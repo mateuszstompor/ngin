@@ -10,6 +10,9 @@
 #define scene_hpp
 
 #include "camera/camera.hpp"
+#include "lights/directionalLight.hpp"
+#include "lights/pointLight.hpp"
+#include "lights/spotLight.hpp"
 
 #include <vector>
 

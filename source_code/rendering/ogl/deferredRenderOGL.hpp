@@ -16,9 +16,10 @@
 
 #if __APPLE__
 
-	#if TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
+	#if ios_build
 
-	#elif TARGET_OS_IPHONE
+		#import <OpenGLES/ES3/gl.h>
+		#import <OpenGLES/ES3/glext.h>
 
 	#else
 

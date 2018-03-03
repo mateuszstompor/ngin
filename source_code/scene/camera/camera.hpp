@@ -18,6 +18,7 @@ namespace ms {
 	
 	public:
 		
+		Camera() : PositionedObject() {}
 		
 		
 	};

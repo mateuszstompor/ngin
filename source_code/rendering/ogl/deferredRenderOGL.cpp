@@ -1,5 +1,5 @@
 //
-//  deferredRenderOGL.cpp
+//  deferredRenderOGL.mm
 //  ngin
 //
 //  Created by Mateusz Stompór on 03/03/2018.
