@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		568A18B02049847F0017B5CF /* libngin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 568A18AF204984760017B5CF /* libngin_ios.a */; };
 		568FA8972048A37F005BD711 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8962048A37F005BD711 /* AppDelegate.m */; };
-		568FA89A2048A37F005BD711 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8992048A37F005BD711 /* ViewController.m */; };
+		568FA89A2048A37F005BD711 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8992048A37F005BD711 /* ViewController.mm */; };
 		568FA89D2048A37F005BD711 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 568FA89B2048A37F005BD711 /* Main.storyboard */; };
 		568FA89F2048A37F005BD711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 568FA89E2048A37F005BD711 /* Assets.xcassets */; };
 		568FA8A22048A37F005BD711 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 568FA8A02048A37F005BD711 /* LaunchScreen.storyboard */; };
@@ -16,18 +17,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		568A18AB204984760017B5CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 568A18A12049846C0017B5CF;
+			remoteInfo = ngin_ios;
+		};
+		568A18AE204984760017B5CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 568A18A22049846C0017B5CF;
+			remoteInfo = ngin_ios;
+		};
 		56E8F05E2048A3A40019F0D5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 568FA8702048A2E2005BD711;
-			remoteInfo = ngin;
-		};
-		56E8F0602048A3B10019F0D5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 568FA86F2048A2E2005BD711;
 			remoteInfo = ngin;
 		};
 /* End PBXContainerItemProxy section */
@@ -37,7 +45,7 @@
 		568FA8952048A37F005BD711 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		568FA8962048A37F005BD711 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		568FA8982048A37F005BD711 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		568FA8992048A37F005BD711 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		568FA8992048A37F005BD711 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		568FA89C2048A37F005BD711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		568FA89E2048A37F005BD711 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		568FA8A12048A37F005BD711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,18 +59,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				568A18B02049847F0017B5CF /* libngin_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		568A189C204983380017B5CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		568FA8892048A37F005BD711 = {
 			isa = PBXGroup;
 			children = (
 				56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */,
 				568FA8942048A37F005BD711 /* ngin-example */,
 				568FA8932048A37F005BD711 /* Products */,
+				568A189C204983380017B5CF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,7 +97,7 @@
 				568FA8952048A37F005BD711 /* AppDelegate.h */,
 				568FA8962048A37F005BD711 /* AppDelegate.m */,
 				568FA8982048A37F005BD711 /* ViewController.h */,
-				568FA8992048A37F005BD711 /* ViewController.m */,
+				568FA8992048A37F005BD711 /* ViewController.mm */,
 				568FA89B2048A37F005BD711 /* Main.storyboard */,
 				568FA89E2048A37F005BD711 /* Assets.xcassets */,
 				568FA8A02048A37F005BD711 /* LaunchScreen.storyboard */,
@@ -94,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				56E8F05F2048A3A40019F0D5 /* libngin.a */,
+				568A18AF204984760017B5CF /* libngin_ios.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,7 +130,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				56E8F0612048A3B10019F0D5 /* PBXTargetDependency */,
+				568A18AC204984760017B5CF /* PBXTargetDependency */,
 			);
 			name = "ngin-example";
 			productName = "ngin-example";
@@ -159,6 +177,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		568A18AF204984760017B5CF /* libngin_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libngin_ios.a;
+			remoteRef = 568A18AE204984760017B5CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		56E8F05F2048A3A40019F0D5 /* libngin.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -186,7 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				568FA89A2048A37F005BD711 /* ViewController.m in Sources */,
+				568FA89A2048A37F005BD711 /* ViewController.mm in Sources */,
 				568FA8A52048A37F005BD711 /* main.m in Sources */,
 				568FA8972048A37F005BD711 /* AppDelegate.m in Sources */,
 			);
@@ -195,10 +220,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		56E8F0612048A3B10019F0D5 /* PBXTargetDependency */ = {
+		568A18AC204984760017B5CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ngin;
-			targetProxy = 56E8F0602048A3B10019F0D5 /* PBXContainerItemProxy */;
+			name = ngin_ios;
+			targetProxy = 568A18AB204984760017B5CF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
