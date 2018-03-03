@@ -10,6 +10,7 @@
 		5626786C204ABCAA00A203F2 /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5626786A204ABCAA00A203F2 /* libglfw.3.2.dylib */; };
 		56329ED4204ABC0600AF29CA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56329ED3204ABC0600AF29CA /* main.cpp */; };
 		56329EE2204ABC1D00AF29CA /* libngin_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56329EDC204ABC0C00AF29CA /* libngin_mac.a */; };
+		5640FED0204AE52D00512938 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5640FECE204AE52D00512938 /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		56329EC9204ABBEA00AF29CA /* ngin_mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ngin_mac; sourceTree = BUILT_PRODUCTS_DIR; };
 		56329ED3204ABC0600AF29CA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ngin.xcodeproj; path = ../../ngin.xcodeproj; sourceTree = "<group>"; };
+		5640FECE204AE52D00512938 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5640FED0204AE52D00512938 /* OpenGL.framework in Frameworks */,
 				5626786C204ABCAA00A203F2 /* libglfw.3.2.dylib in Frameworks */,
 				56329EE2204ABC1D00AF29CA /* libngin_mac.a in Frameworks */,
 			);
@@ -98,6 +101,7 @@
 		56329EE1204ABC1D00AF29CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5640FECE204AE52D00512938 /* OpenGL.framework */,
 				5626786A204ABCAA00A203F2 /* libglfw.3.2.dylib */,
 			);
 			name = Frameworks;

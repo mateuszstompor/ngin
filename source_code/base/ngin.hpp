@@ -26,7 +26,7 @@ namespace ms {
         
         virtual void    draw_scene  () = 0;
         
-		virtual         ~NGin       ();
+		virtual         ~NGin       () = 0;
 		
         
     protected:

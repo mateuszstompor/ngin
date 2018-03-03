@@ -9,18 +9,49 @@
 #ifndef deferredRenderOGL_hpp
 #define deferredRenderOGL_hpp
 
+#include <memory>
+
 #include "../render.hpp"
+#include "../shaders/shader.hpp"
+
+#if __APPLE__
+
+	#if TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
+
+	#elif TARGET_OS_IPHONE
+
+	#else
+
+		#include <OpenGL/gl3.h>
+		#include <OpenGL/gl.h>
+
+	#endif
+
+#endif
+
+
 
 namespace ms {
     
     class DeferredRenderOGL : public Render {
 		
 	public:
-					~DeferredRenderOGL 	() {}
 		
-		void		use     			() {}
-		void		initialize			() {}
-		bool		is_loaded			() { return true; }
+		
+		void	use     			() 										override	;
+		void 	clear_frame			()										override	;
+		void 	draw_scene			(const std::unique_ptr<Scene> &scene) 	override	;
+		
+		void	initialize			() 										override	;
+		bool	is_loaded			() 										override	;
+		
+		void 	destroy				() 										override	;
+		
+				~DeferredRenderOGL 	()													;
+		
+	private:
+		
+		std::unique_ptr<Shader>		gbufferShader;
         
     };
     

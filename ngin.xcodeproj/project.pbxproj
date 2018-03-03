@@ -9,6 +9,52 @@
 /* Begin PBXBuildFile section */
 		56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
 		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
+		5640FECA204AE31700512938 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FEC9204AE31700512938 /* render.cpp */; };
+		5640FED4204AE77600512938 /* shaderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5640FED2204AE77600512938 /* shaderOGL.hpp */; };
+		5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shaderOGL.cpp */; };
+		5640FED6204AE77600512938 /* shaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shaderOGL.cpp */; };
+		5671682B204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716805204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp */; };
+		5671682C204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716805204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp */; };
+		5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
+		5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
+		5671682F204ADFAE0028EFAA /* resourceCoordinatorOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716807204ADFAE0028EFAA /* resourceCoordinatorOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716831204ADFAE0028EFAA /* resource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716809204ADFAE0028EFAA /* resource.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716832204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */; };
+		56716833204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */; };
+		56716834204ADFAE0028EFAA /* deferredRenderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671680D204ADFAE0028EFAA /* deferredRenderOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716835204ADFAE0028EFAA /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680F204ADFAE0028EFAA /* shader.cpp */; };
+		56716836204ADFAE0028EFAA /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680F204ADFAE0028EFAA /* shader.cpp */; };
+		56716837204ADFAE0028EFAA /* shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716810204ADFAE0028EFAA /* shader.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716838204ADFAE0028EFAA /* render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716811204ADFAE0028EFAA /* render.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716839204ADFAE0028EFAA /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716813204ADFAE0028EFAA /* scene.cpp */; };
+		5671683A204ADFAE0028EFAA /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716813204ADFAE0028EFAA /* scene.cpp */; };
+		5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716814204ADFAE0028EFAA /* positionedObject.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671683D204ADFAE0028EFAA /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716817204ADFAE0028EFAA /* camera.cpp */; };
+		5671683E204ADFAE0028EFAA /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716817204ADFAE0028EFAA /* camera.cpp */; };
+		5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
+		56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
+		56716841204ADFAE0028EFAA /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716819204ADFAE0028EFAA /* camera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716842204ADFAE0028EFAA /* directionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681B204ADFAE0028EFAA /* directionalLight.cpp */; };
+		56716843204ADFAE0028EFAA /* directionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681B204ADFAE0028EFAA /* directionalLight.cpp */; };
+		56716844204ADFAE0028EFAA /* pointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681C204ADFAE0028EFAA /* pointLight.cpp */; };
+		56716845204ADFAE0028EFAA /* pointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681C204ADFAE0028EFAA /* pointLight.cpp */; };
+		56716846204ADFAE0028EFAA /* spotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681D204ADFAE0028EFAA /* spotLight.cpp */; };
+		56716847204ADFAE0028EFAA /* spotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681D204ADFAE0028EFAA /* spotLight.cpp */; };
+		56716848204ADFAE0028EFAA /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681F204ADFAE0028EFAA /* light.cpp */; };
+		56716849204ADFAE0028EFAA /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671681F204ADFAE0028EFAA /* light.cpp */; };
+		5671684A204ADFAE0028EFAA /* light.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716820204ADFAE0028EFAA /* light.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716821204ADFAE0028EFAA /* directionalLight.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716822204ADFAE0028EFAA /* pointLight.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671684D204ADFAE0028EFAA /* spotLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716823204ADFAE0028EFAA /* spotLight.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671684E204ADFAE0028EFAA /* scene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716824204ADFAE0028EFAA /* scene.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
+		56716850204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
+		56716851204ADFAE0028EFAA /* nginOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716828204ADFAE0028EFAA /* nginOGL.cpp */; };
+		56716852204ADFAE0028EFAA /* nginOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716828204ADFAE0028EFAA /* nginOGL.cpp */; };
+		56716853204ADFAE0028EFAA /* nginOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716829204ADFAE0028EFAA /* nginOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716854204ADFAE0028EFAA /* ngin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671682A204ADFAE0028EFAA /* ngin.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +89,38 @@
 /* Begin PBXFileReference section */
 		56267870204AC01000A203F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		56267872204AC01A00A203F2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		562678AE204AC82600A203F2 /* source_code */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_code; sourceTree = "<group>"; };
+		5640FEC9204AE31700512938 /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
+		5640FED2204AE77600512938 /* shaderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shaderOGL.hpp; sourceTree = "<group>"; };
+		5640FED3204AE77600512938 /* shaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderOGL.cpp; sourceTree = "<group>"; };
+		56716805204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resourceCoordinatorOGL.cpp; sourceTree = "<group>"; };
+		56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resourceCoordinator.cpp; sourceTree = "<group>"; };
+		56716807204ADFAE0028EFAA /* resourceCoordinatorOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resourceCoordinatorOGL.hpp; sourceTree = "<group>"; };
+		56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resourceCoordinator.hpp; sourceTree = "<group>"; };
+		56716809204ADFAE0028EFAA /* resource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resource.hpp; sourceTree = "<group>"; };
+		5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deferredRenderOGL.cpp; sourceTree = "<group>"; };
+		5671680D204ADFAE0028EFAA /* deferredRenderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = deferredRenderOGL.hpp; sourceTree = "<group>"; };
+		5671680F204ADFAE0028EFAA /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		56716810204ADFAE0028EFAA /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
+		56716811204ADFAE0028EFAA /* render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; };
+		56716813204ADFAE0028EFAA /* scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
+		56716814204ADFAE0028EFAA /* positionedObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = positionedObject.hpp; sourceTree = "<group>"; };
+		56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = perspectiveCamera.hpp; sourceTree = "<group>"; };
+		56716817204ADFAE0028EFAA /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
+		56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = perspectiveCamera.cpp; sourceTree = "<group>"; };
+		56716819204ADFAE0028EFAA /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
+		5671681B204ADFAE0028EFAA /* directionalLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = directionalLight.cpp; sourceTree = "<group>"; };
+		5671681C204ADFAE0028EFAA /* pointLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pointLight.cpp; sourceTree = "<group>"; };
+		5671681D204ADFAE0028EFAA /* spotLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spotLight.cpp; sourceTree = "<group>"; };
+		5671681F204ADFAE0028EFAA /* light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = light.cpp; sourceTree = "<group>"; };
+		56716820204ADFAE0028EFAA /* light.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = light.hpp; sourceTree = "<group>"; };
+		56716821204ADFAE0028EFAA /* directionalLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = directionalLight.hpp; sourceTree = "<group>"; };
+		56716822204ADFAE0028EFAA /* pointLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointLight.hpp; sourceTree = "<group>"; };
+		56716823204ADFAE0028EFAA /* spotLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spotLight.hpp; sourceTree = "<group>"; };
+		56716824204ADFAE0028EFAA /* scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scene.hpp; sourceTree = "<group>"; };
+		56716826204ADFAE0028EFAA /* ngin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ngin.cpp; sourceTree = "<group>"; };
+		56716828204ADFAE0028EFAA /* nginOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nginOGL.cpp; sourceTree = "<group>"; };
+		56716829204ADFAE0028EFAA /* nginOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = nginOGL.hpp; sourceTree = "<group>"; };
+		5671682A204ADFAE0028EFAA /* ngin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ngin.hpp; sourceTree = "<group>"; };
 		568A18A22049846C0017B5CF /* libngin_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
@@ -78,10 +155,137 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5640FED1204AE77600512938 /* ogl */ = {
+			isa = PBXGroup;
+			children = (
+				5640FED2204AE77600512938 /* shaderOGL.hpp */,
+				5640FED3204AE77600512938 /* shaderOGL.cpp */,
+			);
+			path = ogl;
+			sourceTree = "<group>";
+		};
+		56716803204ADFAE0028EFAA /* source_code */ = {
+			isa = PBXGroup;
+			children = (
+				56716804204ADFAE0028EFAA /* resources */,
+				5671680A204ADFAE0028EFAA /* rendering */,
+				56716812204ADFAE0028EFAA /* scene */,
+				56716825204ADFAE0028EFAA /* base */,
+			);
+			path = source_code;
+			sourceTree = "<group>";
+		};
+		56716804204ADFAE0028EFAA /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				56716805204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp */,
+				56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */,
+				56716807204ADFAE0028EFAA /* resourceCoordinatorOGL.hpp */,
+				56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */,
+				56716809204ADFAE0028EFAA /* resource.hpp */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		5671680A204ADFAE0028EFAA /* rendering */ = {
+			isa = PBXGroup;
+			children = (
+				5671680B204ADFAE0028EFAA /* ogl */,
+				5671680E204ADFAE0028EFAA /* shaders */,
+				56716811204ADFAE0028EFAA /* render.hpp */,
+				5640FEC9204AE31700512938 /* render.cpp */,
+			);
+			path = rendering;
+			sourceTree = "<group>";
+		};
+		5671680B204ADFAE0028EFAA /* ogl */ = {
+			isa = PBXGroup;
+			children = (
+				5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */,
+				5671680D204ADFAE0028EFAA /* deferredRenderOGL.hpp */,
+			);
+			path = ogl;
+			sourceTree = "<group>";
+		};
+		5671680E204ADFAE0028EFAA /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				5640FED1204AE77600512938 /* ogl */,
+				5671680F204ADFAE0028EFAA /* shader.cpp */,
+				56716810204ADFAE0028EFAA /* shader.hpp */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
+		56716812204ADFAE0028EFAA /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				56716813204ADFAE0028EFAA /* scene.cpp */,
+				56716814204ADFAE0028EFAA /* positionedObject.hpp */,
+				56716815204ADFAE0028EFAA /* camera */,
+				5671681A204ADFAE0028EFAA /* lights */,
+				56716824204ADFAE0028EFAA /* scene.hpp */,
+			);
+			path = scene;
+			sourceTree = "<group>";
+		};
+		56716815204ADFAE0028EFAA /* camera */ = {
+			isa = PBXGroup;
+			children = (
+				56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */,
+				56716817204ADFAE0028EFAA /* camera.cpp */,
+				56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */,
+				56716819204ADFAE0028EFAA /* camera.hpp */,
+			);
+			path = camera;
+			sourceTree = "<group>";
+		};
+		5671681A204ADFAE0028EFAA /* lights */ = {
+			isa = PBXGroup;
+			children = (
+				5671681B204ADFAE0028EFAA /* directionalLight.cpp */,
+				5671681C204ADFAE0028EFAA /* pointLight.cpp */,
+				5671681D204ADFAE0028EFAA /* spotLight.cpp */,
+				5671681E204ADFAE0028EFAA /* general */,
+				56716821204ADFAE0028EFAA /* directionalLight.hpp */,
+				56716822204ADFAE0028EFAA /* pointLight.hpp */,
+				56716823204ADFAE0028EFAA /* spotLight.hpp */,
+			);
+			path = lights;
+			sourceTree = "<group>";
+		};
+		5671681E204ADFAE0028EFAA /* general */ = {
+			isa = PBXGroup;
+			children = (
+				5671681F204ADFAE0028EFAA /* light.cpp */,
+				56716820204ADFAE0028EFAA /* light.hpp */,
+			);
+			path = general;
+			sourceTree = "<group>";
+		};
+		56716825204ADFAE0028EFAA /* base */ = {
+			isa = PBXGroup;
+			children = (
+				56716826204ADFAE0028EFAA /* ngin.cpp */,
+				56716827204ADFAE0028EFAA /* ogl */,
+				5671682A204ADFAE0028EFAA /* ngin.hpp */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
+		56716827204ADFAE0028EFAA /* ogl */ = {
+			isa = PBXGroup;
+			children = (
+				56716828204ADFAE0028EFAA /* nginOGL.cpp */,
+				56716829204ADFAE0028EFAA /* nginOGL.hpp */,
+			);
+			path = ogl;
+			sourceTree = "<group>";
+		};
 		568FA8672048A2E2005BD711 = {
 			isa = PBXGroup;
 			children = (
-				562678AE204AC82600A203F2 /* source_code */,
+				56716803204ADFAE0028EFAA /* source_code */,
 				568FA87F2048A328005BD711 /* glMath.xcodeproj */,
 				568FA8712048A2E2005BD711 /* Products */,
 				5626786D204AC01000A203F2 /* Frameworks */,
@@ -113,6 +317,23 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */,
+				5671684E204ADFAE0028EFAA /* scene.hpp in Headers */,
+				5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */,
+				56716837204ADFAE0028EFAA /* shader.hpp in Headers */,
+				56716831204ADFAE0028EFAA /* resource.hpp in Headers */,
+				5671684A204ADFAE0028EFAA /* light.hpp in Headers */,
+				5671682F204ADFAE0028EFAA /* resourceCoordinatorOGL.hpp in Headers */,
+				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
+				56716834204ADFAE0028EFAA /* deferredRenderOGL.hpp in Headers */,
+				56716841204ADFAE0028EFAA /* camera.hpp in Headers */,
+				5640FED4204AE77600512938 /* shaderOGL.hpp in Headers */,
+				56716854204ADFAE0028EFAA /* ngin.hpp in Headers */,
+				56716838204ADFAE0028EFAA /* render.hpp in Headers */,
+				5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */,
+				56716853204ADFAE0028EFAA /* nginOGL.hpp in Headers */,
+				5671684D204ADFAE0028EFAA /* spotLight.hpp in Headers */,
+				56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +439,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5671683A204ADFAE0028EFAA /* scene.cpp in Sources */,
+				56716852204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
+				5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
+				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
+				56716843204ADFAE0028EFAA /* directionalLight.cpp in Sources */,
+				56716833204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */,
+				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
+				56716845204ADFAE0028EFAA /* pointLight.cpp in Sources */,
+				56716847204ADFAE0028EFAA /* spotLight.cpp in Sources */,
+				56716836204ADFAE0028EFAA /* shader.cpp in Sources */,
+				5671683E204ADFAE0028EFAA /* camera.cpp in Sources */,
+				5640FED6204AE77600512938 /* shaderOGL.cpp in Sources */,
+				56716849204ADFAE0028EFAA /* light.cpp in Sources */,
+				5671682C204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +460,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56716839204ADFAE0028EFAA /* scene.cpp in Sources */,
+				56716851204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
+				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
+				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
+				56716842204ADFAE0028EFAA /* directionalLight.cpp in Sources */,
+				5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */,
+				56716832204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */,
+				5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */,
+				56716844204ADFAE0028EFAA /* pointLight.cpp in Sources */,
+				56716846204ADFAE0028EFAA /* spotLight.cpp in Sources */,
+				5640FECA204AE31700512938 /* render.cpp in Sources */,
+				56716835204ADFAE0028EFAA /* shader.cpp in Sources */,
+				5671683D204ADFAE0028EFAA /* camera.cpp in Sources */,
+				56716848204ADFAE0028EFAA /* light.cpp in Sources */,
+				5671682B204ADFAE0028EFAA /* resourceCoordinatorOGL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

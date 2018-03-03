@@ -11,12 +11,13 @@
 ms::NGinOGL::NGinOGL() : NGin() {
     
     coordinator = std::unique_ptr<ResourceCoordinator>(new ResourceCoordinatorOGL());
-//    deferredRenderer = std::unique_ptr<Render>(new DeferredRenderOGL());
+    deferredRenderer = std::unique_ptr<Render>(new DeferredRenderOGL());
 	
 }
 
 void ms::NGinOGL::draw_scene() {
-//    deferredRenderer->draw_scene();
+	deferredRenderer->clear_frame();
+    deferredRenderer->draw_scene(scene);
 }
 
 void ms::NGinOGL::initialize () {

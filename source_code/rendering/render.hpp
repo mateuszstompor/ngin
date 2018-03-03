@@ -9,6 +9,8 @@
 #ifndef render_h
 #define render_h
 
+#include <memory>
+
 #include "../resources/resource.hpp"
 #include "../scene/scene.hpp"
 
@@ -18,9 +20,11 @@ namespace ms {
         
     public:
         
-        virtual void	use     	() = 0;
-        virtual void	draw_scene  (Scene scene);
-        virtual			~Render 	() {}
+        virtual void	use     	() 										= 0	;
+		virtual void 	clear_frame	()										= 0 ;
+		virtual void	draw_scene  (const std::unique_ptr<Scene> & scene) 	= 0	;
+		virtual			~Render 	() 										= 0	;
+		
     };
     
 }

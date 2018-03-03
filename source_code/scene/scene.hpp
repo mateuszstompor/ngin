@@ -9,10 +9,20 @@
 #ifndef scene_hpp
 #define scene_hpp
 
+#include "camera/camera.hpp"
+
+#include <vector>
+
 namespace ms {
     
     class Scene {
-        
+
+	public:
+		
+		Scene 	(){}
+		
+		std::unique_ptr<Camera> cam;
+		
     };
     
 }
