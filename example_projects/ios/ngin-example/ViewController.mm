@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "/Users/mateuszstompor/Documents/ngin/source_code/ngin.hpp"
 
 @interface ViewController ()
 
@@ -16,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ms::NGin n;
     // Do any additional setup after loading the view, typically from a nib.
 }
 

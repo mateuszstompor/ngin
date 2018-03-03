@@ -6,6 +6,11 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
+		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		568FA8842048A328005BD711 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,44 +28,73 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		568A18A02049846C0017B5CF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		568FA8702048A2E2005BD711 /* libngin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		56267870204AC01000A203F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		56267872204AC01A00A203F2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		562678AE204AC82600A203F2 /* source_code */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_code; sourceTree = "<group>"; };
+		568A18A22049846C0017B5CF /* libngin_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		568A189F2049846C0017B5CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		568FA86D2048A2E2005BD711 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5626786D204AC01000A203F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				56267872204AC01A00A203F2 /* OpenGL.framework */,
+				56267870204AC01000A203F2 /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		568FA8672048A2E2005BD711 = {
 			isa = PBXGroup;
 			children = (
+				562678AE204AC82600A203F2 /* source_code */,
 				568FA87F2048A328005BD711 /* glMath.xcodeproj */,
-				568FA87E2048A323005BD711 /* source_code */,
 				568FA8712048A2E2005BD711 /* Products */,
+				5626786D204AC01000A203F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		568FA8712048A2E2005BD711 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				568FA8702048A2E2005BD711 /* libngin.a */,
+				568FA8702048A2E2005BD711 /* libngin_mac.a */,
+				568A18A22049846C0017B5CF /* libngin_ios.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		568FA87E2048A323005BD711 /* source_code */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = source_code;
 			sourceTree = "<group>";
 		};
 		568FA8802048A328005BD711 /* Products */ = {
@@ -85,9 +119,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		568FA86F2048A2E2005BD711 /* ngin */ = {
+		568A18A12049846C0017B5CF /* ngin_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 568FA87B2048A2E2005BD711 /* Build configuration list for PBXNativeTarget "ngin" */;
+			buildConfigurationList = 568A18A82049846D0017B5CF /* Build configuration list for PBXNativeTarget "ngin_ios" */;
+			buildPhases = (
+				568A189E2049846C0017B5CF /* Sources */,
+				568A189F2049846C0017B5CF /* Frameworks */,
+				568A18A02049846C0017B5CF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ngin_ios;
+			productName = ngin_ios;
+			productReference = 568A18A22049846C0017B5CF /* libngin_ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		568FA86F2048A2E2005BD711 /* ngin_mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 568FA87B2048A2E2005BD711 /* Build configuration list for PBXNativeTarget "ngin_mac" */;
 			buildPhases = (
 				568FA86C2048A2E2005BD711 /* Sources */,
 				568FA86D2048A2E2005BD711 /* Frameworks */,
@@ -97,9 +148,9 @@
 			);
 			dependencies = (
 			);
-			name = ngin;
+			name = ngin_mac;
 			productName = ngin;
-			productReference = 568FA8702048A2E2005BD711 /* libngin.a */;
+			productReference = 568FA8702048A2E2005BD711 /* libngin_mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -111,6 +162,10 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Mateusz Stompór";
 				TargetAttributes = {
+					568A18A12049846C0017B5CF = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					568FA86F2048A2E2005BD711 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -135,7 +190,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				568FA86F2048A2E2005BD711 /* ngin */,
+				568FA86F2048A2E2005BD711 /* ngin_mac */,
+				568A18A12049846C0017B5CF /* ngin_ios */,
 			);
 		};
 /* End PBXProject section */
@@ -158,6 +214,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
+		568A189E2049846C0017B5CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		568FA86C2048A2E2005BD711 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,6 +231,42 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		568A18A92049846D0017B5CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R78NEXF6E2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		568A18AA2049846D0017B5CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R78NEXF6E2;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		568FA8792048A2E2005BD711 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -298,6 +397,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		568A18A82049846D0017B5CF /* Build configuration list for PBXNativeTarget "ngin_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				568A18A92049846D0017B5CF /* Debug */,
+				568A18AA2049846D0017B5CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		568FA86B2048A2E2005BD711 /* Build configuration list for PBXProject "ngin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -307,7 +415,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		568FA87B2048A2E2005BD711 /* Build configuration list for PBXNativeTarget "ngin" */ = {
+		568FA87B2048A2E2005BD711 /* Build configuration list for PBXNativeTarget "ngin_mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				568FA87C2048A2E2005BD711 /* Debug */,
