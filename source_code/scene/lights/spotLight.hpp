@@ -16,6 +16,14 @@ namespace ms {
 	
 	class SpotLight : public PointLight, public DirectionalLight {
 		
+	public:
+		
+		inline 		SpotLight 	(float power, math::vec4 color, math::mat4 transformation, float lightingAngleDegrees);
+		
+		virtual		~SpotLight 	() = default;
+		
+		float 		lightingAngleDegrees;
+		
 	};
 	
 }

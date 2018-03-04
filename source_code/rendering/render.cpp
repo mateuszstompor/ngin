@@ -7,7 +7,3 @@
 //
 
 #include "render.hpp"
-
-ms::Render::~Render () {
-	
-}

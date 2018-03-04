@@ -10,23 +10,15 @@
 
 ms::NGinOGL::NGinOGL() : NGin() {
     
-    deferredRenderer = std::unique_ptr<Render>(new DeferredRenderOGL());
+//    deferredRenderer = std::unique_ptr<Render>(new DeferredRenderOGL());
 	
 }
 
 void ms::NGinOGL::draw_scene() {
-	deferredRenderer->clear_frame();
+//	deferredRenderer->clear_frame();
     deferredRenderer->draw_scene(scene);
 }
 
-void ms::NGinOGL::load () {
-	
-}
-
-bool ms::NGinOGL::is_loaded () {
-	return true;
-}
-
 void ms::NGinOGL::unload () {
-	
+	NGin::unload();
 }

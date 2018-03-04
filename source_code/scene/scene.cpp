@@ -7,3 +7,7 @@
 //
 
 #include "scene.hpp" 
+
+ms::Scene::Scene() {
+	
+}

@@ -15,8 +15,12 @@
 namespace ms {
 	
 	class PointLight : public Light, public PositionedObject {
+	
+	public:
 		
-		inline PointLight (float power, math::vec4 color, math::mat4 transformation);
+		inline 	PointLight (float power, math::vec4 color, math::mat4 transformation);
+		
+		virtual ~PointLight() = default;
 		
 	};
 	

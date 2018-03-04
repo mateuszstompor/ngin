@@ -38,21 +38,18 @@ namespace ms {
 		
 	public:
 		
-		
+				DeferredRenderOGL	(std::shared_ptr<Shader> shader);
 		void	use     			() 										override	;
 		void 	clear_frame			()										override	;
-		void 	draw_scene			(const std::unique_ptr<Scene> &scene) 	override	;
-		
-		void	load			() 											override	;
+		void 	draw_scene			(const std::shared_ptr<Scene> &scene) 	override	;
+		void	load				() 										override	;
 		bool	is_loaded			() 										override	;
-		
 		void 	unload				() 										override	;
-		
-				~DeferredRenderOGL 	()													;
+		virtual	~DeferredRenderOGL 	()													;
 		
 	private:
 		
-		std::unique_ptr<Shader>		gbufferShader;
+		std::shared_ptr<Shader>		gbufferShader;
         
     };
     

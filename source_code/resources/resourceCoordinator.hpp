@@ -31,15 +31,19 @@ namespace ms {
 		virtual void 									register_unload				(Resource* resource);
 		virtual void 									register_allocation			(Resource* resource);
 		virtual void 									register_deallocation		(Resource* resource);
-		
+		virtual void									unload_all_resources		();
 														~ResourceCoordinator		() = default;
     protected:
 		
 														ResourceCoordinator			();
 		
-		std::vector<std::weak_ptr<Resource>> 			loadedResources;
-        std::vector<std::weak_ptr<Resource>> 			allocatedResources;
+		std::vector<Resource*> 							loadedResources;
+        std::vector<Resource*> 							allocatedResources;
+	
+	public:
+		
 		static std::shared_ptr<ResourceCoordinator> 	sharedInstance;
+		
     };
     
 }

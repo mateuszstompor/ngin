@@ -22,8 +22,8 @@ namespace ms {
         
         virtual void	use     	() 										= 0	;
 		virtual void 	clear_frame	()										= 0 ;
-		virtual void	draw_scene  (const std::unique_ptr<Scene> & scene) 	= 0	;
-		virtual			~Render 	() 										= 0	;
+		virtual void	draw_scene  (const std::shared_ptr<Scene> & scene) 	= 0	;
+		virtual			~Render 	() = default;
 		
     };
     

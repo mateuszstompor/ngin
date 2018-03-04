@@ -12,4 +12,10 @@ ms::NGin::NGin() : scene(new Scene()) {
     
 }
 
-ms::NGin::~NGin() { }
+void ms::NGin::sygnalize_loading_ability() {
+
+}
+
+void ms::NGin::unload() {
+	ResourceCoordinator::sharedInstance->unload_all_resources();
+}

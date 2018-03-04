@@ -11,6 +11,8 @@
 
 #include <memory>
 
+#include "../../libs/source/glMath.h"
+
 namespace ms {
 
     class Resource {

@@ -18,13 +18,7 @@ namespace ms {
         
     public:
                 NGinOGL     ();
-		
         void    draw_scene  () override;
-		
-		void 	load		() override;
-		
-		bool 	is_loaded	() override;
-		
 		void 	unload		() override;
 		
     };

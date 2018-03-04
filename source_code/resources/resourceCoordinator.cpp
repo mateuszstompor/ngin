@@ -12,28 +12,35 @@
 std::shared_ptr<ms::ResourceCoordinator> ms::ResourceCoordinator::sharedInstance = nullptr;
 
 void ms::ResourceCoordinator::register_load (Resource* resource) {
-	
+	loadedResources.push_back(resource);
 }
 
 void ms::ResourceCoordinator::register_unload (Resource* resource) {
-	
+	std::remove(loadedResources.begin(), loadedResources.end(), resource);
 }
 
 void ms::ResourceCoordinator::register_allocation (Resource* resource) {
-	
+	allocatedResources.push_back(resource);
 }
 
 void ms::ResourceCoordinator::register_deallocation (Resource* resource) {
-	
+	std::remove(allocatedResources.begin(), allocatedResources.end(), resource);
 }
 
 void ms::ResourceCoordinator::destroy_shared_instance () {
 	ResourceCoordinator::sharedInstance = nullptr;
 }
 
+void ms::ResourceCoordinator::unload_all_resources () {
+	for(Resource* res : loadedResources) {
+		res->unload();
+	}
+}
+
+
 ms::ResourceCoordinator::ResourceCoordinator () :
-	loadedResources(std::vector<std::weak_ptr<Resource>>()),
-	allocatedResources(std::vector<std::weak_ptr<Resource>>()) {
+	loadedResources(std::vector<Resource*>()),
+	allocatedResources(std::vector<Resource*>()) {
 	
 }
 
