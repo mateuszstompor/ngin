@@ -10,7 +10,6 @@
 #define nginOGL_hpp
 
 #include "../ngin.hpp"
-#include "../../resources/resourceCoordinatorOGL.hpp"
 #include "../../rendering/ogl/deferredRenderOGL.hpp"
 
 namespace ms {
@@ -22,11 +21,11 @@ namespace ms {
 		
         void    draw_scene  () override;
 		
-		void 	initialize	() override;
+		void 	load		() override;
 		
 		bool 	is_loaded	() override;
 		
-		void 	destroy		() override;
+		void 	unload		() override;
 		
     };
     

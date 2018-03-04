@@ -15,6 +15,10 @@ namespace ms {
     
 	class ShaderOGL : public Shader {
 		
+	protected:
+		
+		ShaderOGL();
+		
 	public:
 		
 		

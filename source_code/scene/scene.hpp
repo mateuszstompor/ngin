@@ -13,6 +13,7 @@
 #include "lights/directionalLight.hpp"
 #include "lights/pointLight.hpp"
 #include "lights/spotLight.hpp"
+#include "model.hpp"
 
 #include <vector>
 

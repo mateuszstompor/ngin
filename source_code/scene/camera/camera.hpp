@@ -20,7 +20,6 @@ namespace ms {
 		
 		Camera() : PositionedObject() {}
 		
-		
 	};
 	
 }

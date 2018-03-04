@@ -17,7 +17,7 @@
 namespace ms {
     
     class Render : public Resource {
-        
+		
     public:
         
         virtual void	use     	() 										= 0	;

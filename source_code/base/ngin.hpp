@@ -36,8 +36,6 @@ namespace ms {
         // Coordinator and renderer should be initialized by class
         // which inherits from NGin
         
-        std::unique_ptr<ResourceCoordinator>    coordinator;
-        
         std::unique_ptr<Render>                 deferredRenderer;
         
     };

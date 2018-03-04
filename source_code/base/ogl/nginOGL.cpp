@@ -10,7 +10,6 @@
 
 ms::NGinOGL::NGinOGL() : NGin() {
     
-    coordinator = std::unique_ptr<ResourceCoordinator>(new ResourceCoordinatorOGL());
     deferredRenderer = std::unique_ptr<Render>(new DeferredRenderOGL());
 	
 }
@@ -20,7 +19,7 @@ void ms::NGinOGL::draw_scene() {
     deferredRenderer->draw_scene(scene);
 }
 
-void ms::NGinOGL::initialize () {
+void ms::NGinOGL::load () {
 	
 }
 
@@ -28,6 +27,6 @@ bool ms::NGinOGL::is_loaded () {
 	return true;
 }
 
-void ms::NGinOGL::destroy () {
+void ms::NGinOGL::unload () {
 	
 }

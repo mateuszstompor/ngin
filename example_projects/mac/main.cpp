@@ -75,7 +75,7 @@ int main(int argc, const char * argv[]) {
 
 	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
-    engine->initialize();
+    engine->load();
     
     glfwSetKeyCallback(window, key_callback);
     
@@ -87,7 +87,7 @@ int main(int argc, const char * argv[]) {
         glfwSwapBuffers(window);
     }
     
-    engine->destroy();
+    engine->unload();
     
     glfwTerminate();
     return 0;

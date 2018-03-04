@@ -9,16 +9,26 @@
 #ifndef resource_h
 #define resource_h
 
+#include <memory>
+
 namespace ms {
 
     class Resource {
-        
+		
+	protected:
+		
+		 						Resource	();
+		
     public:
-        
-        virtual void    initialize  () = 0;
-        virtual bool    is_loaded   () = 0;
-		virtual void 	destroy 	() = 0;
-        virtual         ~Resource   () { }
+		
+        		virtual void    load  		() = 0;
+				virtual bool    is_loaded   ();
+				virtual void 	unload 		() = 0;
+		 		virtual         ~Resource   ();
+		
+	protected:
+		
+						bool	isLoaded;
         
     };
     

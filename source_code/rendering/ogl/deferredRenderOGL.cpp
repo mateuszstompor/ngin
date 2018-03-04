@@ -21,7 +21,7 @@ void ms::DeferredRenderOGL::draw_scene (const std::unique_ptr<Scene> &scene) {
 	
 }
 
-void ms::DeferredRenderOGL::initialize () {
+void ms::DeferredRenderOGL::load () {
 	
 }
 
@@ -29,7 +29,7 @@ bool ms::DeferredRenderOGL::is_loaded () {
 	return true;
 }
 
-void ms::DeferredRenderOGL::destroy ()  {
+void ms::DeferredRenderOGL::unload ()  {
 	
 }
 

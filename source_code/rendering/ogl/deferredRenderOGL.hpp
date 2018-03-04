@@ -43,10 +43,10 @@ namespace ms {
 		void 	clear_frame			()										override	;
 		void 	draw_scene			(const std::unique_ptr<Scene> &scene) 	override	;
 		
-		void	initialize			() 										override	;
+		void	load			() 											override	;
 		bool	is_loaded			() 										override	;
 		
-		void 	destroy				() 										override	;
+		void 	unload				() 										override	;
 		
 				~DeferredRenderOGL 	()													;
 		

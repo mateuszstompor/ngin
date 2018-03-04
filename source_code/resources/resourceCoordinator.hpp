@@ -19,16 +19,27 @@
 namespace ms {
     
     class ResourceCoordinator {
-    
+		
     public:
-        
-        std::shared_ptr<Render>     get_render      () const;
-        std::shared_ptr<Shader>     get_shader      () const;
-        
+														ResourceCoordinator			(ResourceCoordinator const & rc) = delete;
+		ResourceCoordinator& 							operator = 					(ResourceCoordinator const & rc) = delete;
+
+		static 	std::shared_ptr<ResourceCoordinator> 	get_instance				();
+		static 	void 									destroy_shared_instance		();
+		
+		virtual void 									register_load				(Resource* resource);
+		virtual void 									register_unload				(Resource* resource);
+		virtual void 									register_allocation			(Resource* resource);
+		virtual void 									register_deallocation		(Resource* resource);
+		
+														~ResourceCoordinator		() = default;
     protected:
-        
-        std::vector<std::weak_ptr<Resource>> resources;
-        
+		
+														ResourceCoordinator			();
+		
+		std::vector<std::weak_ptr<Resource>> 			loadedResources;
+        std::vector<std::weak_ptr<Resource>> 			allocatedResources;
+		static std::shared_ptr<ResourceCoordinator> 	sharedInstance;
     };
     
 }
