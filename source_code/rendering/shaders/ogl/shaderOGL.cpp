@@ -7,6 +7,8 @@
 //
 
 #include "shaderOGL.hpp"
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 namespace ms {
 	#define SHADER_ERROR 			"Shader error"
@@ -27,20 +29,23 @@ void ms::ShaderOGL::use() {
 void ms::ShaderOGL::load() {
 	program = glCreateProgram();
 	compile();
+	use();
 //	cameraTranslation;
 //	perspectiveProjectionMatrix;
 	GLint cam = glGetUniformLocation(program, "cameraTranslation");
 	GLint persp = glGetUniformLocation(program, "perspectiveProjectionMatrix");
-	
-	auto cameraPosition = math::mat4::identity();
-	cameraPosition = math::transform::translate<float, 4>({0.0f, 0.0f, -4.0}) * cameraPosition;
+
+	auto cameraPosition = glm::mat4(1);
+	// Then we move camera away from object that we are going to render.
+	cameraPosition = glm::translate(cameraPosition, glm::vec3(0.0f, 0.0f, -4.0));
+
+
+	glm::mat4 perspective = glm::perspectiveFov(90.0f, static_cast<float>(1200), static_cast<float>(800), 0.01f, 100.0f);
 //	cameraPosition *= math::transform::rotateAboutXRadians<float, 4>(math::radians(90));
 	
-	glUniformMatrix4fv(cam, 1, GL_FALSE, cameraPosition.c_array());
-	
-	auto d =  math::projection::perspective<float>(0.01f, 100.0f, 90, 800.0/600.0);
-	glUniformMatrix4fv(persp, 1, GL_FALSE, d.c_array());
-	
+	glUniformMatrix4fv(cam, 1, GL_FALSE, glm::value_ptr(cameraPosition));
+
+	glUniformMatrix4fv(persp, 1, GL_FALSE, glm::value_ptr(perspective));
 //	cameraPosition = glm::translate(cameraPosition, glm::vec3(0.0f, 0.0f, -4.0));
 //	cameraPosition = glm::rotate(cameraPosition, 90.0f, glm::vec3(1,0,0));
 	

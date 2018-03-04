@@ -16,7 +16,7 @@ void ms::ResourceCoordinator::register_load (Resource* resource) {
 }
 
 void ms::ResourceCoordinator::register_unload (Resource* resource) {
-	std::remove(loadedResources.begin(), loadedResources.end(), resource);
+//	std::remove(loadedResources.begin(), loadedResources.end(), resource);
 }
 
 void ms::ResourceCoordinator::register_allocation (Resource* resource) {
@@ -24,7 +24,7 @@ void ms::ResourceCoordinator::register_allocation (Resource* resource) {
 }
 
 void ms::ResourceCoordinator::register_deallocation (Resource* resource) {
-	std::remove(allocatedResources.begin(), allocatedResources.end(), resource);
+//	std::remove(allocatedResources.begin(), allocatedResources.end(), resource);
 }
 
 void ms::ResourceCoordinator::destroy_shared_instance () {

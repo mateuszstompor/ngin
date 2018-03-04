@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "../resources/resource.hpp"
-#include "../../libs/source/glMath.h"
+//#include "../../libs/source/glMath.h"
 
 namespace ms {
 	

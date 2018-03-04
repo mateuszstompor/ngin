@@ -14,6 +14,10 @@
 #include "../render.hpp"
 #include "../shaders/shader.hpp"
 
+#ifdef __WIN32__
+	#include <glad/glad.h>
+#endif
+
 #if __APPLE__
 
 	#if ios_build

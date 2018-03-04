@@ -9,6 +9,10 @@
 #ifndef scene_node_ogl_hpp
 #define scene_node_ogl_hpp
 
+#ifdef __WIN32__
+	#include <glad/glad.h>
+#endif
+
 #if __APPLE__
 
 	#if ios_build

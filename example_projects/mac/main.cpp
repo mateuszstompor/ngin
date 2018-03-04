@@ -12,12 +12,14 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <cassert>
 
+
+#include "../../third-party-libs/renderdoc.h"
 #include "../../source_code/umbrellaHeader.hpp"
 #include "../../source_code/scene/ogl/geometryOGL.hpp"
 #include "../../source_code/scene/ogl/sceneNodeOGL.hpp"
 #include "../../source_code/rendering/shaders/ogl/shaderOGL.hpp"
-#include "../../source_code/rendering/ogl/deferredRenderOGL.hpp"
 #include "Geometry.h"
 
 namespace ms {
@@ -25,6 +27,35 @@ namespace ms {
     const std::string windowCreationError           = "Cannot create window";
     const std::string windowName                    = "NGIN";
     const std::string contextInitializationFailure  = "Failed to initialize OpenGL context";
+}
+
+void prepareRenderDoc() {
+#ifdef __WIN32__
+    HINSTANCE hGetProcIDDLL = LoadLibrary("renderdoc.dll");
+
+    if (!hGetProcIDDLL) {
+        std::cout << "could not load the dynamic library" << std::endl;
+        return exit(0);
+    }
+
+    HMODULE mod = GetModuleHandleA("renderdoc.dll");
+    if(mod)
+    {
+        pRENDERDOC_GetAPI RENDERDOC_GetAPI = (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+
+        RENDERDOC_API_1_0_0 *rdoc_api = NULL;
+        int ret = RENDERDOC_GetAPI(eRENDERDOC_API_Version_1_0_0, (void **)&rdoc_api);
+
+        assert(ret == 1);
+        assert(rdoc_api->StartFrameCapture != NULL && rdoc_api->EndFrameCapture != NULL);
+
+        int major = 999, minor = 999, patch = 999;
+        std::cout<<rdoc_api->GetLogFilePathTemplate()<<std::endl;
+        rdoc_api->GetAPIVersion(&major, &minor, &patch);
+
+        assert(major == 1 && minor >= 0 && patch >= 0);
+    }
+#endif
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -45,6 +76,8 @@ int main(int argc, const char * argv[]) {
     int height = 800;
 	int framebufferWidth;
 	int framebufferHeight;
+
+    prepareRenderDoc();
 
     if(glfwInit()==0){
         std::cerr<<ms::libInitializationError<<std::endl;
@@ -82,8 +115,8 @@ int main(int argc, const char * argv[]) {
 	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
 
-	auto vertexSource = ms::utils::load_contents_of_file("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/vshader.glsl");
-	auto fragmentSource = ms::utils::load_contents_of_file("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/fshader.glsl");
+	auto vertexSource = ms::utils::load_contents_of_file("C:\\Users\\Matias\\Desktop\\ngin\\source_code\\shaders\\forward_render\\vshader.glsl");
+	auto fragmentSource = ms::utils::load_contents_of_file("C:\\Users\\Matias\\Desktop\\ngin\\source_code\\shaders\\forward_render\\fshader.glsl");
 	
 	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string(vertexSource));
 	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string(fragmentSource));
@@ -109,8 +142,8 @@ int main(int argc, const char * argv[]) {
     while(!glfwWindowShouldClose(window)){
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glColorMask(0.0f, 0.0f, 0.0f, 1.0f);
-		glfwPollEvents();
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glfwPollEvents();
 		
         engine->draw_scene();
         
