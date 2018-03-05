@@ -11,6 +11,8 @@
 
 #include <memory>
 
+#include "../../libs/source/glMath.h"
+
 namespace ms {
 
     class Resource {
@@ -29,6 +31,13 @@ namespace ms {
 	protected:
 		
 						bool	isLoaded;
+	
+	private:
+	
+	#ifdef DEBUG
+				static	int		allocatedInstances;
+				static	int		loadedInstances;
+	#endif
         
     };
     

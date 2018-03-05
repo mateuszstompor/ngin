@@ -1,0 +1,6 @@
+third-party-libs/ export-ignore
+libs/ export-ignore
+ngin.xcodeproj/ export-ignore
+example_projects/ios/ngin-example.xcodeproj export-ignore
+example_projects/mac/ngin_mac.xcodeproj export-ignore
+screenshots/ export-ignore

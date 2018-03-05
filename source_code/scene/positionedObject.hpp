@@ -17,11 +17,15 @@ namespace ms {
 
 	public:
 		
-		inline				PositionedObject	();
-		inline				PositionedObject	(math::mat4 transformation);
-		inline virtual 		~PositionedObject	() = 0;
+		inline							PositionedObject	();
+		inline							PositionedObject	(math::mat4 transformation);
+		virtual 						~PositionedObject	() = default;
 		
-		math::mat4 transformation;
+		inline math::mat4 const & 		get_transformation	();
+		
+	protected:
+		
+		math::mat4 						transformation;
 
 	};
 
@@ -31,6 +35,9 @@ ms::PositionedObject::PositionedObject (math::mat4 t) : transformation(t) { }
 
 ms::PositionedObject::PositionedObject () : PositionedObject(math::mat4::identity()) { }
 
-ms::PositionedObject::~PositionedObject () { }
+ms::math::mat4 const & ms::PositionedObject::get_transformation	() {
+	return transformation;
+}
+
 
 #endif /* positioned_object_hpp */

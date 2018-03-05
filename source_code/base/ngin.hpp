@@ -18,26 +18,24 @@
 
 namespace ms {
     
-	class NGin : public Resource {
+	class NGin {
       
     public:
         
-                        NGin        ();
-        
-        virtual void    draw_scene  () = 0;
-        
-		virtual         ~NGin       () = 0;
+                        NGin        					(unsigned int screenWidth, unsigned int screenHeight);
 		
-        
-    protected:
-        
-        std::unique_ptr<Scene>                  scene;
-        
-        // Coordinator and renderer should be initialized by class
-        // which inherits from NGin
-        
-        std::unique_ptr<Render>                 deferredRenderer;
-        
+		virtual void 	unload 							() = 0;
+        virtual void    draw_scene  					() = 0;
+		virtual         ~NGin       					() = default;
+		
+		std::shared_ptr<Scene>                  scene;
+		
+	protected:
+		
+		std::shared_ptr<Render>                 forwardRenderer;
+		unsigned int 							screenWidth;
+		unsigned int 							screenHeight;
+		
     };
     
 }

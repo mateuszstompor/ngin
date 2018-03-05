@@ -10,21 +10,23 @@
 #define nginOGL_hpp
 
 #include "../ngin.hpp"
-#include "../../rendering/ogl/deferredRenderOGL.hpp"
+#include "../../rendering/ogl/forwardRenderOGL.hpp"
 
 namespace ms {
     
     class NGinOGL : public NGin {
         
     public:
-                NGinOGL     ();
+				NGinOGL     (
+							 std::shared_ptr<std::string> vertexShaderSource,
+							 std::shared_ptr<std::string> fragmentShaderSource,
+							 unsigned int screenWidth,
+							 unsigned int screenHeight,
+							 unsigned int frameBufferWidth,
+							 unsigned int frameBufferHeight
+							 );
 		
         void    draw_scene  () override;
-		
-		void 	load		() override;
-		
-		bool 	is_loaded	() override;
-		
 		void 	unload		() override;
 		
     };

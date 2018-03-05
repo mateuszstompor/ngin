@@ -18,10 +18,23 @@ namespace ms {
 	
 	public:
 		
-		Camera() : PositionedObject() {}
+		inline 						Camera();
+		virtual 					~Camera() = default;
+		
+		inline virtual math::mat4 	get_projection_matrix();
+	
+	protected:
+		
+		math::mat4 					projectionMatrix;
 		
 	};
 	
+}
+
+ms::Camera::Camera() : PositionedObject() { }
+
+ms::math::mat4 ms::Camera::get_projection_matrix() {
+	return projectionMatrix;
 }
 
 #endif /* camera_hpp */

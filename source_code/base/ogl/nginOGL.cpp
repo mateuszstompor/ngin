@@ -8,25 +8,24 @@
 
 #include "nginOGL.hpp"
 
-ms::NGinOGL::NGinOGL() : NGin() {
+ms::NGinOGL::NGinOGL (	  std::shared_ptr<std::string> vertexShaderSource,
+						  std::shared_ptr<std::string> fragmentShaderSource,
+						  unsigned int screenWidth,
+						  unsigned int screenHeight,
+						  unsigned int frameBufferWidth,
+						  unsigned int frameBufferHeight
+						  ) : NGin(screenWidth, screenHeight) {
     
-    deferredRenderer = std::unique_ptr<Render>(new DeferredRenderOGL());
+    forwardRenderer = std::unique_ptr<Render>
+	(new ForwardRenderOGL(vertexShaderSource, fragmentShaderSource,screenWidth, screenHeight, frameBufferWidth, frameBufferHeight));
 	
 }
 
 void ms::NGinOGL::draw_scene() {
-	deferredRenderer->clear_frame();
-    deferredRenderer->draw_scene(scene);
-}
-
-void ms::NGinOGL::load () {
-	
-}
-
-bool ms::NGinOGL::is_loaded () {
-	return true;
+	forwardRenderer->clear_frame();
+    forwardRenderer->draw_scene(scene);
 }
 
 void ms::NGinOGL::unload () {
-	
+	NGin::unload();
 }

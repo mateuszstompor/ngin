@@ -19,6 +19,8 @@ namespace ms {
 		
 		inline 		DirectionalLight(float power, math::vec4 color, math::vec3 direction);
 		
+		virtual		~DirectionalLight() = default;
+		
 		math::vec3 	direction;
 		
 	};

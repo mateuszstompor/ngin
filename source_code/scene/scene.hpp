@@ -13,7 +13,8 @@
 #include "lights/directionalLight.hpp"
 #include "lights/pointLight.hpp"
 #include "lights/spotLight.hpp"
-#include "model.hpp"
+#include "sceneNode.hpp"
+#include "geometry.hpp"
 
 #include <vector>
 
@@ -23,9 +24,10 @@ namespace ms {
 
 	public:
 		
-		Scene 	(){}
+		Scene 	() = default;
 		
-		std::unique_ptr<Camera> cam;
+		std::vector<std::shared_ptr<SceneNode>> 	nodes;
+		std::unique_ptr<Camera> 					cam;
 		
     };
     

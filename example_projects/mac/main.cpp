@@ -3,25 +3,63 @@
 //  Copyright © 2017 Mateusz Stompór. All rights reserved.
 //
 
-#include <iostream>
-#include <memory>
-
 #ifdef __WIN32__
-#include <glad/glad.h>
+	#include <glad/glad.h>
+	#include "../../third-party-libs/renderdoc.h"
 #endif
+
 #include <GLFW/glfw3.h>
 #include <cstring>
 #include <string>
 #include <memory>
+#include <iostream>
+#include <cassert>
 
-#include "../../source_code/base/ngin.hpp"
-#include "../../source_code/base/ogl/nginOGL.hpp"
+
+
+#include "../../source_code/umbrellaHeader.hpp"
+#include "../../source_code/scene/ogl/geometryOGL.hpp"
+#include "../../source_code/scene/ogl/sceneNodeOGL.hpp"
+#include "../../source_code/rendering/shaders/ogl/shaderOGL.hpp"
+#include "example_geometry.h"
 
 namespace ms {
     const std::string libInitializationError        = "Cannot initialize GLFW3";
     const std::string windowCreationError           = "Cannot create window";
     const std::string windowName                    = "NGIN";
     const std::string contextInitializationFailure  = "Failed to initialize OpenGL context";
+}
+
+void prepareRenderDoc() {
+	
+#ifdef __WIN32__
+	
+    HINSTANCE hGetProcIDDLL = LoadLibrary("renderdoc.dll");
+
+    if (!hGetProcIDDLL) {
+        std::cout << "could not load the dynamic library" << std::endl;
+        return exit(0);
+    }
+
+    HMODULE mod = GetModuleHandleA("renderdoc.dll");
+    if(mod) {
+        pRENDERDOC_GetAPI RENDERDOC_GetAPI = (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+
+        RENDERDOC_API_1_0_0 *rdoc_api = NULL;
+        int ret = RENDERDOC_GetAPI(eRENDERDOC_API_Version_1_0_0, (void **)&rdoc_api);
+
+        assert(ret == 1);
+        assert(rdoc_api->StartFrameCapture != NULL && rdoc_api->EndFrameCapture != NULL);
+
+        int major = 999, minor = 999, patch = 999;
+        std::cout<<rdoc_api->GetLogFilePathTemplate()<<std::endl;
+        rdoc_api->GetAPIVersion(&major, &minor, &patch);
+
+        assert(major == 1 && minor >= 0 && patch >= 0);
+    }
+	
+#endif
+	
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -36,12 +74,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) {
 
-    std::unique_ptr<ms::NGin> engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL());
-    
     int width = 1200;
     int height = 800;
-	int framebufferWidth;
-	int framebufferHeight;
+	int framebufferWidth = 1200;
+	int framebufferHeight = 800;
+	
+    prepareRenderDoc();
 
     if(glfwInit()==0){
         std::cerr<<ms::libInitializationError<<std::endl;
@@ -75,19 +113,50 @@ int main(int argc, const char * argv[]) {
 
 	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
-    engine->load();
-    
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	std::shared_ptr<ms::Geometry> m = std::shared_ptr<ms::Geometry>(new ms::GeometryOGL());
+	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
+	
+
+	auto vertexSource = ms::utils::load_contents_of_file("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/vshader.glsl");
+	auto fragmentSource = ms::utils::load_contents_of_file("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/fshader.glsl");
+	
+	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string(vertexSource));
+	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string(fragmentSource));
+	
+	std::unique_ptr<ms::NGin> engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, 1200, 800, 1200, 800));
+	
+	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
+	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
+
+	node->geometry = m;
+	
+	engine->scene->nodes.push_back(node);
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
     glfwSetKeyCallback(window, key_callback);
     
     while(!glfwWindowShouldClose(window)){
+		
         glfwPollEvents();
-        
+		
+		//////////////////////////////////////////////////////////////////////////////////////////
+		
         engine->draw_scene();
+		
+		//////////////////////////////////////////////////////////////////////////////////////////
         
         glfwSwapBuffers(window);
     }
-    
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
     engine->unload();
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
     
     glfwTerminate();
     return 0;

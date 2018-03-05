@@ -7,3 +7,7 @@
 //
 
 #include "perspectiveCamera.hpp"
+
+ms::PerspectiveCamera::PerspectiveCamera(float nearPlane, float farPlane, float fovDegrees, float aspectRatio) {
+	projectionMatrix = ms::math::projection::perspective(nearPlane, farPlane, fovDegrees, aspectRatio);
+}
