@@ -14,6 +14,10 @@
 		568FA89F2048A37F005BD711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 568FA89E2048A37F005BD711 /* Assets.xcassets */; };
 		568FA8A22048A37F005BD711 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 568FA8A02048A37F005BD711 /* LaunchScreen.storyboard */; };
 		568FA8A52048A37F005BD711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8A42048A37F005BD711 /* main.m */; };
+		56D1B110204D86E20043DAA5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D1B10E204D86E20043DAA5 /* OpenGLES.framework */; };
+		56D1B114204D88980043DAA5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D1B113204D88980043DAA5 /* GLKit.framework */; };
+		56D1B117204D8A8E0043DAA5 /* fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56D1B115204D8A8E0043DAA5 /* fshader.glsl */; };
+		56D1B118204D8A8E0043DAA5 /* vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56D1B116204D8A8E0043DAA5 /* vshader.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		568FA8A12048A37F005BD711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		568FA8A32048A37F005BD711 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		568FA8A42048A37F005BD711 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		56D1B10E204D86E20043DAA5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		56D1B113204D88980043DAA5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		56D1B115204D8A8E0043DAA5 /* fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = fshader.glsl; path = ../../source_code/shaders/forward_render/fshader.glsl; sourceTree = "<group>"; };
+		56D1B116204D8A8E0043DAA5 /* vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = vshader.glsl; path = ../../source_code/shaders/forward_render/vshader.glsl; sourceTree = "<group>"; };
 		56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ngin.xcodeproj; path = ../../ngin.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56D1B114204D88980043DAA5 /* GLKit.framework in Frameworks */,
+				56D1B110204D86E20043DAA5 /* OpenGLES.framework in Frameworks */,
 				568A18B02049847F0017B5CF /* libngin_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +79,8 @@
 		568A189C204983380017B5CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56D1B113204D88980043DAA5 /* GLKit.framework */,
+				56D1B10E204D86E20043DAA5 /* OpenGLES.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -76,6 +88,8 @@
 		568FA8892048A37F005BD711 = {
 			isa = PBXGroup;
 			children = (
+				56D1B115204D8A8E0043DAA5 /* fshader.glsl */,
+				56D1B116204D8A8E0043DAA5 /* vshader.glsl */,
 				56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */,
 				568FA8942048A37F005BD711 /* ngin-example */,
 				568FA8932048A37F005BD711 /* Products */,
@@ -110,7 +124,7 @@
 		56E8F05A2048A3A40019F0D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				56E8F05F2048A3A40019F0D5 /* libngin.a */,
+				56E8F05F2048A3A40019F0D5 /* libngin_mac.a */,
 				568A18AF204984760017B5CF /* libngin_ios.a */,
 			);
 			name = Products;
@@ -184,10 +198,10 @@
 			remoteRef = 568A18AE204984760017B5CF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		56E8F05F2048A3A40019F0D5 /* libngin.a */ = {
+		56E8F05F2048A3A40019F0D5 /* libngin_mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libngin.a;
+			path = libngin_mac.a;
 			remoteRef = 56E8F05E2048A3A40019F0D5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -198,6 +212,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56D1B117204D8A8E0043DAA5 /* fshader.glsl in Resources */,
+				56D1B118204D8A8E0043DAA5 /* vshader.glsl in Resources */,
 				568FA8A22048A37F005BD711 /* LaunchScreen.storyboard in Resources */,
 				568FA89F2048A37F005BD711 /* Assets.xcassets in Resources */,
 				568FA89D2048A37F005BD711 /* Main.storyboard in Resources */,
@@ -355,6 +371,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				INFOPLIST_FILE = "ngin-example/Info.plist";
@@ -369,6 +386,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				INFOPLIST_FILE = "ngin-example/Info.plist";

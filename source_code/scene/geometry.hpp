@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "../resources/resource.hpp"
-//#include "../../libs/source/glMath.h"
 
 namespace ms {
 	
@@ -27,8 +26,8 @@ namespace ms {
 		
 	public:
 		
-		std::vector<float> vertices;
-		std::vector<float> normals;
+		std::vector<float> 	vertices;
+		std::vector<float> 	normals;
 		
 	};
 	

@@ -13,6 +13,7 @@
 
 #include "../resources/resource.hpp"
 #include "geometry.hpp"
+#include "positionedObject.hpp"
 
 namespace ms {
 	
@@ -20,14 +21,17 @@ namespace ms {
 	
 	public:
 		
-							SceneNode	();
+		inline				SceneNode	();
 		virtual 	void 	use			() = 0;
 		virtual 			~SceneNode	() = default;
 		
-		std::shared_ptr<Geometry> geometry;
+		std::shared_ptr<Geometry> 			geometry;
+		std::shared_ptr<PositionedObject>	modelTransformation;
 		
 	};
 	
 }
+
+ms::SceneNode::SceneNode() : geometry(nullptr), modelTransformation(nullptr) { }
 
 #endif /* scene_node_hpp */

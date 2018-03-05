@@ -11,42 +11,32 @@
 		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
 		5633FA8F204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA90204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
-		5633FA95204B6F97003449EE /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA93204B6F97003449EE /* geometry.cpp */; };
-		5633FA96204B6F97003449EE /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA93204B6F97003449EE /* geometry.cpp */; };
 		5633FA97204B6F97003449EE /* geometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FA94204B6F97003449EE /* geometry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5633FA9B204B6FCB003449EE /* geometryOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FA99204B6FCA003449EE /* geometryOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5633FA9C204B6FCB003449EE /* geometryOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA9A204B6FCA003449EE /* geometryOGL.cpp */; };
 		5633FA9D204B6FCB003449EE /* geometryOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA9A204B6FCA003449EE /* geometryOGL.cpp */; };
-		5633FAA8204C565B003449EE /* sceneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FAA6204C565B003449EE /* sceneNode.cpp */; };
-		5633FAA9204C565B003449EE /* sceneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FAA6204C565B003449EE /* sceneNode.cpp */; };
 		5633FAAA204C565B003449EE /* sceneNode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FAA7204C565B003449EE /* sceneNode.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5633FAB2204C64D7003449EE /* sceneNodeOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FAB0204C64D7003449EE /* sceneNodeOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5633FAB3204C64D7003449EE /* sceneNodeOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FAB1204C64D7003449EE /* sceneNodeOGL.cpp */; };
 		5633FAB4204C64D7003449EE /* sceneNodeOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FAB1204C64D7003449EE /* sceneNodeOGL.cpp */; };
 		5633FAB6204C661A003449EE /* umbrellaHeader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FAB5204C661A003449EE /* umbrellaHeader.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5633FAB9204C6625003449EE /* utils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FAB8204C6625003449EE /* utils.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5640FECA204AE31700512938 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FEC9204AE31700512938 /* render.cpp */; };
 		5640FED4204AE77600512938 /* shaderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5640FED2204AE77600512938 /* shaderOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shaderOGL.cpp */; };
 		5640FED6204AE77600512938 /* shaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shaderOGL.cpp */; };
-		5640FED7204AE84200512938 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FEC9204AE31700512938 /* render.cpp */; };
 		5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
 		5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
 		56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56716831204ADFAE0028EFAA /* resource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716809204ADFAE0028EFAA /* resource.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		56716832204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */; };
-		56716833204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */; };
-		56716834204ADFAE0028EFAA /* deferredRenderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671680D204ADFAE0028EFAA /* deferredRenderOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56716832204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680C204ADFAE0028EFAA /* forwardRenderOGL.cpp */; };
+		56716833204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680C204ADFAE0028EFAA /* forwardRenderOGL.cpp */; };
+		56716834204ADFAE0028EFAA /* forwardRenderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671680D204ADFAE0028EFAA /* forwardRenderOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56716835204ADFAE0028EFAA /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680F204ADFAE0028EFAA /* shader.cpp */; };
 		56716836204ADFAE0028EFAA /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5671680F204ADFAE0028EFAA /* shader.cpp */; };
 		56716837204ADFAE0028EFAA /* shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716810204ADFAE0028EFAA /* shader.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56716838204ADFAE0028EFAA /* render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716811204ADFAE0028EFAA /* render.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		56716839204ADFAE0028EFAA /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716813204ADFAE0028EFAA /* scene.cpp */; };
-		5671683A204ADFAE0028EFAA /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716813204ADFAE0028EFAA /* scene.cpp */; };
 		5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716814204ADFAE0028EFAA /* positionedObject.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5671683D204ADFAE0028EFAA /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716817204ADFAE0028EFAA /* camera.cpp */; };
-		5671683E204ADFAE0028EFAA /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716817204ADFAE0028EFAA /* camera.cpp */; };
 		5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
 		56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
 		56716841204ADFAE0028EFAA /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716819204ADFAE0028EFAA /* camera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,11 +86,9 @@
 		56267870204AC01000A203F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		56267872204AC01A00A203F2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		5633FA8E204B6988003449EE /* resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource.cpp; sourceTree = "<group>"; };
-		5633FA93204B6F97003449EE /* geometry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
 		5633FA94204B6F97003449EE /* geometry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = geometry.hpp; sourceTree = "<group>"; };
 		5633FA99204B6FCA003449EE /* geometryOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = geometryOGL.hpp; sourceTree = "<group>"; };
 		5633FA9A204B6FCA003449EE /* geometryOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometryOGL.cpp; sourceTree = "<group>"; };
-		5633FAA6204C565B003449EE /* sceneNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sceneNode.cpp; sourceTree = "<group>"; };
 		5633FAA7204C565B003449EE /* sceneNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sceneNode.hpp; sourceTree = "<group>"; };
 		5633FAB0204C64D7003449EE /* sceneNodeOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sceneNodeOGL.hpp; sourceTree = "<group>"; };
 		5633FAB1204C64D7003449EE /* sceneNodeOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneNodeOGL.cpp; sourceTree = "<group>"; };
@@ -108,21 +96,18 @@
 		5633FAB8204C6625003449EE /* utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
 		5633FABC204C9EB3003449EE /* vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vshader.glsl; sourceTree = "<group>"; };
 		5633FABD204C9EB3003449EE /* fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fshader.glsl; sourceTree = "<group>"; };
-		5640FEC9204AE31700512938 /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
 		5640FED2204AE77600512938 /* shaderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shaderOGL.hpp; sourceTree = "<group>"; };
 		5640FED3204AE77600512938 /* shaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderOGL.cpp; sourceTree = "<group>"; };
 		56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resourceCoordinator.cpp; sourceTree = "<group>"; };
 		56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resourceCoordinator.hpp; sourceTree = "<group>"; };
 		56716809204ADFAE0028EFAA /* resource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resource.hpp; sourceTree = "<group>"; };
-		5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deferredRenderOGL.cpp; sourceTree = "<group>"; };
-		5671680D204ADFAE0028EFAA /* deferredRenderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = deferredRenderOGL.hpp; sourceTree = "<group>"; };
+		5671680C204ADFAE0028EFAA /* forwardRenderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = forwardRenderOGL.cpp; sourceTree = "<group>"; };
+		5671680D204ADFAE0028EFAA /* forwardRenderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = forwardRenderOGL.hpp; sourceTree = "<group>"; };
 		5671680F204ADFAE0028EFAA /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
 		56716810204ADFAE0028EFAA /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
 		56716811204ADFAE0028EFAA /* render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; };
-		56716813204ADFAE0028EFAA /* scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
 		56716814204ADFAE0028EFAA /* positionedObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = positionedObject.hpp; sourceTree = "<group>"; };
 		56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = perspectiveCamera.hpp; sourceTree = "<group>"; };
-		56716817204ADFAE0028EFAA /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = perspectiveCamera.cpp; sourceTree = "<group>"; };
 		56716819204ADFAE0028EFAA /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
 		56716820204ADFAE0028EFAA /* light.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = light.hpp; sourceTree = "<group>"; };
@@ -244,7 +229,6 @@
 				5671680B204ADFAE0028EFAA /* ogl */,
 				5671680E204ADFAE0028EFAA /* shaders */,
 				56716811204ADFAE0028EFAA /* render.hpp */,
-				5640FEC9204AE31700512938 /* render.cpp */,
 			);
 			path = rendering;
 			sourceTree = "<group>";
@@ -252,8 +236,8 @@
 		5671680B204ADFAE0028EFAA /* ogl */ = {
 			isa = PBXGroup;
 			children = (
-				5671680C204ADFAE0028EFAA /* deferredRenderOGL.cpp */,
-				5671680D204ADFAE0028EFAA /* deferredRenderOGL.hpp */,
+				5671680C204ADFAE0028EFAA /* forwardRenderOGL.cpp */,
+				5671680D204ADFAE0028EFAA /* forwardRenderOGL.hpp */,
 			);
 			path = ogl;
 			sourceTree = "<group>";
@@ -271,15 +255,12 @@
 		56716812204ADFAE0028EFAA /* scene */ = {
 			isa = PBXGroup;
 			children = (
-				5633FAA6204C565B003449EE /* sceneNode.cpp */,
 				5633FAA7204C565B003449EE /* sceneNode.hpp */,
 				5633FA98204B6FCA003449EE /* ogl */,
 				56716814204ADFAE0028EFAA /* positionedObject.hpp */,
 				56716824204ADFAE0028EFAA /* scene.hpp */,
-				56716813204ADFAE0028EFAA /* scene.cpp */,
 				56716815204ADFAE0028EFAA /* camera */,
 				5671681A204ADFAE0028EFAA /* lights */,
-				5633FA93204B6F97003449EE /* geometry.cpp */,
 				5633FA94204B6F97003449EE /* geometry.hpp */,
 			);
 			path = scene;
@@ -289,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */,
-				56716817204ADFAE0028EFAA /* camera.cpp */,
 				56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */,
 				56716819204ADFAE0028EFAA /* camera.hpp */,
 			);
@@ -376,7 +356,7 @@
 				56716831204ADFAE0028EFAA /* resource.hpp in Headers */,
 				5671684A204ADFAE0028EFAA /* light.hpp in Headers */,
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
-				56716834204ADFAE0028EFAA /* deferredRenderOGL.hpp in Headers */,
+				56716834204ADFAE0028EFAA /* forwardRenderOGL.hpp in Headers */,
 				56716841204ADFAE0028EFAA /* camera.hpp in Headers */,
 				56716854204ADFAE0028EFAA /* ngin.hpp in Headers */,
 				56716838204ADFAE0028EFAA /* render.hpp in Headers */,
@@ -496,21 +476,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5640FED7204AE84200512938 /* render.cpp in Sources */,
 				5633FA9D204B6FCB003449EE /* geometryOGL.cpp in Sources */,
-				5671683A204ADFAE0028EFAA /* scene.cpp in Sources */,
 				56716852204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
 				5633FA90204B6988003449EE /* resource.cpp in Sources */,
 				5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
-				56716833204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */,
+				56716833204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5633FAB4204C64D7003449EE /* sceneNodeOGL.cpp in Sources */,
 				56716836204ADFAE0028EFAA /* shader.cpp in Sources */,
-				5633FAA9204C565B003449EE /* sceneNode.cpp in Sources */,
-				5671683E204ADFAE0028EFAA /* camera.cpp in Sources */,
 				5640FED6204AE77600512938 /* shaderOGL.cpp in Sources */,
-				5633FA96204B6F97003449EE /* geometry.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,21 +493,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56716839204ADFAE0028EFAA /* scene.cpp in Sources */,
 				5633FA9C204B6FCB003449EE /* geometryOGL.cpp in Sources */,
 				56716851204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
 				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				5633FA8F204B6988003449EE /* resource.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */,
-				56716832204ADFAE0028EFAA /* deferredRenderOGL.cpp in Sources */,
+				56716832204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */,
 				5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5633FAB3204C64D7003449EE /* sceneNodeOGL.cpp in Sources */,
-				5640FECA204AE31700512938 /* render.cpp in Sources */,
-				5633FAA8204C565B003449EE /* sceneNode.cpp in Sources */,
 				56716835204ADFAE0028EFAA /* shader.cpp in Sources */,
-				5671683D204ADFAE0028EFAA /* camera.cpp in Sources */,
-				5633FA95204B6F97003449EE /* geometry.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,9 +518,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
 					"ios_build=1",
+					"DEBUG=1",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -571,6 +540,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "ios_build=1";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -693,6 +663,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"mac_build=1",
+					"DEBUG=1",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -705,6 +679,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "mac_build=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

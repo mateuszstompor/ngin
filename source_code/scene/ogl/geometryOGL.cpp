@@ -11,7 +11,7 @@
 void ms::GeometryOGL::load() {
 	
 	load_vector_to_buffer(vertices, &verticesBuffer);
-//	load_vector_to_buffer(normals, &normalsBuffer);
+	load_vector_to_buffer(normals, 	&normalsBuffer);
 	
 	isLoaded = true;
 	
@@ -20,11 +20,10 @@ void ms::GeometryOGL::load() {
 }
 
 void ms::GeometryOGL::use_normals () {
-//	if(!isLoaded) {
-//		load();
-//	}
-//
-//	glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
+	if(!isLoaded) {
+		load();
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
 }
 
 void ms::GeometryOGL::use_vertices () {
@@ -37,24 +36,16 @@ void ms::GeometryOGL::use_vertices () {
 void ms::GeometryOGL::load_vector_to_buffer(const std::vector<float> & v, GLuint* b) {
 	glGenBuffers(1, b);
 	glBindBuffer(GL_ARRAY_BUFFER, *b);
-//	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), nullptr, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), nullptr, GL_STATIC_DRAW);
 	
-	glBufferData(
-				 GL_ARRAY_BUFFER,
-				 v.size() * sizeof(float),
-				 &v[0],
-				 GL_STATIC_DRAW
-				 );
-	
-	
-//	float* vBuf = /*reinterpret_cast<float*>*/(float*)(glMapBufferRange(GL_ARRAY_BUFFER, 0, v.size() * sizeof(float),  GL_MAP_WRITE_BIT));
-//
-//	for (unsigned long long i = 0; i < v.size(); ++i) {
-//		*(vBuf + i) = v[i];
-//	}
-//
-//	glUnmapBuffer(GL_ARRAY_BUFFER);
-//	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	float* vBuf = reinterpret_cast<float*>(glMapBufferRange(GL_ARRAY_BUFFER, 0, v.size() * sizeof(float),  GL_MAP_WRITE_BIT));
+
+	for (unsigned long long i = 0; i < v.size(); ++i) {
+		*(vBuf + i) = v[i];
+	}
+
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void ms::GeometryOGL::unload() {

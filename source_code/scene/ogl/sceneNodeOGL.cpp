@@ -8,29 +8,33 @@
 
 #include "sceneNodeOGL.hpp"
 
+ms::SceneNodeOGL::SceneNodeOGL () : ms::SceneNode() {
+	modelTransformation = std::shared_ptr<PositionedObject>(new PositionedObject());
+}
+
 void ms::SceneNodeOGL::use () {
+	if(!isLoaded)
+		load();
+	
 	glBindVertexArray(vertexArray);
 }
 
 void ms::SceneNodeOGL::load	() {
-	glGenVertexArrays(1, &vertexArray);
 	
-	if (geometry && !geometry->is_loaded()) {
-		geometry->load();
-		
-	}
+	glGenVertexArrays(1, &vertexArray);
+	isLoaded = true;
 	
 	this->use();
-//	geometry->use_normals();s
 	
-//	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-//	glEnableVertexAttribArray(1);
-	
-	geometry->use_vertices();
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-	glEnableVertexAttribArray(0);
-	
-	isLoaded = true;
+	if(geometry) {
+		geometry->use_normals();
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+		glEnableVertexAttribArray(1);
+		
+		geometry->use_vertices();
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+		glEnableVertexAttribArray(0);
+	}
 	
 	Resource::load();
 }

@@ -8,14 +8,9 @@
 
 #include "ngin.hpp"
 
-ms::NGin::NGin() : scene(new Scene()) {
-    
-}
-
-void ms::NGin::sygnalize_loading_ability() {
-
-}
+ms::NGin::NGin(unsigned int scW, unsigned int scH) : scene(new Scene()), screenWidth(scW), screenHeight(scH) { }
 
 void ms::NGin::unload() {
 	ResourceCoordinator::sharedInstance->unload_all_resources();
+	ResourceCoordinator::destroy_shared_instance();
 }

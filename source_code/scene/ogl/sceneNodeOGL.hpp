@@ -15,12 +15,12 @@
 
 #if __APPLE__
 
-	#if ios_build
+	#ifdef ios_build
 
 		#import <OpenGLES/ES3/gl.h>
 		#import <OpenGLES/ES3/glext.h>
 
-	#else
+	#elif mac_build
 
 		#include <OpenGL/gl3.h>
 		#include <OpenGL/gl.h>
@@ -36,14 +36,14 @@ namespace ms {
 	class SceneNodeOGL : public SceneNode {
 		
 	public:
-		
-		void 	use			() override;
-		void	load		() override;
-		void 	unload		() override;
+				SceneNodeOGL	();
+		void 	use				() override;
+		void	load			() override;
+		void 	unload			() override;
 		
 	protected:
 		
-		GLuint vertexArray;
+		GLuint 	vertexArray;
 		
 	};
 	

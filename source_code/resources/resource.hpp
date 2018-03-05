@@ -11,7 +11,7 @@
 
 #include <memory>
 
-//#include "../../libs/source/glMath.h"
+#include "../../libs/source/glMath.h"
 
 namespace ms {
 
@@ -31,6 +31,13 @@ namespace ms {
 	protected:
 		
 						bool	isLoaded;
+	
+	private:
+	
+	#ifdef DEBUG
+				static	int		allocatedInstances;
+				static	int		loadedInstances;
+	#endif
         
     };
     

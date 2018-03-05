@@ -18,7 +18,7 @@ namespace ms {
 	public:
 		
 		inline 			Light	(float power, math::vec4 color);
-		inline virtual 	~Light	() = 0;
+		virtual		 	~Light	() = default;
 		
 		float			power;
 		math::vec4 		color;
@@ -28,7 +28,5 @@ namespace ms {
 }
 
 ms::Light::Light (float p, math::vec4 c) : power(p), color(c) { }
-
-ms::Light::~Light () { }
 
 #endif /* light_hpp */

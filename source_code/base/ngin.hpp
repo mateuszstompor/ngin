@@ -22,18 +22,20 @@ namespace ms {
       
     public:
         
-                        NGin        					();
-		virtual void    sygnalize_loading_ability  		();
+                        NGin        					(unsigned int screenWidth, unsigned int screenHeight);
+		
 		virtual void 	unload 							() = 0;
         virtual void    draw_scene  					() = 0;
 		virtual         ~NGin       					() = default;
 		
-        
-//    protected:
+		std::shared_ptr<Scene>                  scene;
 		
-		std::shared_ptr<Render>                 deferredRenderer;
-        std::shared_ptr<Scene>                  scene;
-        
+	protected:
+		
+		std::shared_ptr<Render>                 forwardRenderer;
+		unsigned int 							screenWidth;
+		unsigned int 							screenHeight;
+		
     };
     
 }

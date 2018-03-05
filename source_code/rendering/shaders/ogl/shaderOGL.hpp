@@ -16,14 +16,14 @@
 	#include <glad/glad.h>
 #endif
 
-#if __APPLE__
+	#if __APPLE__
 
-	#if ios_build
+	#ifdef ios_build
 
 		#import <OpenGLES/ES3/gl.h>
 		#import <OpenGLES/ES3/glext.h>
 
-	#else
+	#elif mac_build
 
 		#include <OpenGL/gl3.h>
 		#include <OpenGL/gl.h>

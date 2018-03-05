@@ -7,8 +7,6 @@
 //
 
 #include "shaderOGL.hpp"
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
 
 namespace ms {
 	#define SHADER_ERROR 			"Shader error"
@@ -29,27 +27,18 @@ void ms::ShaderOGL::use() {
 void ms::ShaderOGL::load() {
 	program = glCreateProgram();
 	compile();
+
 	use();
-//	cameraTranslation;
-//	perspectiveProjectionMatrix;
 	GLint cam = glGetUniformLocation(program, "cameraTranslation");
 	GLint persp = glGetUniformLocation(program, "perspectiveProjectionMatrix");
+	math::mat4 cameraPosition = math::mat4::identity();
+	cameraPosition = cameraPosition * math::transform::translate<float, 4>({0.0f, 0.0f, -4.0}) ;
 
-	auto cameraPosition = glm::mat4(1);
-	// Then we move camera away from object that we are going to render.
-	cameraPosition = glm::translate(cameraPosition, glm::vec3(0.0f, 0.0f, -4.0));
+	glUniformMatrix4fv(cam, 1, GL_FALSE, cameraPosition.c_array());
 
+	math::mat4 perspective =  math::projection::perspective<float>(0.01f, 100.0f, 90.0f, 1200.0f/800.0f);
+	glUniformMatrix4fv(persp, 1, GL_FALSE, perspective.c_array());
 
-	glm::mat4 perspective = glm::perspectiveFov(90.0f, static_cast<float>(1200), static_cast<float>(800), 0.01f, 100.0f);
-//	cameraPosition *= math::transform::rotateAboutXRadians<float, 4>(math::radians(90));
-	
-	glUniformMatrix4fv(cam, 1, GL_FALSE, glm::value_ptr(cameraPosition));
-
-	glUniformMatrix4fv(persp, 1, GL_FALSE, glm::value_ptr(perspective));
-//	cameraPosition = glm::translate(cameraPosition, glm::vec3(0.0f, 0.0f, -4.0));
-//	cameraPosition = glm::rotate(cameraPosition, 90.0f, glm::vec3(1,0,0));
-	
-	
 	
 	isLoaded = true;
 	Resource::load();
@@ -77,6 +66,8 @@ void ms::ShaderOGL::compile() {
 		get_shader_status(vshader, GL_COMPILE_STATUS);
 		glAttachShader(program, vshader);
 	}
+	
+	#ifdef mac_build
 
 	if (tesselationControlSource) {
 		cshader = glCreateShader(GL_TESS_CONTROL_SHADER);
@@ -116,31 +107,34 @@ void ms::ShaderOGL::compile() {
 		glAttachShader(program, fshader);
 	}
 	
+	#endif
+	
 	glLinkProgram(program);
 
-	if (vertexSource) {
+	if (vertexSource)
 		glDeleteShader(vshader);
-	}
 	
-	if (tesselationControlSource) {
-		glDeleteShader(cshader);
-	}
+	#ifdef mac_build
 	
+		if (tesselationControlSource)
+			glDeleteShader(cshader);
 
-	if (tesselationEvalutationSource) {
-		glDeleteShader(evalshader);
-	}
+		if (tesselationEvalutationSource)
+			glDeleteShader(evalshader);
 
-	if (geometrySource) {
-		glDeleteShader(gshader);
-	}
+		if (geometrySource)
+			glDeleteShader(gshader);
+	
+	#endif
 
-	if (fragmentSource) {
+	if (fragmentSource)
 		glDeleteShader(fshader);
-	}
-	
-	std::cout << COMPILATION_COMPLETED << std::endl;
-	
+
+	#ifdef DEBUG
+
+		std::cout << COMPILATION_COMPLETED << std::endl;
+
+	#endif
 }
 
 int ms::ShaderOGL::get_shader_status(GLuint shader, GLenum statusType) {

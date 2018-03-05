@@ -13,13 +13,13 @@
 
 namespace ms {
 	
-//	class PerspectiveCamera : public Camera {
-//
-//	public:
-//
-//
-//
-//	};
+	class PerspectiveCamera : public Camera {
+
+	public:
+		
+		PerspectiveCamera(float nearPlane, float farPlane, float fovDegrees, float aspectRatio);
+
+	};
 	
 }
 

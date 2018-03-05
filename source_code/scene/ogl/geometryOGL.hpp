@@ -15,12 +15,12 @@
 
 #if __APPLE__
 
-	#if ios_build
+	#ifdef ios_build
 
-		#include <OpenGLES/ES3/gl.h>
-		#include <OpenGLES/ES3/glext.h>
+		#import <OpenGLES/ES3/gl.h>
+		#import <OpenGLES/ES3/glext.h>
 
-	#else
+	#elif mac_build
 
 		#include <OpenGL/gl3.h>
 		#include <OpenGL/gl.h>

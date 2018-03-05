@@ -24,10 +24,10 @@ namespace ms {
 
 	public:
 		
-		Scene 	();
+		Scene 	() = default;
 		
-		std::vector<std::shared_ptr<SceneNode>> nodes;
-		std::unique_ptr<Camera> cam;
+		std::vector<std::shared_ptr<SceneNode>> 	nodes;
+		std::unique_ptr<Camera> 					cam;
 		
     };
     
