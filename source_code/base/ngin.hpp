@@ -22,11 +22,12 @@ namespace ms {
       
     public:
         
-                        NGin        					(unsigned int screenWidth, unsigned int screenHeight);
+                        NGin        		(unsigned int screenWidth, unsigned int screenHeight, float camNear, float camFar, float fovDegrees, float aspect);
 		
-		virtual void 	unload 							() = 0;
-        virtual void    draw_scene  					() = 0;
-		virtual         ~NGin       					() = default;
+		virtual void 	load 				() = 0;
+		virtual void 	unload 				();
+        virtual void    draw_scene  		() = 0;
+		virtual         ~NGin       		() = default;
 		
 		std::shared_ptr<Scene>                  scene;
 		

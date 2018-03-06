@@ -14,13 +14,17 @@ namespace ms {
 
 ms::ForwardRenderOGL::ForwardRenderOGL (std::shared_ptr<std::string> vSS, std::shared_ptr<std::string> fSS, ui sW, ui sH, ui fbW, ui fbH) :
 	ms::Render(sW, sH, fbW, fbH), fragmentShaderSource(fSS), vertexShaderSource(vSS) {
-		shader = std::shared_ptr<Shader>(new ShaderOGL(vSS, nullptr, nullptr, nullptr, fSS));
+		shader = std::shared_ptr<ForwardShader>(new ForwardShaderOGL(vSS, fSS));
 }
 
 void ms::ForwardRenderOGL::use () {
 	if(!shader->is_loaded()) {
 		shader->load();
 	}
+	
+	glViewport(0, 0, screenWidth, screenHeight);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 }
 
 void ms::ForwardRenderOGL::clear_frame () {
@@ -28,40 +32,40 @@ void ms::ForwardRenderOGL::clear_frame () {
 	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
-void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> &scene) {
+void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
+	shader->use();
 	
-	std::shared_ptr<SceneNode> n = *scene->nodes.begin();
-	if(!n->is_loaded()) {
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-		glViewport(0, 0, screenWidth, screenHeight);
-		n->load();
+	shader->set_camera_transformation(scene->get_camera()->get_transformation());
+	shader->set_projection_matrix(scene->get_camera()->get_projection_matrix());
+	
+	if(auto & dirLight = scene->get_directional_light()) {
+		shader->set_has_directional_light(true);
+		shader->set_directional_light_dir(dirLight->direction);
+		shader->set_directional_light_pow(dirLight->power);
+		shader->set_directional_light_color(dirLight->color);
+	} else {
+		shader->set_has_directional_light(false);
 	}
-	n->use();
-	if(this->shader) {
-		if(!this->shader->is_loaded()) {
-			this->shader->load();
-		}
+	
+	for (const std::shared_ptr<SceneNode> & node : scene->nodes) {
+		node->use();
+		
+		shader->set_model_transformation(node->modelTransformation->get_transformation());
 		
 		this->shader->use();
-		n->use();
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 	
 }
 
 void ms::ForwardRenderOGL::load () {
-	
+	this->shader->load();
 }
 
 bool ms::ForwardRenderOGL::is_loaded () {
-	return true;
+	return this->shader->is_loaded();
 }
 
 void ms::ForwardRenderOGL::unload ()  {
-	
-}
-
-ms::ForwardRenderOGL::~ForwardRenderOGL () {
-	
+	this->shader->unload();
 }

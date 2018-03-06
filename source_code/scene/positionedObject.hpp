@@ -22,6 +22,7 @@ namespace ms {
 		virtual 						~PositionedObject	() = default;
 		
 		inline math::mat4 const & 		get_transformation	();
+		inline void						set_transformation	(math::mat4 transformation);
 		
 	protected:
 		
@@ -34,6 +35,10 @@ namespace ms {
 ms::PositionedObject::PositionedObject (math::mat4 t) : transformation(t) { }
 
 ms::PositionedObject::PositionedObject () : PositionedObject(math::mat4::identity()) { }
+
+void ms::PositionedObject::set_transformation (math::mat4 t) {
+	transformation = t;
+}
 
 ms::math::mat4 const & ms::PositionedObject::get_transformation	() {
 	return transformation;

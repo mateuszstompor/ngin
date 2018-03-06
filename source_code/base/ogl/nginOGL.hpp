@@ -23,10 +23,15 @@ namespace ms {
 							 unsigned int screenWidth,
 							 unsigned int screenHeight,
 							 unsigned int frameBufferWidth,
-							 unsigned int frameBufferHeight
+							 unsigned int frameBufferHeight,
+							 float camNear,
+							 float camFar,
+							 float fovDegrees,
+							 float aspect
 							 );
 		
         void    draw_scene  () override;
+		void 	load		() override;
 		void 	unload		() override;
 		
     };

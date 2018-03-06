@@ -1,14 +1,17 @@
+#version 410 core
 //#version 300 es
 //precision highp float;
 
-#version 400 core
-
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 normals;
+layout (location = 1) in vec3 normal;
 
-uniform mat4 cameraTranslation;
-uniform mat4 perspectiveProjectionMatrix;
+uniform mat4		 		modelTransformation;
+uniform mat4 				cameraTransformation;
+uniform mat4 				perspectiveProjection;
+
+smooth out vec3 normalVector;
 
 void main(){
-    gl_Position = perspectiveProjectionMatrix * cameraTranslation * vec4(position, 1.0f);
+	normalVector = normal;
+    gl_Position = perspectiveProjection * cameraTransformation * modelTransformation * vec4(position, 1.0f);
 }

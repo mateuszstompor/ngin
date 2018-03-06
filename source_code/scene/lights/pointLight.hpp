@@ -14,7 +14,7 @@
 
 namespace ms {
 	
-	class PointLight : public Light, public PositionedObject {
+	class PointLight : public virtual Light, public PositionedObject {
 	
 	public:
 		

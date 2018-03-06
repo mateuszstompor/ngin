@@ -17,8 +17,8 @@ namespace ms {
 		
 	public:
 		
-		virtual void use () = 0;
-		
+		virtual void 	use 	() = 0;
+		virtual 		~Shader	() = default;
     };
     
 }
