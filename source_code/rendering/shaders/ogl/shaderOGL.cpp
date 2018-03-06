@@ -42,9 +42,15 @@ void ms::ShaderOGL::unload() {
 
 void ms::ShaderOGL::compile_program() {
 	GLuint vshader 		= glCreateShader(GL_VERTEX_SHADER);
+	
+	#ifdef mac_build
+	
 	GLuint cshader		= glCreateShader(GL_TESS_CONTROL_SHADER);
 	GLuint evalshader 	= glCreateShader(GL_TESS_EVALUATION_SHADER);
 	GLuint gshader 		= glCreateShader(GL_GEOMETRY_SHADER);
+	
+	#endif
+	
 	GLuint fshader 		= glCreateShader(GL_FRAGMENT_SHADER);
 	
 	if (vertexSource) {

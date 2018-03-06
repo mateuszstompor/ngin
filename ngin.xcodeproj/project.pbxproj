@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		561F2EFC204F041D00D7E875 /* material.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 561F2EF9204F041D00D7E875 /* material.hpp */; };
 		56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
 		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
 		5633FA8F204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
@@ -87,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		561F2EF9204F041D00D7E875 /* material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = material.hpp; sourceTree = "<group>"; };
 		56267870204AC01000A203F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		56267872204AC01A00A203F2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		5633FA8E204B6988003449EE /* resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource.cpp; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				56716815204ADFAE0028EFAA /* camera */,
 				5671681A204ADFAE0028EFAA /* lights */,
 				5633FA94204B6F97003449EE /* geometry.hpp */,
+				561F2EF9204F041D00D7E875 /* material.hpp */,
 			);
 			path = scene;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */,
 				5676D569204E16AA005E4AFA /* forwardShader.hpp in Headers */,
 				5633FA9B204B6FCB003449EE /* geometryOGL.hpp in Headers */,
+				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
 				5640FED4204AE77600512938 /* shaderOGL.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
 				5676D56E204E1869005E4AFA /* forwardShaderOGL.hpp in Headers */,

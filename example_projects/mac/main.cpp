@@ -111,6 +111,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) {
 
+	if (argc < 3) {
+		std::cerr << "Pass vertex and fragment shader source path as parameter" << std::endl;
+		exit(1);
+	}
+	
     int width = 1200;
     int height = 800;
 	int framebufferWidth = 1200;
@@ -157,13 +162,13 @@ int main(int argc, const char * argv[]) {
 	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
 
-	auto vertexSource = ms::utils::load_contents_of_file	("./vshader.glsl");
-	auto fragmentSource = ms::utils::load_contents_of_file	("./fshader.glsl");
+	auto vertexSource = ms::utils::load_contents_of_file	(argv[1]);
+	auto fragmentSource = ms::utils::load_contents_of_file	(argv[2]);
 	
 	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string(vertexSource));
 	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string(fragmentSource));
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, 1200, 800, 1200, 800, 0.01, 100, 90, 1200.0/800.0));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, width, height, width, height, 0.01, 100, 90, float(width)/height));
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);

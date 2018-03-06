@@ -9,7 +9,7 @@ uniform mat4		 		modelTransformation;
 uniform mat4 				cameraTransformation;
 uniform mat4 				perspectiveProjection;
 
-smooth out vec3 normalVector;
+out vec3 normalVector;
 
 void main(){
 	normalVector = normal;

@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "/Users/mateuszstompor/Documents/ngin/source_code/umbrellaHeader.hpp"
-#import "/Users/mateuszstompor/Documents/ngin/example_projects/mac/Geometry.h"
+#import "/Users/mateuszstompor/Documents/ngin/example_projects/mac/example_geometry.h"
 #include "/Users/mateuszstompor/Documents/ngin/source_code/scene/ogl/geometryOGL.hpp"
 #include "/Users/mateuszstompor/Documents/ngin/source_code/scene/ogl/sceneNodeOGL.hpp"
 #include "/Users/mateuszstompor/Documents/ngin/source_code/rendering/shaders/ogl/shaderOGL.hpp"
@@ -35,10 +35,8 @@ std::unique_ptr<ms::NGin> engine;
 	self.preferredFramesPerSecond = 60;
 
 	[EAGLContext setCurrentContext:[((GLKView*)[self view]) context]];
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height));
-	std::shared_ptr<ms::Geometry> m = std::shared_ptr<ms::Geometry>(new ms::GeometryOGL());
-	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
-	
+	//load
+
 	NSString* vshaderfilePath = [[NSBundle mainBundle] pathForResource:@"vshader"
 														 ofType:@"glsl"];
 	NSString* fshaderfilePath = [[NSBundle mainBundle] pathForResource:@"fshader"
@@ -52,21 +50,24 @@ std::unique_ptr<ms::NGin> engine;
 	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string([vsh cStringUsingEncoding:NSUTF8StringEncoding]));
 	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string([fsh cStringUsingEncoding:NSUTF8StringEncoding]));
 	
-	std::shared_ptr<ms::Shader> shader = std::shared_ptr<ms::Shader>(new ms::ShaderOGL(vS, nullptr, nullptr, nullptr, fS));
+	std::shared_ptr<ms::Geometry> m = std::shared_ptr<ms::Geometry>(new ms::GeometryOGL());
+	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
-	std::shared_ptr<ms::Render> renderer = std::shared_ptr<ms::Render>(new ms::DeferredRenderOGL(shader));
+	float width = [UIScreen mainScreen].bounds.size.width;
+	float height = [UIScreen mainScreen].bounds.size.height;
 	
-	engine->deferredRenderer = renderer;
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, width, height, width, height, 0.01, 100, 90, width/height));
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
-	m->load();
 	
 	node->geometry = m;
 	
+	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
+	
 	engine->scene->nodes.push_back(node);
 	
-	engine->draw_scene();
+	engine->load();
 	
 }
 
