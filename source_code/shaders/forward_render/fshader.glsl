@@ -8,12 +8,22 @@ struct DirectionalLight {
 	float    	power;
 };
 
+struct Material {
+	vec3 	diffuse;
+	vec3 	ambient;
+	vec3 	specular;
+	float 	shininess;
+	float	opacity;
+};
+
+uniform int 				hasMaterial;
+uniform Material			material;
 uniform	int 				hasDirLight;
 uniform DirectionalLight 	dirLight;
 
 out vec4 FragColor;
 
-smooth in vec3 normalVector;
+in vec3 normalVector;
 
 void main(){
 	

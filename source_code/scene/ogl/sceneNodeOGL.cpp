@@ -9,7 +9,7 @@
 #include "sceneNodeOGL.hpp"
 
 ms::SceneNodeOGL::SceneNodeOGL () : ms::SceneNode() {
-	modelTransformation = std::shared_ptr<PositionedObject>(new PositionedObject());
+	modelTransformation = PositionedObject();
 }
 
 void ms::SceneNodeOGL::use () {

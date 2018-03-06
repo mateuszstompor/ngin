@@ -26,6 +26,14 @@ namespace ms {
 		virtual void	set_directional_light_dir	(math::vec3 dir)	 	= 0;
 		virtual void	set_directional_light_color	(math::vec4 color)	 	= 0;
 		virtual void	set_directional_light_pow	(float power)		 	= 0;
+		
+		virtual void	set_has_material			(bool doesItHave)	 	= 0;
+		virtual void	set_material_ambient_color	(math::vec3 ambient)	= 0;
+		virtual void	set_material_diffuse_color	(math::vec3 diffuse)	= 0;
+		virtual void	set_material_specular_color	(math::vec3 specular)	= 0;
+		virtual void	set_material_opacity		(float opacity)			= 0;
+		virtual void	set_material_shininess		(float shininess)		= 0;
+
 	};
 	
 }

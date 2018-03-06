@@ -47,3 +47,32 @@ void ms::ForwardShaderOGL::set_directional_light_pow (float power) {
 	glUniform1f(powerLocation, power);
 }
 
+void ms::ForwardShaderOGL::set_has_material (bool doesItHave) {
+	GLint hasMaterialLocation = glGetUniformLocation(program, "material.hasMaterial");
+	glUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
+}
+
+void ms::ForwardShaderOGL::set_material_ambient_color (math::vec3 ambient) {
+	GLint ambientLocation = glGetUniformLocation(program, "material.ambient");
+	glUniform3fv(ambientLocation, 1, ambient.c_array());
+}
+
+void ms::ForwardShaderOGL::set_material_diffuse_color (math::vec3 diffuse) {
+	GLint diffuseLocation = glGetUniformLocation(program, "material.diffuse");
+	glUniform3fv(diffuseLocation, 1, diffuse.c_array());
+}
+
+void ms::ForwardShaderOGL::set_material_specular_color (math::vec3 specular) {
+	GLint specularLocation = glGetUniformLocation(program, "material.specular");
+	glUniform3fv(specularLocation, 1, specular.c_array());
+}
+
+void ms::ForwardShaderOGL::set_material_opacity (float opacity) {
+	GLint opacityLocation = glGetUniformLocation(program, "material.opacity");
+	glUniform1f(opacityLocation, opacity);
+}
+
+void ms::ForwardShaderOGL::set_material_shininess (float shininess) {
+	GLint shininessLocation = glGetUniformLocation(program, "material.shininess");
+	glUniform1f(shininessLocation, shininess);
+}

@@ -11,6 +11,8 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
+#include <algorithm>
 
 #include "resource.hpp"
 #include "../rendering/render.hpp"
