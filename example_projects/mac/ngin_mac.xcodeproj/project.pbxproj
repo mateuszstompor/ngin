@@ -55,6 +55,7 @@
 		56329ED3204ABC0600AF29CA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ngin.xcodeproj; path = ../../ngin.xcodeproj; sourceTree = "<group>"; };
 		5640FECE204AE52D00512938 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		566BCF29204EA4D700E90246 /* example_geometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = example_geometry.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +77,7 @@
 			children = (
 				56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */,
 				56329ED3204ABC0600AF29CA /* main.cpp */,
+				566BCF29204EA4D700E90246 /* example_geometry.h */,
 				56329ECA204ABBEA00AF29CA /* Products */,
 				56329EE1204ABC1D00AF29CA /* Frameworks */,
 			);

@@ -12,8 +12,8 @@
 #include <memory>
 
 #include "../render.hpp"
-#include "../shaders/shader.hpp"
-#include "../shaders/ogl/shaderOGL.hpp"
+#include "../shaders/forwardShader.hpp"
+#include "../shaders/ogl/forwardShaderOGL.hpp"
 
 #ifdef __WIN32__
 	#include <glad/glad.h>
@@ -52,13 +52,13 @@ namespace ms {
 		void	load				() 										override;
 		bool	is_loaded			() 										override;
 		void 	unload				() 										override;
-		virtual	~ForwardRenderOGL 	();
+		virtual	~ForwardRenderOGL 	() = default;
 		
 	private:
 		
-		std::shared_ptr<std::string> 	vertexShaderSource;
-		std::shared_ptr<std::string> 	fragmentShaderSource;
-		std::shared_ptr<Shader>			shader;
+		std::shared_ptr<std::string> 			vertexShaderSource;
+		std::shared_ptr<std::string> 			fragmentShaderSource;
+		std::shared_ptr<ForwardShader>			shader;
         
     };
     

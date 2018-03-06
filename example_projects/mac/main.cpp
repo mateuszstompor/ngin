@@ -15,13 +15,13 @@
 #include <iostream>
 #include <cassert>
 
-
-
 #include "../../source_code/umbrellaHeader.hpp"
 #include "../../source_code/scene/ogl/geometryOGL.hpp"
 #include "../../source_code/scene/ogl/sceneNodeOGL.hpp"
 #include "../../source_code/rendering/shaders/ogl/shaderOGL.hpp"
 #include "example_geometry.h"
+
+std::unique_ptr<ms::NGin> engine;
 
 namespace ms {
     const std::string libInitializationError        = "Cannot initialize GLFW3";
@@ -67,6 +67,43 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_ESCAPE:
             glfwSetWindowShouldClose(window, true);
             break;
+			
+		case GLFW_KEY_Q: {
+			auto a = ms::math::transform::translate<float, 4>({0, 0.0, 0.1});
+			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+		}
+			break;
+			
+		case GLFW_KEY_E: {
+			auto a = ms::math::transform::translate<float, 4>({0, 0.0, -0.1});
+			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+		}
+			break;
+			
+		case GLFW_KEY_A: {
+			auto a = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
+			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+		}
+			break;
+			
+		case GLFW_KEY_D: {
+			auto a = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
+			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+		}
+			break;
+			
+		case GLFW_KEY_W: {
+			auto a = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
+			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+		}
+			break;
+			
+		case GLFW_KEY_S: {
+			auto a = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
+			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+		}
+			break;
+			
         default:
             break;
     }
@@ -81,7 +118,7 @@ int main(int argc, const char * argv[]) {
 	
     prepareRenderDoc();
 
-    if(glfwInit()==0){
+    if(glfwInit()==0) {
         std::cerr<<ms::libInitializationError<<std::endl;
     }
 
@@ -120,26 +157,30 @@ int main(int argc, const char * argv[]) {
 	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
 
-	auto vertexSource = ms::utils::load_contents_of_file("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/vshader.glsl");
-	auto fragmentSource = ms::utils::load_contents_of_file("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/fshader.glsl");
+	auto vertexSource = ms::utils::load_contents_of_file	("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/vshader.glsl");
+	auto fragmentSource = ms::utils::load_contents_of_file	("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/fshader.glsl");
 	
 	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string(vertexSource));
 	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string(fragmentSource));
 	
-	std::unique_ptr<ms::NGin> engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, 1200, 800, 1200, 800));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, 1200, 800, 1200, 800, 0.01, 100, 90, 1200.0/800.0));
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
 
 	node->geometry = m;
 	
+	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
+	
 	engine->scene->nodes.push_back(node);
+	
+	engine->load();
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
     glfwSetKeyCallback(window, key_callback);
     
-    while(!glfwWindowShouldClose(window)){
+    while(!glfwWindowShouldClose(window)) {
 		
         glfwPollEvents();
 		
@@ -155,6 +196,8 @@ int main(int argc, const char * argv[]) {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
     engine->unload();
+	
+	engine = nullptr;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
     

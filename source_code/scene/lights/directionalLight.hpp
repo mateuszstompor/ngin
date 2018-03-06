@@ -13,7 +13,7 @@
 
 namespace ms {
 	
-	class DirectionalLight : public Light {
+	class DirectionalLight : public virtual Light {
 	
 	public:
 		

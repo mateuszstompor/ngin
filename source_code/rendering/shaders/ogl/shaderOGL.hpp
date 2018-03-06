@@ -13,7 +13,9 @@
 #include <iostream>
 
 #ifdef __WIN32__
+
 	#include <glad/glad.h>
+
 #endif
 
 	#if __APPLE__
@@ -36,7 +38,9 @@
 
 namespace ms {
     
-	class ShaderOGL : public Shader {
+	class ShaderOGL : public virtual Shader {
+		
+	protected:
 		
 		typedef std::shared_ptr<std::string> str_ptr;
 		
@@ -44,22 +48,24 @@ namespace ms {
 		
 		ShaderOGL(str_ptr vertexSource, str_ptr tessellationControl, str_ptr tessellationEvaluation, str_ptr geometry, str_ptr fragment);
 		
-		void 	use() override;
-		void 	load() override;
-		void 	unload() override;
+		virtual void 	use			() override;
+		virtual void 	load		() override;
+		virtual void 	unload		() override;
+		virtual 		~ShaderOGL	() = 0;
 		
 	protected:
 		
-		void 	compile();
-		int		get_shader_status(GLuint shader, GLenum statusType);
+		void 			compile_program();
+		void 			compile_shader(GLuint program, GLuint shader, GLenum shaderType, str_ptr source);
+		int				get_shader_status(GLuint shader, GLenum statusType);
 		
-		str_ptr vertexSource;
-		str_ptr tesselationControlSource;
-		str_ptr tesselationEvalutationSource;
-		str_ptr geometrySource;
-		str_ptr fragmentSource;
+		str_ptr 		vertexSource;
+		str_ptr 		tesselationControlSource;
+		str_ptr 		tesselationEvalutationSource;
+		str_ptr 		geometrySource;
+		str_ptr 		fragmentSource;
 		
-		GLuint 	program;
+		GLuint 			program;
 		
 	};
     

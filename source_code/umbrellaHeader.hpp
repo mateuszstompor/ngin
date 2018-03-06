@@ -12,5 +12,6 @@
 #include "base/ngin.hpp"
 #include "base/ogl/nginOGL.hpp"
 #include "utils/utils.hpp"
+#include "../libs/source/glMath.h"
 
 #endif /* umbrella_header_hpp */

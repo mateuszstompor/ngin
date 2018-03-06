@@ -8,7 +8,8 @@
 
 #include "ngin.hpp"
 
-ms::NGin::NGin(unsigned int scW, unsigned int scH) : scene(new Scene()), screenWidth(scW), screenHeight(scH) { }
+ms::NGin::NGin(unsigned int scW, unsigned int scH, float camNear, float camFar, float fovDegrees, float aspect) :
+scene(new Scene(camNear, camFar, fovDegrees, aspect)), screenWidth(scW), screenHeight(scH) { }
 
 void ms::NGin::unload() {
 	ResourceCoordinator::sharedInstance->unload_all_resources();

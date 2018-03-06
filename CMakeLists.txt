@@ -29,15 +29,15 @@ add_executable(${PROJECT_NAME}
 
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
         ${CMAKE_SOURCE_DIR}/source_code/base/ogl/nginOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/shaderOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/ForwardShaderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/forwardRenderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resourceCoordinator.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/sceneNodeOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/geometryOGL.cpp
-
+        ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp
 
         ${CMAKE_SOURCE_DIR}/example_projects/mac/main.cpp
 #        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h

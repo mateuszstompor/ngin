@@ -14,6 +14,8 @@ namespace ms {
 	#define COMPILATION_COMPLETED 	"Compilation completed"
 }
 
+ms::ShaderOGL::~ShaderOGL() { } 
+
 ms::ShaderOGL::ShaderOGL(str_ptr vS, str_ptr tcS, str_ptr teS, str_ptr gS, str_ptr fS) :
 		vertexSource(vS), tesselationControlSource(tcS), tesselationEvalutationSource(teS),
 		geometrySource(gS), fragmentSource(fS), program(0) {
@@ -26,20 +28,7 @@ void ms::ShaderOGL::use() {
 
 void ms::ShaderOGL::load() {
 	program = glCreateProgram();
-	compile();
-
-	use();
-	GLint cam = glGetUniformLocation(program, "cameraTranslation");
-	GLint persp = glGetUniformLocation(program, "perspectiveProjectionMatrix");
-	math::mat4 cameraPosition = math::mat4::identity();
-	cameraPosition = cameraPosition * math::transform::translate<float, 4>({0.0f, 0.0f, -4.0}) ;
-
-	glUniformMatrix4fv(cam, 1, GL_FALSE, cameraPosition.c_array());
-
-	math::mat4 perspective =  math::projection::perspective<float>(0.01f, 100.0f, 90.0f, 1200.0f/800.0f);
-	glUniformMatrix4fv(persp, 1, GL_FALSE, perspective.c_array());
-
-	
+	compile_program();
 	isLoaded = true;
 	Resource::load();
 }
@@ -51,63 +40,36 @@ void ms::ShaderOGL::unload() {
 	Resource::unload();
 }
 
-void ms::ShaderOGL::compile() {
-	GLuint vshader 	= 0,
-	cshader 		= 0,
-	evalshader 		= 0,
-	gshader 		= 0,
-	fshader 		= 0;
+void ms::ShaderOGL::compile_program() {
+	GLuint vshader 		= glCreateShader(GL_VERTEX_SHADER);
+	GLuint cshader		= glCreateShader(GL_TESS_CONTROL_SHADER);
+	GLuint evalshader 	= glCreateShader(GL_TESS_EVALUATION_SHADER);
+	GLuint gshader 		= glCreateShader(GL_GEOMETRY_SHADER);
+	GLuint fshader 		= glCreateShader(GL_FRAGMENT_SHADER);
 	
 	if (vertexSource) {
-		vshader = glCreateShader(GL_VERTEX_SHADER);
-		const char * vertexShaderPtr = vertexSource->c_str();
-		glShaderSource(vshader, 1, &vertexShaderPtr, nullptr);
-		glCompileShader(vshader);
-		get_shader_status(vshader, GL_COMPILE_STATUS);
-		glAttachShader(program, vshader);
+		compile_shader(program, vshader, GL_VERTEX_SHADER, vertexSource);
 	}
 	
 	#ifdef mac_build
 
 	if (tesselationControlSource) {
-		cshader = glCreateShader(GL_TESS_CONTROL_SHADER);
-		const char * tessConShaderPtr = tesselationControlSource->c_str();
-		glShaderSource(cshader, 1, &tessConShaderPtr, nullptr);
-		glCompileShader(cshader);
-		get_shader_status(cshader, GL_COMPILE_STATUS);
-		glAttachShader(program, cshader);
-
+		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, tesselationControlSource);
 	}
 	
 	if (tesselationEvalutationSource) {
-		evalshader = glCreateShader(GL_TESS_EVALUATION_SHADER);
-		const char * tessEvalShaderPtr = tesselationEvalutationSource->c_str();
-		glShaderSource(evalshader, 1, &tessEvalShaderPtr, nullptr);
-		glCompileShader(evalshader);
-		get_shader_status(evalshader, GL_COMPILE_STATUS);
-		glAttachShader(program, evalshader);
+		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, tesselationEvalutationSource);
 	}
 
 	if (geometrySource) {
-		gshader = glCreateShader(GL_GEOMETRY_SHADER);
-		const char * geoShaderPtr = geometrySource->c_str();
-		glShaderSource(gshader, 1, &geoShaderPtr, nullptr);
-		glCompileShader(gshader);
-		get_shader_status(gshader, GL_COMPILE_STATUS);
-		glAttachShader(program, gshader);
-
-	}
-	
-	if (fragmentSource) {
-		fshader = glCreateShader(GL_FRAGMENT_SHADER);
-		const char * fragmentShaderPtr = fragmentSource->c_str();
-		glShaderSource(fshader, 1, &fragmentShaderPtr, nullptr);
-		glCompileShader(fshader);
-		get_shader_status(fshader, GL_COMPILE_STATUS);
-		glAttachShader(program, fshader);
+		compile_shader(program, gshader, GL_GEOMETRY_SHADER, geometrySource);
 	}
 	
 	#endif
+	
+	if (fragmentSource) {
+		compile_shader(program, fshader, GL_FRAGMENT_SHADER, fragmentSource);
+	}
 	
 	glLinkProgram(program);
 
@@ -135,6 +97,14 @@ void ms::ShaderOGL::compile() {
 		std::cout << COMPILATION_COMPLETED << std::endl;
 
 	#endif
+}
+
+void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, str_ptr source) {
+	const char * sourcePtr = source->c_str();
+	glShaderSource(shader, 1, &sourcePtr, nullptr);
+	glCompileShader(shader);
+	get_shader_status(shader, GL_COMPILE_STATUS);
+	glAttachShader(program, shader);
 }
 
 int ms::ShaderOGL::get_shader_status(GLuint shader, GLenum statusType) {
