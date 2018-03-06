@@ -7,7 +7,6 @@
 //
 
 #include "resourceCoordinator.hpp"
-#include <iostream>
 
 std::shared_ptr<ms::ResourceCoordinator> ms::ResourceCoordinator::sharedInstance = nullptr;
 

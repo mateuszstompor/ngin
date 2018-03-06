@@ -13,12 +13,12 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <initializer_list>
 #include <cassert>
 
 #include "../../source_code/umbrellaHeader.hpp"
 #include "../../source_code/scene/ogl/geometryOGL.hpp"
 #include "../../source_code/scene/ogl/sceneNodeOGL.hpp"
-#include "../../source_code/rendering/shaders/ogl/shaderOGL.hpp"
 #include "example_geometry.h"
 
 std::unique_ptr<ms::NGin> engine;
@@ -157,8 +157,8 @@ int main(int argc, const char * argv[]) {
 	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
 
-	auto vertexSource = ms::utils::load_contents_of_file	("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/vshader.glsl");
-	auto fragmentSource = ms::utils::load_contents_of_file	("/Users/mateuszstompor/Documents/ngin/source_code/shaders/forward_render/fshader.glsl");
+	auto vertexSource = ms::utils::load_contents_of_file	("./vshader.glsl");
+	auto fragmentSource = ms::utils::load_contents_of_file	("./fshader.glsl");
 	
 	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string(vertexSource));
 	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string(fragmentSource));

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 else()
@@ -27,6 +27,7 @@ include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME}
 
+        ${CMAKE_SOURCE_DIR}/libs/source/glMath.h
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
         ${CMAKE_SOURCE_DIR}/source_code/base/ogl/nginOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/shaderOGL.cpp
@@ -40,14 +41,17 @@ add_executable(${PROJECT_NAME}
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp
 
         ${CMAKE_SOURCE_DIR}/example_projects/mac/main.cpp
-#        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
-#        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
-#        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c
-#        third-party-libs/renderdoc.h
+        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
+        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
+        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c
+        third-party-libs/renderdoc.h
         )
 
 #renderdoc
-#file(COPY ${CMAKE_SOURCE_DIR}/third-party-libs/renderdoc.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/third-party-libs/renderdoc.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 
 target_link_libraries(${PROJECT_NAME}  glfw ${GLFW_LIBRARIES})
 
