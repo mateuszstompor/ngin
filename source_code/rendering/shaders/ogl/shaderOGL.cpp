@@ -14,8 +14,6 @@ namespace ms {
 	#define COMPILATION_COMPLETED 	"Compilation completed"
 }
 
-ms::ShaderOGL::~ShaderOGL() { } 
-
 ms::ShaderOGL::ShaderOGL(str_ptr vS, str_ptr tcS, str_ptr teS, str_ptr gS, str_ptr fS) :
 		vertexSource(vS), tesselationControlSource(tcS), tesselationEvalutationSource(teS),
 		geometrySource(gS), fragmentSource(fS), program(0) {
@@ -29,14 +27,12 @@ void ms::ShaderOGL::use() {
 void ms::ShaderOGL::load() {
 	program = glCreateProgram();
 	compile_program();
-	isLoaded = true;
 	Resource::load();
 }
 
 void ms::ShaderOGL::unload() {
 	glDeleteProgram(program);
 	program = 0;
-	isLoaded = false;
 	Resource::unload();
 }
 

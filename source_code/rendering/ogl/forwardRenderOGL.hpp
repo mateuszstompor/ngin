@@ -6,17 +6,20 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef deferredRenderOGL_hpp
-#define deferredRenderOGL_hpp
+#ifndef forward_render_ogl_hpp
+#define forward_render_ogl_hpp
 
 #include <memory>
 
 #include "../render.hpp"
 #include "../shaders/forwardShader.hpp"
+#include "../forwardRender.hpp"
 #include "../shaders/ogl/forwardShaderOGL.hpp"
 
 #ifdef __WIN32__
+
 	#include <glad/glad.h>
+
 #endif
 
 #if __APPLE__
@@ -39,7 +42,7 @@
 
 namespace ms {
     
-    class ForwardRenderOGL : public Render {
+    class ForwardRenderOGL : public ForwardRender {
 		
 	public:
 		
@@ -53,15 +56,9 @@ namespace ms {
 		bool	is_loaded			() 										override;
 		void 	unload				() 										override;
 		virtual	~ForwardRenderOGL 	() = default;
-		
-	private:
-		
-		std::shared_ptr<std::string> 			vertexShaderSource;
-		std::shared_ptr<std::string> 			fragmentShaderSource;
-		std::shared_ptr<ForwardShader>			shader;
         
     };
     
 }
 
-#endif /* deferredRenderOGL_hpp */
+#endif /* forward_render_ogl_hpp */

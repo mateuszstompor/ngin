@@ -11,6 +11,7 @@
 
 #include "../ngin.hpp"
 #include "../../rendering/ogl/forwardRenderOGL.hpp"
+#include "../../rendering/ogl/deferredRenderOGL.hpp"
 
 namespace ms {
     
@@ -18,8 +19,12 @@ namespace ms {
         
     public:
 				NGinOGL     (
-							 std::shared_ptr<std::string> vertexShaderSource,
-							 std::shared_ptr<std::string> fragmentShaderSource,
+							 std::shared_ptr<std::string> forwardRenderVertexShaderSource,
+							 std::shared_ptr<std::string> forwardRenderFragmentShaderSource,
+							 std::shared_ptr<std::string> deferredRenderVertexShaderSource,
+							 std::shared_ptr<std::string> deferredRenderFragmentShaderSource,
+							 std::shared_ptr<std::string> deferredRenderLightingVertexShaderSource,
+							 std::shared_ptr<std::string> deferredRenderLightingFragmentShaderSource,
 							 unsigned int screenWidth,
 							 unsigned int screenHeight,
 							 unsigned int frameBufferWidth,

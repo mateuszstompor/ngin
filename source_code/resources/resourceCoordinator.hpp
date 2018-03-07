@@ -9,10 +9,12 @@
 #ifndef resourceCoordinator_h
 #define resourceCoordinator_h
 
-#include <vector>
+#include <list>
 #include <memory>
 #include <iostream>
 #include <algorithm>
+#include <string>
+#include <sstream>
 
 #include "resource.hpp"
 #include "../rendering/render.hpp"
@@ -38,9 +40,8 @@ namespace ms {
     protected:
 		
 														ResourceCoordinator			();
-		
-		std::vector<Resource*> 							loadedResources;
-        std::vector<Resource*> 							allocatedResources;
+		std::list<std::string> 							loadedResources;
+        std::list<std::string> 							allocatedResources;
 	
 	public:
 		

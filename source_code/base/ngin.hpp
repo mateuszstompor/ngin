@@ -11,7 +11,8 @@
 
 #include <memory>
 
-#include "../rendering/render.hpp"
+#include "../rendering/forwardRender.hpp"
+#include "../rendering/deferredRender.hpp"
 #include "../scene/scene.hpp"
 #include "../resources/resource.hpp"
 #include "../resources/resourceCoordinator.hpp"
@@ -22,7 +23,12 @@ namespace ms {
       
     public:
         
-                        NGin        		(unsigned int screenWidth, unsigned int screenHeight, float camNear, float camFar, float fovDegrees, float aspect);
+                        NGin        		(unsigned int screenWidth,
+											 unsigned int screenHeight,
+											 float camNear,
+											 float camFar,
+											 float fovDegrees,
+											 float aspect);
 		
 		virtual void 	load 				() = 0;
 		virtual void 	unload 				();
@@ -33,7 +39,8 @@ namespace ms {
 		
 	protected:
 		
-		std::shared_ptr<Render>                 forwardRenderer;
+		std::shared_ptr<DeferredRender>         deferredRenderer;
+		std::shared_ptr<ForwardRender>          forwardRenderer;
 		unsigned int 							screenWidth;
 		unsigned int 							screenHeight;
 		

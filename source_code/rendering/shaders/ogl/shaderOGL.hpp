@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <iostream>
+#include <cstdlib>
 
 #ifdef __WIN32__
 
@@ -51,7 +52,7 @@ namespace ms {
 		virtual void 	use			() override;
 		virtual void 	load		() override;
 		virtual void 	unload		() override;
-		virtual 		~ShaderOGL	() = 0;
+		virtual 		~ShaderOGL	() = default;
 		
 	protected:
 		

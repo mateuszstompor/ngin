@@ -2,6 +2,10 @@
 //#version 300 es
 //precision highp float;
 
+layout (location = 0) out vec3 gPosition;
+layout (location = 1) out vec3 gNormal;
+layout (location = 2) out vec4 gAlbedo;
+
 struct DirectionalLight {
 	vec3    	direction;
 	vec4    	color;
@@ -20,24 +24,15 @@ uniform Material			material;
 uniform	int 				hasDirLight;
 uniform DirectionalLight 	dirLight;
 
-out vec4 FragColor;
-
+in vec3 worldPosition;
 in vec3 normalVector;
+
+out vec4 FragColor;
 
 void main(){
 	
-	vec4 vertColor = vec4(1.0f, 0.0f, 1.0f, 1.0f);
+	gAlbedo = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	gNormal = normalVector;
+	gPosition = worldPosition;
 	
-	if (hasDirLight == 1) {
-		
-		float angleCosine = max(dot(normalize(normalVector), normalize(dirLight.direction)), 0.0);
-		vec4 baseColor = vertColor * dirLight.color;
-		FragColor = angleCosine * baseColor + 0.2 * vertColor;
-		
-	} else {
-		
-		FragColor = vertColor;
-		
-	}
-
 }

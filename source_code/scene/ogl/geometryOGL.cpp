@@ -13,21 +13,19 @@ void ms::GeometryOGL::load() {
 	load_vector_to_buffer(vertices, &verticesBuffer);
 	load_vector_to_buffer(normals, 	&normalsBuffer);
 	
-	isLoaded = true;
-	
 	Resource::load();
 	
 }
 
 void ms::GeometryOGL::use_normals () {
-	if(!isLoaded) {
+	if(!is_loaded()) {
 		load();
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
 }
 
 void ms::GeometryOGL::use_vertices () {
-	if(!isLoaded) {
+	if(!is_loaded()) {
 		load();
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, verticesBuffer);
@@ -52,9 +50,7 @@ void ms::GeometryOGL::unload() {
 	
 	glDeleteBuffers(1, &verticesBuffer);
 	glDeleteBuffers(1, &normalsBuffer);
-	
-	isLoaded = false;
-	
+		
 	Resource::unload();
 	
 }

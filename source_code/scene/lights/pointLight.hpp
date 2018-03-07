@@ -22,10 +22,12 @@ namespace ms {
 		
 		virtual ~PointLight() = default;
 		
+		float			power;
+		
 	};
 	
 }
 
-ms::PointLight::PointLight (float p, math::vec4 c, math::mat4 t) : Light(p, c), ms::PositionedObject(t) { }
+ms::PointLight::PointLight (float p, math::vec4 c, math::mat4 t) : Light(c), power(p), ms::PositionedObject(t) { }
 
 #endif /* point_light_hpp */

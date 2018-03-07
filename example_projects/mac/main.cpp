@@ -63,7 +63,8 @@ void prepareRenderDoc() {
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-    switch(key) {
+	
+	switch(key) {
         case GLFW_KEY_ESCAPE:
             glfwSetWindowShouldClose(window, true);
             break;
@@ -111,8 +112,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) {
 
-	if (argc < 3) {
-		std::cerr << "Pass vertex and fragment shader source path as parameter" << std::endl;
+	if (argc < 7) {
+		std::cerr << "Pass vertex and fragment shader source path for forward, deferred render and its lighting as parameter" << std::endl;
 		exit(1);
 	}
 	
@@ -162,13 +163,21 @@ int main(int argc, const char * argv[]) {
 	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
 
-	auto vertexSource = ms::utils::load_contents_of_file	(argv[1]);
-	auto fragmentSource = ms::utils::load_contents_of_file	(argv[2]);
+	auto forwardRenderVSource = ms::utils::load_contents_of_file	(argv[1]);
+	auto forwardRenderFSource = ms::utils::load_contents_of_file	(argv[2]);
+	auto deferredRenderVSource = ms::utils::load_contents_of_file	(argv[3]);
+	auto deferredRenderFSource = ms::utils::load_contents_of_file	(argv[4]);
+	auto deferredRenderLightingVSource = ms::utils::load_contents_of_file	(argv[5]);
+	auto deferredRenderLightingFSource = ms::utils::load_contents_of_file	(argv[6]);
 	
-	std::shared_ptr<std::string> vS = std::shared_ptr<std::string>(new std::string(vertexSource));
-	std::shared_ptr<std::string> fS = std::shared_ptr<std::string>(new std::string(fragmentSource));
+	std::shared_ptr<std::string> vSFR = std::shared_ptr<std::string>(new std::string(forwardRenderVSource));
+	std::shared_ptr<std::string> fSFR = std::shared_ptr<std::string>(new std::string(forwardRenderFSource));
+	std::shared_ptr<std::string> vSDR = std::shared_ptr<std::string>(new std::string(deferredRenderVSource));
+	std::shared_ptr<std::string> fSDR = std::shared_ptr<std::string>(new std::string(deferredRenderFSource));
+	std::shared_ptr<std::string> vSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingVSource));
+	std::shared_ptr<std::string> fSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingFSource));
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vS, fS, width, height, width, height, 0.01, 100, 90, float(width)/height));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, width, height, 0.01, 100, 90, float(width)/height));
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);

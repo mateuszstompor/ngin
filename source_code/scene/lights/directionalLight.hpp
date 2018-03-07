@@ -17,7 +17,7 @@ namespace ms {
 	
 	public:
 		
-		inline 		DirectionalLight(float power, math::vec4 color, math::vec3 direction);
+		inline 		DirectionalLight(math::vec4 color, math::vec3 direction);
 		
 		virtual		~DirectionalLight() = default;
 		
@@ -27,6 +27,6 @@ namespace ms {
 	
 }
 
-ms::DirectionalLight::DirectionalLight(float p, math::vec4 c, math::vec3 d) : ms::Light(p, c), direction(d) { }
+ms::DirectionalLight::DirectionalLight(math::vec4 c, math::vec3 d) : ms::Light(c), direction(d) { }
 
 #endif /* directional_light_hpp */

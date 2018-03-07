@@ -1,20 +1,19 @@
 //
-//  forwardShader.hpp
+//  deferredShader.h
 //  ngin
 //
 //  Created by Mateusz Stompór on 06/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef forward_shader_hpp
-#define forward_shader_hpp
+#ifndef deferred_shader_h
+#define deferred_shader_h
 
 #include "shader.hpp"
-#include "../../../libs/source/glMath.h"
 
 namespace ms {
 	
-	class ForwardShader : public virtual Shader {
+	class DeferredShader : public virtual Shader {
 		
 	public:
 		
@@ -33,10 +32,10 @@ namespace ms {
 		virtual void	set_material_opacity		(float opacity)			= 0;
 		virtual void	set_material_shininess		(float shininess)		= 0;
 		
-		virtual 		~ForwardShader()									= default;
-
+		virtual			~DeferredShader()									= default;
+		
 	};
 	
 }
 
-#endif /* forward_shader_hpp */
+#endif /* deferred_shader_h */

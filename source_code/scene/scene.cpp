@@ -21,5 +21,5 @@ std::unique_ptr<ms::DirectionalLight> const & ms::Scene::get_directional_light()
 }
 
 void ms::Scene::set_directional_light(float power, math::vec4 color, math::vec3 direction) {
-	directionalLight = std::unique_ptr<ms::DirectionalLight>(new DirectionalLight(power, color, direction));
+	directionalLight = std::unique_ptr<ms::DirectionalLight>(new DirectionalLight(color, direction));
 }

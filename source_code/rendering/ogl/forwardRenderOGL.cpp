@@ -13,7 +13,7 @@ namespace ms {
 }
 
 ms::ForwardRenderOGL::ForwardRenderOGL (std::shared_ptr<std::string> vSS, std::shared_ptr<std::string> fSS, ui sW, ui sH, ui fbW, ui fbH) :
-	ms::Render(sW, sH, fbW, fbH), fragmentShaderSource(fSS), vertexShaderSource(vSS) {
+	ms::ForwardRender(sW, sH, fbW, fbH, vSS, fSS) {
 		shader = std::shared_ptr<ForwardShader>(new ForwardShaderOGL(vSS, fSS));
 }
 
@@ -41,7 +41,6 @@ void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
 	if(auto & dirLight = scene->get_directional_light()) {
 		shader->set_has_directional_light(true);
 		shader->set_directional_light_dir(dirLight->direction);
-		shader->set_directional_light_pow(dirLight->power);
 		shader->set_directional_light_color(dirLight->color);
 	} else {
 		shader->set_has_directional_light(false);
@@ -71,6 +70,7 @@ void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
 
 void ms::ForwardRenderOGL::load () {
 	this->shader->load();
+	Resource::load();
 }
 
 bool ms::ForwardRenderOGL::is_loaded () {
@@ -79,4 +79,5 @@ bool ms::ForwardRenderOGL::is_loaded () {
 
 void ms::ForwardRenderOGL::unload ()  {
 	this->shader->unload();
+	Resource::unload();
 }

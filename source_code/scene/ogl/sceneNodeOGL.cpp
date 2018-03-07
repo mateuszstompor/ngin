@@ -13,8 +13,8 @@ ms::SceneNodeOGL::SceneNodeOGL () : ms::SceneNode() {
 }
 
 void ms::SceneNodeOGL::use () {
-	if(!isLoaded)
-		load();
+//	if(!is_loaded())
+//		load();
 	
 	glBindVertexArray(vertexArray);
 }
@@ -22,7 +22,6 @@ void ms::SceneNodeOGL::use () {
 void ms::SceneNodeOGL::load	() {
 	
 	glGenVertexArrays(1, &vertexArray);
-	isLoaded = true;
 	
 	this->use();
 	
@@ -41,8 +40,6 @@ void ms::SceneNodeOGL::load	() {
 
 void ms::SceneNodeOGL::unload () {
 	glDeleteVertexArrays(1, &vertexArray);
-	
-	isLoaded = false;
-	
+		
 	Resource::unload();
 }

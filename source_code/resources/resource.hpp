@@ -27,18 +27,11 @@ namespace ms {
 				virtual bool    is_loaded   ();
 				virtual void 	unload 		() = 0;
 		 		virtual         ~Resource   ();
-		
-	protected:
-		
-						bool	isLoaded;
 	
 	private:
-	
-	#ifdef DEBUG
-				static	int		allocatedInstances;
-				static	int		loadedInstances;
-	#endif
-        
+		
+						bool	isLoaded;
+	        
     };
     
 }
