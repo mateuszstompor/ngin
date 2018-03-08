@@ -18,8 +18,8 @@ namespace ms {
 	
 	public:
 		
-		DeferredLightingShaderOGL(str_ptr vertexShaderSource, str_ptr fragmentShaderSource);
-		
+						DeferredLightingShaderOGL		(str_ptr vertexShaderSource, str_ptr fragmentShaderSource);
+		virtual void	load							()							override;
 	};
 	
 }

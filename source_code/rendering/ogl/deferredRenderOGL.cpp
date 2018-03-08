@@ -67,11 +67,9 @@ void ms::DeferredRenderOGL::clear_frame () {
 }
 
 void ms::DeferredRenderOGL::draw_scene (const std::shared_ptr<Scene> &scene) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-	
 	glBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
-	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	gShader->use();
 
 	gShader->set_camera_transformation(scene->get_camera().get_transformation());
@@ -105,13 +103,21 @@ void ms::DeferredRenderOGL::draw_scene (const std::shared_ptr<Scene> &scene) {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+
 	lightingShader->use();
 	glBindVertexArray(quadVAO);
-//	glActiveTexture(GL_TEXTURE0);
+
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, gPosition);
-	glDisable(GL_DEPTH_TEST);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, gNormal);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, gAlbedo);
+
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	
