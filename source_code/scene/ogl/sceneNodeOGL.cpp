@@ -13,33 +13,37 @@ ms::SceneNodeOGL::SceneNodeOGL () : ms::SceneNode() {
 }
 
 void ms::SceneNodeOGL::use () {
-//	if(!is_loaded())
-//		load();
+	if(!is_loaded())
+		load();
 	
 	glBindVertexArray(vertexArray);
 }
 
 void ms::SceneNodeOGL::load	() {
 	
-	glGenVertexArrays(1, &vertexArray);
-	
-	this->use();
-	
-	if(geometry) {
-		geometry->use_normals();
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-		glEnableVertexAttribArray(1);
+	if (!is_loaded()) {
 		
-		geometry->use_vertices();
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-		glEnableVertexAttribArray(0);
+		glGenVertexArrays(1, &vertexArray);
+		
+		glBindVertexArray(vertexArray);
+		
+		if(geometry) {
+			geometry->use_normals();
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+			glEnableVertexAttribArray(1);
+			
+			geometry->use_vertices();
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+			glEnableVertexAttribArray(0);
+		}
+		
+		Resource::load();
+		
 	}
 	
-	Resource::load();
 }
 
 void ms::SceneNodeOGL::unload () {
 	glDeleteVertexArrays(1, &vertexArray);
-		
 	Resource::unload();
 }

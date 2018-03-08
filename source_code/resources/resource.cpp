@@ -8,7 +8,6 @@
 
 #include "resource.hpp"
 #include "resourceCoordinator.hpp"
-#include <iostream>
 
 bool ms::Resource::is_loaded () {
 	return isLoaded;

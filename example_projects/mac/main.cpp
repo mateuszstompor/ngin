@@ -71,37 +71,37 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			
 		case GLFW_KEY_Q: {
 			auto a = ms::math::transform::translate<float, 4>({0, 0.0, 0.1});
-			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_E: {
 			auto a = ms::math::transform::translate<float, 4>({0, 0.0, -0.1});
-			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_A: {
 			auto a = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
-			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_D: {
 			auto a = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
-			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_W: {
 			auto a = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
-			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_S: {
 			auto a = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
-			engine->scene->get_camera()->set_transformation(engine->scene->get_camera()->get_transformation() * a);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			

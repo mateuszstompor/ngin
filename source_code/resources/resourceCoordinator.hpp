@@ -6,18 +6,18 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef resourceCoordinator_h
-#define resourceCoordinator_h
+#ifndef resource_coordinator_h
+#define resource_coordinator_h
 
-#include <list>
+#include <set>
 #include <memory>
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <sstream>
 
 #include "resource.hpp"
 #include "../rendering/render.hpp"
+#include "../utils/utils.hpp"
 #include "../rendering/shaders/shader.hpp"
 
 namespace ms {
@@ -40,8 +40,8 @@ namespace ms {
     protected:
 		
 														ResourceCoordinator			();
-		std::list<std::string> 							loadedResources;
-        std::list<std::string> 							allocatedResources;
+		std::set<std::string> 							loadedResources;
+        std::set<std::string> 							allocatedResources;
 	
 	public:
 		
@@ -51,4 +51,4 @@ namespace ms {
     
 }
 
-#endif /* resourceCoordinator_h */
+#endif /* resource_coordinator_h */

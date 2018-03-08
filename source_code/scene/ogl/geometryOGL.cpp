@@ -10,10 +10,14 @@
 
 void ms::GeometryOGL::load() {
 	
-	load_vector_to_buffer(vertices, &verticesBuffer);
-	load_vector_to_buffer(normals, 	&normalsBuffer);
-	
-	Resource::load();
+	if (!is_loaded()) {
+		
+		load_vector_to_buffer(vertices, &verticesBuffer);
+		load_vector_to_buffer(normals, 	&normalsBuffer);
+		
+		Resource::load();
+		
+	}
 	
 }
 

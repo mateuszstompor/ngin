@@ -74,10 +74,10 @@ void ms::DeferredRenderOGL::draw_scene (const std::shared_ptr<Scene> &scene) {
 	
 	gShader->use();
 
-	gShader->set_camera_transformation(scene->get_camera()->get_transformation());
-	gShader->set_projection_matrix(scene->get_camera()->get_projection_matrix());
+	gShader->set_camera_transformation(scene->get_camera().get_transformation());
+	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 
-	if(auto & dirLight = scene->get_directional_light()) {
+	if(auto dirLight = scene->get_directional_light()) {
 		gShader->set_has_directional_light(true);
 		gShader->set_directional_light_dir(dirLight->direction);
 		gShader->set_directional_light_color(dirLight->color);
@@ -118,46 +118,48 @@ void ms::DeferredRenderOGL::draw_scene (const std::shared_ptr<Scene> &scene) {
 }
 
 void ms::DeferredRenderOGL::load () {
-	this->gShader->load();
-	this->lightingShader->is_loaded();
-	
-	glGenFramebuffers(1, &gFrameBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
-	
-	glGenTextures(1, &gPosition);
-	glBindTexture(GL_TEXTURE_2D, gPosition);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
-	
-	glGenTextures(1, &gNormal);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
-	
-	glGenTextures(1, &gAlbedo);
-	glBindTexture(GL_TEXTURE_2D, gAlbedo);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
-	
-	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, attachments);
-	
-	glGenRenderbuffers(1, &gRenderBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, frameBufferWidth, frameBufferHeight);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
-	
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	std::cout << "Framebuffer not complete!" << std::endl;
-	
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	Resource::load();
+	if (!is_loaded()) {
+		this->gShader->load();
+		this->lightingShader->is_loaded();
+		
+		glGenFramebuffers(1, &gFrameBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
+		
+		glGenTextures(1, &gPosition);
+		glBindTexture(GL_TEXTURE_2D, gPosition);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+		
+		glGenTextures(1, &gNormal);
+		glBindTexture(GL_TEXTURE_2D, gNormal);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+		
+		glGenTextures(1, &gAlbedo);
+		glBindTexture(GL_TEXTURE_2D, gAlbedo);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
+		
+		unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+		glDrawBuffers(3, attachments);
+		
+		glGenRenderbuffers(1, &gRenderBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, frameBufferWidth, frameBufferHeight);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
+		
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			std::cout << "Framebuffer not complete!" << std::endl;
+		
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		Resource::load();
+	}
 }
 
 bool ms::DeferredRenderOGL::is_loaded () {
@@ -165,15 +167,17 @@ bool ms::DeferredRenderOGL::is_loaded () {
 }
 
 void ms::DeferredRenderOGL::unload () {
-	
-	glDeleteFramebuffers(1, &gFrameBuffer);
-	glDeleteRenderbuffers(1, &gRenderBuffer);
-	
-	glDeleteTextures(1, &gAlbedo);
-	glDeleteTextures(1, &gNormal);
-	glDeleteTextures(1, &gPosition);
-	
-	this->gShader->unload();
-	this->lightingShader->unload();
-	Resource::unload();
+	if (is_loaded()) {
+		
+		glDeleteFramebuffers(1, &gFrameBuffer);
+		glDeleteRenderbuffers(1, &gRenderBuffer);
+		
+		glDeleteTextures(1, &gAlbedo);
+		glDeleteTextures(1, &gNormal);
+		glDeleteTextures(1, &gPosition);
+		
+		this->gShader->unload();
+		this->lightingShader->unload();
+		Resource::unload();
+	}
 }

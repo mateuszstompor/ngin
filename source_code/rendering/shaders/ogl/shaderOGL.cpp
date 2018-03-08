@@ -25,15 +25,19 @@ void ms::ShaderOGL::use() {
 }
 
 void ms::ShaderOGL::load() {
-	program = glCreateProgram();
-	compile_program();
-	Resource::load();
+	if (!is_loaded()) {
+		program = glCreateProgram();
+		compile_program();
+		Resource::load();
+	}
 }
 
 void ms::ShaderOGL::unload() {
-	glDeleteProgram(program);
-	program = 0;
-	Resource::unload();
+	if(is_loaded()) {
+		glDeleteProgram(program);
+		program = 0;
+		Resource::unload();
+	}
 }
 
 void ms::ShaderOGL::compile_program() {

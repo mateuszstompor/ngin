@@ -25,8 +25,24 @@ namespace ms {
 namespace ms {
     
 	namespace utils {
-	
-		std::string load_contents_of_file(std::string pathToFile) {
+
+		template <typename T>
+		inline std::string ptr_to_string(T* ptr) {
+			std::stringstream stream;
+			stream << static_cast<const void *>(ptr);
+			return stream.str();
+		}
+
+		template <typename T>
+		inline T* ptr_from_string (std::string ptrInString){
+			std::stringstream ss;
+			ss<<ptrInString;
+			long long unsigned int i;
+			ss>>std::hex>>i;
+			return reinterpret_cast<T *>(i);
+		}
+		
+		inline std::string load_contents_of_file(std::string pathToFile) {
 			std::ifstream inputStream(pathToFile, std::ios_base::in);
 			if(!inputStream.good()) {
 				std::cerr << FILE_DOESNT_EXIST << std::endl;

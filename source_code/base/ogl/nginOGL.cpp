@@ -44,13 +44,13 @@ ms::NGinOGL::NGinOGL (	std::shared_ptr<std::string> forwardRenderVertexShaderSou
 
 void ms::NGinOGL::load () {
 	forwardRenderer->load();
-	deferredRenderer->load();
+//	deferredRenderer->load();
 }
 
 void ms::NGinOGL::draw_scene() {
-	deferredRenderer->use();
-	deferredRenderer->clear_frame();
-    deferredRenderer->draw_scene(scene);
+	forwardRenderer->use();
+	forwardRenderer->clear_frame();
+    forwardRenderer->draw_scene(scene);
 }
 
 void ms::NGinOGL::unload () {

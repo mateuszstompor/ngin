@@ -14,7 +14,7 @@ find_package(OpenGL REQUIRED)
 
 # GLFW
 add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master)
-add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
+#add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -24,7 +24,8 @@ include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/include)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include)
 
-include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS} {ASSIMP_INCLUDE_DIRS})
+include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS})
+#include_directories(${ASSIMP_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME}
 
@@ -32,8 +33,11 @@ add_executable(${PROJECT_NAME}
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
         ${CMAKE_SOURCE_DIR}/source_code/base/ogl/nginOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/shaderOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/ForwardShaderOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/forwardShaderOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/deferredShaderOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/deferredLightingShaderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/forwardRenderOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resourceCoordinator.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.cpp
@@ -55,7 +59,7 @@ file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/fshader.glsl DE
 
 
 target_link_libraries(${PROJECT_NAME}  glfw     ${GLFW_LIBRARIES})
-target_link_libraries(${PROJECT_NAME}  assimp   ${ASSIMP_LIBRARIES})
+#target_link_libraries(${PROJECT_NAME}  assimp   ${ASSIMP_LIBRARIES})
 
 IF (APPLE)
     target_compile_definitions  (${PROJECT_NAME}  PRIVATE mac_build=1)

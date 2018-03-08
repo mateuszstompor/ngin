@@ -10,10 +10,13 @@
 #define resource_h
 
 #include <memory>
+#include <iostream>
 
 #include "../../libs/source/glMath.h"
 
 namespace ms {
+
+	class ResourceCoordinator;
 
     class Resource {
 		

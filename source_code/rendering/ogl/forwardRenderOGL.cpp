@@ -34,11 +34,10 @@ void ms::ForwardRenderOGL::clear_frame () {
 
 void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
 	shader->use();
+	shader->set_camera_transformation(scene->get_camera().get_transformation());
+	shader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 	
-	shader->set_camera_transformation(scene->get_camera()->get_transformation());
-	shader->set_projection_matrix(scene->get_camera()->get_projection_matrix());
-	
-	if(auto & dirLight = scene->get_directional_light()) {
+	if(auto dirLight = scene->get_directional_light()) {
 		shader->set_has_directional_light(true);
 		shader->set_directional_light_dir(dirLight->direction);
 		shader->set_directional_light_color(dirLight->color);
