@@ -53,10 +53,17 @@ add_executable(${PROJECT_NAME}
         )
 
 #renderdoc
-#file(COPY ${CMAKE_SOURCE_DIR}/third-party-libs/renderdoc.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/third-party-libs/renderdoc.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+#shaders
 file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
+file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/quad_vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/quad_fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(${PROJECT_NAME}  glfw     ${GLFW_LIBRARIES})
 #target_link_libraries(${PROJECT_NAME}  assimp   ${ASSIMP_LIBRARIES})
