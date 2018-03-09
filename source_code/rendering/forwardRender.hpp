@@ -34,7 +34,7 @@ namespace ms {
 		
 		std::shared_ptr<std::string> 			vertexShaderSource;
 		std::shared_ptr<std::string> 			fragmentShaderSource;
-		std::shared_ptr<ForwardShader>			shader;
+		std::unique_ptr<ForwardShader>			shader;
 		
 	};
 	

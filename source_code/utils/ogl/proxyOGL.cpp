@@ -13,6 +13,23 @@ void _mglDrawBuffers (GLsizei n, const GLenum* bufs) {
 	ms::utils::check_gl_error();
 }
 
+GLvoid* _mglMapBufferRange (GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access) {
+	GLvoid* tmp = glMapBufferRange(target, offset, length, access);
+	ms::utils::check_gl_error();
+	return tmp;
+}
+
+GLboolean _mglUnmapBuffer (GLenum target) {
+	GLboolean tmp = glUnmapBuffer(target);
+	ms::utils::check_gl_error();
+	return tmp;
+}
+
+void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays) {
+	glDeleteVertexArrays(n, arrays);
+	ms::utils::check_gl_error();
+}
+
 void _mglGenRenderbuffers (GLsizei n, GLuint* renderbuffers) {
 	glGenRenderbuffers(n, renderbuffers);
 	ms::utils::check_gl_error();

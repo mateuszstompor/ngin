@@ -35,12 +35,12 @@ namespace ms {
         virtual void    draw_scene  		() = 0;
 		virtual         ~NGin       		() = default;
 		
-		std::shared_ptr<Scene>                  scene;
+		std::unique_ptr<Scene>                  scene;
 		
 	protected:
 		
-		std::shared_ptr<DeferredRender>         deferredRenderer;
-		std::shared_ptr<ForwardRender>          forwardRenderer;
+		std::unique_ptr<DeferredRender>         deferredRenderer;
+		std::unique_ptr<ForwardRender>          forwardRenderer;
 		unsigned int 							screenWidth;
 		unsigned int 							screenHeight;
 		

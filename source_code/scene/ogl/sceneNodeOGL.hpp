@@ -32,6 +32,7 @@
 #endif
 
 #include "../sceneNode.hpp"
+#include "../../utils/ogl/proxyOGL.hpp"
 
 namespace ms {
 	

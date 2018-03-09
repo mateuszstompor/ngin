@@ -14,7 +14,7 @@ namespace ms {
 
 ms::ForwardRenderOGL::ForwardRenderOGL (std::shared_ptr<std::string> vSS, std::shared_ptr<std::string> fSS, ui sW, ui sH, ui fbW, ui fbH) :
 	ms::ForwardRender(sW, sH, fbW, fbH, vSS, fSS) {
-		shader = std::shared_ptr<ForwardShader>(new ForwardShaderOGL(vSS, fSS));
+		shader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(vSS, fSS));
 }
 
 void ms::ForwardRenderOGL::use () {
@@ -32,7 +32,7 @@ void ms::ForwardRenderOGL::clear_frame () {
 	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
-void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
+void ms::ForwardRenderOGL::draw_scene (const Scene * scene) {
 	shader->use();
 	shader->set_camera_transformation(scene->get_camera().get_transformation());
 	shader->set_projection_matrix(scene->get_camera().get_projection_matrix());

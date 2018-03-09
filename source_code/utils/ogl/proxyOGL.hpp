@@ -86,6 +86,9 @@ void _mglShaderSource (GLuint shader, GLsizei count, const GLchar* const *string
 void _mglCompileShader (GLuint shader);
 void _mglGetShaderiv (GLuint shader, GLenum pname, GLint *params);
 void _mglGetShaderInfoLog (GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
+GLvoid* _mglMapBufferRange (GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+GLboolean _mglUnmapBuffer (GLenum target);
+void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays);
 
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
 #define mglViewport					_mglViewport
@@ -138,6 +141,9 @@ void _mglGetShaderInfoLog (GLuint shader, GLsizei bufSize, GLsizei *length, GLch
 #define mglCompileShader			_mglCompileShader
 #define mglGetShaderiv				_mglGetShaderiv
 #define mglGetShaderInfoLog			_mglGetShaderInfoLog
+#define mglMapBufferRange			_mglMapBufferRange
+#define mglUnmapBuffer				_mglUnmapBuffer
+#define mglDeleteVertexArrays		_mglDeleteVertexArrays
 
 #else
 
@@ -192,6 +198,9 @@ void _mglGetShaderInfoLog (GLuint shader, GLsizei bufSize, GLsizei *length, GLch
 #define mglCompileShader			glCompileShader
 #define mglGetShaderiv				glGetShaderiv
 #define mglGetShaderInfoLog			glGetShaderInfoLog
+#define mglMapBufferRange			glMapBufferRange
+#define mglUnmapBuffer				glUnmapBuffer
+#define mglDeleteVertexArrays		glDeleteVertexArrays
 
 #endif
 

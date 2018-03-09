@@ -52,7 +52,7 @@ namespace ms {
 		
 		void	use     			() 										override;
 		void 	clear_frame			()										override;
-		void 	draw_scene			(const std::shared_ptr<Scene> &scene) 	override;
+		void 	draw_scene			(const Scene * scene) 	override;
 		void	load				() 										override;
 		bool	is_loaded			() 										override;
 		void 	unload				() 										override;

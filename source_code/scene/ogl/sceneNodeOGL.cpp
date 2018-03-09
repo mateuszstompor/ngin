@@ -16,25 +16,25 @@ void ms::SceneNodeOGL::use () {
 	if(!is_loaded())
 		load();
 	
-	glBindVertexArray(vertexArray);
+	mglBindVertexArray(vertexArray);
 }
 
 void ms::SceneNodeOGL::load	() {
 	
 	if (!is_loaded()) {
 		
-		glGenVertexArrays(1, &vertexArray);
+		mglGenVertexArrays(1, &vertexArray);
 		
-		glBindVertexArray(vertexArray);
+		mglBindVertexArray(vertexArray);
 		
 		if(geometry) {
 			geometry->use_normals();
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-			glEnableVertexAttribArray(1);
+			mglVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+			mglEnableVertexAttribArray(1);
 			
 			geometry->use_vertices();
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-			glEnableVertexAttribArray(0);
+			mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+			mglEnableVertexAttribArray(0);
 		}
 		
 		Resource::load();
@@ -45,7 +45,7 @@ void ms::SceneNodeOGL::load	() {
 
 void ms::SceneNodeOGL::unload () {
 	if(is_loaded()) {
-		glDeleteVertexArrays(1, &vertexArray);
+		mglDeleteVertexArrays(1, &vertexArray);
 		Resource::unload();
 	}
 }

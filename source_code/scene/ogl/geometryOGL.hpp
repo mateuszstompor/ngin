@@ -32,6 +32,7 @@
 #endif
 
 #include "../geometry.hpp"
+#include "../../utils/ogl/proxyOGL.hpp"
 
 namespace ms {
 	

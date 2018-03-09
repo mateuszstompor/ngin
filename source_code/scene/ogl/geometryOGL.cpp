@@ -25,35 +25,35 @@ void ms::GeometryOGL::use_normals () {
 	if(!is_loaded()) {
 		load();
 	}
-	glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
+	mglBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
 }
 
 void ms::GeometryOGL::use_vertices () {
 	if(!is_loaded()) {
 		load();
 	}
-	glBindBuffer(GL_ARRAY_BUFFER, verticesBuffer);
+	mglBindBuffer(GL_ARRAY_BUFFER, verticesBuffer);
 }
 
 void ms::GeometryOGL::load_vector_to_buffer(const std::vector<float> & v, GLuint* b) {
-	glGenBuffers(1, b);
-	glBindBuffer(GL_ARRAY_BUFFER, *b);
-	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), nullptr, GL_STATIC_DRAW);
+	mglGenBuffers(1, b);
+	mglBindBuffer(GL_ARRAY_BUFFER, *b);
+	mglBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), nullptr, GL_STATIC_DRAW);
 	
-	float* vBuf = reinterpret_cast<float*>(glMapBufferRange(GL_ARRAY_BUFFER, 0, v.size() * sizeof(float),  GL_MAP_WRITE_BIT));
+	float* vBuf = reinterpret_cast<float*>(mglMapBufferRange(GL_ARRAY_BUFFER, 0, v.size() * sizeof(float),  GL_MAP_WRITE_BIT));
 
 	for (unsigned long long i = 0; i < v.size(); ++i) {
 		*(vBuf + i) = v[i];
 	}
 
-	glUnmapBuffer(GL_ARRAY_BUFFER);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	mglUnmapBuffer(GL_ARRAY_BUFFER);
+	mglBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void ms::GeometryOGL::unload() {
 	if(is_loaded()) {
-		glDeleteBuffers(1, &verticesBuffer);
-		glDeleteBuffers(1, &normalsBuffer);
+		mglDeleteBuffers(1, &verticesBuffer);
+		mglDeleteBuffers(1, &normalsBuffer);
 		
 		Resource::unload();
 	}

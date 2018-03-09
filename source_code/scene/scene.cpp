@@ -12,11 +12,11 @@ ms::Scene::Scene (float nearPlan, float farPlan, float fovDegress, float cameraA
 	cam = std::unique_ptr<Camera>( new PerspectiveCamera(nearPlan, farPlan, fovDegress, cameraAspect) );
 }
 
-ms::Camera & ms::Scene::get_camera() {
+ms::Camera & ms::Scene::get_camera() const {
 	return *this->cam;
 }
 
-ms::DirectionalLight * ms::Scene::get_directional_light() {
+ms::DirectionalLight * ms::Scene::get_directional_light() const {
 	return this->directionalLight.get();
 }
 

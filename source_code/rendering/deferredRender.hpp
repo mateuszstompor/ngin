@@ -38,8 +38,8 @@ namespace ms {
 		std::shared_ptr<std::string> 				gBufferFragmentShaderSource;
 		std::shared_ptr<std::string> 				lightingVertexShaderSource;
 		std::shared_ptr<std::string> 				lightingFragmentShaderSource;
-		std::shared_ptr<DeferredShader>				gShader;
-		std::shared_ptr<DeferredLightingShader>		lightingShader;
+		std::unique_ptr<DeferredShader>				gShader;
+		std::unique_ptr<DeferredLightingShader>		lightingShader;
 		
 	};
 	

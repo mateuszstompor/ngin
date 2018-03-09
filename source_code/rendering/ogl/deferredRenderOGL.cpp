@@ -22,8 +22,8 @@ ms::DeferredRenderOGL::DeferredRenderOGL (std::shared_ptr<std::string> gVS,
 										  unsigned int fbH) :
 
 ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS) {
-	gShader = std::shared_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
-	lightingShader = std::shared_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(lVS, lFS));
+	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
+	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(lVS, lFS));
 }
 
 void ms::DeferredRenderOGL::use () {
@@ -65,7 +65,7 @@ void ms::DeferredRenderOGL::clear_frame () {
 	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
-void ms::DeferredRenderOGL::draw_scene (const std::shared_ptr<Scene> &scene) {
+void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

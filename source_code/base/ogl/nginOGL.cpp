@@ -50,5 +50,5 @@ void ms::NGinOGL::load () {
 
 void ms::NGinOGL::draw_scene() {
 	deferredRenderer->clear_frame();
-	deferredRenderer->draw_scene(scene);
+	deferredRenderer->draw_scene(scene.get());
 }
