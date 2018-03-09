@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56872804205213C1008D4C6B /* fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56D1B115204D8A8E0043DAA5 /* fshader.glsl */; };
+		56872805205213C1008D4C6B /* vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56D1B116204D8A8E0043DAA5 /* vshader.glsl */; };
+		5687280A205213DC008D4C6B /* quad_vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56872806205213DC008D4C6B /* quad_vshader.glsl */; };
+		5687280B205213DC008D4C6B /* g_buf_fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56872807205213DC008D4C6B /* g_buf_fshader.glsl */; };
+		5687280C205213DC008D4C6B /* g_buf_vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56872808205213DC008D4C6B /* g_buf_vshader.glsl */; };
+		5687280D205213DC008D4C6B /* quad_fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56872809205213DC008D4C6B /* quad_fshader.glsl */; };
 		568A18B02049847F0017B5CF /* libngin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 568A18AF204984760017B5CF /* libngin_ios.a */; };
 		568FA8972048A37F005BD711 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8962048A37F005BD711 /* AppDelegate.m */; };
 		568FA89A2048A37F005BD711 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8992048A37F005BD711 /* ViewController.mm */; };
@@ -16,8 +22,6 @@
 		568FA8A52048A37F005BD711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FA8A42048A37F005BD711 /* main.m */; };
 		56D1B110204D86E20043DAA5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D1B10E204D86E20043DAA5 /* OpenGLES.framework */; };
 		56D1B114204D88980043DAA5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D1B113204D88980043DAA5 /* GLKit.framework */; };
-		56D1B117204D8A8E0043DAA5 /* fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56D1B115204D8A8E0043DAA5 /* fshader.glsl */; };
-		56D1B118204D8A8E0043DAA5 /* vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56D1B116204D8A8E0043DAA5 /* vshader.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56872806205213DC008D4C6B /* quad_vshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = quad_vshader.glsl; path = ../../source_code/shaders/deferred_render/quad_vshader.glsl; sourceTree = "<group>"; };
+		56872807205213DC008D4C6B /* g_buf_fshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = g_buf_fshader.glsl; path = ../../source_code/shaders/deferred_render/g_buf_fshader.glsl; sourceTree = "<group>"; };
+		56872808205213DC008D4C6B /* g_buf_vshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = g_buf_vshader.glsl; path = ../../source_code/shaders/deferred_render/g_buf_vshader.glsl; sourceTree = "<group>"; };
+		56872809205213DC008D4C6B /* quad_fshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = quad_fshader.glsl; path = ../../source_code/shaders/deferred_render/quad_fshader.glsl; sourceTree = "<group>"; };
 		568FA8922048A37F005BD711 /* ngin-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ngin-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA8952048A37F005BD711 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		568FA8962048A37F005BD711 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -90,6 +98,10 @@
 			children = (
 				56D1B115204D8A8E0043DAA5 /* fshader.glsl */,
 				56D1B116204D8A8E0043DAA5 /* vshader.glsl */,
+				56872807205213DC008D4C6B /* g_buf_fshader.glsl */,
+				56872808205213DC008D4C6B /* g_buf_vshader.glsl */,
+				56872809205213DC008D4C6B /* quad_fshader.glsl */,
+				56872806205213DC008D4C6B /* quad_vshader.glsl */,
 				56E8F0592048A3A40019F0D5 /* ngin.xcodeproj */,
 				568FA8942048A37F005BD711 /* ngin-example */,
 				568FA8932048A37F005BD711 /* Products */,
@@ -212,10 +224,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56D1B117204D8A8E0043DAA5 /* fshader.glsl in Resources */,
-				56D1B118204D8A8E0043DAA5 /* vshader.glsl in Resources */,
+				56872804205213C1008D4C6B /* fshader.glsl in Resources */,
+				5687280C205213DC008D4C6B /* g_buf_vshader.glsl in Resources */,
+				56872805205213C1008D4C6B /* vshader.glsl in Resources */,
+				5687280A205213DC008D4C6B /* quad_vshader.glsl in Resources */,
+				5687280D205213DC008D4C6B /* quad_fshader.glsl in Resources */,
 				568FA8A22048A37F005BD711 /* LaunchScreen.storyboard in Resources */,
 				568FA89F2048A37F005BD711 /* Assets.xcassets in Resources */,
+				5687280B205213DC008D4C6B /* g_buf_fshader.glsl in Resources */,
 				568FA89D2048A37F005BD711 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

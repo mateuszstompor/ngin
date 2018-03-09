@@ -52,9 +52,3 @@ void ms::NGinOGL::draw_scene() {
 	deferredRenderer->clear_frame();
 	deferredRenderer->draw_scene(scene);
 }
-
-void ms::NGinOGL::unload () {
-	deferredRenderer->unload();
-	forwardRenderer->unload();
-	NGin::unload();
-}

@@ -22,14 +22,14 @@ void ms::ForwardRenderOGL::use () {
 		shader->load();
 	}
 	
-	glViewport(0, 0, screenWidth, screenHeight);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	mglViewport(0, 0, screenWidth, screenHeight);
+	mglEnable(GL_DEPTH_TEST);
+	mglDepthFunc(GL_LEQUAL);
 }
 
 void ms::ForwardRenderOGL::clear_frame () {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
 void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
@@ -62,7 +62,7 @@ void ms::ForwardRenderOGL::draw_scene (const std::shared_ptr<Scene> & scene) {
 		}
 		
 		this->shader->use();
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		mglDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 	
 }

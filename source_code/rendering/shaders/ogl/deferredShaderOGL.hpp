@@ -11,10 +11,11 @@
 
 #include "shaderOGL.hpp"
 #include "../deferredShader.hpp"
+#include "../../../utils/ogl/proxyOGL.hpp"
 
 namespace ms {
 	
-	class DeferredShaderOGL : public virtual ShaderOGL, public virtual DeferredShader {
+	class DeferredShaderOGL : public ShaderOGL, public DeferredShader {
 	
 	public:
 		

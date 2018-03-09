@@ -35,6 +35,7 @@
 
 #endif
 
+#include "../../../utils/ogl/proxyOGL.hpp"
 #include "../shader.hpp"
 
 namespace ms {

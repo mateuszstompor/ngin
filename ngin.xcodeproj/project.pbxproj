@@ -65,6 +65,11 @@
 		5676D56C204E1869005E4AFA /* forwardShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676D56A204E1869005E4AFA /* forwardShaderOGL.cpp */; };
 		5676D56D204E1869005E4AFA /* forwardShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676D56A204E1869005E4AFA /* forwardShaderOGL.cpp */; };
 		5676D56E204E1869005E4AFA /* forwardShaderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5676D56B204E1869005E4AFA /* forwardShaderOGL.hpp */; };
+		5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
+		5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
+		5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5676F296205222CB002EAB31 /* utilsOGL.hpp */; };
+		5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
+		5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
 /* End PBXBuildFile section */
 
@@ -104,8 +109,8 @@
 		56296718204F312200685BAE /* deferredShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredShader.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5629671B204F317900685BAE /* deferredRenderOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredRenderOGL.cpp; sourceTree = "<group>"; };
 		5629671C204F317900685BAE /* deferredRenderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredRenderOGL.hpp; sourceTree = "<group>"; };
-		56296721204F31E300685BAE /* vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vshader.glsl; sourceTree = "<group>"; };
-		56296722204F31E300685BAE /* fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fshader.glsl; sourceTree = "<group>"; };
+		56296721204F31E300685BAE /* g_buf_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = g_buf_vshader.glsl; sourceTree = "<group>"; };
+		56296722204F31E300685BAE /* g_buf_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = g_buf_fshader.glsl; sourceTree = "<group>"; };
 		56296723204F328200685BAE /* forwardRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = forwardRender.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		56296725204F37AD00685BAE /* deferredRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredRender.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		56296726204F3CCD00685BAE /* deferredShaderOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredShaderOGL.cpp; sourceTree = "<group>"; usesTabs = 1; };
@@ -152,6 +157,10 @@
 		5676D568204E16AA005E4AFA /* forwardShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = forwardShader.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5676D56A204E1869005E4AFA /* forwardShaderOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = forwardShaderOGL.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		5676D56B204E1869005E4AFA /* forwardShaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = forwardShaderOGL.hpp; sourceTree = "<group>"; usesTabs = 1; };
+		5676F295205222CB002EAB31 /* utilsOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utilsOGL.cpp; sourceTree = "<group>"; };
+		5676F296205222CB002EAB31 /* utilsOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utilsOGL.hpp; sourceTree = "<group>"; };
+		5676F29A20522919002EAB31 /* proxyOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = proxyOGL.hpp; sourceTree = "<group>"; };
+		5676F29B20522AD1002EAB31 /* proxyOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = proxyOGL.cpp; sourceTree = "<group>"; };
 		568A18A22049846C0017B5CF /* libngin_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
@@ -192,8 +201,8 @@
 			children = (
 				5673024C20503A7D0066993D /* quad_fshader.glsl */,
 				5673024F20503A7D0066993D /* quad_vshader.glsl */,
-				56296721204F31E300685BAE /* vshader.glsl */,
-				56296722204F31E300685BAE /* fshader.glsl */,
+				56296721204F31E300685BAE /* g_buf_vshader.glsl */,
+				56296722204F31E300685BAE /* g_buf_fshader.glsl */,
 			);
 			path = deferred_render;
 			sourceTree = "<group>";
@@ -212,6 +221,7 @@
 		5633FAB7204C6625003449EE /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				5676F292205222B7002EAB31 /* ogl */,
 				5633FAB8204C6625003449EE /* utils.hpp */,
 			);
 			path = utils;
@@ -375,6 +385,17 @@
 			path = ogl;
 			sourceTree = "<group>";
 		};
+		5676F292205222B7002EAB31 /* ogl */ = {
+			isa = PBXGroup;
+			children = (
+				5676F295205222CB002EAB31 /* utilsOGL.cpp */,
+				5676F296205222CB002EAB31 /* utilsOGL.hpp */,
+				5676F29A20522919002EAB31 /* proxyOGL.hpp */,
+				5676F29B20522AD1002EAB31 /* proxyOGL.cpp */,
+			);
+			path = ogl;
+			sourceTree = "<group>";
+		};
 		568FA8672048A2E2005BD711 = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +448,7 @@
 				5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */,
 				5676D569204E16AA005E4AFA /* forwardShader.hpp in Headers */,
 				5633FA9B204B6FCB003449EE /* geometryOGL.hpp in Headers */,
+				5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */,
 				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
 				5640FED4204AE77600512938 /* shaderOGL.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
@@ -545,12 +567,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5633FA9D204B6FCB003449EE /* geometryOGL.cpp in Sources */,
+				5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
 				5629671E204F317900685BAE /* deferredRenderOGL.cpp in Sources */,
 				56716852204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
 				5633FA90204B6988003449EE /* resource.cpp in Sources */,
 				56296729204F3CCD00685BAE /* deferredShaderOGL.cpp in Sources */,
 				5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
+				5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				5676D56D204E1869005E4AFA /* forwardShaderOGL.cpp in Sources */,
 				56716833204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
@@ -566,12 +590,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5633FA9C204B6FCB003449EE /* geometryOGL.cpp in Sources */,
+				5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
 				5629671D204F317900685BAE /* deferredRenderOGL.cpp in Sources */,
 				56716851204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
 				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				56296728204F3CCD00685BAE /* deferredShaderOGL.cpp in Sources */,
 				5633FA8F204B6988003449EE /* resource.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
+				5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				5676D56C204E1869005E4AFA /* forwardShaderOGL.cpp in Sources */,
 				5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */,
 				56716832204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */,

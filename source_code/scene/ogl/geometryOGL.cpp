@@ -51,10 +51,10 @@ void ms::GeometryOGL::load_vector_to_buffer(const std::vector<float> & v, GLuint
 }
 
 void ms::GeometryOGL::unload() {
-	
-	glDeleteBuffers(1, &verticesBuffer);
-	glDeleteBuffers(1, &normalsBuffer);
+	if(is_loaded()) {
+		glDeleteBuffers(1, &verticesBuffer);
+		glDeleteBuffers(1, &normalsBuffer);
 		
-	Resource::unload();
-	
+		Resource::unload();
+	}
 }

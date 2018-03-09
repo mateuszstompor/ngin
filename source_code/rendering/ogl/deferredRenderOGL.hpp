@@ -9,10 +9,12 @@
 #ifndef deferred_render_ogl_hpp
 #define deferred_render_ogl_hpp
 
+#include "../../utils/ogl/proxyOGL.hpp"
 #include "../deferredRender.hpp"
 #include "../shaders/ogl/deferredShaderOGL.hpp"
 #include "../shaders/ogl/deferredLightingShaderOGL.hpp"
 #include "../reusableGeometry.hpp"
+#include "../../utils/ogl/utilsOGL.hpp"
 
 #ifdef __WIN32__
 

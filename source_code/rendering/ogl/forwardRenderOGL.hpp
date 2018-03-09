@@ -11,6 +11,7 @@
 
 #include <memory>
 
+#include "../../utils/ogl/proxyOGL.hpp"
 #include "../render.hpp"
 #include "../shaders/forwardShader.hpp"
 #include "../forwardRender.hpp"

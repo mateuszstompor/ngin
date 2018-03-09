@@ -14,7 +14,7 @@
 
 namespace ms {
 	
-	class ForwardShaderOGL : public virtual ShaderOGL, public virtual ForwardShader {
+	class ForwardShaderOGL : public ShaderOGL, public ForwardShader {
 		
 	public:
 		

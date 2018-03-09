@@ -14,17 +14,17 @@ ms::ShaderOGL(vertexShaderSource, nullptr, nullptr, nullptr, fragmentShaderSourc
 void  ms::DeferredLightingShaderOGL::load () {
     ShaderOGL::load();
 
-    glUseProgram(program);
+    mglUseProgram(program);
 
-    GLint gPosition = glGetUniformLocation(program, "gPosition");
-    glUniform1i(gPosition, 0);
+    GLint gPosition = mglGetUniformLocation(program, "gPosition");
+    mglUniform1i(gPosition, 0);
 
-    GLint gNormal = glGetUniformLocation(program, "gNormal");
-    glUniform1i(gNormal, 1);
+    GLint gNormal = mglGetUniformLocation(program, "gNormal");
+    mglUniform1i(gNormal, 1);
 
-    GLint gAlbedo = glGetUniformLocation(program, "gAlbedo");
-    glUniform1i(gAlbedo, 2);
+    GLint gAlbedo = mglGetUniformLocation(program, "gAlbedo");
+    mglUniform1i(gAlbedo, 2);
 
-    glUseProgram(0);
+    mglUseProgram(0);
 
 }

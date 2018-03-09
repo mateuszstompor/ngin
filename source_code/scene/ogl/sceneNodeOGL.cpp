@@ -44,6 +44,8 @@ void ms::SceneNodeOGL::load	() {
 }
 
 void ms::SceneNodeOGL::unload () {
-	glDeleteVertexArrays(1, &vertexArray);
-	Resource::unload();
+	if(is_loaded()) {
+		glDeleteVertexArrays(1, &vertexArray);
+		Resource::unload();
+	}
 }

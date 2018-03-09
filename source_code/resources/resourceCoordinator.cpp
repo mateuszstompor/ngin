@@ -39,10 +39,18 @@ void ms::ResourceCoordinator::register_unload (Resource* resource) {
 }
 
 void ms::ResourceCoordinator::register_allocation (Resource* resource) {
+	#ifdef DEBUG
+		std::cout << "#ResourceCoordinator::register_allocation " << allocatedResources.size() << " " << resource << std::endl;
+	#endif
 	allocatedResources.insert(utils::ptr_to_string(resource));
 }
 
 void ms::ResourceCoordinator::register_deallocation (Resource* resource) {
+	#ifdef DEBUG
+		std::cout << "#ResourceCoordinator::register_deallocation " << allocatedResources.size() << " " << resource << std::endl;
+		assert(std::find(allocatedResources.begin(), allocatedResources.end(), utils::ptr_to_string(resource)) != allocatedResources.end());
+
+	#endif
 	loadedResources.erase(utils::ptr_to_string(resource));
 	allocatedResources.erase(utils::ptr_to_string(resource));
 }
@@ -52,7 +60,8 @@ void ms::ResourceCoordinator::destroy_shared_instance () {
 }
 
 void ms::ResourceCoordinator::unload_all_resources () {
-	std::for_each(loadedResources.begin(), loadedResources.end(), [] (std::string res) { utils::ptr_from_string<Resource>(res)->unload(); });
+	std::set<std::string> tmp(loadedResources.begin(), loadedResources.end());
+	std::for_each(tmp.begin(), tmp.end(), [] (std::string res) { utils::ptr_from_string<Resource>(res)->unload(); });
 }
 
 std::shared_ptr<ms::ResourceCoordinator> ms::ResourceCoordinator::get_instance () {

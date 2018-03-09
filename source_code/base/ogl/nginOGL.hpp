@@ -37,7 +37,6 @@ namespace ms {
 		
         void    draw_scene  () override;
 		void 	load		() override;
-		void 	unload		() override;
 		
     };
     

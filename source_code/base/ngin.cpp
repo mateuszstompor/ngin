@@ -17,5 +17,4 @@ ms::NGin::NGin(unsigned int scW, unsigned int scH, float camNear, float camFar, 
 
 void ms::NGin::unload() {
 	ResourceCoordinator::sharedInstance->unload_all_resources();
-	ResourceCoordinator::destroy_shared_instance();
 }

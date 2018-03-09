@@ -21,12 +21,12 @@ ms::ShaderOGL::ShaderOGL(str_ptr vS, str_ptr tcS, str_ptr teS, str_ptr gS, str_p
 }
 
 void ms::ShaderOGL::use() {
-	glUseProgram(program);
+	mglUseProgram(program);
 }
 
 void ms::ShaderOGL::load() {
 	if (!is_loaded()) {
-		program = glCreateProgram();
+		program = mglCreateProgram();
 		compile_program();
 		Resource::load();
 	}
@@ -34,24 +34,25 @@ void ms::ShaderOGL::load() {
 
 void ms::ShaderOGL::unload() {
 	if(is_loaded()) {
-		glDeleteProgram(program);
+		mglDeleteProgram(program);
 		program = 0;
 		Resource::unload();
 	}
 }
 
 void ms::ShaderOGL::compile_program() {
-	GLuint vshader 		= glCreateShader(GL_VERTEX_SHADER);
+	
+	GLuint vshader 		= mglCreateShader(GL_VERTEX_SHADER);
 	
 	#ifdef mac_build
 	
-	GLuint cshader		= glCreateShader(GL_TESS_CONTROL_SHADER);
-	GLuint evalshader 	= glCreateShader(GL_TESS_EVALUATION_SHADER);
-	GLuint gshader 		= glCreateShader(GL_GEOMETRY_SHADER);
+	GLuint cshader		= mglCreateShader(GL_TESS_CONTROL_SHADER);
+	GLuint evalshader 	= mglCreateShader(GL_TESS_EVALUATION_SHADER);
+	GLuint gshader 		= mglCreateShader(GL_GEOMETRY_SHADER);
 	
 	#endif
 	
-	GLuint fshader 		= glCreateShader(GL_FRAGMENT_SHADER);
+	GLuint fshader 		= mglCreateShader(GL_FRAGMENT_SHADER);
 	
 	if (vertexSource) {
 		compile_shader(program, vshader, GL_VERTEX_SHADER, vertexSource);
@@ -77,26 +78,26 @@ void ms::ShaderOGL::compile_program() {
 		compile_shader(program, fshader, GL_FRAGMENT_SHADER, fragmentSource);
 	}
 	
-	glLinkProgram(program);
+	mglLinkProgram(program);
 
 	if (vertexSource)
-		glDeleteShader(vshader);
+		mglDeleteShader(vshader);
 	
 	#ifdef mac_build
 	
 		if (tesselationControlSource)
-			glDeleteShader(cshader);
+			mglDeleteShader(cshader);
 
 		if (tesselationEvalutationSource)
-			glDeleteShader(evalshader);
+			mglDeleteShader(evalshader);
 
 		if (geometrySource)
-			glDeleteShader(gshader);
+			mglDeleteShader(gshader);
 	
 	#endif
 
 	if (fragmentSource)
-		glDeleteShader(fshader);
+		mglDeleteShader(fshader);
 
 	#ifdef DEBUG
 
@@ -107,17 +108,17 @@ void ms::ShaderOGL::compile_program() {
 
 void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, str_ptr source) {
 	const char * sourcePtr = source->c_str();
-	glShaderSource(shader, 1, &sourcePtr, nullptr);
-	glCompileShader(shader);
+	mglShaderSource(shader, 1, &sourcePtr, nullptr);
+	mglCompileShader(shader);
 	get_shader_status(shader, GL_COMPILE_STATUS);
-	glAttachShader(program, shader);
+	mglAttachShader(program, shader);
 }
 
 int ms::ShaderOGL::get_shader_status(GLuint shader, GLenum statusType) {
 	int code; char infoLog[INFO_LOG_SIZE];
-	glGetShaderiv(shader, statusType, &code);
+	mglGetShaderiv(shader, statusType, &code);
 	if (!code) {
-		glGetShaderInfoLog(shader, INFO_LOG_SIZE, nullptr, infoLog);
+		mglGetShaderInfoLog(shader, INFO_LOG_SIZE, nullptr, infoLog);
 		std::cerr << SHADER_ERROR << std::endl<< infoLog << std::endl;
 	}
 	return code;

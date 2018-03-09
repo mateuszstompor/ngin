@@ -1,4 +1,7 @@
-#version 330 core
+#version 410 core
+//#version 300 es
+//precision highp float;
+
 out vec4 FragColor;
 
 in vec2 TexCoords;
@@ -9,6 +12,6 @@ uniform sampler2D gAlbedo;
 
 void main() {
 
-	FragColor = texture(gAlbedo, TexCoords);
+	FragColor = texture(gPosition, TexCoords);
 
 }

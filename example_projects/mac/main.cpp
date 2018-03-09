@@ -110,59 +110,59 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-int main(int argc, const char * argv[]) {
-
+int main(int argc, const char * argv[]) { {
+	
 	if (argc < 7) {
 		std::cerr << "Pass vertex and fragment shader source path for forward, deferred render and its lighting as parameter" << std::endl;
 		exit(1);
 	}
 	
-    int width = 1200;
-    int height = 800;
+	int width = 1200;
+	int height = 800;
 	int framebufferWidth = 1200;
 	int framebufferHeight = 800;
 	
-    prepareRenderDoc();
-
-    if(glfwInit()==0) {
-        std::cerr<<ms::libInitializationError<<std::endl;
-    }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-    glfwSwapInterval(1);
-
-    GLFWwindow *window = glfwCreateWindow(width, height, ms::windowName.c_str(), nullptr, nullptr);
-
-    glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
-    glfwGetFramebufferSize(window, &width, &height);
-
-    if(window == nullptr){
-      std::cerr << ms::windowCreationError << std::endl;
-      glfwTerminate();
-    }
-
-    glfwMakeContextCurrent(window);
-
-    #ifdef __WIN32__
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        std::cout << ms::contextInitializationFailure << std::endl;
-        return -1;
-    }
-    #endif
-
+	prepareRenderDoc();
+	
+	if(glfwInit()==0) {
+		std::cerr<<ms::libInitializationError<<std::endl;
+	}
+	
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	glfwSwapInterval(1);
+	
+	GLFWwindow *window = glfwCreateWindow(width, height, ms::windowName.c_str(), nullptr, nullptr);
+	
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+	glfwGetFramebufferSize(window, &width, &height);
+	
+	if(window == nullptr){
+		std::cerr << ms::windowCreationError << std::endl;
+		glfwTerminate();
+	}
+	
+	glfwMakeContextCurrent(window);
+	
+#ifdef __WIN32__
+	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+		std::cout << ms::contextInitializationFailure << std::endl;
+		return -1;
+	}
+#endif
+	
 	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-
+	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	std::shared_ptr<ms::Geometry> m = std::shared_ptr<ms::Geometry>(new ms::GeometryOGL());
 	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 	
-
+	
 	auto forwardRenderVSource = ms::utils::load_contents_of_file	(argv[1]);
 	auto forwardRenderFSource = ms::utils::load_contents_of_file	(argv[2]);
 	auto deferredRenderVSource = ms::utils::load_contents_of_file	(argv[3]);
@@ -181,7 +181,7 @@ int main(int argc, const char * argv[]) {
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
-
+	
 	node->geometry = m;
 	
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
@@ -192,29 +192,40 @@ int main(int argc, const char * argv[]) {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-    glfwSetKeyCallback(window, key_callback);
-    
-    while(!glfwWindowShouldClose(window)) {
+	glfwSetKeyCallback(window, key_callback);
+	
+	while(!glfwWindowShouldClose(window)) {
 		
-        glfwPollEvents();
+		glfwPollEvents();
+		
+		//////////////////////////////////////////////////////////////////////////////////////////
+		
+		engine->draw_scene();
 		
 		//////////////////////////////////////////////////////////////////////////////////////////
 		
-        engine->draw_scene();
-		
-		//////////////////////////////////////////////////////////////////////////////////////////
-        
-        glfwSwapBuffers(window);
-    }
+		glfwSwapBuffers(window);
+	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-    engine->unload();
+	engine->unload();
 	
 	engine = nullptr;
 	
+	
+	
 	//////////////////////////////////////////////////////////////////////////////////////////
-    
-    glfwTerminate();
+	
+	glfwTerminate();
+	
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
+	ms::ResourceCoordinator::destroy_shared_instance();
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
+	
     return 0;
 }

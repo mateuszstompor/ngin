@@ -10,7 +10,9 @@
 #define model_ogl_hpp
 
 #ifdef __WIN32__
+
 	#include <glad/glad.h>
+
 #endif
 
 #if __APPLE__
