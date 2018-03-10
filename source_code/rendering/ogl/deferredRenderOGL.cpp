@@ -21,7 +21,7 @@ ms::DeferredRenderOGL::DeferredRenderOGL (std::shared_ptr<std::string> gVS,
 										  unsigned int fbW,
 										  unsigned int fbH) :
 
-ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS) {
+ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gPosition(0), gAlbedo(0), gNormal(0), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
 	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(lVS, lFS));
 }
@@ -61,11 +61,17 @@ void ms::DeferredRenderOGL::use () {
 }
 
 void ms::DeferredRenderOGL::clear_frame () {
-	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	
 }
 
 void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
+	
+	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
+	
+	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	
+	
 	mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -102,7 +108,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 		mglDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 	
-	mglBindFramebuffer(GL_FRAMEBUFFER, 0);
+	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -134,47 +140,56 @@ void ms::DeferredRenderOGL::load () {
 		mglGenTextures(1, &gPosition);
 		mglBindTexture(GL_TEXTURE_2D, gPosition);
 		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		
 		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
 		
 		
 		mglGenTextures(1, &gNormal);
 		mglBindTexture(GL_TEXTURE_2D, gNormal);
 		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		
 		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
 		
 		
 		mglGenTextures(1, &gAlbedo);
 		mglBindTexture(GL_TEXTURE_2D, gAlbedo);
-		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		
 		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
 		
-		{
-			auto glstatus = glGetError();
-			if (glstatus != GL_NO_ERROR) { std::cout << "Error in GL call:" << glstatus << std::endl; }
-			}
-		unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-
+		GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 		
 		mglDrawBuffers(3, attachments);
 
 		mglGenRenderbuffers(1, &gRenderBuffer);
 		mglBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
 
-		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, frameBufferWidth, frameBufferHeight);
-
+		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, frameBufferWidth, frameBufferHeight);
 
 		mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
 
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			std::cout << "Framebuffer not complete!" << std::endl;
 
-		mglBindFramebuffer(GL_FRAMEBUFFER, 0);
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+			std::cout << "Framebuffer not complete!" << std::endl;
+		}
+		
+
+		mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 		Resource::load();
 	}
 }
@@ -189,6 +204,13 @@ void ms::DeferredRenderOGL::unload () {
 		mglDeleteFramebuffers(1, &gFrameBuffer);
 		mglDeleteRenderbuffers(1, &gRenderBuffer);
 		
+		mglDeleteTextures(1, &gPosition);
+		mglDeleteTextures(1, &gAlbedo);
+		mglDeleteTextures(1, &gNormal);
+		
+		mglDeleteVertexArrays(1, &quadVAO);
+		mglDeleteBuffers(1, &quadVBO);
+		
 		mglDeleteTextures(1, &gAlbedo);
 		mglDeleteTextures(1, &gNormal);
 		mglDeleteTextures(1, &gPosition);
@@ -198,3 +220,8 @@ void ms::DeferredRenderOGL::unload () {
 		Resource::unload();
 	}
 }
+
+void ms::DeferredRenderOGL::set_default_FBO (GLuint defFBO) {
+	defaultFBO = defFBO;
+}
+

@@ -177,7 +177,7 @@ int main(int argc, const char * argv[]) { {
 	std::shared_ptr<std::string> vSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingVSource));
 	std::shared_ptr<std::string> fSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingFSource));
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, width, height, 0.01, 100, 90, float(width)/height));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, width, height, 0.01, 100, 90, float(width)/height, 0));
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);

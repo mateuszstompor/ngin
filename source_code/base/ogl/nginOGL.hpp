@@ -32,7 +32,8 @@ namespace ms {
 							 float camNear,
 							 float camFar,
 							 float fovDegrees,
-							 float aspect
+							 float aspect,
+							 GLuint defaultFBO
 							 );
 		
         void    draw_scene  () override;

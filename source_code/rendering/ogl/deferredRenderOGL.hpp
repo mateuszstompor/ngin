@@ -60,10 +60,13 @@ namespace ms {
 			void	load				() 										override;
 			bool	is_loaded			() 										override;
 			void 	unload				() 										override;
+			void 	set_default_FBO		(GLuint defFBO);
 			virtual	~DeferredRenderOGL 	() = default;
 		
 		protected:
 		
+			GLuint						defaultFBO;
+
 			GLuint						gPosition;
 			GLuint 						gNormal;
 			GLuint 						gAlbedo;

@@ -21,7 +21,8 @@ ms::NGinOGL::NGinOGL (	std::shared_ptr<std::string> forwardRenderVertexShaderSou
 						float camNear,
 						float camFar,
 						float fovDegrees,
-						float aspect
+						float aspect,
+					  	GLuint defaultFBO
 						) : NGin(screenWidth, screenHeight, camNear, camFar, fovDegrees, aspect) {
     
     forwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(forwardRenderVertexShaderSource,
@@ -31,7 +32,7 @@ ms::NGinOGL::NGinOGL (	std::shared_ptr<std::string> forwardRenderVertexShaderSou
 						  frameBufferWidth,
 						  frameBufferHeight));
 	
-	deferredRenderer = std::unique_ptr<DeferredRender> (new DeferredRenderOGL(deferredRenderVertexShaderSource,
+	auto defPtr = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(deferredRenderVertexShaderSource,
 																			  deferredRenderFragmentShaderSource,
 																			  deferredRenderLightingVertexShaderSource,
 																			  deferredRenderLightingFragmentShaderSource,
@@ -39,6 +40,8 @@ ms::NGinOGL::NGinOGL (	std::shared_ptr<std::string> forwardRenderVertexShaderSou
 																			  screenHeight,
 																			  frameBufferWidth,
 																			  frameBufferHeight));
+	defPtr->set_default_FBO(defaultFBO);
+	deferredRenderer = std::move(defPtr);
 	
 }
 
