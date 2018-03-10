@@ -21,9 +21,41 @@ ms::DeferredRenderOGL::DeferredRenderOGL (std::shared_ptr<std::string> gVS,
 										  unsigned int fbW,
 										  unsigned int fbH) :
 
-ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gPosition(0), gAlbedo(0), gNormal(0), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
+ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
 	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(lVS, lFS));
+	
+	
+	gPosition = std::unique_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
+														GL_RGB16F,
+														GL_RGB,
+														GL_FLOAT,
+														Texture::MinFilter::linear,
+														Texture::MagFilter::linear,
+														Texture::Wrapping::clamp_to_edge,
+														Texture::Wrapping::clamp_to_edge,
+														0, frameBufferWidth, frameBufferHeight));
+	
+	gNormal = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
+														GL_RGB16F,
+														GL_RGB,
+														GL_FLOAT,
+														Texture::MinFilter::linear,
+														Texture::MagFilter::linear,
+														Texture::Wrapping::clamp_to_edge,
+														Texture::Wrapping::clamp_to_edge,
+														0, frameBufferWidth, frameBufferHeight));
+	
+	gAlbedo = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
+														GL_RGBA8,
+														GL_RGBA,
+														GL_UNSIGNED_BYTE,
+														Texture::MinFilter::linear,
+														Texture::MagFilter::linear,
+														Texture::Wrapping::clamp_to_edge,
+														Texture::Wrapping::clamp_to_edge,
+														0, frameBufferWidth, frameBufferHeight));
+	
 }
 
 void ms::DeferredRenderOGL::use () {
@@ -116,13 +148,13 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglBindVertexArray(quadVAO);
 
 	mglActiveTexture(GL_TEXTURE0);
-	mglBindTexture(GL_TEXTURE_2D, gPosition);
-	
+	gPosition->use();
+
 	mglActiveTexture(GL_TEXTURE1);
-	mglBindTexture(GL_TEXTURE_2D, gNormal);
-	
+	gNormal->use();
+
 	mglActiveTexture(GL_TEXTURE2);
-	mglBindTexture(GL_TEXTURE_2D, gAlbedo);
+	gAlbedo->use();
 	
 	mglDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -137,41 +169,21 @@ void ms::DeferredRenderOGL::load () {
 		mglGenFramebuffers(1, &gFrameBuffer);
 		mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
 		
-		mglGenTextures(1, &gPosition);
-		mglBindTexture(GL_TEXTURE_2D, gPosition);
-		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		gPosition->load();
+		gNormal->load();
+		gAlbedo->load();
 		
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		
-		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+		gPosition->use();
+
+		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gPosition.get()))->get_underlying_id(), 0);
 		
 		
-		mglGenTextures(1, &gNormal);
-		mglBindTexture(GL_TEXTURE_2D, gNormal);
-		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, frameBufferWidth, frameBufferHeight, 0, GL_RGB, GL_FLOAT, nullptr);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		
-		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
-		
-		
-		mglGenTextures(1, &gAlbedo);
-		mglBindTexture(GL_TEXTURE_2D, gAlbedo);
-		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		mglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		
-		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
-		
+		gNormal->use();
+		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gNormal.get()))->get_underlying_id(), 0);
+
+		gAlbedo->use();
+		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gAlbedo.get()))->get_underlying_id(), 0);
+
 		GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 		
 		mglDrawBuffers(3, attachments);
@@ -203,18 +215,13 @@ void ms::DeferredRenderOGL::unload () {
 		
 		mglDeleteFramebuffers(1, &gFrameBuffer);
 		mglDeleteRenderbuffers(1, &gRenderBuffer);
-		
-		mglDeleteTextures(1, &gPosition);
-		mglDeleteTextures(1, &gAlbedo);
-		mglDeleteTextures(1, &gNormal);
-		
 		mglDeleteVertexArrays(1, &quadVAO);
 		mglDeleteBuffers(1, &quadVBO);
 		
-		mglDeleteTextures(1, &gAlbedo);
-		mglDeleteTextures(1, &gNormal);
-		mglDeleteTextures(1, &gPosition);
 		
+		this->gAlbedo->unload();
+		this->gNormal->unload();
+		this->gPosition->unload();
 		this->gShader->unload();
 		this->lightingShader->unload();
 		Resource::unload();

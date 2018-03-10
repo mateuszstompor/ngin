@@ -13,6 +13,7 @@
 #include "shaders/deferredLightingShader.hpp"
 #include "shaders/deferredShader.hpp"
 #include "shaders/deferredLightingShader.hpp"
+#include "../scene/texture.hpp"
 
 namespace ms {
 	
@@ -38,6 +39,11 @@ namespace ms {
 		std::shared_ptr<std::string> 				gBufferFragmentShaderSource;
 		std::shared_ptr<std::string> 				lightingVertexShaderSource;
 		std::shared_ptr<std::string> 				lightingFragmentShaderSource;
+		
+		std::unique_ptr<Texture>					gPosition;
+		std::unique_ptr<Texture>					gAlbedo;
+		std::unique_ptr<Texture>					gNormal;
+		
 		std::unique_ptr<DeferredShader>				gShader;
 		std::unique_ptr<DeferredLightingShader>		lightingShader;
 		
@@ -57,6 +63,9 @@ ms::DeferredRender::DeferredRender(unsigned int sW,
 										gBufferVertexShaderSource(gVS),
 										gBufferFragmentShaderSource(gFS),
 										gShader(nullptr),
-										lightingShader(nullptr) { }
+										lightingShader(nullptr),
+										gNormal(nullptr),
+										gPosition(nullptr),
+										gAlbedo(nullptr) { }
 
 #endif /* defered_render_h */

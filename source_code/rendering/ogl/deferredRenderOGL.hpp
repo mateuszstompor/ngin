@@ -15,6 +15,7 @@
 #include "../shaders/ogl/deferredLightingShaderOGL.hpp"
 #include "../reusableGeometry.hpp"
 #include "../../utils/ogl/utilsOGL.hpp"
+#include "../../scene/ogl/textureOGL.hpp"
 
 #ifdef __WIN32__
 
@@ -67,9 +68,9 @@ namespace ms {
 		
 			GLuint						defaultFBO;
 
-			GLuint						gPosition;
-			GLuint 						gNormal;
-			GLuint 						gAlbedo;
+//			GLuint						gPosition;
+//			GLuint 						gNormal;
+//			GLuint 						gAlbedo;
 		
 			GLuint						gFrameBuffer;
 			GLuint						gRenderBuffer;
