@@ -13,5 +13,7 @@
 #include "base/ogl/nginOGL.hpp"
 #include "utils/utils.hpp"
 #include "../libs/source/glMath.h"
+#include "scene/ogl/geometryOGL.hpp"
+#include "scene/ogl/sceneNodeOGL.hpp"
 
 #endif /* umbrella_header_hpp */

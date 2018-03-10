@@ -267,3 +267,8 @@ void _mglGetShaderInfoLog (GLuint shader, GLsizei bufSize, GLsizei *length, GLch
 	glGetShaderInfoLog(shader, bufSize, length, infoLog);
 	ms::utils::check_gl_error();
 }
+
+void _mglUniform1ui (GLint location, GLuint v0) {
+	glUniform1ui(location, v0);
+	ms::utils::check_gl_error();
+}

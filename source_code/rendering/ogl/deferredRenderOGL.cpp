@@ -112,15 +112,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	gShader->set_camera_transformation(scene->get_camera().get_transformation());
 	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 
-	if(auto dirLight = scene->get_directional_light()) {
-		gShader->set_has_directional_light(true);
-		gShader->set_directional_light_dir(dirLight->direction);
-		gShader->set_directional_light_color(dirLight->color);
-	} else {
-		gShader->set_has_directional_light(false);
-	}
-
-	for (const std::shared_ptr<SceneNode> & node : scene->nodes) {
+	for (const std::shared_ptr<SceneNode> & node : scene->get_nodes()) {
 		node->use();
 
 		gShader->set_model_transformation(node->modelTransformation.get_transformation());
@@ -145,6 +137,37 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	lightingShader->use();
+	
+	if(auto dirLight = scene->get_directional_light()) {
+		lightingShader->set_has_directional_light(true);
+		lightingShader->set_directional_light_dir(dirLight->direction);
+		lightingShader->set_directional_light_color(dirLight->color);
+	} else {
+		lightingShader->set_has_directional_light(false);
+	}
+	
+	{
+		const std::vector<SpotLight> & spotLights = scene->get_spot_lights();
+		lightingShader->set_amount_of_spot_lights(static_cast<unsigned int>(spotLights.size()));
+		for(unsigned int index = 0; index < spotLights.size(); ++index) {
+			lightingShader->set_spot_light_power(index, spotLights[index].power);
+			lightingShader->set_spot_light_color(index, spotLights[index].color);
+			lightingShader->set_spot_light_transformation(index, spotLights[index].get_transformation());
+			lightingShader->set_spot_light_angle(index, spotLights[index].lightingAngleDegrees);
+			lightingShader->set_spot_light_direction(index, spotLights[index].direction);
+		}
+	}
+	
+	{
+		const std::vector<PointLight> & pointLights = scene->get_point_lights();
+		lightingShader->set_amount_of_point_lights(static_cast<unsigned int>(pointLights.size()));
+		for(unsigned int index = 0; index < pointLights.size(); ++index) {
+			lightingShader->set_point_light_color(index, pointLights[index].color);
+			lightingShader->set_point_light_power(index, pointLights[index].power);
+			lightingShader->set_point_light_transformation(index, pointLights[index].get_transformation());
+		}
+	}
+	
 	mglBindVertexArray(quadVAO);
 
 	mglActiveTexture(GL_TEXTURE0);

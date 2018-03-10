@@ -6,11 +6,6 @@ layout (location = 0) out vec3 gPosition;
 layout (location = 1) out vec3 gNormal;
 layout (location = 2) out vec4 gAlbedo;
 
-struct DirectionalLight {
-	vec3    	direction;
-	vec4    	color;
-};
-
 struct Material {
 	vec3 	diffuse;
 	vec3 	ambient;
@@ -19,15 +14,13 @@ struct Material {
 	float	opacity;
 };
 
-uniform int 				hasMaterial;
-uniform Material			material;
-uniform	int 				hasDirLight;
-uniform DirectionalLight 	dirLight;
+uniform int 								hasMaterial;
+uniform Material							material;
 
-in vec3 worldPosition;
-in vec3 normalVector;
+in vec3		worldPosition;
+in vec3		normalVector;
 
-out vec4 FragColor;
+out vec4	FragColor;
 
 void main(){
 	

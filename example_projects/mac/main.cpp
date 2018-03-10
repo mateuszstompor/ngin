@@ -17,8 +17,6 @@
 #include <cassert>
 
 #include "../../source_code/umbrellaHeader.hpp"
-#include "../../source_code/scene/ogl/geometryOGL.hpp"
-#include "../../source_code/scene/ogl/sceneNodeOGL.hpp"
 #include "example_geometry.h"
 
 std::unique_ptr<ms::NGin> engine;
@@ -185,7 +183,7 @@ int main(int argc, const char * argv[]) { {
 	node->geometry = m;
 	
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
-	
+	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 0.0f, 0.0f, 1.0f}, ms::math::mat4::identity()));
 	engine->scene->nodes.push_back(node);
 	
 	engine->load();

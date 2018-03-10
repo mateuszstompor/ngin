@@ -89,6 +89,7 @@ void _mglGetShaderInfoLog (GLuint shader, GLsizei bufSize, GLsizei *length, GLch
 GLvoid* _mglMapBufferRange (GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
 GLboolean _mglUnmapBuffer (GLenum target);
 void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays);
+void _mglUniform1ui (GLint location, GLuint v0);
 
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
 #define mglViewport					_mglViewport
@@ -144,6 +145,7 @@ void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays);
 #define mglMapBufferRange			_mglMapBufferRange
 #define mglUnmapBuffer				_mglUnmapBuffer
 #define mglDeleteVertexArrays		_mglDeleteVertexArrays
+#define mglUniform1ui				_mglUniform1ui
 
 #else
 
@@ -201,6 +203,7 @@ void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays);
 #define mglMapBufferRange			glMapBufferRange
 #define mglUnmapBuffer				glUnmapBuffer
 #define mglDeleteVertexArrays		glDeleteVertexArrays
+#define mglUniform1ui				glUniform1ui
 
 #endif
 

@@ -18,7 +18,11 @@ namespace ms {
 		
 	public:
 		
-		inline 		SpotLight 	(float power, math::vec4 color, math::mat4 transformation, float lightingAngleDegrees);
+		inline 		SpotLight 	(float 			power,
+								 math::vec4 	color,
+								 math::mat4 	transformation,
+								 float 			lightingAngleDegrees,
+								 math::vec3 	direction);
 		
 		virtual		~SpotLight 	() = default;
 		
@@ -27,5 +31,16 @@ namespace ms {
 	};
 	
 }
+
+ms::SpotLight::SpotLight (float 		power,
+						  math::vec4 	color,
+						  math::mat4 	transformation,
+						  float			lightingAngle,
+						  math::vec3 	direction) :
+
+ms::Light(color),
+ms::PointLight(power, color, transformation),
+ms::DirectionalLight(color, direction),
+lightingAngleDegrees(lightingAngle) {}
 
 #endif /* spot_light_hpp */

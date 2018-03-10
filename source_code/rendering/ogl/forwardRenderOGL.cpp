@@ -45,7 +45,7 @@ void ms::ForwardRenderOGL::draw_scene (const Scene * scene) {
 		shader->set_has_directional_light(false);
 	}
 	
-	for (const std::shared_ptr<SceneNode> & node : scene->nodes) {
+	for (const std::shared_ptr<SceneNode> & node : scene->get_nodes()) {
 		node->use();
 		
 		shader->set_model_transformation(node->modelTransformation.get_transformation());
