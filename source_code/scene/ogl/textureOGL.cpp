@@ -92,8 +92,13 @@ GLenum ms::TextureOGL::to_ogl (Wrapping wrapping) {
 	switch (wrapping) {
 		case Texture::Wrapping::clamp_to_edge:
 			return GL_CLAMP_TO_EDGE;
+			
+	//DOESNT RUN ON IOS
+	#ifndef ios_build
 		case Texture::Wrapping::clamp_to_border:
 			return GL_CLAMP_TO_BORDER;
+	#endif
+			
 		default:
 			//critical error
 			assert(false);

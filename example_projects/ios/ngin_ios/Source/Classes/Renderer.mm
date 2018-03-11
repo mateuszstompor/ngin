@@ -60,8 +60,8 @@ std::unique_ptr<ms::NGin> engine;
 	NSString* frfsFP = [[NSBundle mainBundle] pathForResource:@"fshader" ofType:@"glsl"];
 	NSString* drGvsgFP = [[NSBundle mainBundle] pathForResource:@"g_buf_vshader" ofType:@"glsl"];
 	NSString* drGfsgFP = [[NSBundle mainBundle] pathForResource:@"g_buf_fshader" ofType:@"glsl"];
-	NSString* drLvsgFP = [[NSBundle mainBundle] pathForResource:@"quad_vshader" ofType:@"glsl"];
-	NSString* drLfsgFP = [[NSBundle mainBundle] pathForResource:@"quad_fshader" ofType:@"glsl"];
+	NSString* drLvsgFP = [[NSBundle mainBundle] pathForResource:@"lighting_vshader" ofType:@"glsl"];
+	NSString* drLfsgFP = [[NSBundle mainBundle] pathForResource:@"lighting_fshader" ofType:@"glsl"];
 
 	NSString* frvs = [[NSString alloc] initWithContentsOfFile:frvsFP encoding:NSUTF8StringEncoding error:nil];
 	NSString* frfs = [[NSString alloc] initWithContentsOfFile:frfsFP encoding:NSUTF8StringEncoding error:nil];

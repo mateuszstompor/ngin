@@ -1,6 +1,3 @@
-#version 410 core
-//#version 300 es
-//precision highp float;
 
 layout (location = 0) out vec3 gPosition;
 layout (location = 1) out vec3 gNormal;
@@ -24,7 +21,12 @@ out vec4	FragColor;
 
 void main(){
 	
-	gAlbedo = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	if(hasMaterial == 1) {
+		gAlbedo = vec4(material.diffuse, material.shininess);
+	} else {
+		gAlbedo = vec4(0.0f, 1.0f, 0.0f, 0.13f);
+	}
+	
 	gNormal = normalVector;
 	gPosition = worldPosition;
 	

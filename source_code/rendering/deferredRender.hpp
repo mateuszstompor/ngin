@@ -9,6 +9,8 @@
 #ifndef defered_render_h
 #define defered_render_h
 
+#include <cassert>
+
 #include "render.hpp"
 #include "shaders/deferredLightingShader.hpp"
 #include "shaders/deferredShader.hpp"

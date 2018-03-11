@@ -155,8 +155,8 @@
 		56716828204ADFAE0028EFAA /* nginOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nginOGL.cpp; sourceTree = "<group>"; };
 		56716829204ADFAE0028EFAA /* nginOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = nginOGL.hpp; sourceTree = "<group>"; };
 		5671682A204ADFAE0028EFAA /* ngin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ngin.hpp; sourceTree = "<group>"; };
-		5673024C20503A7D0066993D /* quad_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = quad_fshader.glsl; sourceTree = "<group>"; };
-		5673024F20503A7D0066993D /* quad_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = quad_vshader.glsl; sourceTree = "<group>"; };
+		5673024C20503A7D0066993D /* lighting_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lighting_fshader.glsl; sourceTree = "<group>"; };
+		5673024F20503A7D0066993D /* lighting_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lighting_vshader.glsl; sourceTree = "<group>"; };
 		56730250205046A80066993D /* deferredLightingShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredLightingShader.hpp; sourceTree = "<group>"; };
 		5673025120504AFC0066993D /* deferredLightingShaderOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredLightingShaderOGL.cpp; sourceTree = "<group>"; };
 		5673025220504AFC0066993D /* deferredLightingShaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredLightingShaderOGL.hpp; sourceTree = "<group>"; };
@@ -174,6 +174,7 @@
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
 		569A899C204FFF6200A9A292 /* reusableGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = reusableGeometry.hpp; sourceTree = "<group>"; };
+		56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shaderHeaders.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,8 +209,8 @@
 		56296720204F31E300685BAE /* deferred_render */ = {
 			isa = PBXGroup;
 			children = (
-				5673024C20503A7D0066993D /* quad_fshader.glsl */,
-				5673024F20503A7D0066993D /* quad_vshader.glsl */,
+				5673024C20503A7D0066993D /* lighting_fshader.glsl */,
+				5673024F20503A7D0066993D /* lighting_vshader.glsl */,
 				56296721204F31E300685BAE /* g_buf_vshader.glsl */,
 				56296722204F31E300685BAE /* g_buf_fshader.glsl */,
 			);
@@ -241,6 +242,7 @@
 		5633FABA204C9EB3003449EE /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				56A5ED84205580AD00BDA233 /* common */,
 				56296720204F31E300685BAE /* deferred_render */,
 				5633FABB204C9EB3003449EE /* forward_render */,
 			);
@@ -435,6 +437,14 @@
 				568FA8872048A328005BD711 /* matrix_tests */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		56A5ED84205580AD00BDA233 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */,
+			);
+			path = common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

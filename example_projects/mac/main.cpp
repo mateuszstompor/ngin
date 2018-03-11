@@ -94,7 +94,18 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			}
 		}
 			break;
-			
+		
+		case GLFW_KEY_T: {
+			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(0.1);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
+		}
+		break;
+		case GLFW_KEY_Y: {
+			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(-0.1);
+			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
+		}
+		break;
+		
 		case GLFW_KEY_Q: {
 			auto a = ms::math::transform::translate<float, 4>({0, 0.0, 0.1});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
@@ -131,6 +142,37 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 			break;
 			
+		case GLFW_KEY_J: {
+			auto a = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
+			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
+		}
+			break;
+		case GLFW_KEY_L: {
+			auto a = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
+			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
+		}
+			break;
+		case GLFW_KEY_K: {
+			auto a = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
+			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
+		}
+			break;
+		case GLFW_KEY_I: {
+			auto a = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
+			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
+		}
+			break;
+		case GLFW_KEY_U: {
+			auto a = ms::math::transform::translate<float, 4>({0.0, 0.0, -0.1});
+			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
+		}
+			break;
+		case GLFW_KEY_O: {
+			auto a = ms::math::transform::translate<float, 4>({0.0, 0.0, 0.1});
+			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
+		}
+			break;
+			
         default:
             break;
     }
@@ -145,8 +187,8 @@ int main(int argc, const char * argv[]) { {
 	
 	int width = 1200;
 	int height = 800;
-	int framebufferWidth = 1200;
-	int framebufferHeight = 800;
+	int framebufferWidth = 600;
+	int framebufferHeight = 400;
 	
 	prepareRenderDoc();
 	
@@ -203,7 +245,7 @@ int main(int argc, const char * argv[]) { {
 	std::shared_ptr<std::string> vSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingVSource));
 	std::shared_ptr<std::string> fSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingFSource));
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, width, height, 0.01, 100, 90, float(width)/height, 0));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, framebufferWidth, framebufferHeight, 0.01, 100, 90, float(width)/height, 0));
 	
 	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
 	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
@@ -211,7 +253,8 @@ int main(int argc, const char * argv[]) { {
 	node->geometry = m;
 	
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
-	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 0.0f, 0.0f, 1.0f}, ms::math::mat4::identity()));
+	
+	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 1.0f, 1.0f, 1.0f}, ms::math::mat4::identity() * ms::math::transform::translate<float, 4>({-1.4, 4, -9})));
 	engine->scene->nodes.push_back(node);
 	
 	engine->load();

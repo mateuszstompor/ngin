@@ -35,6 +35,7 @@
 
 #endif
 
+#include "../../../shaders/common/shaderHeaders.hpp"
 #include "../../../utils/ogl/proxyOGL.hpp"
 #include "../shader.hpp"
 
@@ -57,8 +58,9 @@ namespace ms {
 		
 	protected:
 		
+		std::string		add_header_to_source(std::string source);
 		void 			compile_program();
-		void 			compile_shader(GLuint program, GLuint shader, GLenum shaderType, str_ptr source);
+		void 			compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source);
 		int				get_shader_status(GLuint shader, GLenum statusType);
 		
 		str_ptr 		vertexSource;

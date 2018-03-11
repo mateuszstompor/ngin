@@ -55,27 +55,27 @@ void ms::ShaderOGL::compile_program() {
 	GLuint fshader 		= mglCreateShader(GL_FRAGMENT_SHADER);
 	
 	if (vertexSource) {
-		compile_shader(program, vshader, GL_VERTEX_SHADER, vertexSource);
+		compile_shader(program, vshader, GL_VERTEX_SHADER, add_header_to_source(*vertexSource));
 	}
 	
 	#ifdef mac_build
 
 	if (tesselationControlSource) {
-		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, tesselationControlSource);
+		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, add_header_to_source(*tesselationControlSource));
 	}
 	
 	if (tesselationEvalutationSource) {
-		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, tesselationEvalutationSource);
+		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, add_header_to_source(*tesselationEvalutationSource));
 	}
 
 	if (geometrySource) {
-		compile_shader(program, gshader, GL_GEOMETRY_SHADER, geometrySource);
+		compile_shader(program, gshader, GL_GEOMETRY_SHADER, add_header_to_source(*geometrySource));
 	}
 	
 	#endif
 	
 	if (fragmentSource) {
-		compile_shader(program, fshader, GL_FRAGMENT_SHADER, fragmentSource);
+		compile_shader(program, fshader, GL_FRAGMENT_SHADER, add_header_to_source(*fragmentSource));
 	}
 	
 	mglLinkProgram(program);
@@ -106,8 +106,22 @@ void ms::ShaderOGL::compile_program() {
 	#endif
 }
 
-void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, str_ptr source) {
-	const char * sourcePtr = source->c_str();
+std::string ms::ShaderOGL::add_header_to_source(std::string source) {
+	
+	#ifdef ios_build
+	
+		return ms::shader::ios_header + source;
+	
+	#else
+	
+		return ms::shader::mac_os_header + source;
+	
+	#endif
+	
+}
+
+void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {
+	const char * sourcePtr = source.c_str();
 	mglShaderSource(shader, 1, &sourcePtr, nullptr);
 	mglCompileShader(shader);
 	get_shader_status(shader, GL_COMPILE_STATUS);

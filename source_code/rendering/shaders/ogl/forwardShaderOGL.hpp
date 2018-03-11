@@ -23,9 +23,11 @@ namespace ms {
 		virtual void 	set_projection_matrix		(math::mat4 proj)			override;
 		virtual void 	set_camera_transformation	(math::mat4 transf)			override;
 		virtual void	set_model_transformation	(math::mat4 modelTransf) 	override;
+		
 		virtual void	set_has_directional_light	(bool doesItHave)	 		override;
 		virtual void	set_directional_light_dir	(math::vec3 dir)	 		override;
 		virtual void	set_directional_light_color	(math::vec4 color)	 		override;
+		
 		virtual void	set_has_material			(bool doesItHave)	 		override;
 		virtual void	set_material_ambient_color	(math::vec3 ambient)		override;
 		virtual void	set_material_diffuse_color	(math::vec3 diffuse)		override;
