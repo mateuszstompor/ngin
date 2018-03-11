@@ -21,17 +21,22 @@ namespace ms {
 		
 	public:
 		
-		inline 	DeferredRender(unsigned int screenWidth,
-							   unsigned int screenHeight,
-							   unsigned int frameBufferWidth,
-							   unsigned int frameBufferHeight,
-							   std::shared_ptr<std::string> gBufferVertexShaderSource,
-							   std::shared_ptr<std::string> gBufferFragmentShaderSource,
-							   std::shared_ptr<std::string> lightingVertexShaderSource,
-							   std::shared_ptr<std::string> lightingFragmentShaderSource
-							  );
+		enum class DebugType;
 		
-		virtual ~DeferredRender() = default;
+			 			DeferredRender	(	unsigned int screenWidth,
+										   unsigned int screenHeight,
+										   unsigned int frameBufferWidth,
+										   unsigned int frameBufferHeight,
+										   std::shared_ptr<std::string> gBufferVertexShaderSource,
+										   std::shared_ptr<std::string> gBufferFragmentShaderSource,
+										   std::shared_ptr<std::string> lightingVertexShaderSource,
+										   std::shared_ptr<std::string> lightingFragmentShaderSource
+										 );
+		
+		virtual void	set_debug_mode	(bool isOn);
+		virtual bool	is_in_debug		();
+		virtual void 	set_debug_Type	(DebugType type);
+		virtual 		~DeferredRender	() = default;
 		
 	protected:
 		
@@ -46,26 +51,18 @@ namespace ms {
 		
 		std::unique_ptr<DeferredShader>				gShader;
 		std::unique_ptr<DeferredLightingShader>		lightingShader;
+		unsigned int								settings;
+		bool										debugMode;
+		DebugType									debugType;
 		
 	};
 	
 }
 
-ms::DeferredRender::DeferredRender(unsigned int sW,
-								   unsigned int sH,
-								   unsigned int fbW,
-								   unsigned int fbH,
-								   std::shared_ptr<std::string> gVS,
-								   std::shared_ptr<std::string> gFS,
-								   std::shared_ptr<std::string> lVS,
-								   std::shared_ptr<std::string> lFS
-								 ) : 	Render(sW, sH, fbW, fbH),
-										gBufferVertexShaderSource(gVS),
-										gBufferFragmentShaderSource(gFS),
-										gShader(nullptr),
-										lightingShader(nullptr),
-										gNormal(nullptr),
-										gPosition(nullptr),
-										gAlbedo(nullptr) { }
+enum class ms::DeferredRender::DebugType {
+	position,
+	normals,
+	albedo
+};
 
 #endif /* defered_render_h */

@@ -37,6 +37,8 @@ namespace ms {
 		virtual void 	set_spot_light_transformation		(unsigned int index, const math::mat4 & transformation) override;
 		virtual void 	set_spot_light_angle				(unsigned int index, float angle) 						override;
 		virtual void 	set_spot_light_direction			(unsigned int index, const math::vec3 direction) 		override;
+		
+		virtual void 	set_rendering_mode					(unsigned int settings) 								override;
 
 		virtual void	load								()														override;
 	};

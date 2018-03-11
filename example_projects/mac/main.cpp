@@ -67,6 +67,34 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             glfwSetWindowShouldClose(window, true);
             break;
 			
+		case GLFW_KEY_1: {
+			if (action == GLFW_PRESS) {
+				engine->get_deferred_render().set_debug_mode(engine->get_deferred_render().is_in_debug() ? false : true);
+			}
+		}
+			break;
+			
+		case GLFW_KEY_2: {
+			if (action == GLFW_PRESS) {
+				engine->get_deferred_render().set_debug_Type(ms::DeferredRender::DebugType::position);
+			}
+		}
+			break;
+		
+		case GLFW_KEY_3: {
+			if (action == GLFW_PRESS) {
+				engine->get_deferred_render().set_debug_Type(ms::DeferredRender::DebugType::albedo);
+			}
+		}
+			break;
+			
+		case GLFW_KEY_4: {
+			if (action == GLFW_PRESS) {
+				engine->get_deferred_render().set_debug_Type(ms::DeferredRender::DebugType::normals);
+			}
+		}
+			break;
+			
 		case GLFW_KEY_Q: {
 			auto a = ms::math::transform::translate<float, 4>({0, 0.0, 0.1});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);

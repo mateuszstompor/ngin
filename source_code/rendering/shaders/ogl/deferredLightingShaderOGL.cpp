@@ -101,3 +101,8 @@ void ms::DeferredLightingShaderOGL::set_spot_light_direction (unsigned int index
 	GLint directionLocation = mglGetUniformLocation(program, name.c_str());
 	mglUniform3fv(directionLocation, 1, direction.c_array());
 }
+
+void ms::DeferredLightingShaderOGL::set_rendering_mode (unsigned int settings) {
+	GLint settingsLocation = mglGetUniformLocation(program, "settings");
+	mglUniform1ui(settingsLocation, settings);
+}

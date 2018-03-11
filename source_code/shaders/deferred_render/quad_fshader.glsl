@@ -36,10 +36,23 @@ uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 uniform	uint								pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
 
+uniform uint								settings;
+
 out 	vec4 								FragColor;
 
 void main() {
 
-	FragColor = texture(gPosition, TexCoords);
-
+	if ((settings & uint(1)) == 1) {
+		//DEBUG MODE
+		if(((settings >> 2) & uint(1)) == 1) {
+			FragColor = texture(gPosition, TexCoords);
+		} else if (((settings >> 1) & uint(1)) == 1) {
+			FragColor = texture(gAlbedo, TexCoords);
+		} else {
+			FragColor = texture(gNormal, TexCoords);
+		}
+	} else {
+		FragColor = texture(gPosition, TexCoords);
+	}
+	
 }

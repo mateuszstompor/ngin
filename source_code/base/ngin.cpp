@@ -18,3 +18,11 @@ ms::NGin::NGin(unsigned int scW, unsigned int scH, float camNear, float camFar, 
 void ms::NGin::unload() {
 	ResourceCoordinator::sharedInstance->unload_all_resources();
 }
+
+ms::DeferredRender & ms::NGin::get_deferred_render () const {
+	return *deferredRenderer;
+}
+
+ms::ForwardRender & ms::NGin::get_forward_render () const {
+	return *forwardRenderer;
+}

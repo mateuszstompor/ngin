@@ -23,17 +23,19 @@ namespace ms {
       
     public:
         
-                        NGin        		(unsigned int screenWidth,
-											 unsigned int screenHeight,
-											 float camNear,
-											 float camFar,
-											 float fovDegrees,
-											 float aspect);
+							NGin        		(unsigned int screenWidth,
+												 unsigned int screenHeight,
+												 float camNear,
+												 float camFar,
+												 float fovDegrees,
+												 float aspect);
 		
-		virtual void 	load 				() = 0;
-		virtual void 	unload 				();
-        virtual void    draw_scene  		() = 0;
-		virtual         ~NGin       		() = default;
+		virtual void 		load 				() = 0;
+		virtual void 		unload 				();
+        virtual void		draw_scene  		() = 0;
+		DeferredRender & 	get_deferred_render	() const;
+		ForwardRender & 	get_forward_render	() const;
+		virtual        		~NGin       		() = default;
 		
 		std::unique_ptr<Scene>                  scene;
 		

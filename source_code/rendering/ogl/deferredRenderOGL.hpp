@@ -67,10 +67,6 @@ namespace ms {
 		protected:
 		
 			GLuint						defaultFBO;
-
-//			GLuint						gPosition;
-//			GLuint 						gNormal;
-//			GLuint 						gAlbedo;
 		
 			GLuint						gFrameBuffer;
 			GLuint						gRenderBuffer;

@@ -101,7 +101,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 	
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	mglClearColor(0.3f, 0.2f, 0.0f, 1.0f);
 	
 	
 	mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
@@ -137,6 +137,8 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	lightingShader->use();
+	
+	lightingShader->set_rendering_mode(this->settings);
 	
 	if(auto dirLight = scene->get_directional_light()) {
 		lightingShader->set_has_directional_light(true);
@@ -197,9 +199,7 @@ void ms::DeferredRenderOGL::load () {
 		gAlbedo->load();
 		
 		gPosition->use();
-
 		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gPosition.get()))->get_underlying_id(), 0);
-		
 		
 		gNormal->use();
 		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gNormal.get()))->get_underlying_id(), 0);
