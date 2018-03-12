@@ -103,6 +103,6 @@ void ms::DeferredLightingShaderOGL::set_spot_light_direction (unsigned int index
 }
 
 void ms::DeferredLightingShaderOGL::set_rendering_mode (unsigned int settings) {
-	GLint settingsLocation = mglGetUniformLocation(program, "settings");
+	GLint settingsLocation = mglGetUniformLocation(program, "renderMode");
 	mglUniform1ui(settingsLocation, settings);
 }

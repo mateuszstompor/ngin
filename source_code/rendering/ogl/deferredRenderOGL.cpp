@@ -101,8 +101,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 	
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.3f, 0.2f, 0.0f, 1.0f);
-	
+	mglClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
 	mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -138,7 +137,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 
 	lightingShader->use();
 	
-	lightingShader->set_rendering_mode(this->settings);
+	lightingShader->set_rendering_mode(this->renderMode);
 	
 	if(auto dirLight = scene->get_directional_light()) {
 		lightingShader->set_has_directional_light(true);

@@ -35,9 +35,7 @@ namespace ms {
 										   std::shared_ptr<std::string> lightingFragmentShaderSource
 										 );
 		
-		virtual void	set_debug_mode	(bool isOn);
-		virtual bool	is_in_debug		();
-		virtual void 	set_debug_Type	(DebugType type);
+		virtual void 	set_render_type	(DebugType type);
 		virtual 		~DeferredRender	() = default;
 		
 	protected:
@@ -53,7 +51,7 @@ namespace ms {
 		
 		std::unique_ptr<DeferredShader>				gShader;
 		std::unique_ptr<DeferredLightingShader>		lightingShader;
-		unsigned int								settings;
+		unsigned int								renderMode;
 		bool										debugMode;
 		DebugType									debugType;
 		
@@ -62,9 +60,11 @@ namespace ms {
 }
 
 enum class ms::DeferredRender::DebugType {
+	standard,
 	position,
 	normals,
-	albedo
+	albedo,
+	specular
 };
 
 #endif /* defered_render_h */

@@ -69,28 +69,35 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			
 		case GLFW_KEY_1: {
 			if (action == GLFW_PRESS) {
-				engine->get_deferred_render().set_debug_mode(engine->get_deferred_render().is_in_debug() ? false : true);
+				engine->get_deferred_render().set_render_type(ms::DeferredRender::DebugType::standard);
 			}
 		}
 			break;
 			
 		case GLFW_KEY_2: {
 			if (action == GLFW_PRESS) {
-				engine->get_deferred_render().set_debug_Type(ms::DeferredRender::DebugType::position);
+				engine->get_deferred_render().set_render_type(ms::DeferredRender::DebugType::position);
 			}
 		}
 			break;
 		
 		case GLFW_KEY_3: {
 			if (action == GLFW_PRESS) {
-				engine->get_deferred_render().set_debug_Type(ms::DeferredRender::DebugType::albedo);
+				engine->get_deferred_render().set_render_type(ms::DeferredRender::DebugType::albedo);
 			}
 		}
 			break;
 			
 		case GLFW_KEY_4: {
 			if (action == GLFW_PRESS) {
-				engine->get_deferred_render().set_debug_Type(ms::DeferredRender::DebugType::normals);
+				engine->get_deferred_render().set_render_type(ms::DeferredRender::DebugType::normals);
+			}
+		}
+			break;
+			
+		case GLFW_KEY_5: {
+			if (action == GLFW_PRESS) {
+				engine->get_deferred_render().set_render_type(ms::DeferredRender::DebugType::specular);
 			}
 		}
 			break;

@@ -37,34 +37,30 @@ lightingShader(nullptr),
 gNormal(nullptr),
 gPosition(nullptr),
 gAlbedo(nullptr),
-settings(0),
+renderMode(0),
 debugMode(false),
 debugType(DeferredRender::DebugType::position) { }
 
-void ms::DeferredRender::set_debug_mode	(bool isOn) {
-	isOn ? settings |= 1 : settings &= ~1;
-}
-
-void ms::DeferredRender::set_debug_Type	(DebugType type) {
+void ms::DeferredRender::set_render_type (DebugType type) {
 	switch (type) {
 		case DeferredRender::DebugType::position:
-			settings |= (1 << 2);
+			renderMode = 1;
 			break;
 		case DeferredRender::DebugType::albedo:
-			settings |= (1 << 1);
-			settings &= ~(1 << 2);
+			renderMode = 2;
 			break;
 		case DeferredRender::DebugType::normals:
-			settings &= ~(1 << 1);
-			settings &= ~(1 << 2);
+			renderMode = 3;
+			break;
+		case DeferredRender::DebugType::specular:
+			renderMode = 4;
+			break;
+		case DeferredRender::DebugType::standard:
+			renderMode = 0;
 			break;
 		default:
 			assert(false);
 			//fatal error
 			break;
 	}
-}
-
-bool ms::DeferredRender::is_in_debug () {
-	return (this->settings & 1) == 1;
 }

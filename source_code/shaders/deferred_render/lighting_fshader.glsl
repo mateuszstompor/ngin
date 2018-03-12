@@ -33,7 +33,7 @@ uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 uniform	uint								pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
 
-uniform uint								settings;
+uniform uint								renderMode;
 
 out 	vec4 								FragColor;
 
@@ -41,15 +41,19 @@ void main() {
 
 #ifdef DEBUG
 	//DEBUG MODE
-	if((settings & uint(1)) == uint(1)) {
-		if(((settings >> 2) & uint(1)) == uint(1)) {
+	if(renderMode > 0) {
+		if(renderMode == 1) {
 			FragColor = texture(gPosition, TexCoords);
 			return;
-		} else if (((settings >> 1) & uint(1)) == uint(1)) {
+		} else if (renderMode == 2) {
 			FragColor = texture(gAlbedo, TexCoords);
 			return;
-		} else {
+		} else if (renderMode == 3) {
 			FragColor = texture(gNormal, TexCoords);
+			return;
+		} else {
+			float spec = texture(gAlbedo, TexCoords).w;
+			FragColor = vec4(spec, spec, spec, 1.0f);
 			return;
 		}
 	}
