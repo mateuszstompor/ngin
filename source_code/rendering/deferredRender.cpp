@@ -15,11 +15,16 @@
 // def. Najbardziej znaczący bit (ang. most significant bit, MSB), zwany też najstarszym bitem
 // def. Najmniej znaczący bit (ang. least significant bit, LSB), zwany też najmłodszym bitem
 
-// LSB
-// 1 bit - debug mode on/off
-// 2 bit - albedo/normals, 1 for albedo and 0 for normals
-// 3 bit - position/turn on second bit, 1 for turning on position, 0 for turing on albedo or normals
-// MSB
+
+namespace ms {
+
+	#define RENDER_MODE_STANDARD	0
+	#define RENDER_MODE_POSITION 	1
+	#define RENDER_MODE_ALBEDO 		2
+	#define RENDER_MODE_NORMALS 	3
+	#define RENDER_MODE_SPECULAR 	4
+	
+}
 
 ms::DeferredRender::DeferredRender(unsigned int sW,
 								   unsigned int sH,
@@ -43,20 +48,20 @@ debugType(DeferredRender::DebugType::position) { }
 
 void ms::DeferredRender::set_render_type (DebugType type) {
 	switch (type) {
+		case DeferredRender::DebugType::standard:
+			renderMode = RENDER_MODE_STANDARD;
+			break;
 		case DeferredRender::DebugType::position:
-			renderMode = 1;
+			renderMode = RENDER_MODE_POSITION;
 			break;
 		case DeferredRender::DebugType::albedo:
-			renderMode = 2;
+			renderMode = RENDER_MODE_ALBEDO;
 			break;
 		case DeferredRender::DebugType::normals:
-			renderMode = 3;
+			renderMode = RENDER_MODE_NORMALS;
 			break;
 		case DeferredRender::DebugType::specular:
-			renderMode = 4;
-			break;
-		case DeferredRender::DebugType::standard:
-			renderMode = 0;
+			renderMode = RENDER_MODE_SPECULAR;
 			break;
 		default:
 			assert(false);
