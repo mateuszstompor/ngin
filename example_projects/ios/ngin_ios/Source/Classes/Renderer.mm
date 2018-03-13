@@ -6,10 +6,6 @@
 #import "../../../../../source_code/umbrellaHeader.hpp"
 #import "../../../../../source_code/scene/ogl/geometryOGL.hpp"
 #import "../../../../../source_code/scene/ogl/sceneNodeOGL.hpp"
-#import "../../../../mac/example_geometry.h"
-
-
-
 
 std::unique_ptr<ms::NGin> engine;
 
@@ -86,9 +82,15 @@ std::unique_ptr<ms::NGin> engine;
 	float height = backingHeight;
 
 	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(fvS, ffS, gvs, gfs, qvs, qfs, width, height, width, height, 0.01, 100, 90, width/height, _defaultFBOName));
+	std::unique_ptr<ms::Loader> loader = std::unique_ptr<ms::Loader>(new ms::LoaderOGL());
 
-	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
-	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
+	NSString* model = [[NSBundle mainBundle] pathForResource:@"classroom" ofType:@"obj"];
+	std::string modelPath = std::string([model cStringUsingEncoding:NSUTF8StringEncoding]);
+
+	for (auto a : loader->load_model(modelPath)) {
+		engine->scene->nodes.push_back(a);
+	}
+
 
 	node->geometry = m;
 

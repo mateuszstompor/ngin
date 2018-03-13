@@ -22,6 +22,8 @@ namespace ms {
 	
 	public:
 		
+		friend class Loader;
+		
 		inline					SceneNode		();
 		virtual 	void 		use				() = 0;
 		virtual 				~SceneNode		() = default;

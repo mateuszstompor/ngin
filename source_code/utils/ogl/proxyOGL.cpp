@@ -272,3 +272,8 @@ void _mglUniform1ui (GLint location, GLuint v0) {
 	glUniform1ui(location, v0);
 	ms::utils::check_gl_error();
 }
+
+void _mglDrawElements (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices) {
+	glDrawElements(mode, count, type, indices);
+	ms::utils::check_gl_error();
+}

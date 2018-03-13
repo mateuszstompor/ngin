@@ -17,7 +17,7 @@
 #include <cassert>
 
 #include "../../source_code/umbrellaHeader.hpp"
-#include "example_geometry.h"
+#include "assimp/scene.h"
 
 std::unique_ptr<ms::NGin> engine;
 
@@ -233,11 +233,6 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	
-	std::shared_ptr<ms::Geometry> m = std::shared_ptr<ms::Geometry>(new ms::GeometryOGL());
-	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
-	
-	
 	auto forwardRenderVSource = ms::utils::load_contents_of_file	(argv[1]);
 	auto forwardRenderFSource = ms::utils::load_contents_of_file	(argv[2]);
 	auto deferredRenderVSource = ms::utils::load_contents_of_file	(argv[3]);
@@ -252,17 +247,19 @@ int main(int argc, const char * argv[]) { {
 	std::shared_ptr<std::string> vSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingVSource));
 	std::shared_ptr<std::string> fSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingFSource));
 	
+	
+	
 	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, framebufferWidth, framebufferHeight, 0.01, 100, 90, float(width)/height, 0));
 	
-	m->vertices.insert(m->vertices.end(), &cube::vertices[0], &cube::vertices[108]);
-	m->normals.insert(m->normals.end(), &cube::normals[0], &cube::normals[108]);
+	std::unique_ptr<ms::Loader> loader = std::unique_ptr<ms::Loader>(new ms::LoaderOGL());
 	
-	node->geometry = m;
+	for (auto a : loader->load_model("/Users/mateuszstompor/Desktop/classroom.obj")) {
+		engine->scene->nodes.push_back(a);
+	}
 	
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
 	
 	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 1.0f, 1.0f, 1.0f}, ms::math::mat4::identity() * ms::math::transform::translate<float, 4>({-1.4, 4, -9})));
-	engine->scene->nodes.push_back(node);
 	
 	engine->load();
 	

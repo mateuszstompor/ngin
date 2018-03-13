@@ -18,15 +18,15 @@ namespace ms {
 		static std::string ios_header =
 		"#version 300 es\n"
 		#ifdef DEBUG
-		"#define DEBUG 1"
+		"#define DEBUG 1\n"
 		#endif
-		"precision highp float;";
+		"precision highp float;\n";
 
 		
 		static std::string mac_os_header =
 		"#version 410 core"
 		#ifdef DEBUG
-		"#define DEBUG 1"
+		"#define DEBUG 1\n"
 		#endif
 		;
 		

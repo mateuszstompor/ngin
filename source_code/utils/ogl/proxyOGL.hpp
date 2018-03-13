@@ -90,7 +90,9 @@ GLvoid* 	_mglMapBufferRange (GLenum target, GLintptr offset, GLsizeiptr length, 
 GLboolean	_mglUnmapBuffer (GLenum target);
 void 		_mglDeleteVertexArrays (GLsizei n, const GLuint *arrays);
 void 		_mglUniform1ui (GLint location, GLuint v0);
+void 		_mglDrawElements (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 
+#define mglDrawElements				_mglDrawElements
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
 #define mglViewport					_mglViewport
 #define mglDepthFunc				_mglDepthFunc
@@ -149,6 +151,7 @@ void 		_mglUniform1ui (GLint location, GLuint v0);
 
 #else
 
+#define mglDrawElements				glDrawElements
 #define mglFramebufferRenderbuffer	glFramebufferRenderbuffer
 #define mglViewport					glViewport
 #define mglDepthFunc				glDepthFunc

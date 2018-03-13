@@ -39,6 +39,9 @@ namespace ms {
 	class SceneNodeOGL : public SceneNode {
 		
 	public:
+		
+		friend class Loader;
+		
 				SceneNodeOGL	();
 		void 	use				() override;
 		void	load			() override;

@@ -76,6 +76,13 @@
 		5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
+		56BD165D205759D7001B02C5 /* libassimp-fat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E611B720574FFF0036FA07 /* libassimp-fat.a */; };
+		56BD1660205759D8001B02C5 /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BD165E205759D8001B02C5 /* libIrrXML.a */; };
+		56BD1661205759D8001B02C5 /* libzlibstatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BD165F205759D8001B02C5 /* libzlibstatic.a */; };
+		56DF0F3B20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
+		56DF0F3C20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
+		56DF0F3D20571B6D00713420 /* loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F3A20571B6D00713420 /* loader.hpp */; };
+		56DF0F452057233900713420 /* loaderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F422057233900713420 /* loaderOGL.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +182,20 @@
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
 		569A899C204FFF6200A9A292 /* reusableGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = reusableGeometry.hpp; sourceTree = "<group>"; };
 		56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shaderHeaders.hpp; sourceTree = "<group>"; };
+		56BD164F205757D8001B02C5 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
+		56BD1651205757DD001B02C5 /* libIrrXML 2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libIrrXML 2.a"; path = "third-party-libs/assimp_iOS/lib/libIrrXML 2.a"; sourceTree = "<group>"; };
+		56BD1652205757DD001B02C5 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/lib/libIrrXML.a"; sourceTree = "<group>"; };
+		56BD1653205757DD001B02C5 /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/lib/libzlibstatic.a"; sourceTree = "<group>"; };
+		56BD165720575801001B02C5 /* libIrrXML2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML2.a; path = "third-party-libs/assimp_iOS/lib/libIrrXML2.a"; sourceTree = "<group>"; };
+		56BD165E205759D8001B02C5 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/libIrrXML.a"; sourceTree = "<group>"; };
+		56BD165F205759D8001B02C5 /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/libzlibstatic.a"; sourceTree = "<group>"; };
+		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
+		56DF0F3920571B6D00713420 /* loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loader.cpp; sourceTree = "<group>"; };
+		56DF0F3A20571B6D00713420 /* loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
+		56DF0F422057233900713420 /* loaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loaderOGL.hpp; sourceTree = "<group>"; };
+		56E611B720574FFF0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/libassimp-fat.a"; sourceTree = "<group>"; };
+		56E611BC2057520E0036FA07 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = ../assimp/lib/iOS/x86_64/libassimp.a; sourceTree = "<group>"; };
+		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +203,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56BD1660205759D8001B02C5 /* libIrrXML.a in Frameworks */,
+				56BD1661205759D8001B02C5 /* libzlibstatic.a in Frameworks */,
+				56BD165D205759D7001B02C5 /* libassimp-fat.a in Frameworks */,
 				56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,6 +224,16 @@
 		5626786D204AC01000A203F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56BD165E205759D8001B02C5 /* libIrrXML.a */,
+				56BD165F205759D8001B02C5 /* libzlibstatic.a */,
+				56BD165720575801001B02C5 /* libIrrXML2.a */,
+				56BD1651205757DD001B02C5 /* libIrrXML 2.a */,
+				56BD1652205757DD001B02C5 /* libIrrXML.a */,
+				56BD1653205757DD001B02C5 /* libzlibstatic.a */,
+				56E611BE2057522A0036FA07 /* libassimp-fat.a */,
+				56BD164F205757D8001B02C5 /* libassimp-fat.a */,
+				56E611BC2057520E0036FA07 /* libassimp.a */,
+				56E611B720574FFF0036FA07 /* libassimp-fat.a */,
 				56267872204AC01A00A203F2 /* OpenGL.framework */,
 				56267870204AC01000A203F2 /* OpenGLES.framework */,
 			);
@@ -235,6 +269,8 @@
 			children = (
 				5676F292205222B7002EAB31 /* ogl */,
 				5633FAB8204C6625003449EE /* utils.hpp */,
+				56DF0F3920571B6D00713420 /* loader.cpp */,
+				56DF0F3A20571B6D00713420 /* loader.hpp */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -348,6 +384,7 @@
 				5633FA94204B6F97003449EE /* geometry.hpp */,
 				561F2EF9204F041D00D7E875 /* material.hpp */,
 				56407D7F2054034800EB1061 /* texture.hpp */,
+				56C9A15E2056C301008AD76B /* vertex.hpp */,
 			);
 			path = scene;
 			sourceTree = "<group>";
@@ -407,6 +444,7 @@
 				5676F296205222CB002EAB31 /* utilsOGL.hpp */,
 				5676F29A20522919002EAB31 /* proxyOGL.hpp */,
 				5676F29B20522AD1002EAB31 /* proxyOGL.cpp */,
+				56DF0F422057233900713420 /* loaderOGL.hpp */,
 			);
 			path = ogl;
 			sourceTree = "<group>";
@@ -477,6 +515,8 @@
 				5640FED4204AE77600512938 /* shaderOGL.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
 				5676D56E204E1869005E4AFA /* forwardShaderOGL.hpp in Headers */,
+				56DF0F452057233900713420 /* loaderOGL.hpp in Headers */,
+				56DF0F3D20571B6D00713420 /* loader.hpp in Headers */,
 				5633FAB2204C64D7003449EE /* sceneNodeOGL.hpp in Headers */,
 				5633FAB9204C6625003449EE /* utils.hpp in Headers */,
 				5633FAB6204C661A003449EE /* umbrellaHeader.hpp in Headers */,
@@ -598,6 +638,7 @@
 				5633FA90204B6988003449EE /* resource.cpp in Sources */,
 				56296729204F3CCD00685BAE /* deferredShaderOGL.cpp in Sources */,
 				5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
+				56DF0F3C20571B6D00713420 /* loader.cpp in Sources */,
 				5674534A2054B391000E7EBD /* deferredRender.cpp in Sources */,
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */,
@@ -623,6 +664,7 @@
 				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				56296728204F3CCD00685BAE /* deferredShaderOGL.cpp in Sources */,
 				5633FA8F204B6988003449EE /* resource.cpp in Sources */,
+				56DF0F3B20571B6D00713420 /* loader.cpp in Sources */,
 				567453492054B391000E7EBD /* deferredRender.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */,
@@ -642,42 +684,63 @@
 		568A18A92049846D0017B5CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"ios_build=1",
 					"DEBUG=1",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		568A18AA2049846D0017B5CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
+				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = "ios_build=1";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -688,7 +751,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -733,7 +796,16 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/assimp/4.1.0/include",
+				);
+				OTHER_LDFLAGS = (
+					"-L/usr/local/Cellar/assimp/4.1.0/lib",
+					"-lassimp",
+				);
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -743,7 +815,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -781,7 +853,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/assimp/4.1.0/include",
+				);
+				OTHER_LDFLAGS = (
+					"-L/usr/local/Cellar/assimp/4.1.0/lib",
+					"-lassimp",
+				);
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -797,6 +878,11 @@
 					"mac_build=1",
 					"DEBUG=1",
 				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/assimp/4.1.0/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -810,6 +896,11 @@
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "mac_build=1";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/assimp/4.1.0/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

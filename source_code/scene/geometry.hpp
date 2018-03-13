@@ -11,6 +11,7 @@
 
 #include <vector>
 
+#include "vertex.hpp"
 #include "../resources/resource.hpp"
 
 namespace ms {
@@ -19,18 +20,36 @@ namespace ms {
 	
 	public:
 		
+		friend class Loader;
+		
 		virtual void 	use_normals 		() = 0;
 		virtual void 	use_vertices 		() = 0;
-						Geometry			() = default;
+		virtual void 	use_indicies 		() = 0;
+		
+		inline int		amount_of_vertices	() const;
+		inline int		amount_of_indices	() const;
+		
+		inline			Geometry			();
 		virtual			~Geometry			() = default;
 		
-	public:
+	protected:
 		
-		std::vector<float> 	vertices;
-		std::vector<float> 	normals;
-		
+		std::vector <Vertex> 		vertices;
+		std::vector <unsigned int> 	indices;
+
 	};
 	
 }
+
+ms::Geometry::Geometry() : vertices(std::vector<Vertex>()), indices(std::vector<unsigned int>()) { }
+
+int ms::Geometry::amount_of_vertices () const {
+	return static_cast<int>(vertices.size());
+}
+
+int ms::Geometry::amount_of_indices	() const {
+	return static_cast<int>(indices.size());
+}
+
 
 #endif /* geometry_hpp */

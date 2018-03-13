@@ -15,7 +15,15 @@
 		56AE16422053FAF90078BC94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56AE16392053FAF90078BC94 /* Main.storyboard */; };
 		56AE16432053FAF90078BC94 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56AE163B2053FAF90078BC94 /* Images.xcassets */; };
 		56AE16442053FAF90078BC94 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56AE163C2053FAF90078BC94 /* info.plist */; };
-		56BCEAAE2053619A0021D658 /* libngin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BCEAA6205361420021D658 /* libngin_ios.a */; };
+		56BD166720575A74001B02C5 /* g_buf_fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56BD166220575A74001B02C5 /* g_buf_fshader.glsl */; };
+		56BD166820575A74001B02C5 /* g_buf_vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56BD166420575A74001B02C5 /* g_buf_vshader.glsl */; };
+		56BD166920575A74001B02C5 /* lighting_fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56BD166520575A74001B02C5 /* lighting_fshader.glsl */; };
+		56BD166A20575A74001B02C5 /* lighting_vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56BD166620575A74001B02C5 /* lighting_vshader.glsl */; };
+		56BD166D20575A8B001B02C5 /* fshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56BD166B20575A8B001B02C5 /* fshader.glsl */; };
+		56BD166E20575A8B001B02C5 /* vshader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 56BD166C20575A8B001B02C5 /* vshader.glsl */; };
+		56CCB58B20574B7700141C1F /* classroom.obj in Resources */ = {isa = PBXBuildFile; fileRef = 56CCB58920574B7700141C1F /* classroom.obj */; };
+		56CCB58C20574B7700141C1F /* classroom.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 56CCB58A20574B7700141C1F /* classroom.mtl */; };
+		56E611C1205754B20036FA07 /* libngin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BCEAA6205361420021D658 /* libngin_ios.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3A4CF8651A8958DD00324DBF /* GLEssentials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GLEssentials.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A4CF8651A8958DD00324DBF /* NGin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NGin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56AE162F2053FAF90078BC94 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		56AE16302053FAF90078BC94 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		56AE16312053FAF90078BC94 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
@@ -56,6 +64,15 @@
 		56AE163B2053FAF90078BC94 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		56AE163C2053FAF90078BC94 /* info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		56BCEA9E205361420021D658 /* ngin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ngin.xcodeproj; path = ../../ngin.xcodeproj; sourceTree = "<group>"; };
+		56BD166220575A74001B02C5 /* g_buf_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = g_buf_fshader.glsl; path = ../../source_code/shaders/deferred_render/g_buf_fshader.glsl; sourceTree = "<group>"; };
+		56BD166420575A74001B02C5 /* g_buf_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = g_buf_vshader.glsl; path = ../../source_code/shaders/deferred_render/g_buf_vshader.glsl; sourceTree = "<group>"; };
+		56BD166520575A74001B02C5 /* lighting_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = lighting_fshader.glsl; path = ../../source_code/shaders/deferred_render/lighting_fshader.glsl; sourceTree = "<group>"; };
+		56BD166620575A74001B02C5 /* lighting_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = lighting_vshader.glsl; path = ../../source_code/shaders/deferred_render/lighting_vshader.glsl; sourceTree = "<group>"; };
+		56BD166B20575A8B001B02C5 /* fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = fshader.glsl; path = ../../source_code/shaders/forward_render/fshader.glsl; sourceTree = "<group>"; };
+		56BD166C20575A8B001B02C5 /* vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = vshader.glsl; path = ../../source_code/shaders/forward_render/vshader.glsl; sourceTree = "<group>"; };
+		56CCB58920574B7700141C1F /* classroom.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = classroom.obj; sourceTree = "<group>"; };
+		56CCB58A20574B7700141C1F /* classroom.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = classroom.mtl; sourceTree = "<group>"; };
+		56E611B9205750CC0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../../third-party-libs/assimp_iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56BCEAAE2053619A0021D658 /* libngin_ios.a in Frameworks */,
+				56E611C1205754B20036FA07 /* libngin_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +90,14 @@
 		3A4CF85C1A8958DD00324DBF = {
 			isa = PBXGroup;
 			children = (
+				56BD166B20575A8B001B02C5 /* fshader.glsl */,
+				56BD166C20575A8B001B02C5 /* vshader.glsl */,
+				56BD166220575A74001B02C5 /* g_buf_fshader.glsl */,
+				56BD166420575A74001B02C5 /* g_buf_vshader.glsl */,
+				56BD166520575A74001B02C5 /* lighting_fshader.glsl */,
+				56BD166620575A74001B02C5 /* lighting_vshader.glsl */,
+				56CCB58A20574B7700141C1F /* classroom.mtl */,
+				56CCB58920574B7700141C1F /* classroom.obj */,
 				56AE16362053FAF90078BC94 /* Data */,
 				56AE162C2053FAF90078BC94 /* Source */,
 				56BCEA9E205361420021D658 /* ngin.xcodeproj */,
@@ -84,7 +109,7 @@
 		3A4CF8661A8958DD00324DBF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3A4CF8651A8958DD00324DBF /* GLEssentials.app */,
+				3A4CF8651A8958DD00324DBF /* NGin.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,6 +161,7 @@
 		56BCEAAD2053619A0021D658 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56E611B9205750CC0036FA07 /* libassimp-fat.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,7 +184,7 @@
 			);
 			name = NGin_iOS;
 			productName = GLEssentials;
-			productReference = 3A4CF8651A8958DD00324DBF /* GLEssentials.app */;
+			productReference = 3A4CF8651A8958DD00324DBF /* NGin.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -172,6 +198,7 @@
 				TargetAttributes = {
 					3A4CF8641A8958DD00324DBF = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = R78NEXF6E2;
 					};
 				};
 			};
@@ -221,8 +248,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56BD166D20575A8B001B02C5 /* fshader.glsl in Resources */,
+				56BD166E20575A8B001B02C5 /* vshader.glsl in Resources */,
+				56BD166720575A74001B02C5 /* g_buf_fshader.glsl in Resources */,
+				56BD166820575A74001B02C5 /* g_buf_vshader.glsl in Resources */,
+				56BD166920575A74001B02C5 /* lighting_fshader.glsl in Resources */,
+				56BD166A20575A74001B02C5 /* lighting_vshader.glsl in Resources */,
 				56AE16442053FAF90078BC94 /* info.plist in Resources */,
+				56CCB58B20574B7700141C1F /* classroom.obj in Resources */,
 				56AE16432053FAF90078BC94 /* Images.xcassets in Resources */,
+				56CCB58C20574B7700141C1F /* classroom.mtl in Resources */,
 				56AE16422053FAF90078BC94 /* Main.storyboard in Resources */,
 				56AE16412053FAF90078BC94 /* LaunchScreen.xib in Resources */,
 			);
@@ -306,7 +341,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -342,7 +377,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -356,16 +391,27 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R78NEXF6E2;
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					TARGET_IOS,
 				);
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = "$(SRCROOT)/ngin_ios/Data/info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.ngin;
-				PRODUCT_NAME = GLEssentials;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/assimp/4.1.0/include\n-I/usr/local/Cellar/assimp/4.1.0/include\n-I/usr/local/Cellar/assimp/4.1.0/include",
+				);
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lstdc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.nginex;
+				PRODUCT_NAME = NGin;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -376,13 +422,24 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R78NEXF6E2;
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_IOS;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = "$(SRCROOT)/ngin_ios/Data/info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.ngin;
-				PRODUCT_NAME = GLEssentials;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/Cellar/assimp/4.1.0/include\n-I/usr/local/Cellar/assimp/4.1.0/include\n-I/usr/local/Cellar/assimp/4.1.0/include",
+				);
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lstdc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.nginex;
+				PRODUCT_NAME = NGin;
 				SDKROOT = iphoneos;
 			};
 			name = Release;

@@ -128,7 +128,10 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 		}
 
 		this->gShader->use();
-		mglDrawArrays(GL_TRIANGLES, 0, 36);
+		
+		node->geometry->use_indicies();
+		
+		mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, (void*)0 );
 	}
 	
 	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);

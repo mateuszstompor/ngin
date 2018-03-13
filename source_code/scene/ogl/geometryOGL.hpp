@@ -42,14 +42,19 @@ namespace ms {
 		
 		void 	use_normals 			() override;
 		void 	use_vertices 			() override;
+		void 	use_indicies 			() override;
+
 		void 	load					() override;
 		void 	unload					() override;
-		void 	load_vector_to_buffer	(const std::vector<float> &, GLuint*);
+		void 	load_vertices_to_buffer	();
 		
 	protected:
 		
 		GLuint 	normalsBuffer;
-		GLuint 	verticesBuffer;
+		GLuint 	positionsBuffer;
+		GLuint 	texturesCooridnatesBuffer;
+		
+		GLuint 	indiciesBuffer;
 		
 	};
 	
