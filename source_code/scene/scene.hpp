@@ -17,6 +17,7 @@
 #include "sceneNode.hpp"
 #include "geometry.hpp"
 
+#include <map>
 #include <vector>
 
 namespace ms {
@@ -38,14 +39,14 @@ namespace ms {
 		void												set_directional_light(float 		power,
 																				  math::vec4 	color,
 																				  math::vec3 	direction);
-	
+//TODO make it protected
 //		protected:
-		std::vector<std::shared_ptr<SceneNode>> 	nodes;
-		
-		std::vector<PointLight>						pointLights;
-		std::vector<SpotLight>						spotLights;
-		std::unique_ptr<Camera> 					cam;
-		std::unique_ptr<DirectionalLight>			directionalLight;
+		std::vector<std::shared_ptr<SceneNode>> 			nodes;
+		std::map<std::string, std::shared_ptr<Material>>	materials;
+		std::vector<PointLight>								pointLights;
+		std::vector<SpotLight>								spotLights;
+		std::unique_ptr<Camera> 							cam;
+		std::unique_ptr<DirectionalLight>					directionalLight;
 		
     };
     

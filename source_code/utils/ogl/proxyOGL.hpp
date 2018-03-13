@@ -9,6 +9,8 @@
 #ifndef proxy_ogl_h
 #define proxy_ogl_h
 
+#include <cassert>
+
 #include "utilsOGL.hpp"
 
 #ifdef __WIN32__

@@ -22,7 +22,7 @@ namespace ms {
 		
 						DeferredLightingShaderOGL			(str_ptr vertexShaderSource, str_ptr fragmentShaderSource);
 		
-		virtual void 	set_amount_of_point_lights			(unsigned int amount) 									override;
+		virtual void 	set_amount_of_point_lights			(int amount) 											override;
 		virtual void 	set_point_light_power				(unsigned int index, float power) 						override;
 		virtual void 	set_point_light_color				(unsigned int index, const math::vec4 & color) 			override;
 		virtual void 	set_point_light_transformation		(unsigned int index, const math::mat4 & transformation) override;
@@ -31,7 +31,7 @@ namespace ms {
 		virtual void	set_directional_light_dir			(const math::vec3 & dir)								override;
 		virtual void	set_directional_light_color			(const math::vec4 & color)								override;
 		
-		virtual void 	set_amount_of_spot_lights			(unsigned int amount)									override;
+		virtual void 	set_amount_of_spot_lights			(int amount)											override;
 		virtual void 	set_spot_light_power				(unsigned int index, float power) 						override;
 		virtual void 	set_spot_light_color				(unsigned int index, const math::vec4 & color)			override;
 		virtual void 	set_spot_light_transformation		(unsigned int index, const math::mat4 & transformation) override;

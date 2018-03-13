@@ -76,6 +76,8 @@
 		5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
+		56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
+		56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56BD165D205759D7001B02C5 /* libassimp-fat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E611B720574FFF0036FA07 /* libassimp-fat.a */; };
 		56BD1660205759D8001B02C5 /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BD165E205759D8001B02C5 /* libIrrXML.a */; };
 		56BD1661205759D8001B02C5 /* libzlibstatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BD165F205759D8001B02C5 /* libzlibstatic.a */; };
@@ -182,6 +184,7 @@
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
 		569A899C204FFF6200A9A292 /* reusableGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = reusableGeometry.hpp; sourceTree = "<group>"; };
 		56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shaderHeaders.hpp; sourceTree = "<group>"; };
+		56AB0ED92058552300B8E964 /* geometry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
 		56BD164F205757D8001B02C5 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56BD1651205757DD001B02C5 /* libIrrXML 2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libIrrXML 2.a"; path = "third-party-libs/assimp_iOS/lib/libIrrXML 2.a"; sourceTree = "<group>"; };
 		56BD1652205757DD001B02C5 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/lib/libIrrXML.a"; sourceTree = "<group>"; };
@@ -382,6 +385,7 @@
 				56716815204ADFAE0028EFAA /* camera */,
 				5671681A204ADFAE0028EFAA /* lights */,
 				5633FA94204B6F97003449EE /* geometry.hpp */,
+				56AB0ED92058552300B8E964 /* geometry.cpp */,
 				561F2EF9204F041D00D7E875 /* material.hpp */,
 				56407D7F2054034800EB1061 /* texture.hpp */,
 				56C9A15E2056C301008AD76B /* vertex.hpp */,
@@ -643,6 +647,7 @@
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				5676D56D204E1869005E4AFA /* forwardShaderOGL.cpp in Sources */,
+				56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */,
 				56716833204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5673025420504AFC0066993D /* deferredLightingShaderOGL.cpp in Sources */,
@@ -669,6 +674,7 @@
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				5676D56C204E1869005E4AFA /* forwardShaderOGL.cpp in Sources */,
+				56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */,
 				5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */,
 				56716832204ADFAE0028EFAA /* forwardRenderOGL.cpp in Sources */,
 				5673025320504AFC0066993D /* deferredLightingShaderOGL.cpp in Sources */,

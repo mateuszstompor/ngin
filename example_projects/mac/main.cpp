@@ -187,8 +187,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) { {
 	
-	if (argc < 7) {
-		std::cerr << "Pass vertex and fragment shader source path for forward, deferred render and its lighting as parameter" << std::endl;
+	if (argc < 8) {
+		std::cerr << "Pass vertex and fragment shader source path for forward, deferred render, its lighting and model as parameter" << std::endl;
 		exit(1);
 	}
 	
@@ -252,9 +252,16 @@ int main(int argc, const char * argv[]) { {
 	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, framebufferWidth, framebufferHeight, 0.01, 100, 90, float(width)/height, 0));
 	
 	std::unique_ptr<ms::Loader> loader = std::unique_ptr<ms::Loader>(new ms::LoaderOGL());
+	auto loadedData = loader->load_model(argv[7]);
 	
-	for (auto a : loader->load_model("/Users/mateuszstompor/Desktop/classroom.obj")) {
-		engine->scene->nodes.push_back(a);
+	for (auto a : std::get<0>(loadedData)) {
+		std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
+		node->geometry=a;
+		engine->scene->nodes.push_back(node);
+	}
+	
+	for (auto a : std::get<1>(loadedData)) {
+		engine->scene->materials.insert(a);
 	}
 	
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });

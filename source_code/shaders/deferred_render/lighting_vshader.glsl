@@ -4,8 +4,7 @@ layout (location = 1) in vec2 textureCoord;
 
 out vec2 TexCoords;
 
-void main()
-{
-    gl_Position = vec4(position, 1.0);
+void main() {
+    gl_Position = vec4(position, 1.0f);
     TexCoords = textureCoord;
 }

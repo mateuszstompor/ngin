@@ -29,9 +29,9 @@ void  ms::DeferredLightingShaderOGL::load () {
 
 }
 
-void ms::DeferredLightingShaderOGL::set_amount_of_point_lights (unsigned int amount) {
+void ms::DeferredLightingShaderOGL::set_amount_of_point_lights (int amount) {
 	GLint amountLocation = mglGetUniformLocation(program, "pointLightsAmount");
-	mglUniform1ui(amountLocation, amount);
+	mglUniform1i(amountLocation, amount);
 }
 
 void ms::DeferredLightingShaderOGL::set_point_light_power (unsigned int index, float power) {
@@ -52,9 +52,9 @@ void ms::DeferredLightingShaderOGL::set_point_light_transformation (unsigned int
 	glUniformMatrix4fv(transformationLocation, 1, GL_FALSE, transformation.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_amount_of_spot_lights (unsigned int amount) {
+void ms::DeferredLightingShaderOGL::set_amount_of_spot_lights (int amount) {
 	GLint amountLocation = mglGetUniformLocation(program, "spotLightsAmount");
-	mglUniform1ui(amountLocation, amount);
+	mglUniform1i(amountLocation, amount);
 }
 
 void ms::DeferredLightingShaderOGL::set_spot_light_power (unsigned int index, float power) {

@@ -47,6 +47,7 @@ add_executable(${PROJECT_NAME}
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/sceneNodeOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/geometryOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/textureOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp
 

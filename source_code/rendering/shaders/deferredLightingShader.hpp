@@ -17,12 +17,12 @@ namespace ms {
 	
 	public:
 		
-		virtual void 	set_amount_of_point_lights			(unsigned int amount) 										= 0;
+		virtual void 	set_amount_of_point_lights			(int amount) 												= 0;
 		virtual void 	set_point_light_power				(unsigned int index, float power) 							= 0;
 		virtual void 	set_point_light_color				(unsigned int index, const math::vec4 & color) 				= 0;
 		virtual void 	set_point_light_transformation		(unsigned int index, const math::mat4 & transformation) 	= 0;
 		
-		virtual void 	set_amount_of_spot_lights			(unsigned int amount)										= 0;
+		virtual void 	set_amount_of_spot_lights			(int amount)												= 0;
 		virtual void 	set_spot_light_power				(unsigned int index, float power) 							= 0;
 		virtual void 	set_spot_light_color				(unsigned int index, const math::vec4 & color) 				= 0;
 		virtual void 	set_spot_light_transformation		(unsigned int index, const math::mat4 & transformation) 	= 0;

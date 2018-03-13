@@ -10,6 +10,7 @@
 #define geometry_hpp
 
 #include <vector>
+#include <string>
 
 #include "vertex.hpp"
 #include "../resources/resource.hpp"
@@ -26,30 +27,24 @@ namespace ms {
 		virtual void 	use_vertices 		() = 0;
 		virtual void 	use_indicies 		() = 0;
 		
-		inline int		amount_of_vertices	() const;
-		inline int		amount_of_indices	() const;
+		void			set_material		(std::string name);
+		std::string		get_material_name	() const;
+		bool			has_material		() const;
 		
-		inline			Geometry			();
+		int				amount_of_vertices	() const;
+		int				amount_of_indices	() const;
+		
+						Geometry			();
 		virtual			~Geometry			() = default;
 		
 	protected:
-		
+				
 		std::vector <Vertex> 		vertices;
 		std::vector <unsigned int> 	indices;
+		std::string					associatedMaterial;
 
 	};
 	
 }
-
-ms::Geometry::Geometry() : vertices(std::vector<Vertex>()), indices(std::vector<unsigned int>()) { }
-
-int ms::Geometry::amount_of_vertices () const {
-	return static_cast<int>(vertices.size());
-}
-
-int ms::Geometry::amount_of_indices	() const {
-	return static_cast<int>(indices.size());
-}
-
 
 #endif /* geometry_hpp */

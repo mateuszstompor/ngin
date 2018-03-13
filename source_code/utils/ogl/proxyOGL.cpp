@@ -93,7 +93,10 @@ void _mglEnableVertexAttribArray (GLuint index) {
 GLint _mglGetUniformLocation (GLuint program, const GLchar* name) {
 	GLint tmp = glGetUniformLocation(program, name);
 	ms::utils::check_gl_error();
-	return tmp;
+	if(tmp == -1) {
+		std::cerr<< "UNIFORM_DOESNT_EXIST" << " " << name <<  std::endl;
+	}
+ 	return tmp;
 }
 
 void _mglUniform4fv (GLint location, GLsizei count, const GLfloat* v) {

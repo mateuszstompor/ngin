@@ -8,8 +8,12 @@
 
 #include "scene.hpp"
 
-ms::Scene::Scene (float nearPlan, float farPlan, float fovDegress, float cameraAspect) : directionalLight(nullptr), nodes(std::vector<std::shared_ptr<SceneNode>>()) {
+ms::Scene::Scene (float nearPlan, float farPlan, float fovDegress, float cameraAspect) : 	directionalLight(nullptr),
+																							nodes(std::vector<std::shared_ptr<SceneNode>>()),
+																							materials(std::map<std::string, std::shared_ptr<Material>>()){
+																								
 	cam = std::unique_ptr<Camera>( new PerspectiveCamera(nearPlan, farPlan, fovDegress, cameraAspect) );
+																								
 }
 
 ms::Camera & ms::Scene::get_camera() const {

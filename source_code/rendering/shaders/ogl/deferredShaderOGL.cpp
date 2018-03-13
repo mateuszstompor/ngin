@@ -27,7 +27,7 @@ void ms::DeferredShaderOGL::set_model_transformation (const math::mat4 & modelTr
 }
 
 void ms::DeferredShaderOGL::set_has_material (bool doesItHave) {
-	GLint hasMaterialLocation = mglGetUniformLocation(program, "material.hasMaterial");
+	GLint hasMaterialLocation = mglGetUniformLocation(program, "hasMaterial");
 	mglUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
 }
 

@@ -116,13 +116,15 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 
 		gShader->set_model_transformation(node->modelTransformation.get_transformation());
 		
-		if (auto material = node->material) {
+		auto material = scene->materials.find(node->geometry->get_material_name());
+		
+		if (material != scene->materials.end()) {
 			gShader->set_has_material(true);
-			gShader->set_material_ambient_color(material->ambientColor);
-			gShader->set_material_diffuse_color(material->diffuseColor);
-			gShader->set_material_specular_color(material->specularColor);
-			gShader->set_material_opacity(material->opacity);
-			gShader->set_material_shininess(material->shininess);
+			gShader->set_material_ambient_color(material->second->ambientColor);
+			gShader->set_material_diffuse_color(material->second->diffuseColor);
+			gShader->set_material_specular_color(material->second->specularColor);
+			gShader->set_material_opacity(material->second->opacity);
+			gShader->set_material_shininess(material->second->shininess);
 		} else {
 			gShader->set_has_material(false);
 		}
@@ -152,7 +154,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	
 	{
 		const std::vector<SpotLight> & spotLights = scene->get_spot_lights();
-		lightingShader->set_amount_of_spot_lights(static_cast<unsigned int>(spotLights.size()));
+		lightingShader->set_amount_of_spot_lights(static_cast<int>(spotLights.size()));
 		for(unsigned int index = 0; index < spotLights.size(); ++index) {
 			lightingShader->set_spot_light_power(index, spotLights[index].power);
 			lightingShader->set_spot_light_color(index, spotLights[index].color);
@@ -164,7 +166,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	
 	{
 		const std::vector<PointLight> & pointLights = scene->get_point_lights();
-		lightingShader->set_amount_of_point_lights(static_cast<unsigned int>(pointLights.size()));
+		lightingShader->set_amount_of_point_lights(static_cast<int>(pointLights.size()));
 		for(unsigned int index = 0; index < pointLights.size(); ++index) {
 			lightingShader->set_point_light_color(index, pointLights[index].color);
 			lightingShader->set_point_light_power(index, pointLights[index].power);
@@ -216,7 +218,9 @@ void ms::DeferredRenderOGL::load () {
 		mglGenRenderbuffers(1, &gRenderBuffer);
 		mglBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
 
-		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, frameBufferWidth, frameBufferHeight);
+		//TODO
+		//Set depth component to 16 in order to see image distortion
+		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, frameBufferWidth, frameBufferHeight);
 
 		mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
 

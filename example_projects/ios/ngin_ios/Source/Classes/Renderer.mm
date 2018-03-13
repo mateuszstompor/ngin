@@ -83,13 +83,21 @@ std::unique_ptr<ms::NGin> engine;
 
 	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(fvS, ffS, gvs, gfs, qvs, qfs, width, height, width, height, 0.01, 100, 90, width/height, _defaultFBOName));
 	std::unique_ptr<ms::Loader> loader = std::unique_ptr<ms::Loader>(new ms::LoaderOGL());
-
+	
 	NSString* model = [[NSBundle mainBundle] pathForResource:@"classroom" ofType:@"obj"];
 	std::string modelPath = std::string([model cStringUsingEncoding:NSUTF8StringEncoding]);
+	auto loadedData = loader->load_model(modelPath);
 
-	for (auto a : loader->load_model(modelPath)) {
-		engine->scene->nodes.push_back(a);
+	for (auto a : std::get<0>(loadedData)) {
+		std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
+		node->geometry=a;
+		engine->scene->nodes.push_back(node);
 	}
+	
+	for (auto a : std::get<1>(loadedData)) {
+		engine->scene->materials.insert(a);
+	}
+	
 
 
 	node->geometry = m;

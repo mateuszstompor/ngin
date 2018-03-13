@@ -32,6 +32,7 @@ namespace ms {
 		
 		// Shared resources
 		std::shared_ptr<Geometry> 			geometry;
+		//TODO should be removed?
 		std::shared_ptr<Material>			material;
 		
 	};
