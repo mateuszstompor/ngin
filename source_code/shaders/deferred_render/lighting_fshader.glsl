@@ -76,7 +76,7 @@ void main() {
 		float attenuation = 50.0f / (pow(dist, 2.0f) + 1.0f);
 		vec3 diffuse_color = pointLights[i].color.xyz * texture(gAlbedo, TexCoords).xyz * NdotL * attenuation;
 		vec3 specular_color = pointLights[i].color.xyz * pow(NdotR, texture(gAlbedo, TexCoords).w) * attenuation;
-		result += vec4(0.1f * texture(gAlbedo, TexCoords).xyz + diffuse_color + specular_color, 0.0f);
+		result += vec4(0.1f * texture(gAlbedo, TexCoords).xyz + diffuse_color/* + 0.specular_color*/, 0.0f);
 	}
 
 	FragColor = result;

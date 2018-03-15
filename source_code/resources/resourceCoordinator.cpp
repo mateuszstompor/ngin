@@ -29,6 +29,7 @@ void ms::ResourceCoordinator::register_unload (Resource* resource) {
 
 	#ifdef DEBUG
 		assert(std::find(loadedResources.begin(), loadedResources.end(), utils::ptr_to_string(resource)) != loadedResources.end());
+		assert(std::find(allocatedResources.begin(), allocatedResources.end(), utils::ptr_to_string(resource)) != allocatedResources.end());
 	#endif
 	
 	loadedResources.erase(utils::ptr_to_string(resource));
@@ -51,7 +52,11 @@ void ms::ResourceCoordinator::register_deallocation (Resource* resource) {
 		assert(std::find(allocatedResources.begin(), allocatedResources.end(), utils::ptr_to_string(resource)) != allocatedResources.end());
 
 	#endif
+	
+	#ifndef DEBUG
 	loadedResources.erase(utils::ptr_to_string(resource));
+	#endif
+	
 	allocatedResources.erase(utils::ptr_to_string(resource));
 }
 

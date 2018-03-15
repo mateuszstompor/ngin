@@ -21,9 +21,9 @@ namespace ms {
 	public:
 		
 						TextureOGL			(	GLenum 			target,
-												GLint			internalFormat,
-												GLenum			format,
-											 	GLenum 			type,
+											 	std::string		name,
+											 	Format			format,
+											 	AssociatedType	associatedType,
 												MinFilter 		minFilter,
 												MagFilter 		magFilter,
 												Wrapping 		sWrapping,
@@ -40,9 +40,12 @@ namespace ms {
 		virtual void 	use					() override;
 						~TextureOGL			() = default;
 		
-		static GLenum	to_ogl				(MinFilter 		minFilter);
-		static GLenum	to_ogl				(MagFilter 		magFilter);
-		static GLenum	to_ogl				(Wrapping 		wrapping);
+		static 	GLenum	to_ogl				(MinFilter 			minFilter);
+		static 	GLenum	to_ogl				(MagFilter 			magFilter);
+		static 	GLenum	to_ogl				(Wrapping 			wrapping);
+		static	GLenum	to_ogl				(Format 			format);
+		static 	GLenum	to_ogl				(AssociatedType 	type) ;
+				GLenum	underlying_type		() const;
 		
 	protected:
 		

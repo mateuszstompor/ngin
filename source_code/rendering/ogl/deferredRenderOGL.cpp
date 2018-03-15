@@ -9,7 +9,13 @@
 #include "deferredRenderOGL.hpp"
 
 namespace ms {
+	
 	typedef unsigned int ui;
+	
+	#define G_BUF_ALBEDO 		"G_BUF_ALBEDO"
+	#define G_BUF_POSITIONS 	"G_BUF_POSITIONS"
+	#define G_BUF_NORMALS 		"G_BUF_NORMALS"
+	
 }
 
 ms::DeferredRenderOGL::DeferredRenderOGL (std::shared_ptr<std::string> gVS,
@@ -27,9 +33,9 @@ ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRend
 	
 	
 	gPosition = std::unique_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
-														GL_RGB16F,
-														GL_RGB,
-														GL_FLOAT,
+														G_BUF_POSITIONS,
+														Texture::Format::rgb16,
+														Texture::AssociatedType::FLOAT,
 														Texture::MinFilter::linear,
 														Texture::MagFilter::linear,
 														Texture::Wrapping::clamp_to_edge,
@@ -37,9 +43,9 @@ ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRend
 														0, frameBufferWidth, frameBufferHeight));
 	
 	gNormal = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
-														GL_RGB16F,
-														GL_RGB,
-														GL_FLOAT,
+														G_BUF_NORMALS,
+														Texture::Format::rgb16,
+														Texture::AssociatedType::FLOAT,
 														Texture::MinFilter::linear,
 														Texture::MagFilter::linear,
 														Texture::Wrapping::clamp_to_edge,
@@ -47,9 +53,9 @@ ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRend
 														0, frameBufferWidth, frameBufferHeight));
 	
 	gAlbedo = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
-														GL_RGBA8,
-														GL_RGBA,
-														GL_UNSIGNED_BYTE,
+														G_BUF_ALBEDO,
+													  	Texture::Format::rgba8888,
+														Texture::AssociatedType::UNSIGNED_BYTE,
 														Texture::MinFilter::linear,
 														Texture::MagFilter::linear,
 														Texture::Wrapping::clamp_to_edge,
@@ -133,7 +139,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 		
 		node->geometry->use_indicies();
 		
-		mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, (void*)0 );
+		mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 	}
 	
 	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);

@@ -23,7 +23,7 @@ ms::Loader::model_data ms::Loader::load_model(std::string path) {
 		materials_map & materials = std::get<1>(data);
 		materials = load_materials(scene);
 	}
-	
+		
 	return data;
 }
 
@@ -123,15 +123,7 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 				#endif
 				
 				geometry->set_material(std::string(aiName.C_Str()));
-				//TODO load textures
-//				material->Get(AI_MATKEY_SHININESS, shininess);
-//				std::cout<<"shininess: "<<shininess<<std::endl;
-//				std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
-//																   aiTextureType_DIFFUSE, "texture_diffuse");
-//				textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-//				vector<Texture> specularMaps = loadMaterialTextures(material,
-//																	aiTextureType_SPECULAR, "texture_specular");
-//				textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+
 			}
 
 	}
@@ -146,23 +138,8 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 	return geometry;
 }
 
+
+
 ms::math::vec3 ms::Loader::to_vec3 (aiColor3D color) {
 	return ms::math::vec3 {color.r, color.g, color.b};
 }
-
-//TODO load textures
-//std::vector<ms::Texture> load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName) {
-//	std::vector<ms::Texture> textures;
-////	for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-////	{
-////		aiString str;
-////		mat->GetTexture(type, i, &str);
-////		Texture texture;
-////		texture.id = TextureFromFile(str.C_Str(), directory);
-////		texture.type = typeName;
-////		texture.path = str;
-////		textures.push_back(texture);
-////	}
-//	return textures;
-//}
-

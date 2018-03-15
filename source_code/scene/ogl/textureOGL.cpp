@@ -8,25 +8,41 @@
 
 #include "textureOGL.hpp"
 
+
+//TODO FORMAT
 ms::TextureOGL::TextureOGL	(	GLenum 			tar,
-							 	GLint			internalF,
-							 	GLenum			form,
-							 	GLenum 			typ,
+							 	std::string		name,
+							 	Format			internalF,
+							 	AssociatedType	typ,
 							 	MinFilter 		minFilter,
 							 	MagFilter 		magFilter,
 							 	Wrapping 		sWrapping,
 							 	Wrapping 		tWrapping,
 							 	unsigned int 	mipMapLevel,
 							 	unsigned int 	wid,
-							 	unsigned int 	hei) : 	ms::Texture(minFilter, magFilter, sWrapping, tWrapping, mipMapLevel, wid, hei),
-																target(tar), type(typ), internalFormat(internalF), colorFormat(form) { }
+							 	unsigned int 	hei) : 	ms::Texture(name,
+																	internalF,
+																	typ,
+																	minFilter,
+																	magFilter,
+																	sWrapping,
+																	tWrapping,
+																	mipMapLevel,
+																	wid,
+																	hei) {
+	
+	
+	target = tar;
+	type = TextureOGL::to_ogl(typ);
+	colorFormat = TextureOGL::to_ogl(internalF);
+	internalFormat = underlying_type();
+}
 
 void ms::TextureOGL::load () {
 	if(!is_loaded()) {
 		mglGenTextures(1, &this->texture);
 		
 		mglBindTexture(this->target, this->texture);
-		//		mglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, frameBufferWidth, frameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
 		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, nullptr);
 		mglTexParameteri(this->target, GL_TEXTURE_MIN_FILTER, to_ogl(this->minFilter));
@@ -110,4 +126,40 @@ const GLuint ms::TextureOGL::get_underlying_id () const {
 	return this->texture;
 }
 
+GLenum ms::TextureOGL::to_ogl (Format wrapping) {
+	switch (wrapping) {
+		case Format::rgb16:
+			return GL_RGB;
+		case Format::rgba8888:
+			return GL_RGBA;
+		default:
+			std::cerr << "format not supported" << std::endl;
+			assert(false);
+			break;
+	}
+}
+
+GLenum ms::TextureOGL::to_ogl (AssociatedType type) {
+	switch (type) {
+		case Texture::AssociatedType::FLOAT:
+			return GL_FLOAT;
+			break;
+		case Texture::AssociatedType::UNSIGNED_BYTE:
+			return GL_UNSIGNED_BYTE;
+		default:
+			std::cerr << "format not supported" << std::endl;
+			assert(false);
+			break;
+	}
+}
+
+GLenum ms::TextureOGL::underlying_type () const {
+	if (this->associatedType == AssociatedType::FLOAT && this->format == Texture::Format::rgb16) {
+		return GL_RGB16F;
+	} else if (this->associatedType == AssociatedType::UNSIGNED_BYTE && this->format == Texture::Format::rgba8888) {
+		return GL_RGBA8;
+	} else {
+		assert(false);
+	}
+}
 

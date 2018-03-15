@@ -39,13 +39,23 @@ namespace ms {
 	protected:
 		
 		model_data 							process_node			(aiNode *		node,
-																 	const aiScene *	scene);
-		//TODO load textures
-//		std::vector<Texture> 				load_material_textures	(aiMaterial *mat, aiTextureType type, std::string typeName);
+																	 const aiScene *	scene);
+		
 		std::shared_ptr<Geometry> 			process_geometry		(aiMesh * mesh, const aiScene * scene);
 		materials_map 						load_materials			(const aiScene * scene);
+		std::shared_ptr<Texture> 			load_texture 			(aiTexture * texture, std::string name);
 		ms::math::vec3						to_vec3					(aiColor3D color);
 		virtual std::shared_ptr<Geometry> 	get_geometry			() = 0;
+		virtual std::shared_ptr<Texture> 	get_texture				(std::string				name,
+																	 Texture::Format			format,
+																	 Texture::AssociatedType	associatedType,
+																	 Texture::MinFilter			minFilter,
+																	 Texture::MagFilter			magFilter,
+																	 Texture::Wrapping			sWrapping,
+																	 Texture::Wrapping			tWrapping,
+																	 unsigned int 				mipMapLevel,
+																	 unsigned int 				width,
+																	 unsigned int 				height) = 0;
 		
 	};
 	

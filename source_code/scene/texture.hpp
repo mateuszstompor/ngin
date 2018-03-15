@@ -11,6 +11,8 @@
 
 #include <memory>
 #include <vector>
+#include <cstdint>
+#include <string>
 
 #include "../resources/resource.hpp"
 
@@ -22,13 +24,20 @@ namespace ms {
 	
 	class Texture : public Resource {
 		
+		typedef uint8_t byte;
+		
 	public:
 		
 		enum class MinFilter;
 		enum class MagFilter;
 		enum class Wrapping;
+		enum class Format;
+		enum class AssociatedType;
 		
-		inline 			Texture		(MinFilter 				minFilter,
+		 inline 		Texture		(std::string			name,
+									 Format					format,
+									 AssociatedType			associatedType,
+									 MinFilter 				minFilter,
 									 MagFilter 				magFilter,
 									 Wrapping 				sWrapping,
 									 Wrapping 				tWrapping,
@@ -36,13 +45,19 @@ namespace ms {
 									 unsigned int 			width,
 									 unsigned int 			height
 									 );
+		
+		inline void		copy_data	(byte* data, size_t size);
+		
 		Texture &		operator = 	(const Texture &) = delete;
 						Texture		(const Texture &) = delete;
 		virtual void 	use			() = 0;
-		virtual 		~Texture	() = default;
+		inline virtual 	~Texture	();
 		
 	public:
 	
+		std::string								name;
+		Format									format;
+		AssociatedType							associatedType;
 		MinFilter 								minFilter;
 		MagFilter 								magFilter;
 		Wrapping 								sWrapping;
@@ -50,6 +65,7 @@ namespace ms {
 		unsigned int 							mipMapLevel;
 		unsigned int 							width;
 		unsigned int 							height;
+		byte *									rawData;
 		
 	};
 	
@@ -76,7 +92,37 @@ enum class ms::Texture::Wrapping {
 	clamp_to_border
 };
 
-ms::Texture::Texture (MinFilter minF, MagFilter magF, Wrapping sWrap, Wrapping tWrap, unsigned int mipMapL, unsigned int wid, unsigned int hei) :
-minFilter(minF), magFilter(magF), sWrapping(sWrap), tWrapping(tWrap), mipMapLevel(mipMapL), width(wid), height(hei) { }
+enum class ms::Texture::Format {
+	rgb16,
+	rgba8888
+};
+
+enum class ms::Texture::AssociatedType {
+	FLOAT,
+	UNSIGNED_BYTE
+};
+
+ms::Texture::Texture (std::string nam,  Format f, AssociatedType aT,MinFilter minF, MagFilter magF,
+					  Wrapping sWrap, Wrapping tWrap, unsigned int mipMapL, unsigned int wid, unsigned int hei) :
+																																			minFilter(minF),
+																																			magFilter(magF),
+																																			sWrapping(sWrap),
+																																			tWrapping(tWrap),
+																																			mipMapLevel(mipMapL),
+																																			width(wid),
+																																			height(hei),
+																																			name(nam),
+																																			format(f),
+																																			associatedType(aT),
+																																			rawData(nullptr){ }
+
+void ms::Texture::copy_data (byte* data, size_t size) {
+	delete [] rawData;
+	std::memcpy(rawData, data, size);
+}
+
+ms::Texture::~Texture() {
+	delete [] rawData;
+}
 
 #endif /* texture_hpp */
