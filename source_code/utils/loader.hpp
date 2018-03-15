@@ -9,6 +9,8 @@
 #ifndef loader_hpp
 #define loader_hpp
 
+#define STB_IMAGE_IMPLEMENTATION
+
 #include <memory>
 #include <string>
 #include <map>
@@ -29,6 +31,7 @@ namespace ms {
 		typedef std::vector<std::shared_ptr<Geometry>> 						geometries_vec;
 		typedef std::map<std::string, std::shared_ptr<Material>> 			materials_map;
 		typedef std::map<std::string, std::shared_ptr<Texture>> 			textures_map;
+		typedef std::tuple<materials_map, textures_map>						textures_and_materials;
 		
 		typedef std::tuple<geometries_vec, materials_map, textures_map>		model_data;
 		
@@ -42,8 +45,10 @@ namespace ms {
 																	 const aiScene *	scene);
 		
 		std::shared_ptr<Geometry> 			process_geometry		(aiMesh * mesh, const aiScene * scene);
-		materials_map 						load_materials			(const aiScene * scene);
-		std::shared_ptr<Texture> 			load_texture 			(aiTexture * texture, std::string name);
+		textures_and_materials 				load_materials			(const aiScene * scene, std::string directoryPath);
+		std::shared_ptr<Texture>			load_embeded_texture	(aiTexture * texture, std::string withName);
+		std::shared_ptr<Texture>			load_texture_from_file	(std::string absolutePath);
+		std::vector<std::string>			get_texture_paths		(aiTextureType type, aiMaterial * mat, std::string directoryPath);
 		ms::math::vec3						to_vec3					(aiColor3D color);
 		virtual std::shared_ptr<Geometry> 	get_geometry			() = 0;
 		virtual std::shared_ptr<Texture> 	get_texture				(std::string				name,

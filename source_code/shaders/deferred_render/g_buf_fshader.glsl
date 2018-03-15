@@ -14,15 +14,18 @@ struct Material {
 uniform int 								hasMaterial;
 uniform Material							material;
 
+uniform sampler2D 							diffuseTexture;
+
 in vec3		worldPosition;
 in vec3		normalVector;
+in vec2 	texCoord;
 
 out vec4	FragColor;
 
 void main(){
 	
 	if(hasMaterial == 1) {
-		gAlbedo = vec4(material.diffuse, material.shininess);
+		gAlbedo = vec4(texture(diffuseTexture, texCoord).xyz, material.shininess);
 	} else {
 		gAlbedo = vec4(0.0f, 1.0f, 0.0f, 0.13f);
 	}

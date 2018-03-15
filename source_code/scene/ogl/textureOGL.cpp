@@ -8,8 +8,6 @@
 
 #include "textureOGL.hpp"
 
-
-//TODO FORMAT
 ms::TextureOGL::TextureOGL	(	GLenum 			tar,
 							 	std::string		name,
 							 	Format			internalF,
@@ -44,7 +42,8 @@ void ms::TextureOGL::load () {
 		
 		mglBindTexture(this->target, this->texture);
 
-		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, nullptr);
+		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, (const GLvoid *) rawData);
+		
 		mglTexParameteri(this->target, GL_TEXTURE_MIN_FILTER, to_ogl(this->minFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_MAG_FILTER, to_ogl(this->magFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_WRAP_S, to_ogl(this->sWrapping));
@@ -128,9 +127,10 @@ const GLuint ms::TextureOGL::get_underlying_id () const {
 
 GLenum ms::TextureOGL::to_ogl (Format wrapping) {
 	switch (wrapping) {
-		case Format::rgb16:
+		case Format::rgb_8_8_8:
+		case Format::rgb_16_16_16:
 			return GL_RGB;
-		case Format::rgba8888:
+		case Format::rgba_8_8_8_8:
 			return GL_RGBA;
 		default:
 			std::cerr << "format not supported" << std::endl;
@@ -154,12 +154,19 @@ GLenum ms::TextureOGL::to_ogl (AssociatedType type) {
 }
 
 GLenum ms::TextureOGL::underlying_type () const {
-	if (this->associatedType == AssociatedType::FLOAT && this->format == Texture::Format::rgb16) {
-		return GL_RGB16F;
-	} else if (this->associatedType == AssociatedType::UNSIGNED_BYTE && this->format == Texture::Format::rgba8888) {
-		return GL_RGBA8;
-	} else {
-		assert(false);
+	if (this->associatedType == AssociatedType::FLOAT) {
+		if (this->format == Texture::Format::rgb_16_16_16) {
+			return GL_RGB16F;
+		}
+	} else if (this->associatedType == AssociatedType::UNSIGNED_BYTE) {
+		if (this->format == Texture::Format::rgba_8_8_8_8) {
+			return GL_RGBA8;
+		} else if (this->format == Texture::Format::rgb_8_8_8) {
+			return GL_RGB8;
+		}
 	}
+		
+	std::cerr << "Format not supported" << std::endl;
+	assert(false);
 }
 

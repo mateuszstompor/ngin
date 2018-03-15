@@ -264,6 +264,11 @@ int main(int argc, const char * argv[]) { {
 		engine->scene->materials.insert(a);
 	}
 	
+	for (auto a : std::get<2>(loadedData)) {
+		std::cout << std::get<2>(loadedData).size() << std::endl;
+		engine->scene->textures.insert(a);
+	}
+	
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
 	
 	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 1.0f, 1.0f, 1.0f}, ms::math::mat4::identity() * ms::math::transform::translate<float, 4>({-1.4, 4, -9})));

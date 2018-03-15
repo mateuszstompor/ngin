@@ -26,6 +26,7 @@ namespace ms {
 		virtual void 	use_normals 		() = 0;
 		virtual void 	use_vertices 		() = 0;
 		virtual void 	use_indicies 		() = 0;
+		virtual void 	use_texture_coord 	() = 0;
 		
 		void			set_material		(std::string name);
 		std::string		get_material_name	() const;

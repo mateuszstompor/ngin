@@ -50,16 +50,16 @@ void ms::ForwardRenderOGL::draw_scene (const Scene * scene) {
 		
 		shader->set_model_transformation(node->modelTransformation.get_transformation());
 		
-		if (auto material = node->material) {
-			shader->set_has_material(true);
-			shader->set_material_ambient_color(material->ambientColor);
-			shader->set_material_diffuse_color(material->diffuseColor);
-			shader->set_material_specular_color(material->specularColor);
-			shader->set_material_opacity(material->opacity);
-			shader->set_material_shininess(material->shininess);
-		} else {
-			shader->set_has_material(false);
-		}
+//		if (auto material = node->material) {
+//			shader->set_has_material(true);
+//			shader->set_material_ambient_color(material->ambientColor);
+//			shader->set_material_diffuse_color(material->diffuseColor);
+//			shader->set_material_specular_color(material->specularColor);
+//			shader->set_material_opacity(material->opacity);
+//			shader->set_material_shininess(material->shininess);
+//		} else {
+//			shader->set_has_material(false);
+//		}
 		
 		this->shader->use();
 		mglDrawArrays(GL_TRIANGLES, 0, 36);

@@ -43,7 +43,8 @@ namespace ms {
 		void 	use_normals 			() override;
 		void 	use_vertices 			() override;
 		void 	use_indicies 			() override;
-
+		void 	use_texture_coord	 	() override;
+		
 		void 	load					() override;
 		void 	unload					() override;
 		void 	load_vertices_to_buffer	();

@@ -93,8 +93,9 @@ enum class ms::Texture::Wrapping {
 };
 
 enum class ms::Texture::Format {
-	rgb16,
-	rgba8888
+	rgb_16_16_16,
+	rgb_8_8_8,
+	rgba_8_8_8_8
 };
 
 enum class ms::Texture::AssociatedType {
@@ -118,6 +119,7 @@ ms::Texture::Texture (std::string nam,  Format f, AssociatedType aT,MinFilter mi
 
 void ms::Texture::copy_data (byte* data, size_t size) {
 	delete [] rawData;
+	rawData = new byte [size];
 	std::memcpy(rawData, data, size);
 }
 

@@ -10,6 +10,7 @@
 #define textureOGL_hpp
 
 #include <cassert>
+#include <iostream>
 
 #include "../../utils/ogl/proxyOGL.hpp"
 #include "../texture.hpp"

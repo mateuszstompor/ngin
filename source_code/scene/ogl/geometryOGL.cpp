@@ -20,6 +20,14 @@ void ms::GeometryOGL::load() {
 	
 }
 
+void ms::GeometryOGL::use_texture_coord () {
+	if(!is_loaded()) {
+		load();
+	}
+	
+	mglBindBuffer(GL_ARRAY_BUFFER, texturesCooridnatesBuffer);
+}
+
 void ms::GeometryOGL::use_normals () {
 	if(!is_loaded()) {
 		load();

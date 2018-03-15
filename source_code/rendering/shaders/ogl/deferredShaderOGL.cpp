@@ -11,6 +11,18 @@
 
 ms::DeferredShaderOGL::DeferredShaderOGL(str_ptr vSS, str_ptr fSS) : ms::ShaderOGL(vSS, nullptr, nullptr, nullptr, fSS) { }
 
+void  ms::DeferredShaderOGL::load () {
+	ShaderOGL::load();
+	
+	mglUseProgram(program);
+	
+	GLint diffuseTextureLocation = mglGetUniformLocation(program, "diffuseTexture");
+	mglUniform1i(diffuseTextureLocation, 0);
+	
+	mglUseProgram(0);
+	
+}
+
 void ms::DeferredShaderOGL::set_projection_matrix (const math::mat4 & proj) {
 	GLint persp = mglGetUniformLocation(program, "perspectiveProjection");
 	mglUniformMatrix4fv(persp, 1, GL_FALSE, proj.c_array());

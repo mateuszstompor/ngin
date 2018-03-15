@@ -34,7 +34,7 @@ ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRend
 	
 	gPosition = std::unique_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
 														G_BUF_POSITIONS,
-														Texture::Format::rgb16,
+														Texture::Format::rgb_16_16_16,
 														Texture::AssociatedType::FLOAT,
 														Texture::MinFilter::linear,
 														Texture::MagFilter::linear,
@@ -44,7 +44,7 @@ ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRend
 	
 	gNormal = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
 														G_BUF_NORMALS,
-														Texture::Format::rgb16,
+														Texture::Format::rgb_16_16_16,
 														Texture::AssociatedType::FLOAT,
 														Texture::MinFilter::linear,
 														Texture::MagFilter::linear,
@@ -54,7 +54,7 @@ ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRend
 	
 	gAlbedo = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
 														G_BUF_ALBEDO,
-													  	Texture::Format::rgba8888,
+													  	Texture::Format::rgba_8_8_8_8,
 														Texture::AssociatedType::UNSIGNED_BYTE,
 														Texture::MinFilter::linear,
 														Texture::MagFilter::linear,
@@ -126,6 +126,19 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 		
 		if (material != scene->materials.end()) {
 			gShader->set_has_material(true);
+			
+			if(material->second->diffuseTexturesNames.size() > 0) {
+				
+				auto textureIt = scene->textures.find(material->second->diffuseTexturesNames[0]);
+				
+				if ( textureIt != scene->textures.end()) {
+					mglActiveTexture(GL_TEXTURE0);
+					textureIt->second->use();
+				}
+				
+			}
+			
+			
 			gShader->set_material_ambient_color(material->second->ambientColor);
 			gShader->set_material_diffuse_color(material->second->diffuseColor);
 			gShader->set_material_specular_color(material->second->specularColor);
@@ -224,9 +237,8 @@ void ms::DeferredRenderOGL::load () {
 		mglGenRenderbuffers(1, &gRenderBuffer);
 		mglBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
 
-		//TODO
-		//Set depth component to 16 in order to see image distortion
-		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, frameBufferWidth, frameBufferHeight);
+		//TODO Set depth component to 16 in order to see image distortion
+		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, frameBufferWidth, frameBufferHeight);
 
 		mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
 

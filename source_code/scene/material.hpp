@@ -19,13 +19,17 @@ namespace ms {
 		
 		inline Material(math::vec3 ambient, math::vec3 diffuse, math::vec3 specular, float shininess, float opacity, std::string name);
 		
-		math::vec3 	diffuseColor;
-		math::vec3 	ambientColor;
-		math::vec3 	specularColor;
-		float 		shininess;
-		float		opacity;
-		std::string	name;
+		math::vec3 					diffuseColor;
+		math::vec3 					ambientColor;
+		math::vec3 					specularColor;
+		float 						shininess;
+		float						opacity;
+		std::string					name;
 		
+		std::vector <std::string> 	diffuseTexturesNames;
+		std::vector <std::string> 	specularTexturesNames;
+		std::vector <std::string> 	normalTexturesNames;
+		std::vector <std::string> 	heightTexturesNames;
 	};
 	
 }

@@ -8,6 +8,8 @@
 
 #include "loader.hpp"
 
+#include "../../third-party-libs/stb_image.h"
+
 ms::Loader::model_data ms::Loader::load_model(std::string path) {
 	
 	Assimp::Importer importer;
@@ -18,18 +20,22 @@ ms::Loader::model_data ms::Loader::load_model(std::string path) {
 	}
 	
 	model_data data = process_node(scene->mRootNode, scene);
+	textures_and_materials texmat = load_materials(scene, path.substr(0, path.find_last_of('/')));
+	std::get<2>(data) = std::get<1>(texmat);
 	
 	if(scene->HasMaterials()) {
-		materials_map & materials = std::get<1>(data);
-		materials = load_materials(scene);
+		std::get<1>(data) = std::get<0>(texmat);
 	}
-		
+	
 	return data;
 }
 
-ms::Loader::materials_map ms::Loader::load_materials (const aiScene * scene) {
+ms::Loader::textures_and_materials ms::Loader::load_materials (const aiScene * scene, std::string directoryPath) {
 	
-	materials_map materials;
+	textures_and_materials texmat;
+	
+	materials_map & 	materials 	= std::get<0>(texmat);
+	textures_map & 		textures 	= std::get<1>(texmat);
 	
 	for(unsigned int i = 0; i < scene->mNumMaterials; ++i) {
 		aiMaterial * mat = scene->mMaterials[i];
@@ -44,6 +50,8 @@ ms::Loader::materials_map ms::Loader::load_materials (const aiScene * scene) {
 		mat->Get(AI_MATKEY_OPACITY, opacity);
 		mat->Get(AI_MATKEY_SHININESS, shininess);
 		
+		//TODO handle embedded textures
+		
 		std::string name (aiName.C_Str());
 		
 		std::shared_ptr<Material> msMaterial(new Material(to_vec3(ambient),
@@ -53,12 +61,95 @@ ms::Loader::materials_map ms::Loader::load_materials (const aiScene * scene) {
 														  opacity,
 														  name));
 		
+		msMaterial->diffuseTexturesNames 	= get_texture_paths(aiTextureType_DIFFUSE, mat, directoryPath);
+		msMaterial->specularTexturesNames 	= get_texture_paths(aiTextureType_SPECULAR, mat, directoryPath);
+		msMaterial->normalTexturesNames 	= get_texture_paths(aiTextureType_NORMALS, mat, directoryPath);
+		msMaterial->heightTexturesNames 	= get_texture_paths(aiTextureType_HEIGHT, mat, directoryPath);
+		
+		#ifdef DEBUG
+			std::cout << aiName.C_Str() << 	" DIFFUSE: " 	<< msMaterial->diffuseTexturesNames.size() 	<< std:: endl;
+			std::cout << aiName.C_Str() << 	" SPECULAR: " 	<< msMaterial->specularTexturesNames.size()	<< std:: endl;
+			std::cout << aiName.C_Str() <<  " NORMALS: " 	<< msMaterial->normalTexturesNames.size() 	<< std:: endl;
+			std::cout << aiName.C_Str() <<  " HEIGHT: " 	<< msMaterial->heightTexturesNames.size() 	<< std:: endl;
+		#endif
+		
+		for (auto absolutePath : msMaterial->diffuseTexturesNames) {
+			if(auto texture = load_texture_from_file(absolutePath)) {
+				textures.insert(std::make_pair(absolutePath, texture));
+			}
+		}
+	
+		for (auto absolutePath : msMaterial->specularTexturesNames) {
+			if(auto texture = load_texture_from_file(name)) {
+				textures.insert(std::make_pair(name, texture));
+			}
+		}
+		
+		for (auto absolutePath : msMaterial->normalTexturesNames) {
+			if(auto texture = load_texture_from_file(absolutePath)) {
+				textures.insert(std::make_pair(absolutePath, texture));
+			}
+		}
+		
+		for (auto absolutePath : msMaterial->heightTexturesNames) {
+			if(auto texture = load_texture_from_file(absolutePath)) {
+				textures.insert(std::make_pair(absolutePath, texture));
+			}
+		}
+		
 		materials.insert(std::make_pair(name, msMaterial));
 		
 	}
 	
-	return materials;
+	#ifdef DEBUG
 	
+		std::cout << "materials count: " << materials.size() << std::endl;
+		std::cout << "textures count: " << textures.size() << std::endl;
+	
+	#endif
+	
+	return texmat;
+	
+}
+
+std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string absolutePath) {
+	int width, height, bpp;
+	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
+	if (data) {
+		std::shared_ptr<Texture> texture;
+		if(bpp == 3) {
+			texture = get_texture(absolutePath,
+								  Texture::Format::rgb_8_8_8,
+								  Texture::AssociatedType::UNSIGNED_BYTE,
+								  Texture::MinFilter::linear,
+								  Texture::MagFilter::linear,
+								  Texture::Wrapping::clamp_to_edge,
+								  Texture::Wrapping::clamp_to_edge,
+								  0,
+								  static_cast<unsigned int>(width),
+								  static_cast<unsigned int>(height));
+			
+		} else {
+			
+			texture = get_texture(absolutePath,
+								  Texture::Format::rgba_8_8_8_8,
+								  Texture::AssociatedType::UNSIGNED_BYTE,
+								  Texture::MinFilter::linear,
+								  Texture::MagFilter::linear,
+								  Texture::Wrapping::clamp_to_edge,
+								  Texture::Wrapping::clamp_to_edge,
+								  0,
+								  static_cast<unsigned int>(width),
+								  static_cast<unsigned int>(height));
+			
+		}
+		
+		texture->copy_data(data, width * height * bpp);
+		
+		return texture;
+	} else {
+		return nullptr;
+	}
 }
 
 ms::Loader::model_data ms::Loader::process_node (aiNode * node, const aiScene *	scene) {
@@ -72,14 +163,16 @@ ms::Loader::model_data ms::Loader::process_node (aiNode * node, const aiScene *	
 			if(mesh->HasNormals() && mesh->HasFaces() && mesh->HasPositions()) {
 				std::shared_ptr<Geometry> geometry = get_geometry();
 				geometry = process_geometry(mesh, scene);
-				std::get<0>(data).push_back(geometry);
+				geometries.push_back(geometry);
 			}
 		}
 	
 		for(unsigned int i = 0; i < node->mNumChildren; ++i) {
 			model_data proceededNodes = process_node(node->mChildren[i], scene);
 			geometries_vec & proceededGeo = std::get<0>(proceededNodes);
-			geometries.insert(geometries.end(), std::make_move_iterator(proceededGeo.begin()), std::make_move_iterator(proceededGeo.end()));
+			geometries.insert(geometries.end(),
+							  std::make_move_iterator(proceededGeo.begin()),
+							  std::make_move_iterator(proceededGeo.end()));
 		}
 	
 	return data;
@@ -138,7 +231,21 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 	return geometry;
 }
 
+std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType type, aiMaterial * mat, std::string directoryPath) {
+	std::vector<std::string> paths;
+	unsigned int texCount = mat->GetTextureCount(type);
+	for (unsigned int i = 0; i < texCount; ++i) {
+		aiString path;
+		mat->GetTexture(type, i, &path);
+		paths.push_back(directoryPath + "/" + path.C_Str());
+	}
+	return paths;
+}
 
+std::shared_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture * texture, std::string withName) {
+	//TO DO
+	return nullptr;
+}
 
 ms::math::vec3 ms::Loader::to_vec3 (aiColor3D color) {
 	return ms::math::vec3 {color.r, color.g, color.b};

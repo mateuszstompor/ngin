@@ -14,6 +14,7 @@
 #include "lights/directionalLight.hpp"
 #include "lights/pointLight.hpp"
 #include "lights/spotLight.hpp"
+#include "texture.hpp"
 #include "sceneNode.hpp"
 #include "geometry.hpp"
 
@@ -43,6 +44,7 @@ namespace ms {
 //		protected:
 		std::vector<std::shared_ptr<SceneNode>> 			nodes;
 		std::map<std::string, std::shared_ptr<Material>>	materials;
+		std::map<std::string, std::shared_ptr<Texture>>		textures;
 		std::vector<PointLight>								pointLights;
 		std::vector<SpotLight>								spotLights;
 		std::unique_ptr<Camera> 							cam;

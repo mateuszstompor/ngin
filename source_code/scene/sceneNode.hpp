@@ -32,13 +32,11 @@ namespace ms {
 		
 		// Shared resources
 		std::shared_ptr<Geometry> 			geometry;
-		//TODO should be removed?
-		std::shared_ptr<Material>			material;
 		
 	};
 	
 }
 
-ms::SceneNode::SceneNode() : geometry(nullptr), modelTransformation(PositionedObject()), material(nullptr) { }
+ms::SceneNode::SceneNode() : geometry(nullptr), modelTransformation(PositionedObject()) { }
 
 #endif /* scene_node_hpp */
