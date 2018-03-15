@@ -107,7 +107,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 	
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	mglClearColor(0.2f, 0.4f, 1.0f, 1.0f);
 	
 	mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -133,6 +133,17 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 				
 				if ( textureIt != scene->textures.end()) {
 					mglActiveTexture(GL_TEXTURE0);
+					textureIt->second->use();
+				}
+				
+			}
+			
+			if(material->second->specularTexturesNames.size() > 0) {
+				
+				auto textureIt = scene->textures.find(material->second->specularTexturesNames[0]);
+				
+				if ( textureIt != scene->textures.end()) {
+					mglActiveTexture(GL_TEXTURE1);
 					textureIt->second->use();
 				}
 				
@@ -238,7 +249,11 @@ void ms::DeferredRenderOGL::load () {
 		mglBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
 
 		//TODO Set depth component to 16 in order to see image distortion
-		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, frameBufferWidth, frameBufferHeight);
+		#ifdef ios_build
+		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, frameBufferWidth, frameBufferHeight);
+		#else
+		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, frameBufferWidth, frameBufferHeight);
+		#endif
 
 		mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
 

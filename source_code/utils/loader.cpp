@@ -194,33 +194,33 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 			vertex.normal.y() = mesh->mNormals[i].y;
 			vertex.normal.z() = mesh->mNormals[i].z;
 
-			geometry->vertices.push_back(vertex);
-
 			if(mesh->mTextureCoords[0]) {
 				vertex.textureCoordinates.x() = mesh->mTextureCoords[0][i].x;
 				vertex.textureCoordinates.y() = mesh->mTextureCoords[0][i].y;
 			} else {
 				vertex.textureCoordinates = math::vec2{0.0f, 0.0f};
 			}
-
-			if(mesh->mMaterialIndex > 0) {
-				
-				aiMaterial * material = scene->mMaterials[mesh->mMaterialIndex];
-				
-				aiString aiName;
-				
-				material->Get(AI_MATKEY_NAME, aiName);
-				
-				#ifdef DEBUG
-				assert(strcmp(aiName.C_Str(), "") != 0);
-				#endif
-				
-				geometry->set_material(std::string(aiName.C_Str()));
-
-			}
+		
+			geometry->vertices.push_back(vertex);
 
 	}
 
+	if(mesh->mMaterialIndex > 0) {
+		
+		aiMaterial * material = scene->mMaterials[mesh->mMaterialIndex];
+		
+		aiString aiName;
+		
+		material->Get(AI_MATKEY_NAME, aiName);
+		
+		#ifdef DEBUG
+		assert(strcmp(aiName.C_Str(), "") != 0);
+		#endif
+		
+		geometry->set_material(std::string(aiName.C_Str()));
+		
+	}
+	
 	for(unsigned int i = 0; i < mesh->mNumFaces; ++i) {
 		aiFace face = mesh->mFaces[i];
 		for(unsigned int j = 0; j < face.mNumIndices; ++j) {
@@ -243,7 +243,8 @@ std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType type, aiMa
 }
 
 std::shared_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture * texture, std::string withName) {
-	//TO DO
+	//TODO implement embeded 
+	assert(false);
 	return nullptr;
 }
 

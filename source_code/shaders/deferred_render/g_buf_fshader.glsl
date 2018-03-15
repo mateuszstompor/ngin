@@ -15,6 +15,7 @@ uniform int 								hasMaterial;
 uniform Material							material;
 
 uniform sampler2D 							diffuseTexture;
+uniform sampler2D 							specularTexture;
 
 in vec3		worldPosition;
 in vec3		normalVector;
@@ -25,7 +26,7 @@ out vec4	FragColor;
 void main(){
 	
 	if(hasMaterial == 1) {
-		gAlbedo = vec4(texture(diffuseTexture, texCoord).xyz, material.shininess);
+		gAlbedo = vec4(texture(diffuseTexture, texCoord).xyz, texture(specularTexture, texCoord).y);
 	} else {
 		gAlbedo = vec4(0.0f, 1.0f, 0.0f, 0.13f);
 	}

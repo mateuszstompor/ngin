@@ -24,7 +24,7 @@ namespace ms {
 	
 	class Texture : public Resource {
 		
-		typedef uint8_t byte;
+		typedef unsigned char byte;
 		
 	public:
 		

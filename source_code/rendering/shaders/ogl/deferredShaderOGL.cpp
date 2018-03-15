@@ -19,6 +19,9 @@ void  ms::DeferredShaderOGL::load () {
 	GLint diffuseTextureLocation = mglGetUniformLocation(program, "diffuseTexture");
 	mglUniform1i(diffuseTextureLocation, 0);
 	
+	GLint specularTextureLocation = mglGetUniformLocation(program, "specularTexture");
+	mglUniform1i(specularTextureLocation, 1);
+	
 	mglUseProgram(0);
 	
 }

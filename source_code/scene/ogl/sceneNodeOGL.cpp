@@ -29,17 +29,17 @@ void ms::SceneNodeOGL::load	() {
 		
 		if(geometry) {
 			
-			geometry->use_texture_coord();
-			mglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), nullptr);
-			mglEnableVertexAttribArray(2);
+			geometry->use_vertices();
+			mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+			mglEnableVertexAttribArray(0);
 			
 			geometry->use_normals();
 			mglVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
 			mglEnableVertexAttribArray(1);
 			
-			geometry->use_vertices();
-			mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-			mglEnableVertexAttribArray(0);
+			geometry->use_texture_coord();
+			mglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), nullptr);
+			mglEnableVertexAttribArray(2);
 			
 		}
 		

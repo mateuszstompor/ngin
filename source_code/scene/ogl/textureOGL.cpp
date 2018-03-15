@@ -42,7 +42,7 @@ void ms::TextureOGL::load () {
 		
 		mglBindTexture(this->target, this->texture);
 
-		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, (const GLvoid *) rawData);
+		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, rawData);
 		
 		mglTexParameteri(this->target, GL_TEXTURE_MIN_FILTER, to_ogl(this->minFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_MAG_FILTER, to_ogl(this->magFilter));
@@ -98,6 +98,7 @@ GLenum ms::TextureOGL::to_ogl (MagFilter magFilter) {
 			return GL_NEAREST;
 		default:
 			//critical error
+			std::cerr << "Filter type not supported" << std::endl;
 			assert(false);
 			break;
 	}
@@ -116,6 +117,7 @@ GLenum ms::TextureOGL::to_ogl (Wrapping wrapping) {
 			
 		default:
 			//critical error
+			std::cerr << "Wrapping type not supported" << std::endl;
 			assert(false);
 			break;
 	}
@@ -128,6 +130,7 @@ const GLuint ms::TextureOGL::get_underlying_id () const {
 GLenum ms::TextureOGL::to_ogl (Format wrapping) {
 	switch (wrapping) {
 		case Format::rgb_8_8_8:
+			return GL_RGB;
 		case Format::rgb_16_16_16:
 			return GL_RGB;
 		case Format::rgba_8_8_8_8:
