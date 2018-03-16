@@ -1,31 +1,42 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(CMAKE_CXX_STANDARD 17)
+project(ngin)
+project(${PROJECT_NAME} CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 else()
     add_definitions(-DDEBUG=1)
-    set (CMAKE_CXX_FLAGS "-g -fno-inline -fno-omit-frame-pointer -m64")
 endif(NOT CMAKE_BUILD_TYPE)
 
-project(ngin)
+if(WIN32)
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        add_compile_options(/bigobj)
+        add_definitions(-D__WIN32__)
+    else()
+        message( FATAL_ERROR "Compiler not supported. You need to use visual studio compiler" )
+    endif()
+else()
+    set (CMAKE_CXX_FLAGS "-g -fno-inline -fno-omit-frame-pointer -m64")
+endif()
 
 find_package(OpenGL REQUIRED)
 
 # GLFW
 add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master)
-add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
-
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/include)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps)
+
+# assimp
+add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include)
 
-include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS})
-include_directories(${ASSIMP_INCLUDE_DIRS})
+include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS} ${ASSIMP_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME}
 
@@ -70,6 +81,9 @@ file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/g_buf_fshader.
 
 file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/lighting_vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/lighting_fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+#models
+file(COPY ${CMAKE_SOURCE_DIR}/models/classroom DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(${PROJECT_NAME}  glfw     ${GLFW_LIBRARIES})
 target_link_libraries(${PROJECT_NAME}  assimp   ${ASSIMP_LIBRARIES})

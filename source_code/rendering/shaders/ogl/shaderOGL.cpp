@@ -44,7 +44,7 @@ void ms::ShaderOGL::compile_program() {
 	
 	GLuint vshader 		= mglCreateShader(GL_VERTEX_SHADER);
 	
-	#ifdef mac_build
+	#ifndef ios_build
 	
 	GLuint cshader		= mglCreateShader(GL_TESS_CONTROL_SHADER);
 	GLuint evalshader 	= mglCreateShader(GL_TESS_EVALUATION_SHADER);
@@ -58,7 +58,7 @@ void ms::ShaderOGL::compile_program() {
 		compile_shader(program, vshader, GL_VERTEX_SHADER, add_header_to_source(*vertexSource));
 	}
 	
-	#ifdef mac_build
+	#ifndef ios_build
 
 	if (tesselationControlSource) {
 		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, add_header_to_source(*tesselationControlSource));
@@ -83,7 +83,7 @@ void ms::ShaderOGL::compile_program() {
 	if (vertexSource)
 		mglDeleteShader(vshader);
 	
-	#ifdef mac_build
+	#ifndef ios_build
 	
 		if (tesselationControlSource)
 			mglDeleteShader(cshader);

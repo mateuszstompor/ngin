@@ -13,11 +13,9 @@
 #include <string>
 #include <memory>
 #include <iostream>
-#include <initializer_list>
 #include <cassert>
 
 #include "../../source_code/umbrellaHeader.hpp"
-#include "assimp/scene.h"
 
 std::unique_ptr<ms::NGin> engine;
 
@@ -103,79 +101,79 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			break;
 		
 		case GLFW_KEY_T: {
-			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(0.1);
+			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(0.1f);
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 		break;
 		case GLFW_KEY_Y: {
-			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(-0.1);
+			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(-0.1f);
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 		break;
 		
 		case GLFW_KEY_Q: {
-			auto a = ms::math::transform::translate<float, 4>({0, 0.0, 0.1});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, 0.0f, 0.1f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_E: {
-			auto a = ms::math::transform::translate<float, 4>({0, 0.0, -0.1});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, 0.0f, -0.1f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_A: {
-			auto a = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({0.1f, 0.0f, 0.0f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_D: {
-			auto a = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({-0.f, 0.0f, 0.0f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_W: {
-			auto a = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, 0.1f, 0.0f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_S: {
-			auto a = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, -0.1f, 0.0f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 			break;
 			
 		case GLFW_KEY_J: {
-			auto a = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, -0.1f, 0.0f});
 			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
 		}
 			break;
 		case GLFW_KEY_L: {
-			auto a = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, 0.1f, 0.0f});
 			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
 		}
 			break;
 		case GLFW_KEY_K: {
-			auto a = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({-0.1f, 0.0f, 0.0f});
 			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
 		}
 			break;
 		case GLFW_KEY_I: {
-			auto a = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
+			auto a = ms::math::transform::translate<float, 4>({0.1f, 0.0f, 0.0f});
 			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
 		}
 			break;
 		case GLFW_KEY_U: {
-			auto a = ms::math::transform::translate<float, 4>({0.0, 0.0, -0.1});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, 0.0f, -0.1f});
 			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
 		}
 			break;
 		case GLFW_KEY_O: {
-			auto a = ms::math::transform::translate<float, 4>({0.0, 0.0, 0.1});
+			auto a = ms::math::transform::translate<float, 4>({0.0f, 0.0f, 0.1f});
 			engine->scene->pointLights[0].set_transformation(engine->scene->pointLights[0].get_transformation() * a);
 		}
 			break;
@@ -186,12 +184,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 int main(int argc, const char * argv[]) { {
-	
-	if (argc < 8) {
-		std::cerr << "Pass vertex and fragment shader source path for forward, deferred render, its lighting and model as parameter" << std::endl;
-		exit(1);
-	}
-	
+
+	bool useCommandLineArguments = argc == 8;
+
 	int width = 1200;
 	int height = 800;
 	int framebufferWidth = 600;
@@ -211,7 +206,6 @@ int main(int argc, const char * argv[]) { {
 	glfwSwapInterval(1);
 	
 	GLFWwindow *window = glfwCreateWindow(width, height, ms::windowName.c_str(), nullptr, nullptr);
-	
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 	glfwGetFramebufferSize(window, &width, &height);
 	
@@ -233,12 +227,12 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	auto forwardRenderVSource = ms::utils::load_contents_of_file	(argv[1]);
-	auto forwardRenderFSource = ms::utils::load_contents_of_file	(argv[2]);
-	auto deferredRenderVSource = ms::utils::load_contents_of_file	(argv[3]);
-	auto deferredRenderFSource = ms::utils::load_contents_of_file	(argv[4]);
-	auto deferredRenderLightingVSource = ms::utils::load_contents_of_file	(argv[5]);
-	auto deferredRenderLightingFSource = ms::utils::load_contents_of_file	(argv[6]);
+	auto forwardRenderVSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[1] : "./vshader.glsl");
+	auto forwardRenderFSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[2] :"./fshader.glsl");
+	auto deferredRenderVSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[3] :"./g_buf_vshader.glsl");
+	auto deferredRenderFSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[4] :"./g_buf_fshader.glsl");
+	auto deferredRenderLightingVSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[5] :"./lighting_vshader.glsl");
+	auto deferredRenderLightingFSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[6] :"./lighting_fshader.glsl");
 	
 	std::shared_ptr<std::string> vSFR = std::shared_ptr<std::string>(new std::string(forwardRenderVSource));
 	std::shared_ptr<std::string> fSFR = std::shared_ptr<std::string>(new std::string(forwardRenderFSource));
@@ -247,34 +241,30 @@ int main(int argc, const char * argv[]) { {
 	std::shared_ptr<std::string> vSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingVSource));
 	std::shared_ptr<std::string> fSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingFSource));
 	
-	
-	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, framebufferWidth, framebufferHeight, 0.01, 100, 90, float(width)/height, 0));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(width)/height, 0));
 	
 	std::unique_ptr<ms::Loader> loader = std::unique_ptr<ms::Loader>(new ms::LoaderOGL());
-	auto loadedData = loader->load_model(argv[7]);
 	
+	auto loadedData = loader->load_model(useCommandLineArguments ? argv[7] : "./classroom/classroom.obj");
 	for (auto a : std::get<0>(loadedData)) {
 		std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
 		node->geometry=a;
 		engine->scene->nodes.push_back(node);
 	}
-	
+
 	for (auto a : std::get<1>(loadedData)) {
 		engine->scene->materials.insert(a);
 	}
-	
+
 	for (auto a : std::get<2>(loadedData)) {
 		std::cout << std::get<2>(loadedData).size() << std::endl;
 		engine->scene->textures.insert(a);
 	}
-	
+
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
-	
-	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 1.0f, 1.0f, 1.0f}, ms::math::mat4::identity() * ms::math::transform::translate<float, 4>({-1.4, 4, -9})));
-	
+
+	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 1.0f, 1.0f, 1.0f}, ms::math::mat4::identity() * ms::math::transform::translate<float, 4>({-1.4f, 4.0f, -9.0f})));
 	engine->load();
-	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
 	glfwSetKeyCallback(window, key_callback);
@@ -293,12 +283,10 @@ int main(int argc, const char * argv[]) { {
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	engine->unload();
-	
-	engine = nullptr;
-	
-	
+
+	engine = nullptr;	
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	

@@ -6,8 +6,8 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef shader_headers
-#define shader_headers
+#ifndef shader_headers_hpp
+#define shader_headers_hpp
 
 #include <string>
 
@@ -24,7 +24,7 @@ namespace ms {
 
 		
 		static std::string mac_os_header =
-		"#version 410 core"
+		"#version 410 core\n"
 		#ifdef DEBUG
 		"#define DEBUG 1\n"
 		#endif
@@ -34,5 +34,5 @@ namespace ms {
 	
 }
 
-#endif
+#endif // shader_headers_hpp
 
