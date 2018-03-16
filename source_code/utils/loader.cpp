@@ -123,8 +123,8 @@ std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string abs
 								  Texture::AssociatedType::UNSIGNED_BYTE,
 								  Texture::MinFilter::linear,
 								  Texture::MagFilter::linear,
-								  Texture::Wrapping::clamp_to_edge,
-								  Texture::Wrapping::clamp_to_edge,
+								  Texture::Wrapping::repeat,
+								  Texture::Wrapping::repeat,
 								  0,
 								  static_cast<unsigned int>(width),
 								  static_cast<unsigned int>(height));
@@ -136,8 +136,8 @@ std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string abs
 								  Texture::AssociatedType::UNSIGNED_BYTE,
 								  Texture::MinFilter::linear,
 								  Texture::MagFilter::linear,
-								  Texture::Wrapping::clamp_to_edge,
-								  Texture::Wrapping::clamp_to_edge,
+								  Texture::Wrapping::repeat,
+								  Texture::Wrapping::repeat,
 								  0,
 								  static_cast<unsigned int>(width),
 								  static_cast<unsigned int>(height));

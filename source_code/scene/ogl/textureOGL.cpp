@@ -106,6 +106,10 @@ GLenum ms::TextureOGL::to_ogl (MagFilter magFilter) {
 
 GLenum ms::TextureOGL::to_ogl (Wrapping wrapping) {
 	switch (wrapping) {
+		case Texture::Wrapping::mirrored_repeat:
+			return GL_MIRRORED_REPEAT;
+		case Texture::Wrapping::repeat:
+			return GL_REPEAT;
 		case Texture::Wrapping::clamp_to_edge:
 			return GL_CLAMP_TO_EDGE;
 			

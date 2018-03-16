@@ -1,5 +1,8 @@
 # ngin
 
+## 15.03.2018 Simple UV Texture mapping
+<img src="/screenshots/simpleUVTexturing.png" width="100%" style="float: left; display:inline-block;"/>
+
 ## 13.03.2018 Assimp materials and models loading
 <p>I have integrated project with assimp library. It enables engine to load models, their materials and textures. You can see that there is one additional image comparing to the post from the previous day. It represents specular component of material</p>
 <img src="screenshots/specular_component_assimp_loading.png" width="100%" style="float: left; display:inline-block;"/>
