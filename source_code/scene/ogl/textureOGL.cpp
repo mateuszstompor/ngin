@@ -34,6 +34,7 @@ ms::TextureOGL::TextureOGL	(	GLenum 			tar,
 	type = TextureOGL::to_ogl(typ);
 	colorFormat = TextureOGL::to_ogl(internalF);
 	internalFormat = underlying_type();
+	this->texture = 0;
 }
 
 void ms::TextureOGL::load () {
@@ -43,7 +44,8 @@ void ms::TextureOGL::load () {
 		mglBindTexture(this->target, this->texture);
 
 		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, rawData);
-		
+		delete [] this->rawData;
+		rawData = nullptr;
 		mglTexParameteri(this->target, GL_TEXTURE_MIN_FILTER, to_ogl(this->minFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_MAG_FILTER, to_ogl(this->magFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_WRAP_S, to_ogl(this->sWrapping));
@@ -64,7 +66,7 @@ void ms::TextureOGL::use () {
 void ms::TextureOGL::unload () {
 	if(is_loaded()) {
 		mglDeleteTextures(1, &this->texture);
-
+		this->texture = 0;
 		Resource::unload();
 	}
 }

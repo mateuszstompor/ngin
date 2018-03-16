@@ -23,6 +23,8 @@
 namespace ms {
 	
 	class Texture : public Resource {
+
+	protected:
 		
 		typedef unsigned char byte;
 		
@@ -34,24 +36,24 @@ namespace ms {
 		enum class Format;
 		enum class AssociatedType;
 		
-		 inline 		Texture		(std::string			name,
-									 Format					format,
-									 AssociatedType			associatedType,
-									 MinFilter 				minFilter,
-									 MagFilter 				magFilter,
-									 Wrapping 				sWrapping,
-									 Wrapping 				tWrapping,
-									 unsigned int 			mipMapLevel,
-									 unsigned int 			width,
-									 unsigned int 			height
-									 );
+		 inline 		Texture				(std::string			name,
+											 Format					format,
+											 AssociatedType			associatedType,
+											 MinFilter 				minFilter,
+											 MagFilter 				magFilter,
+											 Wrapping 				sWrapping,
+											 Wrapping 				tWrapping,
+											 unsigned int 			mipMapLevel,
+											 unsigned int 			width,
+											 unsigned int 			height
+											 );
 		
-		inline void		copy_data	(byte* data, size_t size);
-		
-		Texture &		operator = 	(const Texture &) = delete;
-						Texture		(const Texture &) = delete;
-		virtual void 	use			() = 0;
-		inline virtual 	~Texture	();
+		inline void		copy_data			(byte* data, size_t size);
+		inline int		channels_amount 	() const;
+		Texture &		operator = 			(const Texture &) = delete;
+						Texture				(const Texture &) = delete;
+		virtual void 	use					() = 0;
+		inline virtual 	~Texture			();
 		
 	public:
 	
@@ -121,6 +123,19 @@ void ms::Texture::copy_data (byte* data, size_t size) {
 	delete [] rawData;
 	rawData = new byte [size];
 	std::memcpy(rawData, data, size);
+}
+
+int ms::Texture::channels_amount () const {
+	switch (this->format) {
+		case Format::rgba_8_8_8_8:
+			return 4;
+		case Format::rgb_8_8_8:
+		case Format::rgb_16_16_16:
+			return 3;
+		default:
+			std::cerr << "critical error, format not handled" << std::endl;
+			assert(false);
+	}
 }
 
 ms::Texture::~Texture() {

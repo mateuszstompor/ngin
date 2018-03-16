@@ -68,6 +68,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_brightWood.jpg
 
 newmtl beigeWall
 Ns 96.078431
@@ -78,6 +79,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_wallPaint.jpg
 
 newmtl beige_paintedPipe
 Ns 96.078431
@@ -160,6 +162,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd cork.jpg
 
 newmtl crinkledPaper_paper
 Ns 96.078431
@@ -170,6 +173,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd crinkledPaper.png
 
 newmtl dayLight_portal
 Ns 96.078431
@@ -190,6 +194,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_01.jpg
 
 newmtl drawing.002
 Ns 96.078431
@@ -200,6 +205,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_02.jpg
 
 newmtl drawing.003
 Ns 96.078431
@@ -210,6 +216,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_03.jpg
 
 newmtl drawing.005
 Ns 96.078431
@@ -220,6 +227,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_05.jpg
 
 newmtl drawing.006
 Ns 96.078431
@@ -230,6 +238,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_06.jpg
 
 newmtl drawing.007
 Ns 96.078431
@@ -240,6 +249,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_07.jpg
 
 newmtl drawing.008
 Ns 96.078431
@@ -250,6 +260,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd childDrawing_08.jpg
 
 newmtl dustBin_wireframe
 Ns 96.078431
@@ -260,6 +271,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd dustbin_wireframe.png
 
 newmtl dustbin_bottom_metal
 Ns 96.078431
@@ -290,6 +302,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd glass.jpg
 
 newmtl greyDiffusePaint
 Ns 96.078431
@@ -330,6 +343,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_leather.jpg
 
 newmtl leatherChair_metal
 Ns 96.078431
@@ -340,6 +354,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_bareMetal.png
 
 newmtl leatherCoat
 Ns 96.078431
@@ -350,6 +365,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_leather.jpg
 
 newmtl paintedBlind
 Ns 96.078431
@@ -370,6 +386,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_paper_01.png
 
 newmtl paper
 Ns 96.078431
@@ -380,6 +397,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd crinkledPaper_02.png
 
 newmtl plaster
 Ns 96.078431
@@ -450,6 +468,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_bareMetal.png
 
 newmtl schoolDesk_plastic
 Ns 96.078431
@@ -460,6 +479,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_brownWood.jpg
 
 newmtl schoolDesk_wood
 Ns 96.078431
@@ -470,6 +490,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_brightWood.png
 
 newmtl suitCase_leather
 Ns 123.529412
@@ -480,6 +501,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_leather.jpg
 
 newmtl suitCase_metal
 Ns 96.078431
@@ -490,6 +512,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_bluredMetal.png
 
 newmtl suitCoat_darkWood
 Ns 96.078431
@@ -500,6 +523,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_darkWood.png
 
 newmtl suitCoat_metal
 Ns 96.078431
@@ -510,6 +534,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_scratch.jpg
 
 newmtl teacherDesk_blackPlastic
 Ns 96.078431
@@ -530,6 +555,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_bluredMetal.png
 
 newmtl teacherDesk_plastic
 Ns 96.078431
@@ -550,6 +576,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_darkWood.png
 
 newmtl varnishedWoodDoor
 Ns 96.078431
@@ -560,6 +587,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_darkWood.png
 
 newmtl wallClock_Glass
 Ns 96.078431
@@ -590,6 +618,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_darkWood.png
 
 newmtl wallClock_whiteBackground
 Ns 96.078431
@@ -600,6 +629,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd wallClock.png
 
 newmtl whiteChalk
 Ns 96.078431
@@ -640,6 +670,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd base_woodFloor.jpg
 
 newmtl woodPlanks
 Ns 96.078431
@@ -650,6 +681,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd woodPlanks.jpg
 
 newmtl worldMap
 Ns 96.078431
@@ -660,6 +692,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd europeMap.png
 
 newmtl yellowLetter
 Ns 96.078431
@@ -670,6 +703,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd crinkledPaper.png
 
 newmtl zapBook_color
 Ns 96.078431
@@ -680,3 +714,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd zapBook.jpg
