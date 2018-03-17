@@ -33,7 +33,6 @@
 	#elif mac_build
 
 		#include <OpenGL/gl3.h>
-		#include <OpenGL/gl.h>
 
 	#endif
 

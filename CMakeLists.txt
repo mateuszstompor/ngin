@@ -5,32 +5,51 @@ project(${PROJECT_NAME} CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
+if(WIN32)
+  message("Build for windows")
+else()
+  message("Build for unix")
+endif(WIN32)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
+    message("Building project in release mode")
 else()
     add_definitions(-DDEBUG=1)
+    message("Building project in debug mode")
 endif(NOT CMAKE_BUILD_TYPE)
 
 if(WIN32)
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+
+        file(COPY
+                ${CMAKE_SOURCE_DIR}/third-party-libs/config.h
+             DESTINATION
+                ${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include/assimp
+             )
+
         add_compile_options(/bigobj)
         add_definitions(-D__WIN32__)
+
     else()
         message( FATAL_ERROR "Compiler not supported. You need to use visual studio compiler" )
-    endif()
+    endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 else()
     set (CMAKE_CXX_FLAGS "-g -fno-inline -fno-omit-frame-pointer -m64")
-endif()
+endif(WIN32)
 
 find_package(OpenGL REQUIRED)
 
 # GLFW
-add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/include)
+
+if(WIN32)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps)
+endif(WIN32)
 
 # assimp
 add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
@@ -38,7 +57,7 @@ include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include)
 
 include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS} ${ASSIMP_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME}
+set(PROJECT_SOURCE_FILES
 
         ${CMAKE_SOURCE_DIR}/libs/source/glMath.h
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
@@ -61,13 +80,19 @@ add_executable(${PROJECT_NAME}
         ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/textureOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp
-
         ${CMAKE_SOURCE_DIR}/example_projects/mac/main.cpp
-        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
-        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
-        ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c
-        third-party-libs/renderdoc.h
         )
+
+if (WIN32)
+    set(PROJECT_SOURCE_FILES ${PROJECT_SOURCE_FILES}
+            third-party-libs/renderdoc.h
+            ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
+            ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
+            ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c
+            )
+endif (WIN32)
+
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILES})
 
 #renderdoc
 file(COPY ${CMAKE_SOURCE_DIR}/third-party-libs/renderdoc.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -94,7 +119,7 @@ IF (APPLE)
     target_link_libraries       (${PROJECT_NAME} "-framework CoreVideo")
     target_link_libraries       (${PROJECT_NAME} "-framework IOKit")
     target_link_libraries       (${PROJECT_NAME} "-framework Cocoa")
-ENDIF()
+ENDIF(APPLE)
 
 target_link_libraries       (${PROJECT_NAME} ${OPENGL_LIBRARIES})
 target_compile_definitions  (${PROJECT_NAME} PRIVATE "GLFW_INCLUDE_NONE")

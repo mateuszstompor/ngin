@@ -12,6 +12,7 @@
 #include <memory>
 #include <vector>
 #include <cstdint>
+#include <cassert>
 #include <string>
 
 #include "../resources/resource.hpp"
@@ -21,21 +22,21 @@
 //	//	//	//	//	//	//	//	//	//	//	//	//	//	//	//	//	//	//
 
 namespace ms {
-	
+
 	class Texture : public Resource {
 
 	protected:
-		
+
 		typedef unsigned char byte;
-		
+
 	public:
-		
+
 		enum class MinFilter;
 		enum class MagFilter;
 		enum class Wrapping;
 		enum class Format;
 		enum class AssociatedType;
-		
+
 		 inline 		Texture				(std::string			name,
 											 Format					format,
 											 AssociatedType			associatedType,
@@ -47,16 +48,16 @@ namespace ms {
 											 unsigned int 			width,
 											 unsigned int 			height
 											 );
-		
+
 		inline void		copy_data			(byte* data, size_t size);
 		inline int		channels_amount 	() const;
 		Texture &		operator = 			(const Texture &) = delete;
 						Texture				(const Texture &) = delete;
 		virtual void 	use					() = 0;
 		inline virtual 	~Texture			();
-		
+
 	public:
-	
+
 		std::string								name;
 		Format									format;
 		AssociatedType							associatedType;
@@ -68,9 +69,9 @@ namespace ms {
 		unsigned int 							width;
 		unsigned int 							height;
 		byte *									rawData;
-		
+
 	};
-	
+
 }
 
 enum class ms::Texture::MinFilter {
