@@ -134,19 +134,28 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 				if ( textureIt != scene->textures.end()) {
 					mglActiveTexture(GL_TEXTURE0);
 					textureIt->second->use();
+					gShader->set_has_diffuse_texture(true);
+				} else {
+					gShader->set_has_diffuse_texture(false);
 				}
 				
+			} else {
+				gShader->set_has_diffuse_texture(false);
 			}
 			
 			if(material->second->specularTexturesNames.size() > 0) {
-				
 				auto textureIt = scene->textures.find(material->second->specularTexturesNames[0]);
-				
 				if ( textureIt != scene->textures.end()) {
 					mglActiveTexture(GL_TEXTURE1);
 					textureIt->second->use();
+					gShader->set_has_specular_texture(true);
+
+				} else {
+					gShader->set_has_specular_texture(false);
 				}
 				
+			} else {
+				gShader->set_has_specular_texture(false);
 			}
 			
 			
@@ -188,7 +197,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 		for(unsigned int index = 0; index < spotLights.size(); ++index) {
 			lightingShader->set_spot_light_power(index, spotLights[index].power);
 			lightingShader->set_spot_light_color(index, spotLights[index].color);
-			lightingShader->set_spot_light_transformation(index, spotLights[index].get_transformation());
+			lightingShader->set_spot_light_position(index, spotLights[index].position);
 			lightingShader->set_spot_light_angle(index, spotLights[index].lightingAngleDegrees);
 			lightingShader->set_spot_light_direction(index, spotLights[index].direction);
 		}
@@ -200,7 +209,7 @@ void ms::DeferredRenderOGL::draw_scene (const Scene * scene) {
 		for(unsigned int index = 0; index < pointLights.size(); ++index) {
 			lightingShader->set_point_light_color(index, pointLights[index].color);
 			lightingShader->set_point_light_power(index, pointLights[index].power);
-			lightingShader->set_point_light_transformation(index, pointLights[index].get_transformation());
+			lightingShader->set_point_light_position(index, pointLights[index].position);
 		}
 	}
 	

@@ -10,13 +10,13 @@ struct DirectionalLight {
 struct PointLight {
 	float 		power;
 	vec4		color;
-	mat4		transformation;
+	vec3		position;
 };
 
 struct SpotLight {
 	float 		power;
 	vec4 		color;
-	mat4		transformation;
+	vec3		position;
 	float		angleDegrees;
 	vec3		direction;
 };
@@ -65,18 +65,19 @@ void main() {
 	vec4 result = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	for (i = 0; i < pointLightsAmount; i++) {
-		mat4 lightTransform = pointLights[i].transformation;
-		vec3 lightPosition = vec3(lightTransform[3][0], lightTransform[3][1], lightTransform[3][2]);
+		vec3 lightPosition = pointLights[i].position;
 		vec3 L = texture(gPosition, TexCoords).xyz - lightPosition;
 		float dist = length(L);
 		vec3 N = normalize(texture(gNormal, TexCoords).xyz);
 		vec3 R = reflect(-L, N);
 		float NdotR = max(0.0f, dot(N, R));
 		float NdotL = max(0.0f, dot(N, L));
-		float attenuation = 50.0f / (pow(dist, 2.0f) + 1.0f);
+		float attenuation = 1.0f / (pow(dist, 2.0f) * 1.0f/pointLights[i].power  + 1.0f);
 		vec3 diffuse_color = pointLights[i].color.xyz * texture(gAlbedo, TexCoords).xyz * NdotL * attenuation;
+		
 		vec3 specular_color = pointLights[i].color.xyz * pow(NdotR, texture(gAlbedo, TexCoords).w) * attenuation;
-		result += vec4(0.1f * texture(gAlbedo, TexCoords).xyz + diffuse_color/* + 0.specular_color*/, 0.0f);
+		
+		result += vec4(0.1f * texture(gAlbedo, TexCoords).xyz + diffuse_color + specular_color, 0.0f);
 	}
 
 	FragColor = result;

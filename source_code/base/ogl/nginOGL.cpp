@@ -55,3 +55,11 @@ void ms::NGinOGL::draw_scene() {
 	deferredRenderer->clear_frame();
 	deferredRenderer->draw_scene(scene.get());
 }
+
+std::shared_ptr<ms::SceneNode> ms::NGinOGL::get_node() {
+	return std::shared_ptr<SceneNode>(new SceneNodeOGL());
+}
+
+std::unique_ptr<ms::Loader> ms::NGinOGL::get_loader () {
+	return std::unique_ptr<Loader>(new LoaderOGL());
+}

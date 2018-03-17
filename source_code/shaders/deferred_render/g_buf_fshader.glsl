@@ -14,7 +14,10 @@ struct Material {
 uniform int 								hasMaterial;
 uniform Material							material;
 
+uniform int 								hasDiffuseTexture;
 uniform sampler2D 							diffuseTexture;
+
+uniform int 								hasSpecularTexture;
 uniform sampler2D 							specularTexture;
 
 in vec3		worldPosition;
@@ -26,7 +29,8 @@ out vec4	FragColor;
 void main(){
 	
 	if(hasMaterial == 1) {
-		gAlbedo = vec4(texture(diffuseTexture, texCoord).xyz, texture(specularTexture, texCoord).y);
+		gAlbedo.xyz = hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : material.diffuse;
+		gAlbedo.w = hasSpecularTexture == 1 ? texture(specularTexture, texCoord).x : material.shininess;
 	} else {
 		gAlbedo = vec4(0.0f, 1.0f, 0.0f, 0.13f);
 	}

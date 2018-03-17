@@ -80,8 +80,8 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (const aiScene * s
 		}
 	
 		for (auto absolutePath : msMaterial->specularTexturesNames) {
-			if(auto texture = load_texture_from_file(name)) {
-				textures.insert(std::make_pair(name, texture));
+			if(auto texture = load_texture_from_file(absolutePath)) {
+				textures.insert(std::make_pair(absolutePath, texture));
 			}
 		}
 		

@@ -46,10 +46,10 @@ void ms::DeferredLightingShaderOGL::set_point_light_color (unsigned int index, c
 	mglUniform4fv(colorLocation, 1, color.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_point_light_transformation (unsigned int index, const math::mat4 & transformation) {
-	std::string name = "pointLights[" + std::to_string(index) + "].transformation";
-	GLint transformationLocation = mglGetUniformLocation(program, name.c_str());
-	glUniformMatrix4fv(transformationLocation, 1, GL_FALSE, transformation.c_array());
+void ms::DeferredLightingShaderOGL::set_point_light_position (unsigned int index, const math::vec3 & position) {
+	std::string name = "pointLights[" + std::to_string(index) + "].position";
+	GLint positionLocation = mglGetUniformLocation(program, name.c_str());
+	mglUniform3fv(positionLocation, 1, position.c_array());
 }
 
 void ms::DeferredLightingShaderOGL::set_amount_of_spot_lights (int amount) {
@@ -84,10 +84,10 @@ void ms::DeferredLightingShaderOGL::set_spot_light_color (unsigned int index, co
 	mglUniform4fv(colorLocation, 1, color.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_spot_light_transformation (unsigned int index, const math::mat4 & transformation) {
-	std::string name = "spotLights[" + std::to_string(index) + "].transformation";
-	GLint transformationLocation = mglGetUniformLocation(program, name.c_str());
-	glUniformMatrix4fv(transformationLocation, 1, GL_FALSE, transformation.c_array());
+void ms::DeferredLightingShaderOGL::set_spot_light_position (unsigned int index, const math::vec3 & position) {
+	std::string name = "spotLights[" + std::to_string(index) + "].position";
+	GLint positionLocation = mglGetUniformLocation(program, name.c_str());
+	glUniform3fv(positionLocation, 1, position.c_array());
 }
 
 void ms::DeferredLightingShaderOGL::set_spot_light_angle (unsigned int index, float angle) {

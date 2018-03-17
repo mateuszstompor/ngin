@@ -75,9 +75,6 @@ std::unique_ptr<ms::NGin> engine;
 	std::shared_ptr<std::string> qvs = std::shared_ptr<std::string>(new std::string([drLvsg cStringUsingEncoding:NSUTF8StringEncoding]));
 	std::shared_ptr<std::string> qfs = std::shared_ptr<std::string>(new std::string([drLfsg cStringUsingEncoding:NSUTF8StringEncoding]));
 
-	std::shared_ptr<ms::Geometry> m = std::shared_ptr<ms::Geometry>(new ms::GeometryOGL());
-	std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
-
 	float width = backingWidth;
 	float height = backingHeight;
 
@@ -86,25 +83,11 @@ std::unique_ptr<ms::NGin> engine;
 	
 	NSString* model = [[NSBundle mainBundle] pathForResource:@"classroom" ofType:@"obj"];
 	std::string modelPath = std::string([model cStringUsingEncoding:NSUTF8StringEncoding]);
-	auto loadedData = loader->load_model(modelPath);
-
-	for (auto a : std::get<0>(loadedData)) {
-		std::shared_ptr<ms::SceneNode> node = std::shared_ptr<ms::SceneNode>(new ms::SceneNodeOGL());
-		node->geometry=a;
-		engine->scene->nodes.push_back(node);
-	}
 	
-	for (auto a : std::get<1>(loadedData)) {
-		engine->scene->materials.insert(a);
-	}
+	engine->load_model(modelPath);
 	
-
-
-	node->geometry = m;
-
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
 
-	engine->scene->nodes.push_back(node);
 	engine->scene->get_camera().set_transformation(ms::math::transform::translate<float, 4>({0, 0, -1}));
 	engine->load();
 	

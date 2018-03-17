@@ -12,6 +12,8 @@
 #include "../ngin.hpp"
 #include "../../rendering/ogl/forwardRenderOGL.hpp"
 #include "../../rendering/ogl/deferredRenderOGL.hpp"
+#include "../../utils/ogl/loaderOGL.hpp"
+#include "../../scene/ogl/sceneNodeOGL.hpp"
 
 namespace ms {
     
@@ -36,8 +38,10 @@ namespace ms {
 							 GLuint defaultFBO
 							 );
 		
-        void    draw_scene  () override;
-		void 	load		() override;
+        void    						draw_scene  () override;
+		void 							load		() override;
+		std::unique_ptr<Loader>			get_loader	() override;
+		std::shared_ptr<SceneNode>		get_node	() override;
 		
     };
     

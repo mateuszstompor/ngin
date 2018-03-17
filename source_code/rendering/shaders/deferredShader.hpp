@@ -28,6 +28,9 @@ namespace ms {
 		virtual void	set_material_opacity		(float opacity)					= 0;
 		virtual void	set_material_shininess		(float shininess)				= 0;
 		
+		virtual void	set_has_diffuse_texture		(bool doesItHave)	 			= 0;
+		virtual void	set_has_specular_texture	(bool doesItHave)	 			= 0;
+		
 		virtual			~DeferredShader()									= default;
 		
 	};

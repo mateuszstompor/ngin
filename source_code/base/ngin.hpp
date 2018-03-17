@@ -16,6 +16,7 @@
 #include "../scene/scene.hpp"
 #include "../resources/resource.hpp"
 #include "../resources/resourceCoordinator.hpp"
+#include "../utils/loader.hpp"
 
 namespace ms {
     
@@ -23,24 +24,28 @@ namespace ms {
       
     public:
         
-							NGin        		(unsigned int screenWidth,
-												 unsigned int screenHeight,
-												 float camNear,
-												 float camFar,
-												 float fovDegrees,
-												 float aspect);
-		
-		virtual void 		load 				() = 0;
-		virtual void 		unload 				();
-        virtual void		draw_scene  		() = 0;
-		DeferredRender & 	get_deferred_render	() const;
-		ForwardRender & 	get_forward_render	() const;
-		virtual        		~NGin       		() = default;
+												NGin        		(unsigned int screenWidth,
+																	 unsigned int screenHeight,
+																	 float camNear,
+																	 float camFar,
+																	 float fovDegrees,
+																	 float aspect);
+		virtual void							load_model			(std::string absolutePath);
+		virtual void 							load 				() = 0;
+		virtual void 							unload 				();
+        virtual void							draw_scene  		() = 0;
+		DeferredRender & 						get_deferred_render	() const;
+		ForwardRender & 						get_forward_render	() const;
+		virtual        							~NGin       		() = default;
 		
 		std::unique_ptr<Scene>                  scene;
 		
 	protected:
 		
+		virtual std::unique_ptr<Loader>			get_loader() = 0;
+		virtual std::shared_ptr<SceneNode>		get_node() = 0;
+		
+		std::unique_ptr<Loader>					loader;
 		std::unique_ptr<DeferredRender>         deferredRenderer;
 		std::unique_ptr<ForwardRender>          forwardRenderer;
 		unsigned int 							screenWidth;

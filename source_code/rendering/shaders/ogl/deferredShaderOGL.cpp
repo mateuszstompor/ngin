@@ -26,6 +26,16 @@ void  ms::DeferredShaderOGL::load () {
 	
 }
 
+void ms::DeferredShaderOGL::set_has_diffuse_texture (bool doesItHave) {
+	GLint hasDiffuseTextureLocation = mglGetUniformLocation(program, "hasDiffuseTexture");
+	mglUniform1i(hasDiffuseTextureLocation, doesItHave == true ? 1 : 0);
+}
+
+void ms::DeferredShaderOGL::set_has_specular_texture (bool doesItHave) {
+	GLint hasSpecularTextureLocation = mglGetUniformLocation(program, "hasSpecularTexture");
+	mglUniform1i(hasSpecularTextureLocation, doesItHave == true ? 1 : 0);
+}
+
 void ms::DeferredShaderOGL::set_projection_matrix (const math::mat4 & proj) {
 	GLint persp = mglGetUniformLocation(program, "perspectiveProjection");
 	mglUniformMatrix4fv(persp, 1, GL_FALSE, proj.c_array());

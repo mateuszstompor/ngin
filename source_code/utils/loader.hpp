@@ -28,14 +28,13 @@ namespace ms {
 	
 	class Loader {
 		
+	public:
+	
 		typedef std::vector<std::shared_ptr<Geometry>> 						geometries_vec;
 		typedef std::map<std::string, std::shared_ptr<Material>> 			materials_map;
 		typedef std::map<std::string, std::shared_ptr<Texture>> 			textures_map;
 		typedef std::tuple<materials_map, textures_map>						textures_and_materials;
-		
 		typedef std::tuple<geometries_vec, materials_map, textures_map>		model_data;
-		
-	public:
 		
 		model_data	load_model(std::string path);
 		

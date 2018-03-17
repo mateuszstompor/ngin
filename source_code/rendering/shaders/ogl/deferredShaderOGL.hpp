@@ -32,6 +32,8 @@ namespace ms {
 		virtual void	set_material_specular_color	(const math::vec3 & specular)		override;
 		virtual void	set_material_opacity		(float opacity)						override;
 		virtual void	set_material_shininess		(float shininess)					override;
+		virtual void	set_has_diffuse_texture		(bool doesItHave)	 				override;
+		virtual void	set_has_specular_texture	(bool doesItHave)	 				override;
 
 	};
 	
