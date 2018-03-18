@@ -153,7 +153,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) { {
 
-	bool useCommandLineArguments = argc == 8;
+	bool useCommandLineArguments = argc == 2;
 
 	int width = 1200;
 	int height = 800;
@@ -195,23 +195,9 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	auto forwardRenderVSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[1] : "./vshader.glsl");
-	auto forwardRenderFSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[2] :"./fshader.glsl");
-	auto deferredRenderVSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[3] :"./g_buf_vshader.glsl");
-	auto deferredRenderFSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[4] :"./g_buf_fshader.glsl");
-	auto deferredRenderLightingVSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[5] :"./lighting_vshader.glsl");
-	auto deferredRenderLightingFSource = ms::utils::load_contents_of_file (useCommandLineArguments ? argv[6] :"./lighting_fshader.glsl");
-	
-	std::shared_ptr<std::string> vSFR = std::shared_ptr<std::string>(new std::string(forwardRenderVSource));
-	std::shared_ptr<std::string> fSFR = std::shared_ptr<std::string>(new std::string(forwardRenderFSource));
-	std::shared_ptr<std::string> vSDR = std::shared_ptr<std::string>(new std::string(deferredRenderVSource));
-	std::shared_ptr<std::string> fSDR = std::shared_ptr<std::string>(new std::string(deferredRenderFSource));
-	std::shared_ptr<std::string> vSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingVSource));
-	std::shared_ptr<std::string> fSDLR = std::shared_ptr<std::string>(new std::string(deferredRenderLightingFSource));
-	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(vSFR, fSFR, vSDR, fSDR, vSDLR, fSDLR, width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(width)/height, 0));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(width)/height, 0));
 		
-	engine->load_model(useCommandLineArguments ? argv[7] : "./classroom/classroom.obj");
+	engine->load_model(useCommandLineArguments ? argv[1] : "./classroom/classroom.obj");
 
 	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
 

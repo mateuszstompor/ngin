@@ -8,13 +8,7 @@
 
 #include "nginOGL.hpp"
 
-ms::NGinOGL::NGinOGL (	std::shared_ptr<std::string> forwardRenderVertexShaderSource,
-						std::shared_ptr<std::string> forwardRenderFragmentShaderSource,
-					  	std::shared_ptr<std::string> deferredRenderVertexShaderSource,
-					  	std::shared_ptr<std::string> deferredRenderFragmentShaderSource,
-					  	std::shared_ptr<std::string> deferredRenderLightingVertexShaderSource,
-					  	std::shared_ptr<std::string> deferredRenderLightingFragmentShaderSource,
-						unsigned int screenWidth,
+ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 						unsigned int screenHeight,
 						unsigned int frameBufferWidth,
 						unsigned int frameBufferHeight,
@@ -24,14 +18,22 @@ ms::NGinOGL::NGinOGL (	std::shared_ptr<std::string> forwardRenderVertexShaderSou
 						float aspect,
 					  	GLuint defaultFBO
 						) : NGin(screenWidth, screenHeight, camNear, camFar, fovDegrees, aspect) {
-    
+	
+	
+	std::string forwardRenderVertexShaderSource = shader::get_shader_of_type(shader::Type::forward_render_phong_vshader);
+	std::string forwardRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::forward_render_phong_fshader);
+	std::string deferredRenderVertexShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_g_buf_vertex_shader);
+	std::string deferredRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_g_buf_fragment_shader);
+	std::string deferredRenderLightingVertexShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_light_pass_vshader);
+	std::string deferredRenderLightingFragmentShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_light_pass_fshader);
+	
     forwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(forwardRenderVertexShaderSource,
 						  forwardRenderFragmentShaderSource,
 						  screenWidth,
 						  screenHeight,
 						  frameBufferWidth,
 						  frameBufferHeight));
-	
+
 	auto defPtr = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(deferredRenderVertexShaderSource,
 																			  deferredRenderFragmentShaderSource,
 																			  deferredRenderLightingVertexShaderSource,
@@ -49,11 +51,6 @@ void ms::NGinOGL::load () {
 	forwardRenderer->load();
 	deferredRenderer->load();
 	deferredRenderer->use();
-}
-
-void ms::NGinOGL::draw_scene() {
-	deferredRenderer->clear_frame();
-	deferredRenderer->draw_scene(scene.get());
 }
 
 std::shared_ptr<ms::SceneNode> ms::NGinOGL::get_node() {

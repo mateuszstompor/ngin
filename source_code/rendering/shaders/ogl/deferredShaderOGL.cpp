@@ -9,7 +9,7 @@
 #include "deferredShaderOGL.hpp"
 
 
-ms::DeferredShaderOGL::DeferredShaderOGL(str_ptr vSS, str_ptr fSS) : ms::ShaderOGL(vSS, nullptr, nullptr, nullptr, fSS) { }
+ms::DeferredShaderOGL::DeferredShaderOGL(std::string vSS, std::string fSS) : ms::ShaderOGL(vSS, "", "", "", fSS) { }
 
 void  ms::DeferredShaderOGL::load () {
 	ShaderOGL::load();

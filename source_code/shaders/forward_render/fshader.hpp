@@ -1,34 +1,6 @@
-
+R"(
 #define MAX_SPOT_LIGHT_AMOUNT	20
 #define MAX_POINT_LIGHT_AMOUNT	20
-
-struct DirectionalLight {
-	vec3    	direction;
-	vec4    	color;
-};
-
-struct PointLight {
-	float 		power;
-	vec4		color;
-	vec3		position;
-};
-
-struct SpotLight {
-	float 		power;
-	vec4 		color;
-	vec3		position;
-	float		angleDegrees;
-	vec3		direction;
-};
-
-struct Material {
-	vec3 	diffuse;
-	vec3 	ambient;
-	vec3 	specular;
-	float 	shininess;
-	float	opacity;
-};
-
 
 uniform	int									spotLightsAmount;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
@@ -70,3 +42,4 @@ void main(){
 
 }
 
+)";

@@ -34,7 +34,7 @@
 
 #endif
 
-#include "../../../shaders/common/shaderHeaders.hpp"
+#include "../../../shaders/shaderHeaders.hpp"
 #include "../../../utils/ogl/proxyOGL.hpp"
 #include "../shader.hpp"
 
@@ -42,13 +42,13 @@ namespace ms {
     
 	class ShaderOGL : public virtual Shader {
 		
-	protected:
-		
-		typedef std::shared_ptr<std::string> str_ptr;
-		
 	public:
 		
-		ShaderOGL(str_ptr vertexSource, str_ptr tessellationControl, str_ptr tessellationEvaluation, str_ptr geometry, str_ptr fragment);
+						ShaderOGL(std::string vertexShader,
+								  std::string tessellationControlShader,
+								  std::string tessellationEvaluationShader,
+								  std::string geometryShader,
+								  std::string fragmentShader);
 		
 		virtual void 	use			() override;
 		virtual void 	load		() override;
@@ -57,16 +57,15 @@ namespace ms {
 		
 	protected:
 		
-		std::string		add_header_to_source(std::string source);
 		void 			compile_program();
 		void 			compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source);
 		int				get_shader_status(GLuint shader, GLenum statusType);
 		
-		str_ptr 		vertexSource;
-		str_ptr 		tesselationControlSource;
-		str_ptr 		tesselationEvalutationSource;
-		str_ptr 		geometrySource;
-		str_ptr 		fragmentSource;
+		std::string 		vertexSource;
+		std::string 		tesselationControlSource;
+		std::string 		tesselationEvalutationSource;
+		std::string 		geometrySource;
+		std::string 		fragmentSource;
 		
 		GLuint 			program;
 		

@@ -55,3 +55,22 @@ void ms::NGin::load_model (std::string absolutePath) {
 	}
 	
 }
+
+void ms::NGin::draw_scene() {
+	
+	int items = static_cast<int>(scene->nodes.size())/2.0f;
+	
+	deferredRenderer->use();
+	deferredRenderer->clear_frame();
+	for(int i = 0; i < items; ++i) {
+		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+	}
+	deferredRenderer->perform_light_pass(scene.get());
+	
+	forwardRenderer->use();
+
+	for(int i = items; i < scene->nodes.size(); ++i) {
+		forwardRenderer->draw(scene->nodes[i].get(), scene.get());
+	}
+
+}

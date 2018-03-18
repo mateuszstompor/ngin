@@ -25,25 +25,25 @@ namespace ms {
 		
 		enum class DebugType;
 		
-			 			DeferredRender	(	unsigned int screenWidth,
-										   unsigned int screenHeight,
-										   unsigned int frameBufferWidth,
-										   unsigned int frameBufferHeight,
-										   std::shared_ptr<std::string> gBufferVertexShaderSource,
-										   std::shared_ptr<std::string> gBufferFragmentShaderSource,
-										   std::shared_ptr<std::string> lightingVertexShaderSource,
-										   std::shared_ptr<std::string> lightingFragmentShaderSource
-										 );
-		
-		virtual void 	set_render_type	(DebugType type);
-		virtual 		~DeferredRender	() = default;
+			 			DeferredRender		(	unsigned int screenWidth,
+												unsigned int screenHeight,
+												unsigned int frameBufferWidth,
+												unsigned int frameBufferHeight,
+												std::string gBufferVertexShaderSource,
+												std::string gBufferFragmentShaderSource,
+												std::string lightingVertexShaderSource,
+												std::string lightingFragmentShaderSource
+											 );
+		virtual void 	perform_light_pass	(const Scene * scene) = 0;
+		virtual void 	set_render_type		(DebugType type);
+		virtual 		~DeferredRender		() = default;
 		
 	protected:
 		
-		std::shared_ptr<std::string> 				gBufferVertexShaderSource;
-		std::shared_ptr<std::string> 				gBufferFragmentShaderSource;
-		std::shared_ptr<std::string> 				lightingVertexShaderSource;
-		std::shared_ptr<std::string> 				lightingFragmentShaderSource;
+		std::string 								gBufferVertexShaderSource;
+		std::string 								gBufferFragmentShaderSource;
+		std::string 								lightingVertexShaderSource;
+		std::string 								lightingFragmentShaderSource;
 		
 		std::unique_ptr<Texture>					gPosition;
 		std::unique_ptr<Texture>					gAlbedo;

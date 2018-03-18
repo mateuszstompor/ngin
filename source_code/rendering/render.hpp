@@ -23,10 +23,12 @@ namespace ms {
 		inline			Render(unsigned int screenWidth, unsigned int screenHeight,
 							   unsigned int frameBufferWidth, unsigned int frameBufferHeight);
 		
-        virtual void	use     	() 										= 0	;
-		virtual void 	clear_frame	()										= 0 ;
-		virtual void	draw_scene  (const Scene * scene) 					= 0	;
-		virtual			~Render 	() = default;
+        virtual void	use		     	() 												= 0;
+		virtual void 	clear_frame		()												= 0;
+		virtual void	draw  			(SceneNode * node, const Scene * scene)			= 0;
+		virtual void 	setup_uniforms	(const Scene * scene)							= 0;
+		
+		virtual			~Render 		() = default;
 		
 	protected:
 		

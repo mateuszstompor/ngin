@@ -33,7 +33,7 @@ namespace ms {
 		virtual void							load_model			(std::string absolutePath);
 		virtual void 							load 				() = 0;
 		virtual void 							unload 				();
-        virtual void							draw_scene  		() = 0;
+        virtual void							draw_scene  		();
 		DeferredRender & 						get_deferred_render	() const;
 		ForwardRender & 						get_forward_render	() const;
 		virtual        							~NGin       		() = default;

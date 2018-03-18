@@ -19,7 +19,7 @@ namespace ms {
 	
 	public:
 		
-		DeferredShaderOGL(str_ptr vertexShaderSource, str_ptr fragmentShaderSource);
+		DeferredShaderOGL(std::string vertexShaderSource, std::string fragmentShaderSource);
 		
 		
 		virtual void 	load						() 									override;

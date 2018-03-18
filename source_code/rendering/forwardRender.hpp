@@ -24,16 +24,16 @@ namespace ms {
 							  unsigned int screenHeight,
 							  unsigned int frameBufferWidth,
 							  unsigned int frameBufferHeight,
-							  std::shared_ptr<std::string> vertexShSource,
-							  std::shared_ptr<std::string> fragmentShSource
+							  std::string vertexShSource,
+							  std::string fragmentShSource
 							  );
 		
 		virtual ~ForwardRender() = default;
 	
 	protected:
 		
-		std::shared_ptr<std::string> 			vertexShaderSource;
-		std::shared_ptr<std::string> 			fragmentShaderSource;
+		std::string 			vertexShaderSource;
+		std::string 			fragmentShaderSource;
 		std::unique_ptr<ForwardShader>			shader;
 		
 	};
@@ -44,8 +44,8 @@ ms::ForwardRender::ForwardRender(unsigned int sW,
 								 unsigned int sH,
 								 unsigned int fbW,
 								 unsigned int fbH,
-								 std::shared_ptr<std::string> vertexShSource,
-								 std::shared_ptr<std::string> fragmentShSource
+								 std::string vertexShSource,
+								 std::string fragmentShSource
 								 ) : Render(sW, sH, fbW, fbH), vertexShaderSource(vertexShSource), fragmentShaderSource(fragmentShSource), shader(nullptr) { }
 
 #endif /* forward_render_hpp */

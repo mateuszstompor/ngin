@@ -20,7 +20,7 @@ namespace ms {
 	
 	public:
 		
-						DeferredLightingShaderOGL			(str_ptr vertexShaderSource, str_ptr fragmentShaderSource);
+						DeferredLightingShaderOGL			(std::string vertexShaderSource, std::string fragmentShaderSource);
 		
 		virtual void 	set_amount_of_point_lights			(int amount) 											override;
 		virtual void 	set_point_light_power				(unsigned int index, float power) 						override;

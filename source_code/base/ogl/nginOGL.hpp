@@ -14,20 +14,14 @@
 #include "../../rendering/ogl/deferredRenderOGL.hpp"
 #include "../../utils/ogl/loaderOGL.hpp"
 #include "../../scene/ogl/sceneNodeOGL.hpp"
+#include "../../shaders/shaderHeaders.hpp"
 
 namespace ms {
     
     class NGinOGL : public NGin {
         
     public:
-				NGinOGL     (
-							 std::shared_ptr<std::string> forwardRenderVertexShaderSource,
-							 std::shared_ptr<std::string> forwardRenderFragmentShaderSource,
-							 std::shared_ptr<std::string> deferredRenderVertexShaderSource,
-							 std::shared_ptr<std::string> deferredRenderFragmentShaderSource,
-							 std::shared_ptr<std::string> deferredRenderLightingVertexShaderSource,
-							 std::shared_ptr<std::string> deferredRenderLightingFragmentShaderSource,
-							 unsigned int screenWidth,
+				NGinOGL     (unsigned int screenWidth,
 							 unsigned int screenHeight,
 							 unsigned int frameBufferWidth,
 							 unsigned int frameBufferHeight,
@@ -38,7 +32,6 @@ namespace ms {
 							 GLuint defaultFBO
 							 );
 		
-        void    						draw_scene  () override;
 		void 							load		() override;
 		std::unique_ptr<Loader>			get_loader	() override;
 		std::shared_ptr<SceneNode>		get_node	() override;

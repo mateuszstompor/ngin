@@ -8,8 +8,8 @@
 
 #include "deferredLightingShaderOGL.hpp"
 
-ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(str_ptr vertexShaderSource, str_ptr fragmentShaderSource) :
-ms::ShaderOGL(vertexShaderSource, nullptr, nullptr, nullptr, fragmentShaderSource) { }
+ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(std::string vertexShaderSource, std::string fragmentShaderSource) :
+ms::ShaderOGL(vertexShaderSource, "", "", "", fragmentShaderSource) { }
 
 void  ms::DeferredLightingShaderOGL::load () {
     ShaderOGL::load();

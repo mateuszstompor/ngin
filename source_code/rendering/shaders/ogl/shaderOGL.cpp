@@ -14,9 +14,18 @@ namespace ms {
 	#define COMPILATION_COMPLETED 	"Compilation completed"
 }
 
-ms::ShaderOGL::ShaderOGL(str_ptr vS, str_ptr tcS, str_ptr teS, str_ptr gS, str_ptr fS) :
-		vertexSource(vS), tesselationControlSource(tcS), tesselationEvalutationSource(teS),
-		geometrySource(gS), fragmentSource(fS), program(0) {
+ms::ShaderOGL::ShaderOGL(std::string vS,
+						 std::string tcS,
+						 std::string teS,
+						 std::string gS,
+						 std::string fS) :
+
+											vertexSource(vS),
+											tesselationControlSource(tcS),
+											tesselationEvalutationSource(teS),
+											geometrySource(gS),
+											fragmentSource(fS),
+											program(0) {
 			
 }
 
@@ -54,49 +63,49 @@ void ms::ShaderOGL::compile_program() {
 	
 	GLuint fshader 		= mglCreateShader(GL_FRAGMENT_SHADER);
 	
-	if (vertexSource) {
-		compile_shader(program, vshader, GL_VERTEX_SHADER, add_header_to_source(*vertexSource));
+	if (!vertexSource.empty()) {
+		compile_shader(program, vshader, GL_VERTEX_SHADER, vertexSource);
 	}
 	
 	#ifndef ios_build
 
-	if (tesselationControlSource) {
-		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, add_header_to_source(*tesselationControlSource));
+	if (!tesselationControlSource.empty()) {
+		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, tesselationControlSource);
 	}
 	
-	if (tesselationEvalutationSource) {
-		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, add_header_to_source(*tesselationEvalutationSource));
+	if (!tesselationEvalutationSource.empty()) {
+		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, tesselationEvalutationSource);
 	}
 
-	if (geometrySource) {
-		compile_shader(program, gshader, GL_GEOMETRY_SHADER, add_header_to_source(*geometrySource));
+	if (!geometrySource.empty()) {
+		compile_shader(program, gshader, GL_GEOMETRY_SHADER, geometrySource);
 	}
 	
 	#endif
 	
-	if (fragmentSource) {
-		compile_shader(program, fshader, GL_FRAGMENT_SHADER, add_header_to_source(*fragmentSource));
+	if (!fragmentSource.empty()) {
+		compile_shader(program, fshader, GL_FRAGMENT_SHADER, fragmentSource);
 	}
 	
 	mglLinkProgram(program);
 
-	if (vertexSource)
+	if (!vertexSource.empty())
 		mglDeleteShader(vshader);
 	
 	#ifndef ios_build
 	
-		if (tesselationControlSource)
+		if (!tesselationControlSource.empty())
 			mglDeleteShader(cshader);
 
-		if (tesselationEvalutationSource)
+		if (!tesselationEvalutationSource.empty())
 			mglDeleteShader(evalshader);
 
-		if (geometrySource)
+		if (!geometrySource.empty())
 			mglDeleteShader(gshader);
 	
 	#endif
 
-	if (fragmentSource)
+	if (!fragmentSource.empty())
 		mglDeleteShader(fshader);
 
 	#ifdef DEBUG
@@ -104,20 +113,6 @@ void ms::ShaderOGL::compile_program() {
 		std::cout << COMPILATION_COMPLETED << std::endl;
 
 	#endif
-}
-
-std::string ms::ShaderOGL::add_header_to_source(std::string source) {
-	
-	#ifdef ios_build
-	
-		return ms::shader::ios_header + source;
-	
-	#else
-	
-		return ms::shader::mac_os_header + source;
-	
-	#endif
-	
 }
 
 void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {

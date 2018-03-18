@@ -45,22 +45,24 @@ namespace ms {
 		
 		public:
 		
-			DeferredRenderOGL			(std::shared_ptr<std::string> gBufferVertexShaderSource,
-										 std::shared_ptr<std::string> gBufferFragmentShaderSource,
-										 std::shared_ptr<std::string> lightingVertexShaderSource,
-										 std::shared_ptr<std::string> lightingFragmentShaderSource,
+			DeferredRenderOGL			(std::string gBufferVertexShaderSource,
+										 std::string gBufferFragmentShaderSource,
+										 std::string lightingVertexShaderSource,
+										 std::string lightingFragmentShaderSource,
 										 unsigned int screenWidth,
 										 unsigned int screenHeight,
 										 unsigned int frameBufferWidth,
 										 unsigned int frameBufferHeight);
 		
-			void	use     			() 										override;
-			void 	clear_frame			()										override;
-			void 	draw_scene			(const Scene * scene) 	override;
-			void	load				() 										override;
-			bool	is_loaded			() 										override;
-			void 	unload				() 										override;
+			void	use     			() 												override;
+			void 	clear_frame			()												override;
+			void 	draw				(SceneNode * node, const Scene * scene) 		override;
+			void 	setup_uniforms		(const Scene * scene) 							override;
+			void	load				() 												override;
+			bool	is_loaded			() 												override;
+			void 	unload				() 												override;
 			void 	set_default_FBO		(GLuint defFBO);
+			void 	perform_light_pass	(const Scene * scene) 							override;
 			virtual	~DeferredRenderOGL 	() = default;
 		
 		protected:

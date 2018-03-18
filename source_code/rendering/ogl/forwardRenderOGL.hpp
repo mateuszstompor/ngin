@@ -46,15 +46,20 @@ namespace ms {
 		
 	public:
 		
-		ForwardRenderOGL			(std::shared_ptr<std::string> vertexShaderSource, std::shared_ptr<std::string> fragmentShaderSource,
-									 unsigned int screenWidth, unsigned int screenHeight, unsigned int frameBufferWidth, unsigned int frameBufferHeight);
+		ForwardRenderOGL			(std::string vertexShaderSource,
+									 std::string fragmentShaderSource,
+									 unsigned int screenWidth,
+									 unsigned int screenHeight,
+									 unsigned int frameBufferWidth,
+									 unsigned int frameBufferHeight);
 		
-		void	use     			() 										override;
-		void 	clear_frame			()										override;
-		void 	draw_scene			(const Scene * scene) 	override;
-		void	load				() 										override;
-		bool	is_loaded			() 										override;
-		void 	unload				() 										override;
+		void	use     			() 												override;
+		void 	clear_frame			()												override;
+		void	draw  				(SceneNode * node, const Scene * scene)			override;
+		void 	setup_uniforms		(const Scene * scene)							override;
+		void	load				() 												override;
+		bool	is_loaded			() 												override;
+		void 	unload				() 												override;
 		virtual	~ForwardRenderOGL 	() = default;
         
     };

@@ -97,16 +97,6 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILES})
 #renderdoc
 file(COPY ${CMAKE_SOURCE_DIR}/third-party-libs/renderdoc.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-#shaders
-file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/forward_render/fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
-file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/g_buf_vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/g_buf_fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
-file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/lighting_vshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/source_code/shaders/deferred_render/lighting_fshader.glsl DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
 #models
 file(COPY ${CMAKE_SOURCE_DIR}/models/classroom DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
