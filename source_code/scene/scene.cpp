@@ -9,7 +9,7 @@
 #include "scene.hpp"
 
 ms::Scene::Scene (float nearPlan, float farPlan, float fovDegress, float cameraAspect) : 	directionalLight(nullptr),
-																							nodes(std::vector<std::shared_ptr<SceneNode>>()),
+																							nodes(std::vector<std::shared_ptr<Drawable>>()),
 																							materials(std::map<std::string, std::shared_ptr<Material>>()){
 																								
 	cam = std::unique_ptr<Camera>( new PerspectiveCamera(nearPlan, farPlan, fovDegress, cameraAspect) );
@@ -20,11 +20,11 @@ ms::Camera & ms::Scene::get_camera() const {
 	return *this->cam;
 }
 
-const std::vector<ms::SpotLight> & ms::Scene::get_spot_lights() const {
+const std::vector<std::shared_ptr<ms::SpotLight>> & ms::Scene::get_spot_lights() const {
 	return this->spotLights;
 }
 
-const std::vector<ms::PointLight> & ms::Scene::get_point_lights() const {
+const std::vector<std::shared_ptr<ms::PointLight>> & ms::Scene::get_point_lights() const {
 	return this->pointLights;
 }
 
@@ -36,7 +36,7 @@ void ms::Scene::set_directional_light(float power, math::vec4 color, math::vec3 
 	directionalLight = std::unique_ptr<ms::DirectionalLight>(new DirectionalLight(color, direction));
 }
 
-const std::vector<std::shared_ptr<ms::SceneNode>> & ms::Scene::get_nodes() const {
+const std::vector<std::shared_ptr<ms::Drawable>> & ms::Scene::get_nodes() const {
 	return this->nodes;
 }
 

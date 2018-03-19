@@ -22,7 +22,7 @@
 #include <assimp/postprocess.h>
 
 #include "../scene/texture.hpp"
-#include "../scene/sceneNode.hpp"
+#include "../scene/drawable.hpp"
 
 namespace ms {
 	

@@ -14,7 +14,8 @@
 #include "utils/utils.hpp"
 #include "../libs/source/glMath.h"
 #include "scene/ogl/geometryOGL.hpp"
-#include "scene/ogl/sceneNodeOGL.hpp"
+#include "scene/ogl/drawableOGL.hpp"
+#include "scene/lights/ogl/pointLightOGL.hpp"
 #include "utils/ogl/loaderOGL.hpp"
 
 #endif /* umbrella_header_hpp */

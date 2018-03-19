@@ -1,6 +1,0 @@
-R"(
-
-#define MAX_SPOT_LIGHT_AMOUNT	20
-#define MAX_POINT_LIGHT_AMOUNT	20
-
-)";

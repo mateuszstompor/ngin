@@ -26,6 +26,9 @@ namespace ms {
     const std::string contextInitializationFailure  = "Failed to initialize OpenGL context";
 }
 
+unsigned int usedIndex = 0;
+unsigned int spotLightIndex = 0;
+
 void prepareRenderDoc() {
 	
 #ifdef __WIN32__
@@ -100,12 +103,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 			break;
 		
-		case GLFW_KEY_T: {
+		case GLFW_KEY_Z: {
 			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(0.1f);
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
 		break;
-		case GLFW_KEY_Y: {
+		case GLFW_KEY_X: {
 			auto a = ms::math::transform::rotateAboutYRadians<float, 4>(-0.1f);
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
@@ -145,18 +148,146 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			auto a = ms::math::transform::translate<float, 4>({0.0f, -0.1f, 0.0f});
 			engine->scene->get_camera().set_transformation(engine->scene->get_camera().get_transformation() * a);
 		}
-			break;			
+			break;
+		case GLFW_KEY_J: {
+			auto a = ms::math::vec3{0.0, -0.1, 0.0};
+			engine->scene->pointLights[usedIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
+			engine->scene->pointLights[usedIndex]->modelTransformation.set_transformation(b * engine->scene->pointLights[usedIndex]->modelTransformation.get_transformation());
+			
+		}
+			break;
+		case GLFW_KEY_L: {
+			auto a = ms::math::vec3{0.0, 0.1, 0.0};
+			engine->scene->pointLights[usedIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
+			engine->scene->pointLights[usedIndex]->modelTransformation.set_transformation(b * engine->scene->pointLights[usedIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_K: {
+			auto a = ms::math::vec3{-0.1, 0.0, 0.0};
+			engine->scene->pointLights[usedIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
+			engine->scene->pointLights[usedIndex]->modelTransformation.set_transformation(b * engine->scene->pointLights[usedIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_I: {
+			auto a = ms::math::vec3{0.1, 0.0, 0.0};
+			engine->scene->pointLights[usedIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
+			engine->scene->pointLights[usedIndex]->modelTransformation.set_transformation(b * engine->scene->pointLights[usedIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_U: {
+			auto a = ms::math::vec3{0.0, 0.0, 0.1};
+			engine->scene->pointLights[usedIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, 0.0, 0.1});
+			engine->scene->pointLights[usedIndex]->modelTransformation.set_transformation(b * engine->scene->pointLights[usedIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_O: {
+			auto a = ms::math::vec3{0.0, 0.0, -0.1};
+			engine->scene->pointLights[usedIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, 0.0, -0.1});
+			engine->scene->pointLights[usedIndex]->modelTransformation.set_transformation(b * engine->scene->pointLights[usedIndex]->modelTransformation.get_transformation());
+		}
+			break;
+			
+		case GLFW_KEY_F: {
+			auto a = ms::math::vec3{0.0, -0.1, 0.0};
+			engine->scene->spotLights[spotLightIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, -0.1, 0.0});
+			engine->scene->spotLights[spotLightIndex]->modelTransformation.set_transformation(b * engine->scene->spotLights[spotLightIndex]->modelTransformation.get_transformation());
+
+		}
+			break;
+		case GLFW_KEY_H: {
+			auto a = ms::math::vec3{0.0, 0.1, 0.0};
+			engine->scene->spotLights[spotLightIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, 0.1, 0.0});
+			engine->scene->spotLights[spotLightIndex]->modelTransformation.set_transformation(b * engine->scene->spotLights[spotLightIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_G: {
+			auto a = ms::math::vec3{-0.1, 0.0, 0.0};
+			engine->scene->spotLights[spotLightIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({-0.1, 0.0, 0.0});
+			engine->scene->spotLights[spotLightIndex]->modelTransformation.set_transformation(b * engine->scene->spotLights[spotLightIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_T: {
+			auto a = ms::math::vec3{0.1, 0.0, 0.0};
+			engine->scene->spotLights[spotLightIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.1, 0.0, 0.0});
+			engine->scene->spotLights[spotLightIndex]->modelTransformation.set_transformation(b * engine->scene->spotLights[spotLightIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_R: {
+			auto a = ms::math::vec3{0.0, 0.0, 0.1};
+			engine->scene->spotLights[spotLightIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, 0.0, 0.1});
+			engine->scene->spotLights[spotLightIndex]->modelTransformation.set_transformation(b * engine->scene->spotLights[spotLightIndex]->modelTransformation.get_transformation());
+		}
+			break;
+		case GLFW_KEY_Y: {
+			auto a = ms::math::vec3{0.0, 0.0, -0.1};
+			engine->scene->spotLights[spotLightIndex]->position += a;
+			auto b = ms::math::transform::translate<float, 4>({0.0, 0.0, -0.1});
+			engine->scene->spotLights[spotLightIndex]->modelTransformation.set_transformation(b * engine->scene->spotLights[spotLightIndex]->modelTransformation.get_transformation());
+		}
+			break;
+			
+		case GLFW_KEY_8:
+			engine->scene->pointLights[usedIndex]->color[0] += 0.1;
+			if(engine->scene->pointLights[usedIndex]->color[0] > 1.0f) {
+				engine->scene->pointLights[usedIndex]->color[0] = 0.0;
+			}
+			break;
+		case GLFW_KEY_9:
+			engine->scene->pointLights[usedIndex]->color[1] += 0.1;
+			if(engine->scene->pointLights[usedIndex]->color[1] > 1.0f) {
+				engine->scene->pointLights[usedIndex]->color[1] = 0.0;
+			}
+			break;
+		case GLFW_KEY_0:
+			engine->scene->pointLights[usedIndex]->color[2] += 0.1;
+			if(engine->scene->pointLights[usedIndex]->color[2] > 1.0f) {
+				engine->scene->pointLights[usedIndex]->color[2] = 0.0;
+			}
+			break;
+		case GLFW_KEY_MINUS:
+			if (usedIndex > 0) {
+				usedIndex--;
+			}
+			break;
+		case GLFW_KEY_EQUAL:
+			if (usedIndex+1 < engine->scene->pointLights.size()) {
+				usedIndex++;
+			}
+			break;
+		case GLFW_KEY_LEFT_BRACKET:
+			if (spotLightIndex > 0) {
+				spotLightIndex--;
+			}
+			break;
+		case GLFW_KEY_RIGHT_BRACKET:
+			if (spotLightIndex+1 < engine->scene->spotLights.size()) {
+				spotLightIndex++;
+			}
+			break;
+			
         default:
             break;
     }
+	
 }
 
 int main(int argc, const char * argv[]) { {
 
 	bool useCommandLineArguments = argc == 2;
 
-	int width = 1200;
-	int height = 800;
+	int width = 800;
+	int height = 600;
 	int framebufferWidth = 600;
 	int framebufferHeight = 400;
 	
@@ -199,10 +330,23 @@ int main(int argc, const char * argv[]) { {
 		
 	engine->load_model(useCommandLineArguments ? argv[1] : "./classroom/classroom.obj");
 
-	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, ms::math::vec3{ -1.0f, -1.0f, -1.0f });
-
-	engine->scene->pointLights.push_back(ms::PointLight(50, ms::math::vec4{1.0f, 1.0f, 1.0f, 1.0f}, ms::math::vec3{-1.4f, 4.0f, -9.0f}));
+	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, ms::math::vec3{ 1.0f, -1.0f, -1.0f });
+	
+	auto a = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
+	
+	for (int i = 0; i < 100; ++i) {
+		engine->load_point_light(50, ms::math::vec4{1.0f, 1.0f, 0.0f, 1.0f}, ms::math::vec3{0.0f, 0.0f, 0.0f}, "/Users/mateuszstompor/Documents/sphere.obj");
+		engine->scene->pointLights[i]->modelTransformation.set_transformation(a * engine->scene->pointLights[i]->modelTransformation.get_transformation());
+	}
+	
+	for (int i = 0; i < 100; ++i) {
+		engine->load_spot_light(50, ms::math::vec4{0.0f, 1.0f, 1.0f, 1.0f}, ms::math::vec3{0.0f, 1.0f, 0.0f}, 50, ms::math::vec3{0.0f, -1.0f, 0.0f},  "/Users/mateuszstompor/Documents/cone.obj");
+		auto b = ms::math::transform::translate<float, 4>({0.0f, 1.0f, 0.0f});
+		engine->scene->spotLights[i]->modelTransformation.set_transformation(b * a * engine->scene->spotLights[i]->modelTransformation.get_transformation());
+	}
+	
 	engine->load();
+	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
 	glfwSetKeyCallback(window, key_callback);

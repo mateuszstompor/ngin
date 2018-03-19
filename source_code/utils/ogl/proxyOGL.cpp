@@ -94,7 +94,7 @@ GLint _mglGetUniformLocation (GLuint program, const GLchar* name) {
 	GLint tmp = glGetUniformLocation(program, name);
 	ms::utils::check_gl_error();
 	if(tmp == -1) {
-		std::cerr<< "UNIFORM_DOESNT_EXIST" << " " << name <<  std::endl;
+//		std::cerr<< "UNIFORM_DOESNT_EXIST" << " " << name <<  std::endl;
 	}
  	return tmp;
 }

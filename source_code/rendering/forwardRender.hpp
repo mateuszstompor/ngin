@@ -13,6 +13,7 @@
 
 #include "render.hpp"
 #include "shaders/forwardShader.hpp"
+#include "shaders/lightSourceDrawerShader.hpp"
 
 namespace ms {
 	
@@ -32,8 +33,9 @@ namespace ms {
 	
 	protected:
 		
-		std::string 			vertexShaderSource;
-		std::string 			fragmentShaderSource;
+		std::string 							vertexShaderSource;
+		std::string 							fragmentShaderSource;
+		
 		std::unique_ptr<ForwardShader>			shader;
 		
 	};
@@ -46,6 +48,9 @@ ms::ForwardRender::ForwardRender(unsigned int sW,
 								 unsigned int fbH,
 								 std::string vertexShSource,
 								 std::string fragmentShSource
-								 ) : Render(sW, sH, fbW, fbH), vertexShaderSource(vertexShSource), fragmentShaderSource(fragmentShSource), shader(nullptr) { }
+								 ) : 	Render(sW, sH, fbW, fbH),
+										vertexShaderSource(vertexShSource),
+										fragmentShaderSource(fragmentShSource),
+										shader(nullptr) { }
 
 #endif /* forward_render_hpp */

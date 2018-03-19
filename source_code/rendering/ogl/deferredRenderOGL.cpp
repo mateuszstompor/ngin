@@ -78,7 +78,7 @@ void ms::DeferredRenderOGL::clear_frame () {
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void ms::DeferredRenderOGL::draw (SceneNode * node, const Scene * scene) {
+void ms::DeferredRenderOGL::draw (Drawable * node, const Scene * scene) {
 
 	gShader->set_camera_transformation(scene->get_camera().get_transformation());
 	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
@@ -122,12 +122,12 @@ void ms::DeferredRenderOGL::draw (SceneNode * node, const Scene * scene) {
 			gShader->set_has_specular_texture(false);
 		}
 		
-		
 		gShader->set_material_ambient_color(material->second->ambientColor);
 		gShader->set_material_diffuse_color(material->second->diffuseColor);
 		gShader->set_material_specular_color(material->second->specularColor);
 		gShader->set_material_opacity(material->second->opacity);
 		gShader->set_material_shininess(material->second->shininess);
+		
 	} else {
 		gShader->set_has_material(false);
 	}
@@ -254,6 +254,8 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	lightingShader->set_rendering_mode(this->renderMode);
 	
+	lightingShader->set_camera_transformation(scene->cam->get_transformation().c_array());
+	
 	if(auto dirLight = scene->get_directional_light()) {
 		lightingShader->set_has_directional_light(true);
 		lightingShader->set_directional_light_dir(dirLight->direction);
@@ -263,24 +265,24 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	}
 	
 	{
-		const std::vector<SpotLight> & spotLights = scene->get_spot_lights();
+		const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
 		lightingShader->set_amount_of_spot_lights(static_cast<int>(spotLights.size()));
 		for(unsigned int index = 0; index < spotLights.size(); ++index) {
-			lightingShader->set_spot_light_power(index, spotLights[index].power);
-			lightingShader->set_spot_light_color(index, spotLights[index].color);
-			lightingShader->set_spot_light_position(index, spotLights[index].position);
-			lightingShader->set_spot_light_angle(index, spotLights[index].lightingAngleDegrees);
-			lightingShader->set_spot_light_direction(index, spotLights[index].direction);
+			lightingShader->set_spot_light_power(index, spotLights[index]->power);
+			lightingShader->set_spot_light_color(index, spotLights[index]->color);
+			lightingShader->set_spot_light_position(index, spotLights[index]->position);
+			lightingShader->set_spot_light_angle(index, spotLights[index]->lightingAngleDegrees);
+			lightingShader->set_spot_light_direction(index, spotLights[index]->direction);
 		}
 	}
 	
 	{
-		const std::vector<PointLight> & pointLights = scene->get_point_lights();
+		const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
 		lightingShader->set_amount_of_point_lights(static_cast<int>(pointLights.size()));
 		for(unsigned int index = 0; index < pointLights.size(); ++index) {
-			lightingShader->set_point_light_color(index, pointLights[index].color);
-			lightingShader->set_point_light_power(index, pointLights[index].power);
-			lightingShader->set_point_light_position(index, pointLights[index].position);
+			lightingShader->set_point_light_color(index, pointLights[index]->color);
+			lightingShader->set_point_light_power(index, pointLights[index]->power);
+			lightingShader->set_point_light_position(index, pointLights[index]->position);
 		}
 	}
 	

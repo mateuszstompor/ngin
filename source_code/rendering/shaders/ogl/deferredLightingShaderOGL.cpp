@@ -78,6 +78,11 @@ void ms::DeferredLightingShaderOGL::set_directional_light_color (const math::vec
 	mglUniform4fv(colorLocation, 1, color.c_array());
 }
 
+void ms::DeferredLightingShaderOGL::set_camera_transformation (const math::mat4 & transf) {
+	GLint cam = mglGetUniformLocation(program, "cameraTransformation");
+	mglUniformMatrix4fv(cam, 1, GL_FALSE, transf.c_array());
+}
+
 void ms::DeferredLightingShaderOGL::set_spot_light_color (unsigned int index, const math::vec4 & color) {
 	std::string name = "spotLights[" + std::to_string(index) + "].color";
 	GLint colorLocation = mglGetUniformLocation(program, name.c_str());

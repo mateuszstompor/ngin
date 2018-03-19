@@ -11,10 +11,11 @@
 
 #include "general/light.hpp"
 #include "../positionedObject.hpp"
+#include "../drawable.hpp"
 
 namespace ms {
 	
-	class PointLight : public virtual Light {
+	class PointLight : public virtual Light, public virtual Drawable {
 	
 	public:
 		
@@ -31,6 +32,6 @@ namespace ms {
 	
 }
 
-ms::PointLight::PointLight (float p, math::vec4 c, math::vec3 	pos) : Light(c), power(p), position(pos) { }
+ms::PointLight::PointLight (float p, math::vec4 c, math::vec3 pos) : Light(c), power(p), position(pos) { }
 
 #endif /* point_light_hpp */

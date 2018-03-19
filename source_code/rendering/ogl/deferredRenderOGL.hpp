@@ -56,7 +56,7 @@ namespace ms {
 		
 			void	use     			() 												override;
 			void 	clear_frame			()												override;
-			void 	draw				(SceneNode * node, const Scene * scene) 		override;
+			void 	draw				(Drawable * node, const Scene * scene) 			override;
 			void 	setup_uniforms		(const Scene * scene) 							override;
 			void	load				() 												override;
 			bool	is_loaded			() 												override;

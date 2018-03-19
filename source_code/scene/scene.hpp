@@ -15,7 +15,7 @@
 #include "lights/pointLight.hpp"
 #include "lights/spotLight.hpp"
 #include "texture.hpp"
-#include "sceneNode.hpp"
+#include "drawable.hpp"
 #include "geometry.hpp"
 
 #include <map>
@@ -34,19 +34,19 @@ namespace ms {
 
 		Camera &											get_camera() const;
 		DirectionalLight *									get_directional_light() const;
-		const std::vector<SpotLight> &						get_spot_lights() const;
-		const std::vector<PointLight> &						get_point_lights() const;
-		const std::vector<std::shared_ptr<SceneNode>> & 	get_nodes() const;
+		const std::vector<std::shared_ptr<SpotLight>> &		get_spot_lights() const;
+		const std::vector<std::shared_ptr<PointLight>> &	get_point_lights() const;
+		const std::vector<std::shared_ptr<Drawable>> & 		get_nodes() const;
 		void												set_directional_light(float 		power,
 																				  math::vec4 	color,
 																				  math::vec3 	direction);
 //TODO make it protected
 //		protected:
-		std::vector<std::shared_ptr<SceneNode>> 			nodes;
+		std::vector<std::shared_ptr<Drawable>> 				nodes;
 		std::map<std::string, std::shared_ptr<Material>>	materials;
 		std::map<std::string, std::shared_ptr<Texture>>		textures;
-		std::vector<PointLight>								pointLights;
-		std::vector<SpotLight>								spotLights;
+		std::vector<std::shared_ptr<PointLight>>			pointLights;
+		std::vector<std::shared_ptr<SpotLight>>				spotLights;
 		std::unique_ptr<Camera> 							cam;
 		std::unique_ptr<DirectionalLight>					directionalLight;
 		

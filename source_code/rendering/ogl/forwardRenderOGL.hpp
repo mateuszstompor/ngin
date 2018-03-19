@@ -16,6 +16,7 @@
 #include "../shaders/forwardShader.hpp"
 #include "../forwardRender.hpp"
 #include "../shaders/ogl/forwardShaderOGL.hpp"
+#include "../shaders/ogl/lightSourceDrawerShaderOGL.hpp"
 
 #ifdef __WIN32__
 
@@ -55,7 +56,7 @@ namespace ms {
 		
 		void	use     			() 												override;
 		void 	clear_frame			()												override;
-		void	draw  				(SceneNode * node, const Scene * scene)			override;
+		void	draw  				(Drawable * node, const Scene * scene)			override;
 		void 	setup_uniforms		(const Scene * scene)							override;
 		void	load				() 												override;
 		bool	is_loaded			() 												override;

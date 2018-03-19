@@ -34,7 +34,7 @@ void ms::ForwardRenderOGL::clear_frame () {
 	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
-void ms::ForwardRenderOGL::draw (SceneNode * node, const Scene * scene) {
+void ms::ForwardRenderOGL::draw (Drawable * node, const Scene * scene) {
 	
 	shader->set_camera_transformation(scene->get_camera().get_transformation());
 	shader->set_projection_matrix(scene->get_camera().get_projection_matrix());
@@ -51,24 +51,24 @@ void ms::ForwardRenderOGL::draw (SceneNode * node, const Scene * scene) {
 	}
 	
 	{
-		const std::vector<SpotLight> & spotLights = scene->get_spot_lights();
+		const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
 		shader->set_amount_of_spot_lights(static_cast<int>(spotLights.size()));
 		for(unsigned int index = 0; index < spotLights.size(); ++index) {
-			shader->set_spot_light_power(index, spotLights[index].power);
-			shader->set_spot_light_color(index, spotLights[index].color);
-			shader->set_spot_light_position(index, spotLights[index].position);
-			shader->set_spot_light_angle(index, spotLights[index].lightingAngleDegrees);
-			shader->set_spot_light_direction(index, spotLights[index].direction);
+			shader->set_spot_light_power(index, spotLights[index]->power);
+			shader->set_spot_light_color(index, spotLights[index]->color);
+			shader->set_spot_light_position(index, spotLights[index]->position);
+			shader->set_spot_light_angle(index, spotLights[index]->lightingAngleDegrees);
+			shader->set_spot_light_direction(index, spotLights[index]->direction);
 		}
 	}
 	
 	{
-		const std::vector<PointLight> & pointLights = scene->get_point_lights();
+		const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
 		shader->set_amount_of_point_lights(static_cast<int>(pointLights.size()));
 		for(unsigned int index = 0; index < pointLights.size(); ++index) {
-			shader->set_point_light_color(index, pointLights[index].color);
-			shader->set_point_light_power(index, pointLights[index].power);
-			shader->set_point_light_position(index, pointLights[index].position);
+			shader->set_point_light_color(index, pointLights[index]->color);
+			shader->set_point_light_power(index, pointLights[index]->power);
+			shader->set_point_light_position(index, pointLights[index]->position);
 		}
 	}
 	

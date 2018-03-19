@@ -1,40 +1,13 @@
-
-#define MAX_SPOT_LIGHT_AMOUNT	20
-#define MAX_POINT_LIGHT_AMOUNT	20
-
-struct DirectionalLight {
-	vec3    	direction;
-	vec4    	color;
-};
-
-struct PointLight {
-	float 		power;
-	vec4		color;
-	vec3		position;
-};
-
-struct SpotLight {
-	float 		power;
-	vec4 		color;
-	vec3		position;
-	float		angleDegrees;
-	vec3		direction;
-};
-
-struct Material {
-	vec3 	diffuse;
-	vec3 	ambient;
-	vec3 	specular;
-	float 	shininess;
-	float	opacity;
-};
-
+R"(
 
 uniform	int									spotLightsAmount;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 
 uniform	int									pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
+
+uniform	int 								hasDirLight;
+uniform DirectionalLight 					dirLight;
 
 uniform int 								hasMaterial;
 uniform Material							material;
@@ -45,9 +18,6 @@ uniform sampler2D 							diffuseTexture;
 uniform int 								hasSpecularTexture;
 uniform sampler2D 							specularTexture;
 
-uniform	int 								hasDirLight;
-uniform DirectionalLight 					dirLight;
-
 out vec4 FragColor;
 
 in vec3 normalVector;
@@ -57,8 +27,7 @@ void main(){
 	vec4 vertColor = vec4(1.0f, 0.0f, 1.0f, 1.0f);
 	
 	if (hasDirLight == 1) {
-		
-		float angleCosine = max(dot(normalize(normalVector), normalize(dirLight.direction)), 0.0);
+		float angleCosine = count_diffuse_factor(normalVector, dirLight.direction);
 		vec4 baseColor = vertColor * dirLight.color;
 		FragColor = angleCosine * baseColor + 0.2 * vertColor;
 		
@@ -70,3 +39,4 @@ void main(){
 
 }
 
+)";

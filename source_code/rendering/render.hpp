@@ -25,7 +25,7 @@ namespace ms {
 		
         virtual void	use		     	() 												= 0;
 		virtual void 	clear_frame		()												= 0;
-		virtual void	draw  			(SceneNode * node, const Scene * scene)			= 0;
+		virtual void	draw  			(Drawable * node, const Scene * scene)			= 0;
 		virtual void 	setup_uniforms	(const Scene * scene)							= 0;
 		
 		virtual			~Render 		() = default;

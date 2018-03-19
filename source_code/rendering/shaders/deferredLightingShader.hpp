@@ -17,6 +17,8 @@ namespace ms {
 	
 	public:
 		
+		virtual void	set_camera_transformation			(const math::mat4 & transformation)				 			= 0;
+		
 		virtual void 	set_amount_of_point_lights			(int amount) 												= 0;
 		virtual void 	set_point_light_power				(unsigned int index, float power) 							= 0;
 		virtual void 	set_point_light_color				(unsigned int index, const math::vec4 & color) 				= 0;
@@ -34,6 +36,8 @@ namespace ms {
 		virtual void	set_directional_light_color			(const math::vec4 & color) 									= 0;
 		
 		virtual void 	set_rendering_mode					(unsigned int settings) 									= 0;
+		
+		virtual 		~DeferredLightingShader				()															= default;
 	};
 	
 }

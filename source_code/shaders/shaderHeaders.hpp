@@ -39,36 +39,46 @@ namespace ms {
 	#endif
 		
 		const std::string lightsDeclarations =
-		#include "./lightDeclarations.hpp"
+		#include "./lightDeclarations.glsl"
 		
 		const std::string constantsDefinitions =
-		#include "./constantsDefinitions.hpp"
+		#include "./constantsDefinitions.glsl"
 		
 		const std::string materialsDeclarations =
-		#include "./materialDeclarations.hpp"
+		#include "./materialDeclarations.glsl"
+		
+		const std::string functionsDefinitions =
+		#include "./functions.glsl"
 		
 		namespace deferredrenderer {
 			
 			const std::string gBufferPassVertexShader =
-			#include "./deferred_render/g_buf_vshader.hpp"
+			#include "./deferred_render/g_buf_vshader.glsl"
 			
 			const std::string gBufferPassFragmentShader =
-			#include "./deferred_render/g_buf_fshader.hpp"
+			#include "./deferred_render/g_buf_fshader.glsl"
 			
 			const std::string lightingPassVertexShader =
-			#include "./deferred_render/lighting_vshader.hpp"
+			#include "./deferred_render/lighting_vshader.glsl"
 			
 			const std::string lightingPassFragmentShader =
-			#include "./deferred_render/lighting_fshader.hpp"
+			#include "./deferred_render/lighting_fshader.glsl"
+	
 		}
 		
 		namespace forwardrenderer {
 			
 			const std::string phongVertexShader =
-			#include "./forward_render/vshader.hpp"
+			#include "./forward_render/vshader.glsl"
 			
 			const std::string phongFragmentShader =
-			#include "./forward_render/fshader.hpp"
+			#include "./forward_render/fshader.glsl"
+			
+			const std::string lightSourceDrawerVertexShader =
+			#include "./forward_render/light_source_drawer_vshader.glsl"
+			
+			const std::string lightSourceDrawerFragmentShader =
+			#include "./forward_render/light_source_drawer_fshader.glsl"
 			
 		}
 		
@@ -84,7 +94,9 @@ enum class ms::shader::Type {
 	deferred_render_light_pass_vshader,
 	deferred_render_light_pass_fshader,
 	forward_render_phong_vshader,
-	forward_render_phong_fshader
+	forward_render_phong_fshader,
+	forward_render_light_drawer_vshader,
+	forward_render_light_drawer_fshader
 };
 
 
@@ -108,6 +120,7 @@ std::string ms::shader::get_shader_of_type(Type type) {
 		case ms::shader::Type::deferred_render_light_pass_fshader:
 			shaderContent += constantsDefinitions;
 			shaderContent += lightsDeclarations;
+			shaderContent += functionsDefinitions;
 			shaderContent += deferredrenderer::lightingPassFragmentShader;
 			break;
 		case ms::shader::Type::forward_render_phong_vshader:
@@ -117,7 +130,14 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += constantsDefinitions;
 			shaderContent += lightsDeclarations;
 			shaderContent += materialsDeclarations;
+			shaderContent += functionsDefinitions;
 			shaderContent += forwardrenderer::phongFragmentShader;
+			break;
+		case ms::shader::Type::forward_render_light_drawer_vshader:
+			shaderContent += forwardrenderer::lightSourceDrawerVertexShader;
+			break;
+		case ms::shader::Type::forward_render_light_drawer_fshader:
+			shaderContent += forwardrenderer::lightSourceDrawerFragmentShader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

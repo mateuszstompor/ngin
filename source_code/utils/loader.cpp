@@ -145,7 +145,7 @@ std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string abs
 		}
 		
 		texture->copy_data(data, width * height * bpp);
-		
+		stbi_image_free(data);
 		return texture;
 	} else {
 		return nullptr;
@@ -243,7 +243,7 @@ std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType type, aiMa
 }
 
 std::shared_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture * texture, std::string withName) {
-	//TODO implement embeded 
+	//TODO implement embeded textures
 	assert(false);
 	return nullptr;
 }

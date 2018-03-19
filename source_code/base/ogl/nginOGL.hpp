@@ -12,8 +12,12 @@
 #include "../ngin.hpp"
 #include "../../rendering/ogl/forwardRenderOGL.hpp"
 #include "../../rendering/ogl/deferredRenderOGL.hpp"
+#include "../../rendering/ogl/lightSourceRenderOGL.hpp"
+
 #include "../../utils/ogl/loaderOGL.hpp"
-#include "../../scene/ogl/sceneNodeOGL.hpp"
+#include "../../scene/ogl/drawableOGL.hpp"
+#include "../../scene/lights/ogl/pointLightOGL.hpp"
+#include "../../scene/lights/ogl/spotLightOGL.hpp"
 #include "../../shaders/shaderHeaders.hpp"
 
 namespace ms {
@@ -32,9 +36,18 @@ namespace ms {
 							 GLuint defaultFBO
 							 );
 		
-		void 							load		() override;
-		std::unique_ptr<Loader>			get_loader	() override;
-		std::shared_ptr<SceneNode>		get_node	() override;
+		void 							load				() 							override;
+		std::unique_ptr<Loader>			get_loader			() 							override;
+		std::shared_ptr<Drawable>		get_drawable		() 							override;
+		std::shared_ptr<PointLight>		get_point_light		(float 			power,
+															 math::vec4 	color,
+															 math::vec3 	position) 	override;
+		
+		std::shared_ptr<SpotLight>		get_spot_light		(float 			power,
+															 math::vec4 	color,
+															 math::vec3 	position,
+															 float 			lightingAngleDegrees,
+															 math::vec3 	direction) 	override;
 		
     };
     
