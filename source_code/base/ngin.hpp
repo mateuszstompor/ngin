@@ -75,7 +75,8 @@ namespace ms {
 		
 		std::unique_ptr<Loader>					loader;
 		std::unique_ptr<DeferredRender>         deferredRenderer;
-		std::unique_ptr<ForwardRender>          forwardRenderer;
+		std::unique_ptr<ForwardRender>          gouraudForwardRenderer;
+		std::unique_ptr<ForwardRender>          phongForwardRenderer;
 		std::unique_ptr<LightSourcesRender>     lightSourceRenderer;
 		
 		unsigned int 							screenWidth;

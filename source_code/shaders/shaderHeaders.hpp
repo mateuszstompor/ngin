@@ -66,16 +66,22 @@ namespace ms {
 		namespace forwardrenderer {
 			
 			const std::string phongVertexShader =
-			#include "./forward_render/vshader.glsl"
+			#include "./forward_render/phong/phong_vshader.glsl"
 			
 			const std::string phongFragmentShader =
-			#include "./forward_render/fshader.glsl"
+			#include "./forward_render/phong/phong_fshader.glsl"
+			
+			const std::string gouraudVertexShader =
+			#include "./forward_render/gouraud/gouraud_vshader.glsl"
+			
+			const std::string gouraudFragmentShader =
+			#include "./forward_render/gouraud/gouraud_fshader.glsl"
 			
 			const std::string lightSourceDrawerVertexShader =
-			#include "./forward_render/light_source_drawer_vshader.glsl"
+			#include "./forward_render/light_source_drawer/light_source_drawer_vshader.glsl"
 			
 			const std::string lightSourceDrawerFragmentShader =
-			#include "./forward_render/light_source_drawer_fshader.glsl"
+			#include "./forward_render/light_source_drawer/light_source_drawer_fshader.glsl"
 			
 		}
 		
@@ -92,6 +98,8 @@ enum class ms::shader::Type {
 	deferred_render_light_pass_fshader,
 	forward_render_phong_vshader,
 	forward_render_phong_fshader,
+	forward_render_gouraud_vshader,
+	forward_render_gouraud_fshader,
 	forward_render_light_drawer_vshader,
 	forward_render_light_drawer_fshader
 };
@@ -133,6 +141,15 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::forward_render_light_drawer_fshader:
 			shaderContent += forwardrenderer::lightSourceDrawerFragmentShader;
+			break;
+		case ms::shader::Type::forward_render_gouraud_vshader:
+			shaderContent += constantsDefinitions;
+			shaderContent += materialsDeclarations;
+			shaderContent += functionsDefinitions;
+			shaderContent += forwardrenderer::gouraudVertexShader;
+			break;
+		case ms::shader::Type::forward_render_gouraud_fshader:
+			shaderContent += forwardrenderer::gouraudFragmentShader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

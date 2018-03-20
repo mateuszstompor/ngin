@@ -31,13 +31,11 @@ void ms::ForwardRenderOGL::use () {
 
 void ms::ForwardRenderOGL::clear_frame () {
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	mglClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void ms::ForwardRenderOGL::draw (Drawable * node, const Scene * scene) {
 	
-	shader->set_camera_transformation(scene->get_camera().get_transformation());
-	shader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 	shader->set_model_transformation(node->modelTransformation.get_transformation());
 
 	node->use();
@@ -125,7 +123,8 @@ void ms::ForwardRenderOGL::draw (Drawable * node, const Scene * scene) {
 }
 
 void  ms::ForwardRenderOGL::setup_uniforms (const Scene * scene) {
-	
+	shader->set_camera_transformation(scene->get_camera().get_transformation());
+	shader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 }
 
 void ms::ForwardRenderOGL::load () {

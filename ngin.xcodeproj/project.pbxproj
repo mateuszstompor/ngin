@@ -124,6 +124,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5616642D2061353000915042 /* phong_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = phong_fshader.glsl; sourceTree = "<group>"; };
+		5616642E2061353000915042 /* phong_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = phong_vshader.glsl; sourceTree = "<group>"; };
+		561664302061353000915042 /* light_source_drawer_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = light_source_drawer_fshader.glsl; sourceTree = "<group>"; };
+		561664312061353000915042 /* light_source_drawer_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = light_source_drawer_vshader.glsl; sourceTree = "<group>"; };
+		561664332061358D00915042 /* gouraud_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud_vshader.glsl; sourceTree = "<group>"; };
+		561664342061359A00915042 /* gouraud_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud_fshader.glsl; sourceTree = "<group>"; };
 		561F2EF9204F041D00D7E875 /* material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = material.hpp; sourceTree = "<group>"; };
 		562138212060212C00ABA354 /* spotLightOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = spotLightOGL.hpp; sourceTree = "<group>"; };
 		56267870204AC01000A203F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -141,8 +147,6 @@
 		5632E38F205EF6A800A323A4 /* lightSourceDrawerShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lightSourceDrawerShader.hpp; sourceTree = "<group>"; };
 		5632E390205EF83000A323A4 /* lightSourceDrawerShaderOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lightSourceDrawerShaderOGL.cpp; sourceTree = "<group>"; };
 		5632E391205EF83000A323A4 /* lightSourceDrawerShaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lightSourceDrawerShaderOGL.hpp; sourceTree = "<group>"; };
-		5632E395205EFACB00A323A4 /* light_source_drawer_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = light_source_drawer_vshader.glsl; sourceTree = "<group>"; };
-		5632E396205EFADF00A323A4 /* light_source_drawer_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = light_source_drawer_fshader.glsl; sourceTree = "<group>"; };
 		5633FA8E204B6988003449EE /* resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource.cpp; sourceTree = "<group>"; };
 		5633FA94204B6F97003449EE /* geometry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = geometry.hpp; sourceTree = "<group>"; };
 		5633FA99204B6FCA003449EE /* geometryOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = geometryOGL.hpp; sourceTree = "<group>"; };
@@ -152,8 +156,6 @@
 		5633FAB1204C64D7003449EE /* drawableOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawableOGL.cpp; sourceTree = "<group>"; };
 		5633FAB5204C661A003449EE /* umbrellaHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = umbrellaHeader.hpp; sourceTree = "<group>"; };
 		5633FAB8204C6625003449EE /* utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
-		5633FABC204C9EB3003449EE /* vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vshader.glsl; sourceTree = "<group>"; };
-		5633FABD204C9EB3003449EE /* fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fshader.glsl; sourceTree = "<group>"; };
 		56407D7F2054034800EB1061 /* texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		5640FED2204AE77600512938 /* shaderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shaderOGL.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5640FED3204AE77600512938 /* shaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderOGL.cpp; sourceTree = "<group>"; usesTabs = 1; };
@@ -244,6 +246,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5616642C2061353000915042 /* phong */ = {
+			isa = PBXGroup;
+			children = (
+				5616642D2061353000915042 /* phong_fshader.glsl */,
+				5616642E2061353000915042 /* phong_vshader.glsl */,
+			);
+			path = phong;
+			sourceTree = "<group>";
+		};
+		5616642F2061353000915042 /* light_source_drawer */ = {
+			isa = PBXGroup;
+			children = (
+				561664302061353000915042 /* light_source_drawer_fshader.glsl */,
+				561664312061353000915042 /* light_source_drawer_vshader.glsl */,
+			);
+			path = light_source_drawer;
+			sourceTree = "<group>";
+		};
+		561664322061355B00915042 /* gouraud */ = {
+			isa = PBXGroup;
+			children = (
+				561664332061358D00915042 /* gouraud_vshader.glsl */,
+				561664342061359A00915042 /* gouraud_fshader.glsl */,
+			);
+			path = gouraud;
+			sourceTree = "<group>";
+		};
 		5626786D204AC01000A203F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,10 +343,9 @@
 		5633FABB204C9EB3003449EE /* forward_render */ = {
 			isa = PBXGroup;
 			children = (
-				5633FABC204C9EB3003449EE /* vshader.glsl */,
-				5633FABD204C9EB3003449EE /* fshader.glsl */,
-				5632E395205EFACB00A323A4 /* light_source_drawer_vshader.glsl */,
-				5632E396205EFADF00A323A4 /* light_source_drawer_fshader.glsl */,
+				561664322061355B00915042 /* gouraud */,
+				5616642F2061353000915042 /* light_source_drawer */,
+				5616642C2061353000915042 /* phong */,
 			);
 			path = forward_render;
 			sourceTree = "<group>";

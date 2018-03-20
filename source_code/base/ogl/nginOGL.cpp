@@ -22,6 +22,8 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	
 	std::string forwardRenderVertexShaderSource = shader::get_shader_of_type(shader::Type::forward_render_phong_vshader);
 	std::string forwardRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::forward_render_phong_fshader);
+	std::string gouraudVertexShaderSource = shader::get_shader_of_type(shader::Type::forward_render_gouraud_vshader);
+	std::string gouraudRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::forward_render_gouraud_fshader);
 	std::string deferredRenderVertexShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_g_buf_vertex_shader);
 	std::string deferredRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_g_buf_fragment_shader);
 	std::string deferredRenderLightingVertexShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_light_pass_vshader);
@@ -37,13 +39,20 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																					   frameBufferWidth,
 																					   frameBufferHeight));
 	
-    forwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(forwardRenderVertexShaderSource,
-																		  forwardRenderFragmentShaderSource,
-																		  screenWidth,
-																		  screenHeight,
-																		  frameBufferWidth,
-																		  frameBufferHeight));
+    phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(forwardRenderVertexShaderSource,
+																			   forwardRenderFragmentShaderSource,
+																			   screenWidth,
+																			   screenHeight,
+																			   frameBufferWidth,
+																			   frameBufferHeight));
 
+	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(gouraudVertexShaderSource,
+																				 gouraudRenderFragmentShaderSource,
+																				 screenWidth,
+																				 screenHeight,
+																				 frameBufferWidth,
+																				 frameBufferHeight));
+	
 	auto defPtr = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(deferredRenderVertexShaderSource,
 																			  deferredRenderFragmentShaderSource,
 																			  deferredRenderLightingVertexShaderSource,
@@ -58,7 +67,8 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 }
 
 void ms::NGinOGL::load () {
-	forwardRenderer->load();
+	phongForwardRenderer->load();
+	gouraudForwardRenderer->load();
 	deferredRenderer->load();
 	lightSourceRenderer->load();
 	deferredRenderer->use();
