@@ -139,6 +139,7 @@ void ms::NGin::draw_scene() {
 	int items = static_cast<int>(scene->nodes.size());
 	
 	deferredRenderer->use();
+	deferredRenderer->setup_uniforms(scene.get());
 	deferredRenderer->clear_frame();
 	for(int i = 0; i < items; ++i) {
 		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
@@ -153,10 +154,8 @@ void ms::NGin::draw_scene() {
 		lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
 	}
 	
-	
 //	forwardRenderer->use();
-//
-//	for(int i = items; i < scene->nodes.size(); ++i) {
+//	for(int i = 0; i < scene->nodes.size(); ++i) {
 //		forwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 

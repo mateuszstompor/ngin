@@ -13,11 +13,11 @@ uniform sampler2D 							diffuseTexture;
 uniform int 								hasSpecularTexture;
 uniform sampler2D 							specularTexture;
 
-in vec3		worldPosition;
-in vec3		normalVector;
-in vec2 	texCoord;
+in 		vec3								worldPosition;
+in 		vec3								normalVector;
+in 		vec2 								texCoord;
 
-out vec4	FragColor;
+out 	vec4								FragColor;
 
 void main(){
 	

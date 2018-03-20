@@ -10,6 +10,21 @@
 
 ms::ForwardShaderOGL::ForwardShaderOGL(std::string vSS, std::string fSS) : ms::ShaderOGL(vSS, "", "", "", fSS) { }
 
+void  ms::ForwardShaderOGL::load () {
+	ShaderOGL::load();
+	
+	mglUseProgram(program);
+	
+	GLint diffuseTextureLocation = mglGetUniformLocation(program, "diffuseTexture");
+	mglUniform1i(diffuseTextureLocation, 0);
+	
+	GLint specularTextureLocation = mglGetUniformLocation(program, "specularTexture");
+	mglUniform1i(specularTextureLocation, 1);
+	
+	mglUseProgram(0);
+	
+}
+
 void ms::ForwardShaderOGL::set_projection_matrix (const math::mat4 & proj) {
 	GLint persp = mglGetUniformLocation(program, "perspectiveProjection");
 	mglUniformMatrix4fv(persp, 1, GL_FALSE, proj.c_array());
@@ -99,7 +114,7 @@ void ms::ForwardShaderOGL::set_directional_light_color (const math::vec4 & color
 }
 
 void ms::ForwardShaderOGL::set_has_material (bool doesItHave) {
-	GLint hasMaterialLocation = mglGetUniformLocation(program, "material.hasMaterial");
+	GLint hasMaterialLocation = mglGetUniformLocation(program, "hasMaterial");
 	mglUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
 }
 

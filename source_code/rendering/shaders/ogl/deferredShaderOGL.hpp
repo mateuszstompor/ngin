@@ -19,7 +19,8 @@ namespace ms {
 	
 	public:
 		
-		DeferredShaderOGL(std::string vertexShaderSource, std::string fragmentShaderSource);
+						DeferredShaderOGL(std::string vertexShaderSource,
+										  std::string fragmentShaderSource);
 		
 		virtual void 	load						() 									override;
 		virtual void 	set_projection_matrix		(const math::mat4 & proj)			override;
@@ -33,7 +34,22 @@ namespace ms {
 		virtual void	set_material_shininess		(float shininess)					override;
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 				override;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 				override;
-
+		
+	protected:
+		
+		GLint			projectionMatrixLocation;
+		GLint			cameraTransformationLocation;
+		GLint			modelTransformationLocation;
+		
+		GLint			hasMaterialLocation;
+		GLint			ambientColorLocation;
+		GLint			diffuseColorLocation;
+		GLint			specularColorLocation;
+		GLint			opacityLocation;
+		GLint			shininessLocation;
+		GLint			hasDiffuseTextureLocation;
+		GLint			hasSpecularTextureLocation;
+		
 	};
 	
 }

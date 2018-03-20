@@ -20,6 +20,8 @@ namespace ms {
 		
 						ForwardShaderOGL(std::string vertexShaderSource, std::string fragmentShaderSource);
 		
+		virtual void	load						()													override;
+		
 		virtual void 	set_projection_matrix		(const math::mat4 & proj)							override;
 		virtual void 	set_camera_transformation	(const math::mat4 & transf)							override;
 		virtual void	set_model_transformation	(const math::mat4 & modelTransf) 					override;

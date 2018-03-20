@@ -17,6 +17,8 @@ namespace ms {
 	
 	public:
 		
+		inline			DeferredLightingShader				(unsigned int maximalAmountOfLights);
+		
 		virtual void	set_camera_transformation			(const math::mat4 & transformation)				 			= 0;
 		
 		virtual void 	set_amount_of_point_lights			(int amount) 												= 0;
@@ -38,8 +40,15 @@ namespace ms {
 		virtual void 	set_rendering_mode					(unsigned int settings) 									= 0;
 		
 		virtual 		~DeferredLightingShader				()															= default;
+		
+	protected:
+		
+		unsigned int maximalAmountOfLights;
+		
 	};
 	
 }
+
+ms::DeferredLightingShader::DeferredLightingShader (unsigned int maximalAmountOfLights) : maximalAmountOfLights(maximalAmountOfLights) { }
 
 #endif /* deferred_lighting_shader_h */

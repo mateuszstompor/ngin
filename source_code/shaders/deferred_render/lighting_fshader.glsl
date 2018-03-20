@@ -27,77 +27,40 @@ void main() {
 
 	if(renderMode > uint(0)) {
 		if(renderMode == uint(1)) {
-			FragColor = texture(gPosition, TexCoords);
+			FragColor 	= texture(gPosition, TexCoords);
 			return;
 		} else if (renderMode == uint(2)) {
-			FragColor = texture(gAlbedo, TexCoords);
+			FragColor 	= texture(gAlbedo, TexCoords);
 			return;
 		} else if (renderMode == uint(3)) {
-			FragColor = texture(gNormal, TexCoords);
+			FragColor 	= texture(gNormal, TexCoords);
 			return;
 		} else {
-			float spec = texture(gAlbedo, TexCoords).w;
-			FragColor = vec4(spec, spec, spec, 1.0f);
+			float spec 	= texture(gAlbedo, TexCoords).w;
+			FragColor 	= vec4(spec, spec, spec, 1.0f);
 			return;
 		}
 	}
 
 #endif
 
+	vec3 normal 			= normalize(texture(gNormal, TexCoords).xyz);
+	vec3 fragmentColor		= texture(gAlbedo, TexCoords).xyz;
+	vec3 fragmentPosition 	= texture(gPosition, TexCoords).xyz;
 	
-	vec3 normal = normalize(texture(gNormal, TexCoords).xyz);
-	vec3 fragmentColor = texture(gAlbedo, TexCoords).xyz;
-	vec3 fragmentPosition = texture(gPosition, TexCoords).xyz;
-	
-	vec3 result = vec3(0.0f, 0.0f, 0.0f);
-	vec3 cameraPosition = (cameraTransformation * vec4(1.0f)).xyz;
-	vec3 surfaceToCamera = normalize(fragmentPosition - cameraPosition);
-	
-	result += 0.1f * texture(gAlbedo, TexCoords).xyz;
+	vec3 result 			= vec3(0.0f, 0.0f, 0.0f);
+	vec3 cameraPosition 	= (cameraTransformation * vec4(1.0f)).xyz;
 	
 	if (hasDirLight == 1) {
-		result += dirLight.color.xyz * fragmentColor * count_diffuse_factor(normal, dirLight.direction);
+		result += count_light_influence(dirLight, vec4(fragmentColor, 1.0f), normal).xyz;
 	}
 	
 	for(int j=0; j < spotLightsAmount; ++j) {
-		
-		vec3 lightToFragment = normalize(fragmentPosition - spotLights[j].position);
-		float angle = max(dot(lightToFragment, spotLights[j].direction), 0.0f);
-		float angleRadians = radians(spotLights[j].angleDegrees);
-		if (angle > angleRadians) {
-			vec3 lightPosition = spotLights[j].position;
-			vec3 surfaceToLight = lightPosition - fragmentPosition;
-			
-			
-			//use length2 instead of length
-			float distance = length(surfaceToLight);
-			
-			surfaceToLight = normalize(surfaceToLight);
-			
-			float attenuation = count_attenuation_factor(distance);
-			vec3 diffuseColor = spotLights[j].color.xyz * fragmentColor * count_diffuse_factor(normal, surfaceToLight) * attenuation;
-			vec3 specularColor = spotLights[j].color.xyz * fragmentColor * count_blinn_phong_specular_factor(normalize(fragmentPosition - cameraPosition), surfaceToLight, normal, 256) * attenuation;
-			
-			result += diffuseColor + specularColor;
-		}
-		
+		result += count_light_influence(spotLights[j], fragmentPosition, vec4(fragmentColor, 1.0f), normal, cameraPosition).xyz;
 	}
 
 	for (int i = 0; i < pointLightsAmount; i++) {
-		vec3 lightPosition = pointLights[i].position;
-		vec3 surfaceToLight = lightPosition - fragmentPosition;
-		
-		
-		//use length2 instead of length
-		float distance = length(surfaceToLight);
-		
-		surfaceToLight = normalize(surfaceToLight);
-		
-		float attenuation = count_attenuation_factor(distance);
-		vec3 diffuseColor = pointLights[i].color.xyz * fragmentColor * count_diffuse_factor(normal, surfaceToLight) * attenuation;
-		vec3 specularColor = pointLights[i].color.xyz * fragmentColor * count_blinn_phong_specular_factor(normalize(fragmentPosition - cameraPosition), surfaceToLight, normal, 256) * attenuation;
-		
-		result += diffuseColor + specularColor;
+		result += count_light_influence(pointLights[i], fragmentPosition, vec4(fragmentColor, 1.0f), normal, cameraPosition).xyz;
 	}
 
 	FragColor = vec4(result, 1.0f);

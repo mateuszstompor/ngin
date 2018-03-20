@@ -38,9 +38,6 @@ namespace ms {
 		
 	#endif
 		
-		const std::string lightsDeclarations =
-		#include "./lightDeclarations.glsl"
-		
 		const std::string constantsDefinitions =
 		#include "./constantsDefinitions.glsl"
 		
@@ -119,7 +116,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::deferred_render_light_pass_fshader:
 			shaderContent += constantsDefinitions;
-			shaderContent += lightsDeclarations;
 			shaderContent += functionsDefinitions;
 			shaderContent += deferredrenderer::lightingPassFragmentShader;
 			break;
@@ -128,7 +124,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::forward_render_phong_fshader:
 			shaderContent += constantsDefinitions;
-			shaderContent += lightsDeclarations;
 			shaderContent += materialsDeclarations;
 			shaderContent += functionsDefinitions;
 			shaderContent += forwardrenderer::phongFragmentShader;

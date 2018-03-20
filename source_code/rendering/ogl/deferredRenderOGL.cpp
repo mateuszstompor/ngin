@@ -12,9 +12,10 @@ namespace ms {
 	
 	typedef unsigned int ui;
 	
-	#define G_BUF_ALBEDO 		"G_BUF_ALBEDO"
-	#define G_BUF_POSITIONS 	"G_BUF_POSITIONS"
-	#define G_BUF_NORMALS 		"G_BUF_NORMALS"
+	#define G_BUF_ALBEDO 			"G_BUF_ALBEDO"
+	#define G_BUF_POSITIONS 		"G_BUF_POSITIONS"
+	#define G_BUF_NORMALS 			"G_BUF_NORMALS"
+	#define MAX_AMOUNT_OF_LIGHTS	20
 	
 }
 
@@ -29,7 +30,7 @@ ms::DeferredRenderOGL::DeferredRenderOGL (std::string gVS,
 
 ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
-	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(lVS, lFS));
+	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(MAX_AMOUNT_OF_LIGHTS, lVS, lFS));
 	
 	
 	gPosition = std::unique_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
@@ -80,53 +81,57 @@ void ms::DeferredRenderOGL::clear_frame () {
 
 void ms::DeferredRenderOGL::draw (Drawable * node, const Scene * scene) {
 
-	gShader->set_camera_transformation(scene->get_camera().get_transformation());
-	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 	gShader->set_model_transformation(node->modelTransformation.get_transformation());
-
+	
 	node->use();
 	
-	auto material = scene->materials.find(node->geometry->get_material_name());
+	if(!node->geometry->get_material_name().empty()) {
 		
-	if (material != scene->materials.end()) {
-		gShader->set_has_material(true);
+		auto material = scene->materials.find(node->geometry->get_material_name());
 		
-		if(material->second->diffuseTexturesNames.size() > 0) {
+		if (material != scene->materials.end()) {
+			gShader->set_has_material(true);
 			
-			auto textureIt = scene->textures.find(material->second->diffuseTexturesNames[0]);
-			
-			if ( textureIt != scene->textures.end()) {
-				mglActiveTexture(GL_TEXTURE0);
-				textureIt->second->use();
-				gShader->set_has_diffuse_texture(true);
+			if(material->second->diffuseTexturesNames.size() > 0) {
+				
+				auto textureIt = scene->textures.find(material->second->diffuseTexturesNames[0]);
+				
+				if ( textureIt != scene->textures.end()) {
+					mglActiveTexture(GL_TEXTURE0);
+					textureIt->second->use();
+					gShader->set_has_diffuse_texture(true);
+				} else {
+					gShader->set_has_diffuse_texture(false);
+				}
+				
 			} else {
 				gShader->set_has_diffuse_texture(false);
 			}
 			
-		} else {
-			gShader->set_has_diffuse_texture(false);
-		}
-		
-		if(material->second->specularTexturesNames.size() > 0) {
-			auto textureIt = scene->textures.find(material->second->specularTexturesNames[0]);
-			if ( textureIt != scene->textures.end()) {
-				mglActiveTexture(GL_TEXTURE1);
-				textureIt->second->use();
-				gShader->set_has_specular_texture(true);
-
+			if(material->second->specularTexturesNames.size() > 0) {
+				auto textureIt = scene->textures.find(material->second->specularTexturesNames[0]);
+				if (textureIt != scene->textures.end()) {
+					mglActiveTexture(GL_TEXTURE1);
+					textureIt->second->use();
+					gShader->set_has_specular_texture(true);
+					
+				} else {
+					gShader->set_has_specular_texture(false);
+				}
+				
 			} else {
 				gShader->set_has_specular_texture(false);
 			}
 			
+			gShader->set_material_ambient_color(material->second->ambientColor);
+			gShader->set_material_diffuse_color(material->second->diffuseColor);
+			gShader->set_material_specular_color(material->second->specularColor);
+			gShader->set_material_opacity(material->second->opacity);
+			gShader->set_material_shininess(material->second->shininess);
+			
 		} else {
-			gShader->set_has_specular_texture(false);
+			gShader->set_has_material(false);
 		}
-		
-		gShader->set_material_ambient_color(material->second->ambientColor);
-		gShader->set_material_diffuse_color(material->second->diffuseColor);
-		gShader->set_material_specular_color(material->second->specularColor);
-		gShader->set_material_opacity(material->second->opacity);
-		gShader->set_material_shininess(material->second->shininess);
 		
 	} else {
 		gShader->set_has_material(false);
@@ -216,7 +221,8 @@ void ms::DeferredRenderOGL::load () {
 }
 
 void ms::DeferredRenderOGL::setup_uniforms (const Scene * scene) {
-	
+	gShader->set_camera_transformation(scene->get_camera().get_transformation());
+	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 }
 
 bool ms::DeferredRenderOGL::is_loaded () {
@@ -230,7 +236,6 @@ void ms::DeferredRenderOGL::unload () {
 		mglDeleteRenderbuffers(1, &gRenderBuffer);
 		mglDeleteVertexArrays(1, &quadVAO);
 		mglDeleteBuffers(1, &quadVBO);
-		
 		
 		this->gAlbedo->unload();
 		this->gNormal->unload();

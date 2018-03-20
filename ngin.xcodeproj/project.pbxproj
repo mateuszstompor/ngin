@@ -217,7 +217,6 @@
 		56E611B720574FFF0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56E611BC2057520E0036FA07 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = ../assimp/lib/iOS/x86_64/libassimp.a; sourceTree = "<group>"; };
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
-		56F5447A205DC7A700431095 /* lightDeclarations.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lightDeclarations.glsl; sourceTree = "<group>"; };
 		56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = constantsDefinitions.glsl; sourceTree = "<group>"; };
 		56F5447C205ECCCE00431095 /* materialDeclarations.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = materialDeclarations.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -302,7 +301,6 @@
 		5633FABA204C9EB3003449EE /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				56F5447A205DC7A700431095 /* lightDeclarations.glsl */,
 				56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */,
 				56F5447C205ECCCE00431095 /* materialDeclarations.glsl */,
 				56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */,

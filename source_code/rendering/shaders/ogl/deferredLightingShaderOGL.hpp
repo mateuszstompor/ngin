@@ -20,7 +20,9 @@ namespace ms {
 	
 	public:
 		
-						DeferredLightingShaderOGL			(std::string vertexShaderSource, std::string fragmentShaderSource);
+						DeferredLightingShaderOGL			(unsigned int maximalAmountOfLights,
+															 std::string vertexShaderSource,
+															 std::string fragmentShaderSource);
 		
 		virtual void 	set_camera_transformation 			(const math::mat4 & transf)								override;
 		
@@ -43,7 +45,50 @@ namespace ms {
 		virtual void 	set_rendering_mode					(unsigned int settings) 								override;
 
 		virtual void	load								()														override;
+		
+						~DeferredLightingShaderOGL			();
+		
+	protected:
+		
+		GLint			directionalLightColorLocation;
+		GLint			directionalLightDirectionLocation;
+		GLint			hasDirectionalLightLocation;
+		
+		GLint			cameraTransformationLocation;
+		GLint			renderModeLocation;
+		
+		GLint			spotLightsAmount;
+		GLint*			spotLightsLocations;
+		
+		GLint			pointLightsAmount;
+		GLint*			pointLightsLocations;
+		
 	};
+	
+}
+
+namespace ms {
+	
+#define AMOUNT_SPOT_LIGHT_PROPERTIES 	5
+#define AMOUNT_POINT_LIGHT_PROPERTIES 	3
+	
+	namespace spotlight {
+		
+		#define SL_POWER			0
+		#define SL_COLOR			1
+		#define SL_POSITION			2
+		#define SL_ANGLE_DEGREES	3
+		#define SL_DIRECTION		4
+		
+	}
+	
+	namespace pointlight {
+		
+		#define PL_POWER			0
+		#define PL_COLOR			1
+		#define PL_POSITION			2
+		
+	}
 	
 }
 

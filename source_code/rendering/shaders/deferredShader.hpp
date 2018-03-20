@@ -31,7 +31,7 @@ namespace ms {
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 			= 0;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 			= 0;
 		
-		virtual			~DeferredShader()									= default;
+		virtual			~DeferredShader()											= default;
 		
 	};
 	
