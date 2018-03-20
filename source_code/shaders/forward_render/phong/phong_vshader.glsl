@@ -9,13 +9,17 @@ uniform mat4 				cameraTransformation;
 uniform mat4 				perspectiveProjection;
 
 out vec2 texCoord;
-out vec3 normalVector;
+out vec3 normal_N;
 out vec3 fragmentPosition;
+out vec3 cameraPosition;
+out vec3 surfaceZCamera_N;
 
 void main(){
-	normalVector = normalize(transpose(inverse(mat3(modelTransformation))) * normal);
+	normal_N = normalize(transpose(inverse(mat3(modelTransformation))) * normal);
 	vec4 pos = modelTransformation * vec4(position, 1.0f);
 	fragmentPosition = pos.xyz;
+	cameraPosition = (cameraTransformation * vec4(1.0f)).xyz;
+	surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
 	texCoord = textureCoordinates;
 	gl_Position = perspectiveProjection * cameraTransformation * pos;
 }

@@ -137,30 +137,28 @@ void ms::NGin::draw_scene() {
 	
 	count_fps();
 	
-//	int items = static_cast<int>(scene->nodes.size());
-	
 //	deferredRenderer->use();
 //	deferredRenderer->setup_uniforms(scene.get());
 //	deferredRenderer->clear_frame();
-//	for(int i = 0; i < items; ++i) {
+//	for(int i = 0; i < scene->nodes.size(); ++i) {
 //		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 //	deferredRenderer->perform_light_pass(scene.get());
-//
+
 	
-	phongForwardRenderer->use();
-	phongForwardRenderer->clear_frame();
-	phongForwardRenderer->setup_uniforms(scene.get());
-	for(int i = 0; i < scene->nodes.size(); ++i) {
-		phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-	}
-	
-//	gouraudForwardRenderer->use();
-//	gouraudForwardRenderer->clear_frame();
-//	gouraudForwardRenderer->setup_uniforms(scene.get());
+//	phongForwardRenderer->use();
+//	phongForwardRenderer->clear_frame();
+//	phongForwardRenderer->setup_uniforms(scene.get());
 //	for(int i = 0; i < scene->nodes.size(); ++i) {
-//		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+//		phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
+	
+	gouraudForwardRenderer->use();
+	gouraudForwardRenderer->clear_frame();
+	gouraudForwardRenderer->setup_uniforms(scene.get());
+	for(int i = 0; i < scene->nodes.size(); ++i) {
+		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+	}
 	
 	lightSourceRenderer->use();
 	for(int i = 0; i < scene->pointLights.size(); ++i) {

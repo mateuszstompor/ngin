@@ -18,39 +18,58 @@ uniform sampler2D 							diffuseTexture;
 uniform int 								hasSpecularTexture;
 uniform sampler2D 							specularTexture;
 
-uniform mat4 								cameraTransformation;
-
 out vec4 FragColor;
 
 in vec2 texCoord;
-in vec3 normalVector;
+in vec3 normal_N;
 in vec3 fragmentPosition;
+in vec3 cameraPosition;
+in vec3 surfaceZCamera_N;
 
 void main(){
 	
-	vec4 fragmentBaseColor;
-	vec3 result = vec3(0.0f);
-	
+	vec3 	diffuseColor;
+	vec3 	specularColor;
+	float 	shininess;
+	vec3 	result = vec3(0.0f);
+
 	if(hasMaterial == 1) {
-		fragmentBaseColor.xyz = hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : material.diffuse;
-		fragmentBaseColor.w = hasSpecularTexture == 1 ? texture(specularTexture, texCoord).x : material.shininess;
+		diffuseColor 	= hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : material.diffuse;
+		specularColor 	= hasSpecularTexture == 1 ? texture(specularTexture, texCoord).xyz : material.specular;
+		shininess		= material.shininess;
 	} else {
-		fragmentBaseColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		// some default colors
+		diffuseColor 	= vec3(0.0f, 1.0f, 0.0f);
+		specularColor 	= vec3(1.0f, 0.0f, 0.0f);
+		shininess		= 0.0f;
 	}
-	
-	vec3 normal 			= normalize(normalVector);
-	vec3 cameraPosition 	= (cameraTransformation * vec4(1.0f)).xyz;
 
 	if (hasDirLight == 1) {
-		result += count_light_influence(dirLight, fragmentBaseColor, normal).xyz;
+		result += count_light_influence(dirLight, diffuseColor, normal_N);
 	}
-
+	
 	for(int j=0; j < spotLightsAmount; ++j) {
-		result += count_light_influence(spotLights[j], fragmentPosition, fragmentBaseColor, normal, cameraPosition).xyz;
+		result += count_light_influence(spotLights[j],
+										fragmentPosition,
+										diffuseColor,
+										diffuseColor,
+										specularColor,
+										shininess,
+										normal_N,
+										cameraPosition,
+										surfaceZCamera_N);
 	}
-
-	for (int i = 0; i < pointLightsAmount; i++) {
-		result += count_light_influence(pointLights[i], fragmentPosition, fragmentBaseColor, normal, cameraPosition).xyz;
+	
+	for (int i = 0; i < pointLightsAmount; ++i) {
+		result += count_light_influence(pointLights[i],
+										fragmentPosition,
+										diffuseColor,
+										diffuseColor,
+										specularColor,
+										shininess,
+										normal_N,
+										cameraPosition,
+										surfaceZCamera_N);
 	}
 
 	FragColor = vec4(result, 1.0f);

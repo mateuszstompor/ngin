@@ -12,13 +12,11 @@ namespace ms {
 	
 	typedef unsigned int ui;
 	
-	#define MAX_AMOUNT_OF_LIGHTS	20
-	
 }
 
-ms::ForwardRenderOGL::ForwardRenderOGL (std::string vSS, std::string fSS, ui sW, ui sH, ui fbW, ui fbH) :
-	ms::ForwardRender(sW, sH, fbW, fbH, vSS, fSS) {
-		shader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(MAX_AMOUNT_OF_LIGHTS, vSS, fSS));
+ms::ForwardRenderOGL::ForwardRenderOGL (unsigned int maxAOL, std::string vSS, std::string fSS, ui sW, ui sH, ui fbW, ui fbH) :
+	ms::ForwardRender(maxAOL, sW, sH, fbW, fbH, vSS, fSS) {
+		shader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(maxAOL, vSS, fSS));
 }
 
 void ms::ForwardRenderOGL::use () {

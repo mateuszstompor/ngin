@@ -31,6 +31,7 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	std::string lightSourceDrawerVertexShader = shader::get_shader_of_type(shader::Type::forward_render_light_drawer_vshader);
 	std::string lightSourceDrawerFragmentShader = shader::get_shader_of_type(shader::Type::forward_render_light_drawer_fshader);
 	
+	unsigned int AOL = 200;
 	
 	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourceRenderOGL(lightSourceDrawerVertexShader,
 																					   lightSourceDrawerFragmentShader,
@@ -39,21 +40,24 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																					   frameBufferWidth,
 																					   frameBufferHeight));
 	
-    phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(forwardRenderVertexShaderSource,
+    phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(AOL,
+																			   forwardRenderVertexShaderSource,
 																			   forwardRenderFragmentShaderSource,
 																			   screenWidth,
 																			   screenHeight,
 																			   frameBufferWidth,
 																			   frameBufferHeight));
 
-	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(gouraudVertexShaderSource,
+	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(AOL,
+																				 gouraudVertexShaderSource,
 																				 gouraudRenderFragmentShaderSource,
 																				 screenWidth,
 																				 screenHeight,
 																				 frameBufferWidth,
 																				 frameBufferHeight));
 	
-	auto defPtr = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(deferredRenderVertexShaderSource,
+	auto defPtr = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(  AOL,
+																			  deferredRenderVertexShaderSource,
 																			  deferredRenderFragmentShaderSource,
 																			  deferredRenderLightingVertexShaderSource,
 																			  deferredRenderLightingFragmentShaderSource,
@@ -71,7 +75,6 @@ void ms::NGinOGL::load () {
 	gouraudForwardRenderer->load();
 	deferredRenderer->load();
 	lightSourceRenderer->load();
-	deferredRenderer->use();
 }
 
 std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,

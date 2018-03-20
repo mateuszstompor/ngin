@@ -25,7 +25,8 @@ namespace ms {
 		
 		enum class DebugType;
 		
-			 			DeferredRender		(	unsigned int screenWidth,
+			 			DeferredRender		(	unsigned int maximalAmountOfLights,
+											 	unsigned int screenWidth,
 												unsigned int screenHeight,
 												unsigned int frameBufferWidth,
 												unsigned int frameBufferHeight,
@@ -51,6 +52,8 @@ namespace ms {
 		
 		std::unique_ptr<DeferredShader>				gShader;
 		std::unique_ptr<DeferredLightingShader>		lightingShader;
+		
+		unsigned int 								maximalAmountOfLights;
 		unsigned int								renderMode;
 		bool										debugMode;
 		DebugType									debugType;

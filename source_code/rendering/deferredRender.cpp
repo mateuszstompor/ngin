@@ -26,7 +26,8 @@ namespace ms {
 	
 }
 
-ms::DeferredRender::DeferredRender(unsigned int sW,
+ms::DeferredRender::DeferredRender(unsigned int maxAOL,
+								   unsigned int sW,
 								   unsigned int sH,
 								   unsigned int fbW,
 								   unsigned int fbH,
@@ -39,6 +40,7 @@ gBufferVertexShaderSource(gVS),
 gBufferFragmentShaderSource(gFS),
 lightingVertexShaderSource(lVS),
 lightingFragmentShaderSource(lFS),
+maximalAmountOfLights(maxAOL),
 gShader(nullptr),
 lightingShader(nullptr),
 gNormal(nullptr),

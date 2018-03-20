@@ -47,7 +47,8 @@ namespace ms {
 		
 	public:
 		
-		ForwardRenderOGL			(std::string vertexShaderSource,
+		ForwardRenderOGL			(unsigned int 	maximalAmountOfLights,
+									 std::string vertexShaderSource,
 									 std::string fragmentShaderSource,
 									 unsigned int screenWidth,
 									 unsigned int screenHeight,

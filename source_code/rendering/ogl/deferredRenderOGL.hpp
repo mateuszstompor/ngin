@@ -45,7 +45,8 @@ namespace ms {
 		
 		public:
 		
-			DeferredRenderOGL			(std::string gBufferVertexShaderSource,
+			DeferredRenderOGL			(unsigned int maximalAmountOfLights,
+										 std::string gBufferVertexShaderSource,
 										 std::string gBufferFragmentShaderSource,
 										 std::string lightingVertexShaderSource,
 										 std::string lightingFragmentShaderSource,

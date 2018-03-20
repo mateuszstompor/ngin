@@ -21,12 +21,13 @@ namespace ms {
 	
 	public:
 		
-		inline 	ForwardRender(unsigned int screenWidth,
-							  unsigned int screenHeight,
-							  unsigned int frameBufferWidth,
-							  unsigned int frameBufferHeight,
-							  std::string vertexShSource,
-							  std::string fragmentShSource
+		inline 	ForwardRender(unsigned int 	maximalAmountOfLights,
+							  unsigned int 	screenWidth,
+							  unsigned int 	screenHeight,
+							  unsigned int 	frameBufferWidth,
+							  unsigned int 	frameBufferHeight,
+							  std::string 	vertexShSource,
+							  std::string 	fragmentShSource
 							  );
 		
 		virtual ~ForwardRender() = default;
@@ -35,6 +36,7 @@ namespace ms {
 		
 		std::string 							vertexShaderSource;
 		std::string 							fragmentShaderSource;
+		unsigned int 							maximalAmountOfLights;
 		
 		std::unique_ptr<ForwardShader>			shader;
 		
@@ -42,7 +44,8 @@ namespace ms {
 	
 }
 
-ms::ForwardRender::ForwardRender(unsigned int sW,
+ms::ForwardRender::ForwardRender(unsigned int maxAOL,
+								 unsigned int sW,
 								 unsigned int sH,
 								 unsigned int fbW,
 								 unsigned int fbH,
@@ -51,6 +54,7 @@ ms::ForwardRender::ForwardRender(unsigned int sW,
 								 ) : 	Render(sW, sH, fbW, fbH),
 										vertexShaderSource(vertexShSource),
 										fragmentShaderSource(fragmentShSource),
+										maximalAmountOfLights(maxAOL),
 										shader(nullptr) { }
 
 #endif /* forward_render_hpp */

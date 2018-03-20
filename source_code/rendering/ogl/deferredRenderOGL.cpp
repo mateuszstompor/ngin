@@ -15,22 +15,22 @@ namespace ms {
 	#define G_BUF_ALBEDO 			"G_BUF_ALBEDO"
 	#define G_BUF_POSITIONS 		"G_BUF_POSITIONS"
 	#define G_BUF_NORMALS 			"G_BUF_NORMALS"
-	#define MAX_AMOUNT_OF_LIGHTS	20
 	
 }
 
-ms::DeferredRenderOGL::DeferredRenderOGL (std::string gVS,
-										  std::string gFS,
-										  std::string lVS,
-										  std::string lFS,
-										  unsigned int sW,
-										  unsigned int sH,
-										  unsigned int fbW,
-										  unsigned int fbH) :
+ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	maxAOLights,
+										  std::string 	gVS,
+										  std::string 	gFS,
+										  std::string 	lVS,
+										  std::string 	lFS,
+										  unsigned int 	sW,
+										  unsigned int 	sH,
+										  unsigned int 	fbW,
+										  unsigned int 	fbH) :
 
-ms::DeferredRender(sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
+ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
-	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(MAX_AMOUNT_OF_LIGHTS, lVS, lFS));
+	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(maxAOLights, lVS, lFS));
 	
 	
 	gPosition = std::unique_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,

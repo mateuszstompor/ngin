@@ -14,8 +14,7 @@ out vec2 texCoord;
 
 void main(){
 	//in case of shearing
-	mat3 normalMatrix 	= transpose(inverse(mat3(modelTransformation)));
-	normalVector 		= normalMatrix * normal;
+	normalVector 		= normalize(transpose(inverse(mat3(modelTransformation))) * normal);
 	texCoord 			= textureCoordinates;
 	worldPosition 		= (modelTransformation * vec4(position, 1.0f)).xyz;
 	gl_Position 		= perspectiveProjection * cameraTransformation * modelTransformation * vec4(position, 1.0f);
