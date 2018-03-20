@@ -39,16 +39,41 @@
 #include "../shader.hpp"
 
 namespace ms {
+	
+	#define AMOUNT_SPOT_LIGHT_PROPERTIES 	5
+	#define AMOUNT_POINT_LIGHT_PROPERTIES 	3
+	
+	namespace spotlight {
+		
+		#define SL_POWER			0
+		#define SL_COLOR			1
+		#define SL_POSITION			2
+		#define SL_ANGLE_DEGREES	3
+		#define SL_DIRECTION		4
+		
+	}
+	
+	namespace pointlight {
+		
+		#define PL_POWER			0
+		#define PL_COLOR			1
+		#define PL_POSITION			2
+		
+	}
+	
+}
+
+namespace ms {
     
 	class ShaderOGL : public virtual Shader {
 		
 	public:
 		
-						ShaderOGL(std::string vertexShader,
-								  std::string tessellationControlShader,
-								  std::string tessellationEvaluationShader,
-								  std::string geometryShader,
-								  std::string fragmentShader);
+						ShaderOGL	(std::string vertexShader,
+									 std::string tessellationControlShader,
+									 std::string tessellationEvaluationShader,
+									 std::string geometryShader,
+									 std::string fragmentShader);
 		
 		virtual void 	use			() override;
 		virtual void 	load		() override;
@@ -61,11 +86,11 @@ namespace ms {
 		void 			compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source);
 		int				get_shader_status(GLuint shader, GLenum statusType);
 		
-		std::string 		vertexSource;
-		std::string 		tesselationControlSource;
-		std::string 		tesselationEvalutationSource;
-		std::string 		geometrySource;
-		std::string 		fragmentSource;
+		std::string 	vertexSource;
+		std::string 	tesselationControlSource;
+		std::string		tesselationEvalutationSource;
+		std::string 	geometrySource;
+		std::string 	fragmentSource;
 		
 		GLuint 			program;
 		

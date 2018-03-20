@@ -18,6 +18,8 @@ namespace ms {
 		
 	public:
 		
+		inline			ForwardShader				(unsigned int maximalAmountOfLights);
+		
 		virtual void	set_projection_matrix		(const math::mat4 & proj) 							= 0;
 		virtual void	set_camera_transformation	(const math::mat4 & transf) 						= 0;
 		virtual void	set_model_transformation	(const math::mat4 & transf) 						= 0;
@@ -49,9 +51,15 @@ namespace ms {
 		virtual void	set_has_specular_texture	(bool doesItHave)	 								= 0;
 		
 		virtual 		~ForwardShader()																= default;
+		
+	protected:
+		
+		unsigned int maximalAmountOfLights;
 
 	};
 	
 }
+
+ms::ForwardShader::ForwardShader(unsigned int maximalAmountOfLights) : maximalAmountOfLights(maximalAmountOfLights) { }
 
 #endif /* forward_shader_hpp */

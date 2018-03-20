@@ -8,147 +8,206 @@
 
 #include "forwardShaderOGL.hpp"
 
-ms::ForwardShaderOGL::ForwardShaderOGL(std::string vSS, std::string fSS) : ms::ShaderOGL(vSS, "", "", "", fSS) { }
+ms::ForwardShaderOGL::ForwardShaderOGL(unsigned int maximalAmountOfLights,
+									   std::string vSS,
+									   std::string fSS) : ms::ForwardShader(maximalAmountOfLights), ms::ShaderOGL(vSS, "", "", "", fSS) {
+	
+	spotLightsLocations 	= new GLint[AMOUNT_SPOT_LIGHT_PROPERTIES * maximalAmountOfLights];
+	pointLightsLocations 	= new GLint[AMOUNT_POINT_LIGHT_PROPERTIES * maximalAmountOfLights];
+	
+}
 
 void  ms::ForwardShaderOGL::load () {
 	ShaderOGL::load();
 	
 	mglUseProgram(program);
 	
-	GLint diffuseTextureLocation = mglGetUniformLocation(program, "diffuseTexture");
+	GLint diffuseTextureLocation 		= mglGetUniformLocation(program, "diffuseTexture");
 	mglUniform1i(diffuseTextureLocation, 0);
 	
-	GLint specularTextureLocation = mglGetUniformLocation(program, "specularTexture");
+	GLint specularTextureLocation 		= mglGetUniformLocation(program, "specularTexture");
 	mglUniform1i(specularTextureLocation, 1);
+	
+	projectionMatrixLocation 			= mglGetUniformLocation(program, "perspectiveProjection");
+	cameraTransformationLocation 		= mglGetUniformLocation(program, "cameraTransformation");
+	modelTransformationLocation 		= mglGetUniformLocation(program, "modelTransformation");
+	
+	hasMaterialLocation 				= mglGetUniformLocation(program, "hasMaterial");
+	ambientColorLocation		 		= mglGetUniformLocation(program, "material.ambient");
+	diffuseColorLocation				= mglGetUniformLocation(program, "material.diffuse");
+	specularColorLocation 				= mglGetUniformLocation(program, "material.specular");
+	opacityLocation						= mglGetUniformLocation(program, "material.opacity");
+	shininessLocation					= mglGetUniformLocation(program, "material.shininess");
+	hasDiffuseTextureLocation	 		= mglGetUniformLocation(program, "hasDiffuseTexture");
+	hasSpecularTextureLocation 			= mglGetUniformLocation(program, "hasSpecularTexture");
+	
+	directionalLightColorLocation 		= mglGetUniformLocation(program, "dirLight.color");
+	directionalLightDirectionLocation	= mglGetUniformLocation(program, "dirLight.direction");
+	hasDirectionalLightLocation	 		= mglGetUniformLocation(program, "hasDirLight");
+	
+	renderModeLocation 					= mglGetUniformLocation(program, "renderMode");
+	
+	spotLightsAmount 					= mglGetUniformLocation(program, "spotLightsAmount");
+	
+	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
+		
+		{
+			GLint colorLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].color").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_COLOR) ] = colorLocation;
+		}
+		
+		{
+			GLint positionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].position").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_POSITION) ] = positionLocation;
+		}
+		
+		{
+			GLint powerLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].power").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_POWER) ] = powerLocation;
+		}
+		
+		{
+			GLint angleLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].angleDegrees").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_ANGLE_DEGREES) ] = angleLocation;
+		}
+		
+		{
+			GLint directionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].direction").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_DIRECTION) ] = directionLocation;
+		}
+		
+	}
+	
+	pointLightsAmount = mglGetUniformLocation(program, "pointLightsAmount");
+	
+	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
+		
+		{
+			GLint colorLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].color").c_str());
+			pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_COLOR) ] = colorLocation;
+		}
+		
+		{
+			GLint positionLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].position").c_str());
+			pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_POSITION) ] = positionLocation;
+		}
+		
+		{
+			GLint powerLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].power").c_str());
+			pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_POWER) ] = powerLocation;
+		}
+		
+	}
 	
 	mglUseProgram(0);
 	
 }
 
 void ms::ForwardShaderOGL::set_projection_matrix (const math::mat4 & proj) {
-	GLint persp = mglGetUniformLocation(program, "perspectiveProjection");
-	mglUniformMatrix4fv(persp, 1, GL_FALSE, proj.c_array());
+	mglUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, proj.c_array());
 }
 
 void ms::ForwardShaderOGL::set_camera_transformation (const math::mat4 & transf) {
-	GLint cam = mglGetUniformLocation(program, "cameraTransformation");
-	mglUniformMatrix4fv(cam, 1, GL_FALSE, transf.c_array());
+	mglUniformMatrix4fv(cameraTransformationLocation, 1, GL_FALSE, transf.c_array());
 }
 
 void ms::ForwardShaderOGL::set_model_transformation (const math::mat4 & modelTransf) {
-	GLint model = mglGetUniformLocation(program, "modelTransformation");
-	mglUniformMatrix4fv(model, 1, GL_FALSE, modelTransf.c_array());
+	mglUniformMatrix4fv(modelTransformationLocation, 1, GL_FALSE, modelTransf.c_array());
 }
 
 void ms::ForwardShaderOGL::set_has_directional_light (bool doesItHave) {
-	GLint hasLight = mglGetUniformLocation(program, "hasDirLight");
-	mglUniform1i(hasLight, doesItHave == true ? 1 : 0);
+	mglUniform1i(hasDirectionalLightLocation, doesItHave == true ? 1 : 0);
 }
 
 void ms::ForwardShaderOGL::set_amount_of_point_lights (int amount) {
-	GLint amountLocation = mglGetUniformLocation(program, "pointLightsAmount");
-	mglUniform1i(amountLocation, amount);
+	mglUniform1i(pointLightsAmount, amount);
 }
 
 void ms::ForwardShaderOGL::set_point_light_power (unsigned int index, float power) {
-	std::string name = "pointLights[" + std::to_string(index) + "].power";
-	GLint powerLocation = mglGetUniformLocation(program, name.c_str());
+	GLint powerLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_POWER];
 	mglUniform1f(powerLocation, power);
 }
 
 void ms::ForwardShaderOGL::set_point_light_color (unsigned int index, const math::vec4 & color) {
-	std::string name = "pointLights[" + std::to_string(index) + "].color";
-	GLint colorLocation = mglGetUniformLocation(program, name.c_str());
+	GLint colorLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_COLOR];
 	mglUniform4fv(colorLocation, 1, color.c_array());
 }
 
 void ms::ForwardShaderOGL::set_point_light_position (unsigned int index, const math::vec3 & position) {
-	std::string name = "pointLights[" + std::to_string(index) + "].position";
-	GLint positionLocation = mglGetUniformLocation(program, name.c_str());
+	GLint positionLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_POSITION];
 	mglUniform3fv(positionLocation, 1, position.c_array());
 }
 
 void ms::ForwardShaderOGL::set_amount_of_spot_lights (int amount) {
-	GLint amountLocation = mglGetUniformLocation(program, "spotLightsAmount");
-	mglUniform1i(amountLocation, amount);
+	mglUniform1i(spotLightsAmount, amount);
 }
 
 void ms::ForwardShaderOGL::set_spot_light_power (unsigned int index, float power) {
-	std::string name = "spotLights[" + std::to_string(index) + "].power";
-	GLint powerLocation = mglGetUniformLocation(program, name.c_str());
+	GLint powerLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_POWER];
 	mglUniform1f(powerLocation, power);
 }
 
 void ms::ForwardShaderOGL::set_spot_light_color (unsigned int index, const math::vec4 & color) {
-	std::string name = "spotLights[" + std::to_string(index) + "].color";
-	GLint colorLocation = mglGetUniformLocation(program, name.c_str());
+	GLint colorLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_COLOR];
 	mglUniform4fv(colorLocation, 1, color.c_array());
 }
 
 void ms::ForwardShaderOGL::set_spot_light_position (unsigned int index, const math::vec3 & position) {
-	std::string name = "spotLights[" + std::to_string(index) + "].position";
-	GLint positionLocation = mglGetUniformLocation(program, name.c_str());
+	GLint positionLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_POSITION];
 	glUniform3fv(positionLocation, 1, position.c_array());
 }
 
 void ms::ForwardShaderOGL::set_spot_light_angle (unsigned int index, float angle) {
-	std::string name = "spotLights[" + std::to_string(index) + "].angleDegrees";
-	GLint angleLocation = mglGetUniformLocation(program, name.c_str());
+	GLint angleLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_ANGLE_DEGREES];
 	mglUniform1f(angleLocation, angle);
 }
 
 void ms::ForwardShaderOGL::set_spot_light_direction (unsigned int index, const math::vec3 direction) {
-	std::string name = "spotLights[" + std::to_string(index) + "].direction";
-	GLint directionLocation = mglGetUniformLocation(program, name.c_str());
+	GLint directionLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_DIRECTION];
 	mglUniform3fv(directionLocation, 1, direction.c_array());
 }
 
 void ms::ForwardShaderOGL::set_directional_light_dir (const math::vec3 & dir) {
-	GLint direction = mglGetUniformLocation(program, "dirLight.direction");
-	mglUniform3fv(direction, 1, dir.c_array());
+	mglUniform3fv(directionalLightDirectionLocation, 1, dir.c_array());
 }
 
 void ms::ForwardShaderOGL::set_directional_light_color (const math::vec4 & color) {
-	GLint colorLocation = mglGetUniformLocation(program, "dirLight.color");
-	mglUniform4fv(colorLocation, 1, color.c_array());
+	mglUniform4fv(directionalLightColorLocation, 1, color.c_array());
 }
 
 void ms::ForwardShaderOGL::set_has_material (bool doesItHave) {
-	GLint hasMaterialLocation = mglGetUniformLocation(program, "hasMaterial");
 	mglUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
 }
 
 void ms::ForwardShaderOGL::set_material_ambient_color (const math::vec3 & ambient) {
-	GLint ambientLocation = mglGetUniformLocation(program, "material.ambient");
-	mglUniform3fv(ambientLocation, 1, ambient.c_array());
+	mglUniform3fv(ambientColorLocation, 1, ambient.c_array());
 }
 
 void ms::ForwardShaderOGL::set_material_diffuse_color (const math::vec3 & diffuse) {
-	GLint diffuseLocation = mglGetUniformLocation(program, "material.diffuse");
-	mglUniform3fv(diffuseLocation, 1, diffuse.c_array());
+	mglUniform3fv(diffuseColorLocation, 1, diffuse.c_array());
 }
 
 void ms::ForwardShaderOGL::set_material_specular_color (const math::vec3 & specular) {
-	GLint specularLocation = mglGetUniformLocation(program, "material.specular");
-	mglUniform3fv(specularLocation, 1, specular.c_array());
+	mglUniform3fv(specularColorLocation, 1, specular.c_array());
 }
 
 void ms::ForwardShaderOGL::set_material_opacity (float opacity) {
-	GLint opacityLocation = mglGetUniformLocation(program, "material.opacity");
 	mglUniform1f(opacityLocation, opacity);
 }
 
 void ms::ForwardShaderOGL::set_material_shininess (float shininess) {
-	GLint shininessLocation = mglGetUniformLocation(program, "material.shininess");
 	mglUniform1f(shininessLocation, shininess);
 }
 
 void ms::ForwardShaderOGL::set_has_diffuse_texture (bool doesItHave) {
-	GLint hasDiffuseTextureLocation = mglGetUniformLocation(program, "hasDiffuseTexture");
 	mglUniform1i(hasDiffuseTextureLocation, doesItHave == true ? 1 : 0);
 }
 
 void ms::ForwardShaderOGL::set_has_specular_texture (bool doesItHave) {
-	GLint hasSpecularTextureLocation = mglGetUniformLocation(program, "hasSpecularTexture");
 	mglUniform1i(hasSpecularTextureLocation, doesItHave == true ? 1 : 0);
+}
+
+ms::ForwardShaderOGL::~ForwardShaderOGL() {
+	delete [] spotLightsLocations;
+	delete [] pointLightsLocations;
 }

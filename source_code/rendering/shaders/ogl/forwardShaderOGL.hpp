@@ -18,7 +18,9 @@ namespace ms {
 		
 	public:
 		
-						ForwardShaderOGL(std::string vertexShaderSource, std::string fragmentShaderSource);
+						ForwardShaderOGL			(unsigned int maximalAmountOfLights,
+													 std::string vertexShaderSource,
+													 std::string fragmentShaderSource);
 		
 		virtual void	load						()													override;
 		
@@ -51,6 +53,35 @@ namespace ms {
 		
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 								override;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 								override;
+		
+						~ForwardShaderOGL();
+		
+	protected:
+		
+		GLint			projectionMatrixLocation;
+		GLint			cameraTransformationLocation;
+		GLint			modelTransformationLocation;
+		
+		GLint			hasMaterialLocation;
+		GLint			ambientColorLocation;
+		GLint			diffuseColorLocation;
+		GLint			specularColorLocation;
+		GLint			opacityLocation;
+		GLint			shininessLocation;
+		GLint			hasDiffuseTextureLocation;
+		GLint			hasSpecularTextureLocation;
+		
+		GLint			directionalLightColorLocation;
+		GLint			directionalLightDirectionLocation;
+		GLint			hasDirectionalLightLocation;
+		
+		GLint			renderModeLocation;
+		
+		GLint			spotLightsAmount;
+		GLint*			spotLightsLocations;
+		
+		GLint			pointLightsAmount;
+		GLint*			pointLightsLocations;
 		
 	};
 	
