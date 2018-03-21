@@ -27,10 +27,6 @@ ms::DeferredRender & ms::NGin::get_deferred_render () const {
 	return *deferredRenderer;
 }
 
-ms::ForwardRender & ms::NGin::get_forward_render () const {
-	return *phongForwardRenderer;
-}
-
 void ms::NGin::load_model (std::string absolutePath) {
 	
 	if(loader == nullptr) {
@@ -143,11 +139,12 @@ void ms::NGin::draw_scene() {
 	count_fps();
 	
 	deferredRenderer->use();
-	deferredRenderer->setup_uniforms(scene.get());
+	deferredRenderer->setup_g_buffer_uniforms(scene.get());
 	deferredRenderer->clear_frame();
 	for(int i = 0; i < scene->nodes.size(); ++i) {
 		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
 	}
+	deferredRenderer->setup_lightpass_uniforms(scene.get());
 	deferredRenderer->perform_light_pass(scene.get());
 
 	

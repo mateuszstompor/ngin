@@ -25,19 +25,23 @@ namespace ms {
 		
 		enum class DebugType;
 		
-			 			DeferredRender		(	unsigned int maximalAmountOfLights,
-											 	unsigned int screenWidth,
-												unsigned int screenHeight,
-												unsigned int frameBufferWidth,
-												unsigned int frameBufferHeight,
-												std::string gBufferVertexShaderSource,
-												std::string gBufferFragmentShaderSource,
-												std::string lightingVertexShaderSource,
-												std::string lightingFragmentShaderSource
-											 );
-		virtual void 	perform_light_pass	(const Scene * scene) = 0;
-		virtual void 	set_render_type		(DebugType type);
-		virtual 		~DeferredRender		() = default;
+			 				DeferredRender					(unsigned int maximalAmountOfLights,
+															unsigned int screenWidth,
+															unsigned int screenHeight,
+															unsigned int frameBufferWidth,
+															unsigned int frameBufferHeight,
+															std::string gBufferVertexShaderSource,
+															std::string gBufferFragmentShaderSource,
+															std::string lightingVertexShaderSource,
+															std::string lightingFragmentShaderSource
+															 );
+		
+		virtual void 		perform_light_pass				(const Scene * scene) = 0;
+		virtual void 		setup_material_uniforms			(const Scene * scene, const Drawable * node);
+		virtual void 		setup_lightpass_uniforms		(const Scene * scene);
+		virtual void 		setup_g_buffer_uniforms			(const Scene * scene);
+		virtual void 		set_render_type					(DebugType type);
+		virtual 			~DeferredRender					() = default;
 		
 	protected:
 		
@@ -69,5 +73,7 @@ enum class ms::DeferredRender::DebugType {
 	albedo,
 	specular
 };
+
+
 
 #endif /* defered_render_h */

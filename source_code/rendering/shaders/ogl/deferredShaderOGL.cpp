@@ -82,3 +82,13 @@ void ms::DeferredShaderOGL::set_material_opacity (float opacity) {
 void ms::DeferredShaderOGL::set_material_shininess (float shininess) {
 	mglUniform1f(shininessLocation, shininess);
 }
+
+void ms::DeferredShaderOGL::bind_diffuse_texture (Texture & texture) {
+	mglActiveTexture(GL_TEXTURE0);
+	texture.use();
+}
+
+void ms::DeferredShaderOGL::bind_specular_texture (Texture & texture) {
+	mglActiveTexture(GL_TEXTURE1);
+	texture.use();
+}

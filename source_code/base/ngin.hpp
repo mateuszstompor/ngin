@@ -50,7 +50,6 @@ namespace ms {
 		virtual void 							unload 				();
         virtual void							draw_scene  		();
 		DeferredRender & 						get_deferred_render	() const;
-		ForwardRender & 						get_forward_render	() const;
 		virtual        							~NGin       		() = default;
 		
 		std::unique_ptr<Scene>                  scene;

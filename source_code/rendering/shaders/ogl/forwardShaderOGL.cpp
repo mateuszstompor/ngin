@@ -207,6 +207,16 @@ void ms::ForwardShaderOGL::set_has_specular_texture (bool doesItHave) {
 	mglUniform1i(hasSpecularTextureLocation, doesItHave == true ? 1 : 0);
 }
 
+void ms::ForwardShaderOGL::bind_diffuse_texture (Texture & texture) {
+	mglActiveTexture(GL_TEXTURE0);
+	texture.use();
+}
+
+void ms::ForwardShaderOGL::bind_specular_texture (Texture & texture) {
+	mglActiveTexture(GL_TEXTURE1);
+	texture.use();
+}
+
 ms::ForwardShaderOGL::~ForwardShaderOGL() {
 	delete [] spotLightsLocations;
 	delete [] pointLightsLocations;

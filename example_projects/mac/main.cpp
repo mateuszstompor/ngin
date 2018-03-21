@@ -286,10 +286,10 @@ int main(int argc, const char * argv[]) { {
 
 	bool useCommandLineArguments = argc == 2;
 
-	int width = 1600;
-	int height = 1100;
-	int framebufferWidth = 600;
-	int framebufferHeight = 400;
+	int width = 1500;
+	int height = 1000;
+	int framebufferWidth;
+	int framebufferHeight;
 	
 	prepareRenderDoc();
 	
@@ -308,6 +308,9 @@ int main(int argc, const char * argv[]) { {
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 	glfwGetFramebufferSize(window, &width, &height);
 	
+	framebufferWidth = width/4;
+	framebufferHeight = height/4;
+	
 	if(window == nullptr){
 		std::cerr << ms::windowCreationError << std::endl;
 		glfwTerminate();
@@ -322,11 +325,9 @@ int main(int argc, const char * argv[]) { {
 	}
 #endif
 	
-	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(width)/height, 0));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight, 0));
 		
 	engine->load_model(useCommandLineArguments ? argv[1] : "/Users/mateuszstompor/Desktop/sponza/sponza.obj");
 

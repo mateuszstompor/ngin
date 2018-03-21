@@ -10,6 +10,7 @@
 #define forward_shader_hpp
 
 #include "shader.hpp"
+#include "../../scene/texture.hpp"
 #include "../../../libs/source/glMath.h"
 
 namespace ms {
@@ -43,7 +44,11 @@ namespace ms {
 		virtual void	set_has_material			(bool doesItHave)	 								= 0;
 		virtual void	set_material_ambient_color	(const math::vec3 & ambient)						= 0;
 		virtual void	set_material_diffuse_color	(const math::vec3 & diffuse)						= 0;
+		virtual void	bind_diffuse_texture		(Texture & texture)									= 0;
+
 		virtual void	set_material_specular_color	(const math::vec3 & specular)						= 0;
+		virtual void	bind_specular_texture		(Texture & texture)									= 0;
+		
 		virtual void	set_material_opacity		(float opacity)										= 0;
 		virtual void	set_material_shininess		(float shininess)									= 0;
 		

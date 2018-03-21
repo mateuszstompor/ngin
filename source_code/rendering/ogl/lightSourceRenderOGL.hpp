@@ -15,29 +15,6 @@
 #include "../lightSourcesRender.hpp"
 #include "../shaders/ogl/lightSourceDrawerShaderOGL.hpp"
 
-#ifdef __WIN32__
-
-	#include <glad/glad.h>
-
-#endif
-
-#if __APPLE__
-
-	#ifdef ios_build
-
-		#import <OpenGLES/ES3/gl.h>
-		#import <OpenGLES/ES3/glext.h>
-
-	#elif mac_build
-
-		#include <OpenGL/gl3.h>
-
-	#endif
-
-#endif
-
-
-
 namespace ms {
 	
 	class LightSourceRenderOGL : public LightSourcesRender {
@@ -54,7 +31,7 @@ namespace ms {
 		void	use     				() 												override;
 		void 	clear_frame				()												override;
 		void	draw  					(Drawable * node, const Scene * scene)			override;
-		void 	setup_uniforms			(const Scene * scene)							override;
+		void 	setup_uniforms			(const Scene * scene)							;
 		void	load					() 												override;
 		bool	is_loaded				() 												override;
 		void 	unload					() 												override;
