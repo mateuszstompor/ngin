@@ -128,9 +128,9 @@ void ms::ForwardShaderOGL::set_point_light_power (unsigned int index, float powe
 	mglUniform1f(powerLocation, power);
 }
 
-void ms::ForwardShaderOGL::set_point_light_color (unsigned int index, const math::vec4 & color) {
+void ms::ForwardShaderOGL::set_point_light_color (unsigned int index, const math::vec3 & color) {
 	GLint colorLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_COLOR];
-	mglUniform4fv(colorLocation, 1, color.c_array());
+	mglUniform3fv(colorLocation, 1, color.c_array());
 }
 
 void ms::ForwardShaderOGL::set_point_light_position (unsigned int index, const math::vec3 & position) {
@@ -147,9 +147,9 @@ void ms::ForwardShaderOGL::set_spot_light_power (unsigned int index, float power
 	mglUniform1f(powerLocation, power);
 }
 
-void ms::ForwardShaderOGL::set_spot_light_color (unsigned int index, const math::vec4 & color) {
+void ms::ForwardShaderOGL::set_spot_light_color (unsigned int index, const math::vec3 & color) {
 	GLint colorLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_COLOR];
-	mglUniform4fv(colorLocation, 1, color.c_array());
+	mglUniform3fv(colorLocation, 1, color.c_array());
 }
 
 void ms::ForwardShaderOGL::set_spot_light_position (unsigned int index, const math::vec3 & position) {
@@ -171,8 +171,8 @@ void ms::ForwardShaderOGL::set_directional_light_dir (const math::vec3 & dir) {
 	mglUniform3fv(directionalLightDirectionLocation, 1, dir.c_array());
 }
 
-void ms::ForwardShaderOGL::set_directional_light_color (const math::vec4 & color) {
-	mglUniform4fv(directionalLightColorLocation, 1, color.c_array());
+void ms::ForwardShaderOGL::set_directional_light_color (const math::vec3 & color) {
+	mglUniform3fv(directionalLightColorLocation, 1, color.c_array());
 }
 
 void ms::ForwardShaderOGL::set_has_material (bool doesItHave) {

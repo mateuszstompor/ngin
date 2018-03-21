@@ -20,7 +20,7 @@ namespace ms {
 	public:
 		
 		inline 	PointLight (float 		power,
-							math::vec4 	color,
+							math::vec3 	color,
 							math::vec3 	position);
 		
 		virtual ~PointLight() = default;
@@ -32,6 +32,6 @@ namespace ms {
 	
 }
 
-ms::PointLight::PointLight (float p, math::vec4 c, math::vec3 pos) : Light(c), power(p), position(pos) { }
+ms::PointLight::PointLight (float p, math::vec3 c, math::vec3 pos) : Light(c), power(p), position(pos) { }
 
 #endif /* point_light_hpp */

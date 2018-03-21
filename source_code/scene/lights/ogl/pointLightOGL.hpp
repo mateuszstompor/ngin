@@ -19,7 +19,7 @@ namespace ms {
 	public:
 		
 		inline PointLightOGL (float 		power,
-							  math::vec4 	color,
+							  math::vec3 	color,
 							  math::vec3 	position);
 		
 	};
@@ -27,7 +27,7 @@ namespace ms {
 }
 
 ms::PointLightOGL::PointLightOGL (float power,
-								  math::vec4 color,
+								  math::vec3 color,
 								  math::vec3 position) : PointLight(power, color, position), ms::Light(color) { }
 
 #endif /* pointLightOGL_hpp */

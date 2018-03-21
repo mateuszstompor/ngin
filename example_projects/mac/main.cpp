@@ -330,24 +330,26 @@ int main(int argc, const char * argv[]) { {
 		
 	engine->load_model(useCommandLineArguments ? argv[1] : "/Users/mateuszstompor/Desktop/sponza/sponza.obj");
 
-	engine->scene->set_directional_light(50, ms::math::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, ms::math::vec3{ 1.0f, -1.0f, -1.0f });
+	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, -1.0f, -1.0f });
 	
 	auto a = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 	
-	for (int i = 0; i < 20; ++i) {
-		engine->load_point_light(50, ms::math::vec4{1.0f, 1.0f, 0.0f, 1.0f}, ms::math::vec3{0.0f, 0.0f, 0.0f}, "/Users/mateuszstompor/Documents/sphere.obj");
+	for (int i = 0; i < 3; ++i) {
+		engine->load_point_light(50, ms::math::vec3{1.0f, 1.0f, 0.0f}, ms::math::vec3{0.0f, 0.0f, 0.0f}, "/Users/mateuszstompor/Documents/sphere.obj");
 		engine->scene->pointLights[i]->modelTransformation.set_transformation(a * engine->scene->pointLights[i]->modelTransformation.get_transformation());
 	}
 	
-	for (int i = 0; i < 20; ++i) {
-		engine->load_spot_light(50, ms::math::vec4{0.0f, 1.0f, 1.0f, 1.0f}, ms::math::vec3{0.0f, 1.0f, 0.0f}, 50, ms::math::vec3{0.0f, -1.0f, 0.0f},  "/Users/mateuszstompor/Documents/cone.obj");
+	for (int i = 0; i < 3; ++i) {
+		engine->load_spot_light(50, ms::math::vec3{0.0f, 1.0f, 1.0f}, ms::math::vec3{0.0f, 1.0f, 0.0f}, 50, ms::math::vec3{0.0f, -1.0f, 0.0f},  "/Users/mateuszstompor/Documents/cone.obj");
 		auto b = ms::math::transform::translate<float, 4>({0.0f, 1.0f, 0.0f});
 		engine->scene->spotLights[i]->modelTransformation.set_transformation(b * a * engine->scene->spotLights[i]->modelTransformation.get_transformation());
 	}
 	
 	for(int a = 0; a < engine->scene->get_nodes().size(); a++) {
-		engine->scene->get_nodes()[a]->modelTransformation.set_transformation(ms::math::transform::scale<float, 4>({0.05f, 0.05f, 0.05f}) * engine->scene->get_nodes()[a]->modelTransformation.get_transformation());
+		engine->scene->get_nodes()[a]->modelTransformation.set_transformation(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene->get_nodes()[a]->modelTransformation.get_transformation());
 	}
+	
+	engine->load_model(useCommandLineArguments ? argv[1] : "/Users/mateuszstompor/Documents/ngin/models/nanosuit/nanosuit.obj");
 	
 	engine->load();
 	

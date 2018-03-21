@@ -17,15 +17,15 @@ namespace ms {
 	
 	public:
 		
-		inline 			Light	(math::vec4 color);
+		inline 			Light	(math::vec3 color);
 		virtual		 	~Light	() = default;
 		
-		math::vec4 		color;
+		math::vec3 		color;
 		
 	};
 	
 }
 
-ms::Light::Light (math::vec4 c) : color(c) { }
+ms::Light::Light (math::vec3 c) : color(c) { }
 
 #endif /* light_hpp */

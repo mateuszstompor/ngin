@@ -59,7 +59,7 @@ void ms::NGin::load_model (std::string absolutePath) {
 }
 
 void ms::NGin::load_point_light	(float power,
-								 math::vec4 color,
+								 math::vec3 color,
 								 math::vec3 position,
 								 std::string absolutePath) {
 	
@@ -88,7 +88,12 @@ void ms::NGin::load_point_light	(float power,
 	
 }
 
-void ms::NGin::load_spot_light (float power, math::vec4 color, math::vec3 position, float lightingAngleDegrees, math::vec3 direction, std::string absolutePath) {
+void ms::NGin::load_spot_light (float power,
+								math::vec3 color,
+								math::vec3 position,
+								float lightingAngleDegrees,
+								math::vec3 direction,
+								std::string absolutePath) {
 	
 	if(loader == nullptr) {
 		this->loader = get_loader();
@@ -137,13 +142,13 @@ void ms::NGin::draw_scene() {
 	
 	count_fps();
 	
-//	deferredRenderer->use();
-//	deferredRenderer->setup_uniforms(scene.get());
-//	deferredRenderer->clear_frame();
-//	for(int i = 0; i < scene->nodes.size(); ++i) {
-//		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
-//	}
-//	deferredRenderer->perform_light_pass(scene.get());
+	deferredRenderer->use();
+	deferredRenderer->setup_uniforms(scene.get());
+	deferredRenderer->clear_frame();
+	for(int i = 0; i < scene->nodes.size(); ++i) {
+		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+	}
+	deferredRenderer->perform_light_pass(scene.get());
 
 	
 //	phongForwardRenderer->use();
@@ -153,12 +158,12 @@ void ms::NGin::draw_scene() {
 //		phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 	
-	gouraudForwardRenderer->use();
-	gouraudForwardRenderer->clear_frame();
-	gouraudForwardRenderer->setup_uniforms(scene.get());
-	for(int i = 0; i < scene->nodes.size(); ++i) {
-		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-	}
+//	gouraudForwardRenderer->use();
+//	gouraudForwardRenderer->clear_frame();
+//	gouraudForwardRenderer->setup_uniforms(scene.get());
+//	for(int i = 0; i < scene->nodes.size(); ++i) {
+//		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+//	}
 	
 	lightSourceRenderer->use();
 	for(int i = 0; i < scene->pointLights.size(); ++i) {

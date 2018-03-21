@@ -19,7 +19,7 @@ namespace ms {
 	public:
 
 		inline 		SpotLightOGL	(float 			power,
-									 math::vec4 	color,
+									 math::vec3 	color,
 									 math::vec3 	position,
 									 float 			lightingAngleDegrees,
 									 math::vec3 	direction);
@@ -29,7 +29,7 @@ namespace ms {
 }
 
 ms::SpotLightOGL::SpotLightOGL (float 		power,
-								math::vec4 	color,
+								math::vec3 	color,
 								math::vec3 	position,
 								float			lightingAngle,
 								math::vec3 	direction) : Light(color), ms::SpotLight(power, color, position, lightingAngle, direction) { }

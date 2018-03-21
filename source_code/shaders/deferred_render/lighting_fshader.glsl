@@ -52,7 +52,7 @@ void main() {
 	vec3 specularColor		= vec3(color.w, color.w, color.w);
 	
 	vec3 result 			= vec3(0.0f, 0.0f, 0.0f);
-	vec3 cameraPosition 	= (cameraTransformation * vec4(1.0f)).xyz;
+	vec3 cameraPosition 	= vec3(cameraTransformation[3][0], cameraTransformation[3][1], cameraTransformation[3][2]);
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32;
 	

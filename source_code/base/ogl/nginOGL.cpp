@@ -78,7 +78,7 @@ void ms::NGinOGL::load () {
 }
 
 std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,
-														   math::vec4 	color,
+														   math::vec3 	color,
 														   math::vec3 	position) {
 	
 	return std::shared_ptr<PointLight>(new PointLightOGL(power, color, position));
@@ -94,7 +94,7 @@ std::unique_ptr<ms::Loader> ms::NGinOGL::get_loader () {
 }
 
 std::shared_ptr<ms::SpotLight> ms::NGinOGL::get_spot_light (float 		power,
-															math::vec4 	color,
+															math::vec3 	color,
 															math::vec3 	position,
 															float 		lightingAngleDegrees,
 															math::vec3 	direction) {

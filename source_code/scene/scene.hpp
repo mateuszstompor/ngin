@@ -38,7 +38,7 @@ namespace ms {
 		const std::vector<std::shared_ptr<PointLight>> &	get_point_lights() const;
 		const std::vector<std::shared_ptr<Drawable>> & 		get_nodes() const;
 		void												set_directional_light(float 		power,
-																				  math::vec4 	color,
+																				  math::vec3 	color,
 																				  math::vec3 	direction);
 //TODO make it protected
 //		protected:
