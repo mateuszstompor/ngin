@@ -314,8 +314,8 @@ int main(int argc, const char * argv[]) { {
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 	glfwGetFramebufferSize(window, &width, &height);
 	
-	framebufferWidth = width/4;
-	framebufferHeight = height/4;
+	framebufferWidth = width/2;
+	framebufferHeight = height/2;
 	
 	if(window == nullptr){
 		std::cerr << ms::windowCreationError << std::endl;
@@ -341,7 +341,7 @@ int main(int argc, const char * argv[]) { {
 	
 	auto scale = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 	
-	for (int i = 0; i < 15; ++i) {
+	for (int i = 0; i < 4; ++i) {
 		auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
 		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
 		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
@@ -365,6 +365,7 @@ int main(int argc, const char * argv[]) { {
 		engine->scene->get_nodes()[a]->modelTransformation.set_transformation(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene->get_nodes()[a]->modelTransformation.get_transformation());
 	}
 	
+	engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
 	
 	engine->load();
 	

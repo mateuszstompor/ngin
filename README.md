@@ -1,5 +1,26 @@
 # ngin
 
+## 20.03.2018 Blinn-Phong specular shading
+<p>Another variation of phong lighting model</p>
+
+## 19.03.2018 Multiple resolutions
+<p>It could increase performance if there are many objects placed on the scene. I rendered picture which is placed below in ultra low resolution as an instance</p>
+<img src="/screenshots/potato_mode.jpg" width="100%" style="float: left; display:inline-block;"/>
+
+## 19.03.2018 Light attenuation
+<p>In other words it means that amount of light given by source decreases with rising distance</p>
+<img src="/screenshots/spot_lights.jpg" width="100%" style="float: left; display:inline-block;"/>
+
+
+## 17.03.2018 Gouraud shading
+<p>Provides great performance but looks rather awful</p>
+<img src="/screenshots/gouraud_shading.jpg" width="100%" style="float: left; display:inline-block;"/>
+
+## 16.03.2018 Multiple light sources/renderers integration
+<p>In order to generate frame which you can see below I had to combine two rendering techniques - forward and deferred rendering. Moreover I implemented point, directional and spot lights. They can be used simultaneously</p>
+<img src="/screenshots/multiple_light_sources.jpg" width="100%" style="float: left; display:inline-block;"/>
+
+
 ## 15.03.2018 Simple UV Texture mapping
 <img src="/screenshots/simpleUVTexturing.png" width="100%" style="float: left; display:inline-block;"/>
 
