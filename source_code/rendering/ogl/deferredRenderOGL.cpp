@@ -214,14 +214,9 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	mglBindVertexArray(quadVAO);
 	
-	mglActiveTexture(GL_TEXTURE0);
-	gPosition->use();
-	
-	mglActiveTexture(GL_TEXTURE1);
-	gNormal->use();
-	
-	mglActiveTexture(GL_TEXTURE2);
-	gAlbedo->use();
+	lightingShader->bind_g_buf_posiitons(*gPosition);
+	lightingShader->bind_g_buf_albedo(*gAlbedo);
+	lightingShader->bind_g_buf_normals(*gNormal);
 	
 	mglDrawArrays(GL_TRIANGLES, 0, 6);
 	

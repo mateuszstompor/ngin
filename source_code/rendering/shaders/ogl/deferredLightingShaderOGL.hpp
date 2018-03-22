@@ -42,6 +42,10 @@ namespace ms {
 		virtual void 	set_spot_light_angle				(unsigned int index, float angle) 						override;
 		virtual void 	set_spot_light_direction			(unsigned int index, const math::vec3 direction) 		override;
 		
+		virtual void	bind_g_buf_albedo					(Texture & albedoTexture)								override;
+		virtual void	bind_g_buf_normals					(Texture & normalsTexture)								override;
+		virtual void	bind_g_buf_posiitons				(Texture & positionsTexture)							override;
+		
 		virtual void 	set_rendering_mode					(unsigned int settings) 								override;
 
 		virtual void	load								()														override;

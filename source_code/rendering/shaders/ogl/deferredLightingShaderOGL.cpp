@@ -170,6 +170,21 @@ void ms::DeferredLightingShaderOGL::set_rendering_mode (unsigned int settings) {
 	mglUniform1ui(renderModeLocation, settings);
 }
 
+void ms::DeferredLightingShaderOGL::bind_g_buf_albedo (Texture & albedoTexture) {
+	mglActiveTexture(GL_TEXTURE2);
+	albedoTexture.use();
+}
+
+void ms::DeferredLightingShaderOGL::bind_g_buf_normals (Texture & normalsTexture) {
+	mglActiveTexture(GL_TEXTURE1);
+	normalsTexture.use();
+}
+
+void ms::DeferredLightingShaderOGL::bind_g_buf_posiitons (Texture & positionsTexture) {
+	mglActiveTexture(GL_TEXTURE0);
+	positionsTexture.use();
+}
+
 ms::DeferredLightingShaderOGL::~DeferredLightingShaderOGL () {
 	delete [] spotLightsLocations;
 	delete [] pointLightsLocations;

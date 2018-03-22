@@ -10,6 +10,7 @@
 #define deferred_lighting_shader_h
 
 #include "shader.hpp"
+#include "../../scene/texture.hpp"
 
 namespace ms {
 	
@@ -36,6 +37,10 @@ namespace ms {
 		virtual void	set_has_directional_light			(bool doesItHave) 											= 0;
 		virtual void	set_directional_light_dir			(const math::vec3 & dir) 									= 0;
 		virtual void	set_directional_light_color			(const math::vec3 & color) 									= 0;
+		
+		virtual void	bind_g_buf_albedo					(Texture & albedoTexture)									= 0;
+		virtual void	bind_g_buf_normals					(Texture & normalsTexture)									= 0;
+		virtual void	bind_g_buf_posiitons				(Texture & positionsTexture)								= 0;
 		
 		virtual void 	set_rendering_mode					(unsigned int settings) 									= 0;
 		
