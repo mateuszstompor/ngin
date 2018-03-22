@@ -286,3 +286,9 @@ void _mglBlitFramebuffer (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GL
 	ms::utils::check_gl_error();
 }
 
+GLenum _mglCheckFramebufferStatus (GLenum target) {
+	GLenum status = glCheckFramebufferStatus(target);
+	ms::utils::check_gl_error();
+	return status;
+}
+

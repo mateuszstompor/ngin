@@ -71,8 +71,8 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 }
 
 void ms::NGinOGL::load () {
-	phongForwardRenderer->load();
-	gouraudForwardRenderer->load();
+//	phongForwardRenderer->load();
+//	gouraudForwardRenderer->load();
 	deferredRenderer->load();
 	lightSourceRenderer->load();
 }

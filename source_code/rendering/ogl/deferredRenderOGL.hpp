@@ -16,6 +16,8 @@
 #include "../reusableGeometry.hpp"
 #include "../../utils/ogl/utilsOGL.hpp"
 #include "../../scene/ogl/textureOGL.hpp"
+#include "framebufferOGL.hpp"
+#include "renderbufferOGL.hpp"
 
 namespace ms {
 	
@@ -46,9 +48,6 @@ namespace ms {
 		protected:
 		
 			GLuint						defaultFBO;
-		
-			GLuint						gFrameBuffer;
-			GLuint						gRenderBuffer;
 		
 			GLuint						quadVAO;
 			GLuint						quadVBO;

@@ -93,6 +93,7 @@ void 		_mglDeleteVertexArrays (GLsizei n, const GLuint *arrays);
 void 		_mglUniform1ui (GLint location, GLuint v0);
 void 		_mglDrawElements (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 void		_mglBlitFramebuffer (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+GLenum 		_mglCheckFramebufferStatus (GLenum target);
 
 #define mglDrawElements				_mglDrawElements
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
@@ -151,6 +152,7 @@ void		_mglBlitFramebuffer (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, G
 #define mglDeleteVertexArrays		_mglDeleteVertexArrays
 #define mglUniform1ui				_mglUniform1ui
 #define mglBlitFramebuffer			_mglBlitFramebuffer
+#define mglCheckFramebufferStatus	_mglCheckFramebufferStatus
 
 #else
 
@@ -211,6 +213,7 @@ void		_mglBlitFramebuffer (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, G
 #define mglDeleteVertexArrays		glDeleteVertexArrays
 #define mglUniform1ui				glUniform1ui
 #define mglBlitFramebuffer			glBlitFramebuffer
+#define mglCheckFramebufferStatus	glCheckFramebufferStatus
 
 #endif
 

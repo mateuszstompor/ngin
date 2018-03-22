@@ -98,7 +98,10 @@ enum class ms::Texture::Wrapping {
 enum class ms::Texture::Format {
 	rgb_16_16_16,
 	rgb_8_8_8,
-	rgba_8_8_8_8
+	rgba_8_8_8_8,
+	depth_16,
+	depth_24,
+	depth_32
 };
 
 enum class ms::Texture::AssociatedType {

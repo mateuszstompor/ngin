@@ -144,7 +144,6 @@ void ms::NGin::draw_scene() {
 	for(int i = 0; i < scene->nodes.size(); ++i) {
 		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
 	}
-	deferredRenderer->setup_lightpass_uniforms(scene.get());
 	deferredRenderer->perform_light_pass(scene.get());
 
 	

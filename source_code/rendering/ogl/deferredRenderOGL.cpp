@@ -28,12 +28,12 @@ ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	maxAOLights,
 										  unsigned int 	fbW,
 										  unsigned int 	fbH) :
 
-ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuffer(0), gRenderBuffer(0), quadVAO(0), quadVBO(0), defaultFBO(0) {
+ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), quadVAO(0), quadVBO(0), defaultFBO(0) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
 	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(maxAOLights, lVS, lFS));
 	
 	
-	gPosition = std::unique_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
+	gPosition = std::shared_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
 														G_BUF_POSITIONS,
 														Texture::Format::rgb_16_16_16,
 														Texture::AssociatedType::FLOAT,
@@ -43,7 +43,7 @@ ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuf
 														Texture::Wrapping::clamp_to_edge,
 														0, frameBufferWidth, frameBufferHeight));
 	
-	gNormal = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
+	gNormal = std::shared_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
 														G_BUF_NORMALS,
 														Texture::Format::rgb_16_16_16,
 														Texture::AssociatedType::FLOAT,
@@ -53,7 +53,7 @@ ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuf
 														Texture::Wrapping::clamp_to_edge,
 														0, frameBufferWidth, frameBufferHeight));
 	
-	gAlbedo = std::unique_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
+	gAlbedo = std::shared_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
 														G_BUF_ALBEDO,
 													  	Texture::Format::rgba_8_8_8_8,
 														Texture::AssociatedType::UNSIGNED_BYTE,
@@ -62,6 +62,20 @@ ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), gFrameBuf
 														Texture::Wrapping::clamp_to_edge,
 														Texture::Wrapping::clamp_to_edge,
 														0, frameBufferWidth, frameBufferHeight));
+
+	gFramebuffer = std::unique_ptr<Framebuffer>(new FramebufferOGL(3,
+																   1,
+																   frameBufferWidth,
+																   frameBufferHeight));
+	
+	depthRenderbuffer = std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
+																		  Texture::AssociatedType::UNSIGNED_BYTE,
+																		  0,
+																		  fbW,
+																		  fbH));
+	
+	
+
 	
 }
 
@@ -72,19 +86,16 @@ void ms::DeferredRenderOGL::use () {
 	}
 
 	gShader->use();
-	mglViewport(0, 0, frameBufferWidth, frameBufferHeight);
 	mglEnable(GL_DEPTH_TEST);
 	mglDepthFunc(GL_LEQUAL);
 }
 
 void ms::DeferredRenderOGL::clear_frame () {
-	mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
+	gFramebuffer->use();
 	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void ms::DeferredRenderOGL::draw (Drawable * node, const Scene * scene) {
-	mglViewport(0, 0, frameBufferWidth, frameBufferHeight);
-
 	gShader->set_model_transformation(node->modelTransformation.get_transformation());
 	
 	node->use();
@@ -101,46 +112,16 @@ void ms::DeferredRenderOGL::load () {
 	
 	if (!is_loaded()) {
 		this->gShader->load();
-		this->lightingShader->is_loaded();
+		this->lightingShader->load();
 		
-		mglGenFramebuffers(1, &gFrameBuffer);
-		mglBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);
+		gFramebuffer->use();
 		
-		gPosition->load();
-		gNormal->load();
-		gAlbedo->load();
+		gFramebuffer->bind_color_buffer(0, gPosition);
+		gFramebuffer->bind_color_buffer(1, gNormal);
+		gFramebuffer->bind_color_buffer(2, gAlbedo);
+		gFramebuffer->bind_depth_buffer(depthRenderbuffer);
 		
-		gPosition->use();
-		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gPosition.get()))->get_underlying_id(), 0);
-		
-		gNormal->use();
-		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gNormal.get()))->get_underlying_id(), 0);
-
-		gAlbedo->use();
-		mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, (dynamic_cast<TextureOGL*>(gAlbedo.get()))->get_underlying_id(), 0);
-
-		GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-		
-		mglDrawBuffers(3, attachments);
-
-		mglGenRenderbuffers(1, &gRenderBuffer);
-		mglBindRenderbuffer(GL_RENDERBUFFER, gRenderBuffer);
-
-		//TODO Set depth component to 16 in order to see image distortion
-		#ifdef ios_build
-		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, frameBufferWidth, frameBufferHeight);
-		#else
-		mglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, frameBufferWidth, frameBufferHeight);
-		#endif
-
-		mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, gRenderBuffer);
-
-
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-			std::cout << "Framebuffer not complete!" << std::endl;
-		}
-		
-
+		gFramebuffer->configure();
 		mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 
 		//setup quad
@@ -165,7 +146,7 @@ void ms::DeferredRenderOGL::load () {
 		mglBindVertexArray(0);
 
 		//end
-		mglViewport(0, 0, frameBufferWidth, frameBufferHeight);
+
 		mglEnable(GL_DEPTH_TEST);
 		mglDepthFunc(GL_LEQUAL);
 
@@ -180,8 +161,6 @@ bool ms::DeferredRenderOGL::is_loaded () {
 void ms::DeferredRenderOGL::unload () {
 	if (is_loaded()) {
 		
-		mglDeleteFramebuffers(1, &gFrameBuffer);
-		mglDeleteRenderbuffers(1, &gRenderBuffer);
 		mglDeleteVertexArrays(1, &quadVAO);
 		mglDeleteBuffers(1, &quadVBO);
 		
@@ -220,7 +199,7 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	mglDrawArrays(GL_TRIANGLES, 0, 6);
 	
-	mglBindFramebuffer(GL_READ_FRAMEBUFFER, gFrameBuffer);
+	gFramebuffer->use_for_read();
 	mglBindFramebuffer(GL_DRAW_FRAMEBUFFER, defaultFBO);
 	mglBlitFramebuffer(0, 0, frameBufferWidth, frameBufferHeight, 0, 0, screenWidth, screenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 	mglBindFramebuffer(GL_FRAMEBUFFER, 0);
