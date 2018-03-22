@@ -141,6 +141,8 @@ GLenum ms::TextureOGL::to_ogl (Format wrapping) {
 			return GL_RGB;
 		case Format::rgba_8_8_8_8:
 			return GL_RGBA;
+		case Format::r_8:
+			return GL_RED;
 		default:
 			std::cerr << "format not supported" << std::endl;
 			assert(false);
@@ -172,6 +174,8 @@ GLenum ms::TextureOGL::underlying_type () const {
 			return GL_RGBA8;
 		} else if (this->format == Texture::Format::rgb_8_8_8) {
 			return GL_RGB8;
+		} else if (this->format == Texture::Format::r_8) {
+			return GL_R8;
 		}
 	}
 		

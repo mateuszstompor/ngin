@@ -116,33 +116,34 @@ std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string abs
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
 	if (data) {
+		Texture::Format format;
 		std::shared_ptr<Texture> texture;
-		if(bpp == 3) {
-			texture = get_texture(absolutePath,
-								  Texture::Format::rgb_8_8_8,
-								  Texture::AssociatedType::UNSIGNED_BYTE,
-								  Texture::MinFilter::linear,
-								  Texture::MagFilter::linear,
-								  Texture::Wrapping::repeat,
-								  Texture::Wrapping::repeat,
-								  0,
-								  static_cast<unsigned int>(width),
-								  static_cast<unsigned int>(height));
-			
-		} else {
-			
-			texture = get_texture(absolutePath,
-								  Texture::Format::rgba_8_8_8_8,
-								  Texture::AssociatedType::UNSIGNED_BYTE,
-								  Texture::MinFilter::linear,
-								  Texture::MagFilter::linear,
-								  Texture::Wrapping::repeat,
-								  Texture::Wrapping::repeat,
-								  0,
-								  static_cast<unsigned int>(width),
-								  static_cast<unsigned int>(height));
-			
+		
+		switch (bpp) {
+			case 3:
+				format = Texture::Format::rgb_8_8_8;
+				break;
+			case 4:
+				format = Texture::Format::rgba_8_8_8_8;
+				break;
+			case 1:
+				format = Texture::Format::r_8;
+				break;
+			default:
+				std::cerr << "FORMAT NOT SUPPORTED" << std::endl;
+				assert(false);
 		}
+
+		texture = get_texture(absolutePath,
+							  format,
+							  Texture::AssociatedType::UNSIGNED_BYTE,
+							  Texture::MinFilter::linear,
+							  Texture::MagFilter::linear,
+							  Texture::Wrapping::repeat,
+							  Texture::Wrapping::repeat,
+							  0,
+							  static_cast<unsigned int>(width),
+							  static_cast<unsigned int>(height));
 		
 		texture->copy_data(data, width * height * bpp);
 		stbi_image_free(data);

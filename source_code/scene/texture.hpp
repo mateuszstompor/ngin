@@ -99,6 +99,7 @@ enum class ms::Texture::Format {
 	rgb_16_16_16,
 	rgb_8_8_8,
 	rgba_8_8_8_8,
+	r_8,
 	depth_16,
 	depth_24,
 	depth_32
@@ -131,6 +132,8 @@ void ms::Texture::copy_data (byte* data, size_t size) {
 
 int ms::Texture::channels_amount () const {
 	switch (this->format) {
+		case Format::r_8:
+			return 1;
 		case Format::rgba_8_8_8_8:
 			return 4;
 		case Format::rgb_8_8_8:
