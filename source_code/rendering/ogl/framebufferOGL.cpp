@@ -87,7 +87,7 @@ void ms::FramebufferOGL::bind_depth_buffer	(std::shared_ptr<Renderbuffer> render
 void ms::FramebufferOGL::configure () {
 	
 	this->use();
-	GLuint attachments[colorAttachmentsAmount];
+	GLuint* attachments = new GLuint[colorAttachmentsAmount];
 	for(int i = 0; i < colorAttachmentsAmount; ++i) {
 		attachments[i] = GL_COLOR_ATTACHMENT0 + i;
 	}
@@ -97,7 +97,9 @@ void ms::FramebufferOGL::configure () {
 		std::cerr << "FATAL ERROR" << std::endl;
 		assert(false);
 	}
-	
+
+	delete [] attachments;
+
 	Framebuffer::configure();
 }
 
