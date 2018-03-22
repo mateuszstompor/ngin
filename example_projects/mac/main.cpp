@@ -284,7 +284,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main(int argc, const char * argv[]) { {
 
-	bool useCommandLineArguments = argc == 2;
+	
+	// pass path to scene with building as first param
+	// pass path to nanosuit as second param
+	// pass path to cone as third param
+	// pass path to sphere as fourth param
+	
+	bool useCommandLineArguments = argc == 5;
 
 	int width = 1500;
 	int height = 1000;
@@ -329,28 +335,36 @@ int main(int argc, const char * argv[]) { {
 	
 	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight, 0));
 		
-	engine->load_model(useCommandLineArguments ? argv[1] : "/Users/mateuszstompor/Desktop/sponza/sponza.obj");
+	engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
 	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, -1.0f, -1.0f });
 	
-	auto a = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
+	auto scale = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 	
-	for (int i = 0; i < 3; ++i) {
-		engine->load_point_light(50, ms::math::vec3{1.0f, 1.0f, 0.0f}, ms::math::vec3{0.0f, 0.0f, 0.0f}, "/Users/mateuszstompor/Documents/sphere.obj");
-		engine->scene->pointLights[i]->modelTransformation.set_transformation(a * engine->scene->pointLights[i]->modelTransformation.get_transformation());
+	for (int i = 0; i < 15; ++i) {
+		auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
+		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
+		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
+		
+		engine->load_point_light(50, ms::math::vec3{1.0f, 1.0f, 0.0f},
+								 res, useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
+		engine->scene->pointLights[i]->modelTransformation.set_transformation(translation * scale * engine->scene->pointLights[i]->modelTransformation.get_transformation());
 	}
 	
 	for (int i = 0; i < 3; ++i) {
-		engine->load_spot_light(50, ms::math::vec3{0.0f, 1.0f, 1.0f}, ms::math::vec3{0.0f, 1.0f, 0.0f}, 50, ms::math::vec3{0.0f, -1.0f, 0.0f},  "/Users/mateuszstompor/Documents/cone.obj");
-		auto b = ms::math::transform::translate<float, 4>({0.0f, 1.0f, 0.0f});
-		engine->scene->spotLights[i]->modelTransformation.set_transformation(b * a * engine->scene->spotLights[i]->modelTransformation.get_transformation());
+		auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
+		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
+		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
+	
+		engine->load_spot_light(50, ms::math::vec3{0.0f, 1.0f, 1.0f}, res,
+								50, ms::math::vec3{0.0f, -1.0f, 0.0f},  useCommandLineArguments ? argv[3] : "./cone/cone.obj");
+		engine->scene->spotLights[i]->modelTransformation.set_transformation(translation * scale * engine->scene->spotLights[i]->modelTransformation.get_transformation());
 	}
 	
-	for(int a = 0; a < engine->scene->get_nodes().size(); a++) {
+	for(int a = 0; a < engine->scene->get_nodes().size(); ++a) {
 		engine->scene->get_nodes()[a]->modelTransformation.set_transformation(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene->get_nodes()[a]->modelTransformation.get_transformation());
 	}
 	
-	engine->load_model(useCommandLineArguments ? argv[1] : "/Users/mateuszstompor/Documents/ngin/models/nanosuit/nanosuit.obj");
 	
 	engine->load();
 	
