@@ -48,8 +48,10 @@ GLenum ms::RenderbufferOGL::get_internal_format (Texture::Format format, Texture
 	
 	if(associatedType == Texture::AssociatedType::UNSIGNED_BYTE) {
 		switch (format) {
+		#ifndef ios_build
 			case Texture::Format::depth_32:
 			return GL_DEPTH_COMPONENT32;
+		#endif
 			case Texture::Format::depth_16:
 			return GL_DEPTH_COMPONENT16;
 			case Texture::Format::depth_24:

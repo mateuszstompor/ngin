@@ -52,7 +52,7 @@ void main() {
 	vec3 result 			= vec3(0.0f, 0.0f, 0.0f);
 	
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
-	float shininess 		= 32;
+	float shininess 		= 32.0f;
 	
 	if (hasDirLight == 1) {
 		result += count_light_influence(dirLight, diffuseColor, normal_N);
