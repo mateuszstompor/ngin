@@ -21,17 +21,16 @@ namespace ms {
 	
 	public:
 		
-		inline 				ForwardRender					(unsigned int 					maximalAmountOfLights,
-														  	std::shared_ptr<Framebuffer> 	framebuffer,
-														  	std::string 					vertexShSource,
-														  	std::string 					fragmentShSource
-														  	);
+		inline 						ForwardRender					(unsigned int 					maximalAmountOfLights,
+																	std::shared_ptr<Framebuffer> 	framebuffer,
+																	std::string 					vertexShSource,
+																	std::string 					fragmentShSource);
+		inline virtual std::string 	get_class						() = 0;
+		inline virtual void 		draw  							(Drawable * node, const Scene * scene) 	override;
+		inline virtual void 		setup_uniforms					(const Scene * scene) 					;
+		inline virtual void 		setup_material_uniforms_for		(const Scene * scene, const Drawable * node);
 		
-		inline virtual void draw  							(Drawable * node, const Scene * scene) 	override;
-		inline virtual void setup_uniforms					(const Scene * scene) 					;
-		inline virtual void setup_material_uniforms_for		(const Scene * scene, const Drawable * node);
-		
-		virtual 			~ForwardRender() = default;
+		virtual 					~ForwardRender() = default;
 	
 	protected:
 		
@@ -145,5 +144,10 @@ void ms::ForwardRender::draw (Drawable * node, const Scene * scene) {
 	node->geometry->use_indicies();
 	
 }
+
+std::string ms::ForwardRender::get_class () {
+	return "ms::ForwardRender";
+}
+
 
 #endif /* forward_render_hpp */

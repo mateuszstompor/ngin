@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <iostream>
+#include <string>
 
 #include "../../libs/source/glMath.h"
 
@@ -25,15 +26,16 @@ namespace ms {
 		 						Resource	();
 		
     public:
-		
-        		virtual void    load  		() = 0;
-				virtual bool    is_loaded   ();
-				virtual void 	unload 		() = 0;
-		 		virtual         ~Resource   ();
+	
+		virtual void    		load  		() = 0;
+		virtual bool    		is_loaded   ();
+		virtual void 			unload 		() = 0;
+		virtual std::string 	get_class	();
+		virtual         		~Resource   ();
 	
 	private:
 		
-						bool	isLoaded;
+				bool			isLoaded;
 	        
     };
     

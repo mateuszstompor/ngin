@@ -18,14 +18,14 @@ namespace ms {
 		
 	public:
 		
-		void 	use_normals 			() override;
-		void 	use_vertices 			() override;
-		void 	use_indicies 			() override;
-		void 	use_texture_coord	 	() override;
-		
-		void 	load					() override;
-		void 	unload					() override;
-		void 	load_vertices_to_buffer	();
+				void 			use_normals 			() override;
+				void 			use_vertices 			() override;
+				void 			use_indicies 			() override;
+				void 			use_texture_coord	 	() override;
+		virtual	std::string		get_class				() override;
+				void 			load					() override;
+				void 			unload					() override;
+				void 			load_vertices_to_buffer	();
 		
 	protected:
 		

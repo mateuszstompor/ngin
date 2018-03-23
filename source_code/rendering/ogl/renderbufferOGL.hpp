@@ -21,22 +21,24 @@ namespace ms {
 		
 	public:
 		
-						RenderbufferOGL		(Texture::Format			format,
-											Texture::AssociatedType	associatedType,
-											unsigned int 				mipMapLevel,
-											unsigned int 				width,
-											unsigned int 				height
-											);
-		virtual void 	use					() override;
-		virtual void    load  				() override;
-		virtual void 	unload 				() override;
-				GLuint	get_underlying_id	();
+							RenderbufferOGL		(Texture::Format			format,
+												Texture::AssociatedType	associatedType,
+												unsigned int 				mipMapLevel,
+												unsigned int 				width,
+												unsigned int 				height);
+		
+		virtual std::string	get_class			() override;
+		virtual void 		use					() override;
+		virtual void    	load  				() override;
+		virtual void 		unload 				() override;
+				GLuint		get_underlying_id	();
 		
 	protected:
-		static GLenum	get_internal_format	(Texture::Format format, Texture::AssociatedType associatedType);
+		static GLenum		get_internal_format	(Texture::Format format,
+												 Texture::AssociatedType associatedType);
 		
-		GLenum			internalFormat;
-		GLuint			renderBuffer;
+		GLenum				internalFormat;
+		GLuint				renderBuffer;
 		
 	};
 	

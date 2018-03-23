@@ -8,6 +8,24 @@
 
 #include "textureOGL.hpp"
 
+
+ms::TextureOGL::TextureOGL ( Texture::Type 	type,
+							 std::string	name,
+							 Format			format,
+							 AssociatedType	associatedType,
+							 unsigned int 	width,
+							unsigned int 	height) : TextureOGL(type,
+																 name,
+																 format,
+																 associatedType,
+																 MinFilter::nearest,
+																 MagFilter::nearest,
+																 Wrapping::clamp_to_edge,
+																 Wrapping::clamp_to_edge,
+																 0,
+																 width,
+																 height){ }
+
 ms::TextureOGL::TextureOGL	(	Texture::Type 	textype,
 							 	std::string		name,
 							 	Format			internalF,
@@ -178,6 +196,10 @@ GLenum ms::TextureOGL::to_ogl (AssociatedType type) {
 			assert(false);
 			break;
 	}
+}
+
+std::string ms::TextureOGL::get_class () {
+	return "ms::TextureOGL";
 }
 
 GLenum ms::TextureOGL::underlying_type () const {

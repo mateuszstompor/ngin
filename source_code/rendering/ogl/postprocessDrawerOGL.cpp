@@ -8,22 +8,28 @@
 
 #include "postprocessDrawerOGL.hpp"
 
-
-ms::PostprocessDrawerOGL::PostprocessDrawerOGL(std::shared_ptr<Texture> input, std::shared_ptr<Framebuffer> framebuffer) : PostprocessDrawer(input, framebuffer) {
+ms::PostprocessDrawerOGL::PostprocessDrawerOGL(std::vector<std::shared_ptr<Texture>> 	input,
+											   std::shared_ptr<Framebuffer> 			framebuffer,
+											   std::unique_ptr<Shader>					shaderProgram) : PostprocessDrawer(input,
+																														   framebuffer,
+																														   std::move(shaderProgram)) {
 	
 }
 
 void ms::PostprocessDrawerOGL::draw_quad() {
 	framebuffer->use();
 	shaderProgram->use();
+	
 	mglBindVertexArray(quadVAO);
 	
-	
-	// TODO make it more flexible, support multiple textures
-//	for(int i = 0; i<inputFramebuffer->colorAttachmentsAmount; ++i) {
-		shaderProgram->bind_texture(0, *input);
-//	}
-	
+	{
+		ShaderOGL* shader = dynamic_cast<ShaderOGL*>(shaderProgram.get());
+		for(int i = 0; i<inputTextures.size(); ++i) {
+			shader->set_uniform("in" + std::to_string(i), i);
+			shaderProgram->bind_texture(0, *(inputTextures[i]));
+		}
+	}
+
 	mglDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
@@ -37,7 +43,7 @@ void ms::PostprocessDrawerOGL::use () {
 
 void ms::PostprocessDrawerOGL::clear_frame () {
 	framebuffer->use();
-	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	framebuffer->clear_frame();
 }
 
 void ms::PostprocessDrawerOGL::draw (Drawable * node, const Scene * scene) {
@@ -78,6 +84,11 @@ void ms::PostprocessDrawerOGL::load () {
 		Resource::load();
 	}
 }
+
+std::string ms::PostprocessDrawerOGL::get_class () {
+	return "ms::PostprocessDrawerOGL";
+}
+
 
 void ms::PostprocessDrawerOGL::unload () {
 	if(is_loaded()) {

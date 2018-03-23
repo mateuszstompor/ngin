@@ -16,7 +16,8 @@ ms::NGin::NGin(unsigned int scW, unsigned int scH, float camNear, float camFar, 
 	gouraudForwardRenderer(nullptr),
 	deferredRenderer(nullptr),
 	lightSourceRenderer(nullptr),
-	hdrRenderer(nullptr) {
+	hdrRenderer(nullptr),
+	bloomRenderer(nullptr) {
 		
 }
 
@@ -137,15 +138,17 @@ void ms::NGin::count_fps () {
 
 void ms::NGin::draw_scene() {
 	
-	count_fps();
+	#ifdef NGIN_COUNT_FPS
+		count_fps();
+	#endif
 	
-//	deferredRenderer->use();
-//	deferredRenderer->setup_g_buffer_uniforms(scene.get());
-//	deferredRenderer->clear_frame();
-//	for(int i = 0; i < scene->nodes.size(); ++i) {
-//		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
-//	}
-//	deferredRenderer->perform_light_pass(scene.get());
+	deferredRenderer->use();
+	deferredRenderer->setup_g_buffer_uniforms(scene.get());
+	deferredRenderer->clear_frame();
+	for(int i = 0; i < scene->nodes.size(); ++i) {
+		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+	}
+	deferredRenderer->perform_light_pass(scene.get());
 
 	
 //	phongForwardRenderer->use();
@@ -155,12 +158,12 @@ void ms::NGin::draw_scene() {
 //		phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 	
-	gouraudForwardRenderer->use();
-	gouraudForwardRenderer->clear_frame();
-	gouraudForwardRenderer->setup_uniforms(scene.get());
-	for(int i = 0; i < scene->nodes.size(); ++i) {
-		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-	}
+//	gouraudForwardRenderer->use();
+//	gouraudForwardRenderer->clear_frame();
+//	gouraudForwardRenderer->setup_uniforms(scene.get());
+//	for(int i = 0; i < scene->nodes.size(); ++i) {
+//		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+//	}
 	
 	lightSourceRenderer->use();
 	for(int i = 0; i < scene->pointLights.size(); ++i) {
@@ -170,6 +173,9 @@ void ms::NGin::draw_scene() {
 		lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
 	}
 	
+	hdrRenderer->clear_frame();
 	hdrRenderer->draw_quad();
+	bloomRenderer->clear_frame();
+	bloomRenderer->draw_quad();
 
 }

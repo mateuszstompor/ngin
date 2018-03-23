@@ -21,11 +21,12 @@ namespace ms {
 		
     public:
 		
-		inline			Render			(std::shared_ptr<Framebuffer> framebuffer);
-        virtual void	use		     	() 												= 0;
-		virtual void 	clear_frame		()												= 0;
-		virtual void	draw  			(Drawable * node, const Scene * scene)			= 0;
-		virtual			~Render 		() = default;
+		inline							Render			(std::shared_ptr<Framebuffer> framebuffer);
+        		virtual void			use		     	() 												= 0;
+				virtual void 			clear_frame		()												= 0;
+		inline	virtual std::string 	get_class		();
+				virtual void			draw  			(Drawable * node, const Scene * scene)			= 0;
+				virtual					~Render 		() = default;
 		
 	protected:
 		
@@ -36,5 +37,9 @@ namespace ms {
 }
 
 ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer) : framebuffer(framebuffer) { }
+
+std::string ms::Render::get_class () {
+	return "ms::Render";
+}
 
 #endif /* render_h */

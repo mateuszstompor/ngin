@@ -25,21 +25,24 @@ namespace ms {
 		
 		public:
 		
-			DeferredRenderOGL					(unsigned int maximalAmountOfLights,
-												 std::string gBufferVertexShaderSource,
-												 std::string gBufferFragmentShaderSource,
-												 std::string lightingVertexShaderSource,
-												 std::string lightingFragmentShaderSource,
-												 std::shared_ptr<Framebuffer> framebuffer);
+			DeferredRenderOGL							(unsigned int maximalAmountOfLights,
+												 		std::string gBufferVertexShaderSource,
+												 		std::string gBufferFragmentShaderSource,
+												 		std::string lightingVertexShaderSource,
+												 		std::string lightingFragmentShaderSource,
+												 		std::shared_ptr<Framebuffer> framebuffer);
 		
-			void	use     					() 												override;
-			void 	clear_frame					()												override;
-			void 	draw						(Drawable * node, const Scene * scene) 			override;
-			void	load						() 												override;
-			bool	is_loaded					() 												override;
-			void 	unload						() 												override;
-			void 	perform_light_pass			(const Scene * scene) 							override;
-			virtual	~DeferredRenderOGL 			() = default;
+									DeferredRenderOGL	(const DeferredRenderOGL &) = delete;
+			DeferredRenderOGL & 	operator = 			(const DeferredRenderOGL &) = delete;
+		
+			void					use     			() 												override;
+			void 					clear_frame			()												override;
+			void 					draw				(Drawable * node, const Scene * scene) 			override;
+			void					load				() 												override;
+			bool					is_loaded			() 												override;
+			void 					unload				() 												override;
+			void 					perform_light_pass	(const Scene * scene) 							override;
+			virtual					~DeferredRenderOGL 	() = default;
 		
 		protected:
 				

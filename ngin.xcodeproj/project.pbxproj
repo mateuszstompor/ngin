@@ -236,6 +236,9 @@
 		56BD165720575801001B02C5 /* libIrrXML2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML2.a; path = "third-party-libs/assimp_iOS/lib/libIrrXML2.a"; sourceTree = "<group>"; };
 		56BD165E205759D8001B02C5 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/libIrrXML.a"; sourceTree = "<group>"; };
 		56BD165F205759D8001B02C5 /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/libzlibstatic.a"; sourceTree = "<group>"; };
+		56C3C6A920655EFE0003F630 /* config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
+		56C3C6AD206584420003F630 /* bloom_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_fshader.glsl; sourceTree = "<group>"; };
+		56C3C6AE206584420003F630 /* bloom_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_vshader.glsl; sourceTree = "<group>"; };
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
 		56DF0F3920571B6D00713420 /* loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loader.cpp; sourceTree = "<group>"; };
 		56DF0F3A20571B6D00713420 /* loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
@@ -411,6 +414,7 @@
 				5671680A204ADFAE0028EFAA /* rendering */,
 				56716812204ADFAE0028EFAA /* scene */,
 				56716825204ADFAE0028EFAA /* base */,
+				56C3C6A920655EFE0003F630 /* config.hpp */,
 			);
 			path = source_code;
 			sourceTree = "<group>";
@@ -547,6 +551,7 @@
 		56736CC02064744B00CE636A /* postprocess */ = {
 			isa = PBXGroup;
 			children = (
+				56C3C6AC206582A60003F630 /* bloom */,
 				56736CC12064745100CE636A /* hdr */,
 			);
 			path = postprocess;
@@ -599,6 +604,15 @@
 				568FA8872048A328005BD711 /* matrix_tests */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		56C3C6AC206582A60003F630 /* bloom */ = {
+			isa = PBXGroup;
+			children = (
+				56C3C6AD206584420003F630 /* bloom_fshader.glsl */,
+				56C3C6AE206584420003F630 /* bloom_vshader.glsl */,
+			);
+			path = bloom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

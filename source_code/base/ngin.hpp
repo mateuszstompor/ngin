@@ -79,6 +79,7 @@ namespace ms {
 		std::unique_ptr<ForwardRender>          phongForwardRenderer;
 		std::unique_ptr<LightSourcesRender>     lightSourceRenderer;
 		std::unique_ptr<PostprocessDrawer>     	hdrRenderer;
+		std::unique_ptr<PostprocessDrawer>     	bloomRenderer;
 		
 		unsigned int 							screenWidth;
 		unsigned int 							screenHeight;

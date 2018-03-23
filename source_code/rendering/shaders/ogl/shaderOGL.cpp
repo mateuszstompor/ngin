@@ -11,7 +11,6 @@
 namespace ms {
 	#define SHADER_ERROR 			"Shader error"
 	#define INFO_LOG_SIZE 			512
-	#define COMPILATION_COMPLETED 	"Compilation completed"
 }
 
 ms::ShaderOGL::ShaderOGL(std::string vS,
@@ -31,6 +30,12 @@ ms::ShaderOGL::ShaderOGL(std::string vS,
 
 void ms::ShaderOGL::use() {
 	mglUseProgram(program);
+}
+
+GLint ms::ShaderOGL::set_uniform (std::string name, int value) {
+	GLint location = glGetUniformLocation(program, name.c_str());
+	glUniform1i(location, value);
+	return location;
 }
 
 void ms::ShaderOGL::load() {
@@ -108,17 +113,16 @@ void ms::ShaderOGL::compile_program() {
 	if (!fragmentSource.empty())
 		mglDeleteShader(fshader);
 
-	#ifdef DEBUG
-
-		std::cout << COMPILATION_COMPLETED << std::endl;
-
-	#endif
 }
 
 void ms::ShaderOGL::bind_texture(unsigned int index, Texture & texture) {
 	this->use();
 	glActiveTexture(GL_TEXTURE0 + index);
 	texture.use();
+}
+
+std::string ms::ShaderOGL::get_class () {
+	return "ms::ShaderOGL";
 }
 
 void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {

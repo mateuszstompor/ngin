@@ -93,6 +93,12 @@ namespace ms {
 			const std::string hdrFshader =
 			#include "./postprocess/hdr/hdr_fshader.glsl"
 			
+			const std::string bloomVshader =
+			#include "./postprocess/bloom/bloom_vshader.glsl"
+			
+			const std::string bloomFshader =
+			#include "./postprocess/bloom/bloom_fshader.glsl"
+			
 		}
 		
 		inline std::string get_shader_of_type(Type type);
@@ -113,7 +119,9 @@ enum class ms::shader::Type {
 	forward_render_light_drawer_vshader,
 	forward_render_light_drawer_fshader,
 	post_process_hdr_vshader,
-	post_process_hdr_fshader
+	post_process_hdr_fshader,
+	post_process_bloom_vshader,
+	post_process_bloom_fshader
 };
 
 
@@ -168,6 +176,12 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::post_process_hdr_fshader:
 			shaderContent += postprocess::hdrFshader;
+			break;
+		case ms::shader::Type::post_process_bloom_vshader:
+			shaderContent += postprocess::bloomVshader;
+			break;
+		case ms::shader::Type::post_process_bloom_fshader:
+			shaderContent += postprocess::bloomFshader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

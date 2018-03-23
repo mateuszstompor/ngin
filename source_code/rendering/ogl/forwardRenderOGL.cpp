@@ -34,6 +34,11 @@ void ms::ForwardRenderOGL::draw (Drawable * node, const Scene * scene) {
 	mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 }
 
+std::string ms::ForwardRenderOGL::get_class () {
+	return "ms::ForwardRenderOGL";
+}
+
+
 void ms::ForwardRenderOGL::load () {
 	this->shader->load();
 	Resource::load();

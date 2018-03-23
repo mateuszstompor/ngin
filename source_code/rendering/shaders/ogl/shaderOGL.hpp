@@ -54,12 +54,18 @@ namespace ms {
 											 std::string geometryShader,
 											 std::string fragmentShader);
 		
+								ShaderOGL	(const ShaderOGL &) = delete;
+				ShaderOGL & 	operator = 	(const ShaderOGL &) = delete;
+		
 		virtual void 			bind_texture(unsigned int index, Texture & texture) override;
 		virtual void 			use			() override;
 		virtual void 			load		() override;
+		virtual std::string		get_class	() override;
 		virtual void 			unload		() override;
 		virtual 				~ShaderOGL	() = default;
 				GLuint 			get_gl_id	() const;
+				GLint			set_uniform	(std::string name, int value);
+		
 		
 	protected:
 		

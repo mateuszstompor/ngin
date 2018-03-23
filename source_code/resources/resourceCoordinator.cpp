@@ -14,49 +14,53 @@ ms::ResourceCoordinator::ResourceCoordinator () : loadedResources(std::set<std::
 
 void ms::ResourceCoordinator::register_load (Resource* resource) {
 	
-	#ifdef DEBUG
+	#ifdef RC_ASSERTIONS
 		assert(std::find(loadedResources.begin(), loadedResources.end(), utils::ptr_to_string(resource)) == loadedResources.end());
 	#endif
 	
 	loadedResources.insert(utils::ptr_to_string(resource));
 	
-	#ifdef DEBUG
+	#ifdef RC_ALLOCATIONS
 		std::cout << "#ResourceCoordinator::load " << loadedResources.size() << " " << resource << std::endl;
 	#endif
 }
 
 void ms::ResourceCoordinator::register_unload (Resource* resource) {
 
-	#ifdef DEBUG
+	#ifdef RC_ASSERTIONS
 		assert(std::find(loadedResources.begin(), loadedResources.end(), utils::ptr_to_string(resource)) != loadedResources.end());
 		assert(std::find(allocatedResources.begin(), allocatedResources.end(), utils::ptr_to_string(resource)) != allocatedResources.end());
 	#endif
 	
 	loadedResources.erase(utils::ptr_to_string(resource));
 	
-	#ifdef DEBUG
+	#ifdef RC_UNLOADS
 		std::cout << "#ResourceCoordinator::unload " << loadedResources.size() << " " << resource << std::endl;
 	#endif
 }
 
 void ms::ResourceCoordinator::register_allocation (Resource* resource) {
-	#ifdef DEBUG
+	#ifdef RC_ALLOCATIONS
 		std::cout << "#ResourceCoordinator::register_allocation " << allocatedResources.size() << " " << resource << std::endl;
 	#endif
 	allocatedResources.insert(utils::ptr_to_string(resource));
 }
 
 void ms::ResourceCoordinator::register_deallocation (Resource* resource) {
-	#ifdef DEBUG
+	#ifdef RC_DEALLOCATIONS
 		std::cout << "#ResourceCoordinator::register_deallocation " << allocatedResources.size() << " " << resource << std::endl;
 		assert(std::find(allocatedResources.begin(), allocatedResources.end(), utils::ptr_to_string(resource)) != allocatedResources.end());
+	#endif
+	
+	#ifdef DEBUG
+	if(std::find(loadedResources.begin(), loadedResources.end(), utils::ptr_to_string(resource)) != loadedResources.end()) {
+		std::cerr << "#ResourceCoordinator::OBJECT DEALLOCATED BUT NOT UNLOADED, LEAK!" << std::endl;
+		std::cout << resource->get_class() << std::endl;
+	}
+	#endif
+	
 
-	#endif
-	
-	#ifndef DEBUG
 	loadedResources.erase(utils::ptr_to_string(resource));
-	#endif
-	
 	allocatedResources.erase(utils::ptr_to_string(resource));
 }
 
@@ -66,7 +70,7 @@ void ms::ResourceCoordinator::destroy_shared_instance () {
 
 void ms::ResourceCoordinator::unload_all_resources () {
 	std::set<std::string> tmp(loadedResources.begin(), loadedResources.end());
-//	std::for_each(tmp.begin(), tmp.end(), [] (std::string res) { utils::ptr_from_string<Resource>(res)->unload(); });
+	std::for_each(tmp.begin(), tmp.end(), [] (std::string res) { utils::ptr_from_string<Resource>(res)->unload(); });
 }
 
 std::shared_ptr<ms::ResourceCoordinator> ms::ResourceCoordinator::get_instance () {

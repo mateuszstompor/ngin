@@ -38,25 +38,26 @@ namespace ms {
 		enum class Format;
 		enum class AssociatedType;
 
-		 inline 		Texture				(Type					type,
-											 std::string			name,
-											 Format					format,
-											 AssociatedType			associatedType,
-											 MinFilter 				minFilter,
-											 MagFilter 				magFilter,
-											 Wrapping 				sWrapping,
-											 Wrapping 				tWrapping,
-											 unsigned int 			mipMapLevel,
-											 unsigned int 			width,
-											 unsigned int 			height
-											 );
+		 inline 						Texture			(Type					type,
+														 std::string			name,
+														 Format					format,
+														 AssociatedType			associatedType,
+														 MinFilter 				minFilter,
+														 MagFilter 				magFilter,
+														 Wrapping 				sWrapping,
+														 Wrapping 				tWrapping,
+														 unsigned int 			mipMapLevel,
+														 unsigned int 			width,
+														 unsigned int 			height
+														 );
 
-		inline void		copy_data			(byte* data, size_t size);
-		inline int		channels_amount 	() const;
-		Texture &		operator = 			(const Texture &) = delete;
-						Texture				(const Texture &) = delete;
-		virtual void 	use					() = 0;
-		inline virtual 	~Texture			();
+		inline 			void			copy_data		(byte* data, size_t size);
+		inline 			int				channels_amount () const;
+						Texture &		operator = 		(const Texture &) = delete;
+										Texture			(const Texture &) = delete;
+		inline 	virtual std::string		get_class		() = 0;
+				virtual void 			use				() = 0;
+		inline 	virtual 				~Texture		();
 
 	public:
 
@@ -136,6 +137,10 @@ void ms::Texture::copy_data (byte* data, size_t size) {
 	delete [] rawData;
 	rawData = new byte [size];
 	std::memcpy(rawData, data, size);
+}
+
+std::string ms::Texture::get_class () {
+	return "ms::Texture";
 }
 
 int ms::Texture::channels_amount () const {

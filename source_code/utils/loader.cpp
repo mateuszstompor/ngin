@@ -66,7 +66,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (const aiScene * s
 		msMaterial->normalTexturesNames 	= get_texture_paths(aiTextureType_NORMALS, mat, directoryPath);
 		msMaterial->heightTexturesNames 	= get_texture_paths(aiTextureType_HEIGHT, mat, directoryPath);
 		
-		#ifdef DEBUG
+		#ifdef LD_MAT_COMP_COUNT
 			std::cout << aiName.C_Str() << 	" DIFFUSE: " 	<< msMaterial->diffuseTexturesNames.size() 	<< std:: endl;
 			std::cout << aiName.C_Str() << 	" SPECULAR: " 	<< msMaterial->specularTexturesNames.size()	<< std:: endl;
 			std::cout << aiName.C_Str() <<  " NORMALS: " 	<< msMaterial->normalTexturesNames.size() 	<< std:: endl;
@@ -101,7 +101,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (const aiScene * s
 		
 	}
 	
-	#ifdef DEBUG
+	#ifdef LD_MAT_SUMMARY
 	
 		std::cout << "materials count: " << materials.size() << std::endl;
 		std::cout << "textures count: " << textures.size() << std::endl;

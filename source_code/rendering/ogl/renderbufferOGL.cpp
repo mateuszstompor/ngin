@@ -19,6 +19,10 @@ ms::RenderbufferOGL::RenderbufferOGL (Texture::Format			format,
 	
 }
 
+std::string ms::RenderbufferOGL::get_class () {
+	return "ms::RenderbufferOGL";
+}
+
 void ms::RenderbufferOGL::load () {
 	if(!is_loaded()) {
 		mglGenRenderbuffers(1, &this->renderBuffer);

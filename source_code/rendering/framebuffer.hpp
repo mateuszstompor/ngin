@@ -44,6 +44,7 @@ namespace ms {
 inline  virtual void				configure			();
 		virtual void				use					() = 0;
 		virtual void				use_for_read		() = 0;
+inline	virtual std::string			get_class			() = 0;
 		virtual void 				copy_depth_from		(Framebuffer & frame) = 0;
 		virtual void				use_for_write		() = 0;
 		virtual bool				is_complete			() const = 0;
@@ -87,6 +88,10 @@ ms::Framebuffer::Framebuffer(int colorAttachmentsAmount,
 											renderbufferAttachmentsAmount(renderbufferAttachmentsAmount) {
 	colorAttachments.resize(colorAttachmentsAmount);
 	renderbufferAttachments.resize(renderbufferAttachmentsAmount);
+}
+
+std::string ms::Framebuffer::get_class () {
+	return "ms::Framebuffer";
 }
 
 void ms::Framebuffer::set_clear_color (math::vec4 color) {

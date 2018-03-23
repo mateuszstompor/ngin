@@ -15,7 +15,7 @@ bool ms::Resource::is_loaded () {
 
 void ms::Resource::load () {
 	
-	#ifdef DEBUG
+	#ifdef R_LOADS
 		std::cout << "#Resource::load " << this << std::endl;
 	#endif
 	
@@ -25,7 +25,7 @@ void ms::Resource::load () {
 
 void ms::Resource::unload () {
 	
-	#ifdef DEBUG
+	#ifdef R_UNLOADS
 		std::cout << "#Resource::unload " << this << std::endl;
 	#endif
 	
@@ -35,16 +35,20 @@ void ms::Resource::unload () {
 
 ms::Resource::Resource () : isLoaded(false) {
 	
-	#ifdef DEBUG
+	#ifdef R_ALLOCATIONS
 		std::cout << "#Resource::Resource " << this << std::endl;
 	#endif
 	
 	ResourceCoordinator::get_instance()->register_allocation(this);
 }
 
+std::string ms::Resource::get_class () {
+	return "ms::Resource";
+}
+
 ms::Resource::~Resource () {
 	
-	#ifdef DEBUG
+	#ifdef R_DEALLOCATIONS
 		std::cout << "#Resource::~Resource " << this << std::endl;
 	#endif
 	

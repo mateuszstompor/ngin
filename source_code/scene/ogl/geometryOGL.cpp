@@ -110,6 +110,10 @@ void ms::GeometryOGL::load_vertices_to_buffer () {
 	}
 }
 
+std::string ms::GeometryOGL::get_class () {
+	return "ms::GeometryOGL";
+}
+
 void ms::GeometryOGL::unload() {
 	if(is_loaded()) {
 		mglDeleteBuffers(1, &positionsBuffer);

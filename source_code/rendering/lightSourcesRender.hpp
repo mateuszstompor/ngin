@@ -20,8 +20,7 @@ namespace ms {
 		
 		inline 	LightSourcesRender(std::shared_ptr<Framebuffer> framebuffer,
 								   std::string 	vertexShaderSource,
-								   std::string 	fragmentShaderSource
-								   );
+								   std::string 	fragmentShaderSource);
 		
 		virtual ~LightSourcesRender() = default;
 		

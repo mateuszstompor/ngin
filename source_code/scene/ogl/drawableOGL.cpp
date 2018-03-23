@@ -19,6 +19,10 @@ void ms::DrawableOGL::use () {
 	mglBindVertexArray(vertexArray);
 }
 
+std::string ms::DrawableOGL::get_class () {
+	return "ms::DrawableOGL";
+}
+
 void ms::DrawableOGL::load	() {
 	
 	if (!is_loaded()) {

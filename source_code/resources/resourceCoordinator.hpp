@@ -19,6 +19,7 @@
 #include "../rendering/render.hpp"
 #include "../utils/utils.hpp"
 #include "../rendering/shaders/shader.hpp"
+#include "../config.hpp"
 
 namespace ms {
     

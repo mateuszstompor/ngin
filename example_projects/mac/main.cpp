@@ -341,7 +341,7 @@ int main(int argc, const char * argv[]) { {
 	
 	auto scale = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 	
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 15; ++i) {
 		auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
 		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
 		auto res = ms::math::vec3{result.x(), result.y(), result.z()};

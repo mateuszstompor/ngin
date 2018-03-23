@@ -18,11 +18,18 @@ namespace ms {
 		
 	public:
 		
-		virtual void 			bind_texture	(unsigned int index, Texture & texture) = 0;
-		virtual void 			use 			() = 0;
-		virtual 				~Shader			() = default;
+			virtual void 			bind_texture	(unsigned int 	index,
+													 Texture & 		texture) = 0;
+		
+			virtual void 			use 			() = 0;
+	inline 	virtual std::string		get_class		() = 0;
+			virtual 				~Shader			() = default;
     };
     
+}
+
+std::string ms::Shader::get_class () {
+	return "ms::Shader";
 }
 
 #endif /* shader_hpp */

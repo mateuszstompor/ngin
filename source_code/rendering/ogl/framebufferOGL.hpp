@@ -44,6 +44,7 @@ namespace ms {
 		virtual bool		is_complete			() const override;
 		virtual void    	load  				() override;
 		virtual void 		unload 				() override;
+		virtual std::string	get_class			() override;
 		virtual void		clear_color			() override;
 		virtual void		clear_depth			() override;
 		virtual void		clear_frame			() override;

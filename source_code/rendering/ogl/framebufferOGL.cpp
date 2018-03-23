@@ -121,15 +121,15 @@ void ms::FramebufferOGL::configure () {
 	if(!is_complete()) {
 		std::cerr << "FATAL ERROR" << std::endl;
 		assert(false);
-	} else {
-		#ifdef DEBUG
-			std::cout << "FRAMEBUFFER COMPLETE" << std::endl;
-		#endif
 	}
 
 	delete [] attachments;
 
 	Framebuffer::configure();
+}
+
+std::string ms::FramebufferOGL::get_class () {
+	return "ms::FramebufferOGL";
 }
 
 GLuint ms::FramebufferOGL::get_underlying_id () {
