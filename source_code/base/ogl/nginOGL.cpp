@@ -34,9 +34,7 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	std::string hdrFragmentShader = shader::get_shader_of_type(shader::Type::post_process_hdr_fshader);
 	
 	
-	std::shared_ptr<FramebufferOGL> windowFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(0,0,screenWidth, screenHeight));
-	windowFramebuffer->load();
-	windowFramebuffer->framebuffer = 0;
+	std::shared_ptr<Framebuffer> windowFramebuffer = FramebufferOGL::window_framebuffer(screenWidth, screenHeight);
 	
 	std::shared_ptr<FramebufferOGL> tempBuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
 																									1,
@@ -51,10 +49,10 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																								frameBufferHeight));
 	tempBuffer->bind_depth_buffer(renderbuf);
 	std::shared_ptr<Texture> color = std::shared_ptr<Texture>(new TextureOGL(	 Texture::Type::tex_2d, "",
-																				 Texture::Format::rgba_8_8_8_8,
-																				 Texture::AssociatedType::UNSIGNED_BYTE,
-																				 Texture::MinFilter::linear,
-																				 Texture::MagFilter::linear,
+																				 Texture::Format::rgb_16_16_16,
+																				 Texture::AssociatedType::FLOAT,
+																				 Texture::MinFilter::nearest,
+																				 Texture::MagFilter::nearest,
 																				 Texture::Wrapping::clamp_to_edge,
 																				 Texture::Wrapping::clamp_to_edge,
 																				 0,
@@ -81,12 +79,12 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																				 gouraudRenderFragmentShaderSource,
 																				 tempBuffer));
 
-	deferredRenderer = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(  AOL,
-																			  deferredRenderVertexShaderSource,
-																			  deferredRenderFragmentShaderSource,
-																			  deferredRenderLightingVertexShaderSource,
-																			  deferredRenderLightingFragmentShaderSource,
-																			  tempBuffer));
+	deferredRenderer = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL( AOL,
+																				  deferredRenderVertexShaderSource,
+																				  deferredRenderFragmentShaderSource,
+																				  deferredRenderLightingVertexShaderSource,
+																				  deferredRenderLightingFragmentShaderSource,
+																				  tempBuffer));
 	
 	std::shared_ptr<Framebuffer> framebuffer = std::shared_ptr<Framebuffer>(new FramebufferOGL(1, 0, frameBufferWidth, frameBufferHeight));
 

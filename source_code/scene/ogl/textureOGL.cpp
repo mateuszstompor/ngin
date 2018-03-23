@@ -136,8 +136,6 @@ GLenum	ms::TextureOGL::to_ogl (Texture::Type type) {
 		case ms::Texture::Type::tex_2d:
 			return GL_TEXTURE_2D;
 		case ms::Texture::Type::tex_cube_map:
-			//TODO check if it is correct
-			assert(false);
 			return GL_TEXTURE_CUBE_MAP;
 		default:
 			break;

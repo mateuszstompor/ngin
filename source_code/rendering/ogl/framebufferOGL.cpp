@@ -12,7 +12,7 @@
 ms::FramebufferOGL::FramebufferOGL(int colorAttachmentsAmount,
 								   int renderbufferAttachmentsAmount,
 								   int width,
-								   int height) : ms::Framebuffer(colorAttachmentsAmount, renderbufferAttachmentsAmount, width, height), framebuffer(0) {
+								   int height) : ms::Framebuffer(colorAttachmentsAmount, renderbufferAttachmentsAmount, width, height), framebuffer(0), is_default_framebuffer(false) {
 	
 }
 
@@ -26,7 +26,9 @@ bool ms::FramebufferOGL::is_complete () const {
 
 void ms::FramebufferOGL::load () {
 	if(!is_loaded()) {
-		mglGenFramebuffers(1, &this->framebuffer);
+		if(!is_default_framebuffer) {
+			mglGenFramebuffers(1, &this->framebuffer);
+		}
 		Resource::load();
 	}
 }
@@ -78,8 +80,10 @@ void ms::FramebufferOGL::use_for_read () {
 
 void ms::FramebufferOGL::unload () {
 	if(is_loaded()) {
-		mglDeleteFramebuffers(1, &this->framebuffer);
-		this->framebuffer = 0;
+		if(!is_default_framebuffer) {
+			mglDeleteFramebuffers(1, &this->framebuffer);
+			this->framebuffer = 0;
+		}
 		Resource::unload();
 	}
 }
@@ -131,5 +135,13 @@ void ms::FramebufferOGL::configure () {
 GLuint ms::FramebufferOGL::get_underlying_id () {
 	return framebuffer;
 }
+
+std::shared_ptr<ms::FramebufferOGL> ms::FramebufferOGL::window_framebuffer	(int width, int height) {
+	auto framebuffer = std::shared_ptr<ms::FramebufferOGL>(new FramebufferOGL(0, 0, width, height));
+	framebuffer->is_default_framebuffer = true;
+	framebuffer->framebuffer = 0;
+	return framebuffer;
+}
+
 
 

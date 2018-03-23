@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <memory>
 
 #include "../framebuffer.hpp"
 #include "../../scene/ogl/textureOGL.hpp"
@@ -21,32 +22,37 @@ namespace ms {
 	
 	class FramebufferOGL : public Framebuffer {
 	
+	protected:
+		
+		typedef std::shared_ptr<FramebufferOGL> fb_ptr;
+		
 	public:
 		
-						FramebufferOGL		(int colorAttachmentsAmount,
-									   		int renderbufferAttachmentsAmount,
-									   		int width,
-									   		int height);
+						FramebufferOGL			(int colorAttachmentsAmount,
+												int renderbufferAttachmentsAmount,
+												int width,
+												int height);
 		
-		virtual void	use					() override;
-		virtual void	use_for_read		() override;
-		virtual void	use_for_write		() override;
-		virtual void	configure			() override;
-		virtual void 	bind_color_buffer	(int index, std::shared_ptr<Texture> texture) override;
-		virtual void 	bind_color_buffer	(int index, std::shared_ptr<Renderbuffer> renderbuffer) override;
-		virtual void 	bind_depth_buffer	(std::shared_ptr<Renderbuffer> renderbuffer) override;
-		virtual void 	copy_depth_from		(Framebuffer & frame) override;
-		virtual bool	is_complete			() const override;
-		virtual void    load  				() override;
-		virtual void 	unload 				() override;
-		virtual void	clear_color			() override;
-		virtual void	clear_depth			() override;
-		virtual void	clear_frame			() override;
-				GLuint	get_underlying_id	();
-//	TODO make it protected
-//	protected:
-		
-		GLuint			framebuffer;
+		virtual void		use					() override;
+		virtual void		use_for_read		() override;
+		virtual void		use_for_write		() override;
+		virtual void		configure			() override;
+		virtual void 		bind_color_buffer	(int index, std::shared_ptr<Texture> texture) override;
+		virtual void 		bind_color_buffer	(int index, std::shared_ptr<Renderbuffer> renderbuffer) override;
+		virtual void 		bind_depth_buffer	(std::shared_ptr<Renderbuffer> renderbuffer) override;
+		virtual void 		copy_depth_from		(Framebuffer & frame) override;
+		virtual bool		is_complete			() const override;
+		virtual void    	load  				() override;
+		virtual void 		unload 				() override;
+		virtual void		clear_color			() override;
+		virtual void		clear_depth			() override;
+		virtual void		clear_frame			() override;
+		static 	fb_ptr 		window_framebuffer	(int width, int height);
+				GLuint		get_underlying_id	();
+
+	protected:
+		bool				is_default_framebuffer;
+		GLuint				framebuffer;
 		
 	};
 	
