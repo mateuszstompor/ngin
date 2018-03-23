@@ -28,10 +28,7 @@ namespace ms {
 		enum class DebugType;
 		
 			 				DeferredRender					(unsigned int maximalAmountOfLights,
-															unsigned int screenWidth,
-															unsigned int screenHeight,
-															unsigned int frameBufferWidth,
-															unsigned int frameBufferHeight,
+															std::shared_ptr<Framebuffer> framebuffer,
 															std::string gBufferVertexShaderSource,
 															std::string gBufferFragmentShaderSource,
 															std::string lightingVertexShaderSource,

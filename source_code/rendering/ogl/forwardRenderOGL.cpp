@@ -8,14 +8,8 @@
 
 #include "forwardRenderOGL.hpp"
 
-namespace ms {
-	
-	typedef unsigned int ui;
-	
-}
-
-ms::ForwardRenderOGL::ForwardRenderOGL (unsigned int maxAOL, std::string vSS, std::string fSS, ui sW, ui sH, ui fbW, ui fbH) :
-	ms::ForwardRender(maxAOL, sW, sH, fbW, fbH, vSS, fSS) {
+ms::ForwardRenderOGL::ForwardRenderOGL (unsigned int maxAOL, std::string vSS, std::string fSS, std::shared_ptr<Framebuffer> framebuffer) :
+	ms::ForwardRender(maxAOL, framebuffer, vSS, fSS) {
 		shader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(maxAOL, vSS, fSS));
 }
 
@@ -26,14 +20,13 @@ void ms::ForwardRenderOGL::use () {
 	
 	shader->use();
 	
-	mglViewport(0, 0, screenWidth, screenHeight);
 	mglEnable(GL_DEPTH_TEST);
 	mglDepthFunc(GL_LEQUAL);
 }
 
 void ms::ForwardRenderOGL::clear_frame () {
-	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	framebuffer->use();
+	framebuffer->clear_frame();
 }
 
 void ms::ForwardRenderOGL::draw (Drawable * node, const Scene * scene) {

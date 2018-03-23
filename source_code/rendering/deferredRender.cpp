@@ -27,15 +27,12 @@ namespace ms {
 }
 
 ms::DeferredRender::DeferredRender(unsigned int maxAOL,
-								   unsigned int sW,
-								   unsigned int sH,
-								   unsigned int fbW,
-								   unsigned int fbH,
+								   std::shared_ptr<Framebuffer> framebuffer,
 								   std::string gVS,
 								   std::string gFS,
 								   std::string lVS,
 								   std::string lFS
-								   ) : 	Render(sW, sH, fbW, fbH),
+								   ) : 	Render(framebuffer),
 gBufferVertexShaderSource(gVS),
 gBufferFragmentShaderSource(gFS),
 lightingVertexShaderSource(lVS),

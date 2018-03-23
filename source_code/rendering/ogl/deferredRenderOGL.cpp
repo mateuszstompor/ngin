@@ -23,17 +23,14 @@ ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	maxAOLights,
 										  std::string 	gFS,
 										  std::string 	lVS,
 										  std::string 	lFS,
-										  unsigned int 	sW,
-										  unsigned int 	sH,
-										  unsigned int 	fbW,
-										  unsigned int 	fbH) :
+										  std::shared_ptr<Framebuffer> framebuffer) :
 
-ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), quadVAO(0), quadVBO(0), defaultFBO(0) {
+ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS), quadVAO(0), quadVBO(0) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
 	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(maxAOLights, lVS, lFS));
 	
 	
-	gPosition = std::shared_ptr<Texture>(new TextureOGL(GL_TEXTURE_2D,
+	gPosition = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
 														G_BUF_POSITIONS,
 														Texture::Format::rgb_16_16_16,
 														Texture::AssociatedType::FLOAT,
@@ -41,9 +38,9 @@ ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), quadVAO(0
 														Texture::MagFilter::linear,
 														Texture::Wrapping::clamp_to_edge,
 														Texture::Wrapping::clamp_to_edge,
-														0, frameBufferWidth, frameBufferHeight));
-	
-	gNormal = std::shared_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
+														0, framebuffer->get_width(), framebuffer->get_height()));
+
+	gNormal = std::shared_ptr<Texture>(new TextureOGL(	Texture::Type::tex_2d,
 														G_BUF_NORMALS,
 														Texture::Format::rgb_16_16_16,
 														Texture::AssociatedType::FLOAT,
@@ -51,9 +48,9 @@ ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), quadVAO(0
 														Texture::MagFilter::linear,
 														Texture::Wrapping::clamp_to_edge,
 														Texture::Wrapping::clamp_to_edge,
-														0, frameBufferWidth, frameBufferHeight));
+														0, framebuffer->get_width(), framebuffer->get_height()));
 	
-	gAlbedo = std::shared_ptr<Texture>(new TextureOGL(	GL_TEXTURE_2D,
+	gAlbedo = std::shared_ptr<Texture>(new TextureOGL(	Texture::Type::tex_2d,
 														G_BUF_ALBEDO,
 													  	Texture::Format::rgba_8_8_8_8,
 														Texture::AssociatedType::UNSIGNED_BYTE,
@@ -61,18 +58,18 @@ ms::DeferredRender(maxAOLights, sW, sH, fbW, fbH, gVS, gFS, lVS, lFS), quadVAO(0
 														Texture::MagFilter::linear,
 														Texture::Wrapping::clamp_to_edge,
 														Texture::Wrapping::clamp_to_edge,
-														0, frameBufferWidth, frameBufferHeight));
+														0, framebuffer->get_width(), framebuffer->get_height()));
 
 	gFramebuffer = std::unique_ptr<Framebuffer>(new FramebufferOGL(3,
 																   1,
-																   frameBufferWidth,
-																   frameBufferHeight));
+																   framebuffer->get_width(),
+																   framebuffer->get_height()));
 	
 	depthRenderbuffer = std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
 																		  Texture::AssociatedType::UNSIGNED_BYTE,
 																		  0,
-																		  fbW,
-																		  fbH));
+																		  framebuffer->get_width(),
+																		  framebuffer->get_height()));
 	
 	
 
@@ -92,7 +89,7 @@ void ms::DeferredRenderOGL::use () {
 
 void ms::DeferredRenderOGL::clear_frame () {
 	gFramebuffer->use();
-	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gFramebuffer->clear_frame();
 }
 
 void ms::DeferredRenderOGL::draw (Drawable * node, const Scene * scene) {
@@ -122,8 +119,8 @@ void ms::DeferredRenderOGL::load () {
 		gFramebuffer->bind_depth_buffer(depthRenderbuffer);
 		
 		gFramebuffer->configure();
-		mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
-
+		framebuffer->use();
+		
 		//setup quad
 		mglGenVertexArrays(1, &quadVAO);
 		mglBindVertexArray(quadVAO);
@@ -173,16 +170,10 @@ void ms::DeferredRenderOGL::unload () {
 	}
 }
 
-void ms::DeferredRenderOGL::set_default_FBO (GLuint defFBO) {
-	defaultFBO = defFBO;
-}
-
 void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
-	mglBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
+	framebuffer->use();
+	framebuffer->clear_frame();
 	
-	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglViewport(0, 0, screenWidth, screenHeight);
-
 	lightingShader->use();
 	
 	lightingShader->set_rendering_mode(this->renderMode);
@@ -199,9 +190,7 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	mglDrawArrays(GL_TRIANGLES, 0, 6);
 	
-	gFramebuffer->use_for_read();
-	mglBindFramebuffer(GL_DRAW_FRAMEBUFFER, defaultFBO);
-	mglBlitFramebuffer(0, 0, frameBufferWidth, frameBufferHeight, 0, 0, screenWidth, screenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-	mglBindFramebuffer(GL_FRAMEBUFFER, 0);
+	framebuffer->copy_depth_from(*gFramebuffer);
+	
 }
 

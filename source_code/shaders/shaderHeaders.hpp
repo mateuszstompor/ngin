@@ -85,6 +85,16 @@ namespace ms {
 			
 		}
 		
+		namespace postprocess {
+			
+			const std::string hdrVshader =
+			#include "./postprocess/hdr/hdr_vshader.glsl"
+			
+			const std::string hdrFshader =
+			#include "./postprocess/hdr/hdr_fshader.glsl"
+			
+		}
+		
 		inline std::string get_shader_of_type(Type type);
 		
 	}
@@ -101,7 +111,9 @@ enum class ms::shader::Type {
 	forward_render_gouraud_vshader,
 	forward_render_gouraud_fshader,
 	forward_render_light_drawer_vshader,
-	forward_render_light_drawer_fshader
+	forward_render_light_drawer_fshader,
+	post_process_hdr_vshader,
+	post_process_hdr_fshader
 };
 
 
@@ -150,6 +162,12 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::forward_render_gouraud_fshader:
 			shaderContent += forwardrenderer::gouraudFragmentShader;
+			break;
+		case ms::shader::Type::post_process_hdr_vshader:
+			shaderContent += postprocess::hdrVshader;
+			break;
+		case ms::shader::Type::post_process_hdr_fshader:
+			shaderContent += postprocess::hdrFshader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

@@ -74,6 +74,13 @@
 		5673025320504AFC0066993D /* deferredLightingShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5673025120504AFC0066993D /* deferredLightingShaderOGL.cpp */; };
 		5673025420504AFC0066993D /* deferredLightingShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5673025120504AFC0066993D /* deferredLightingShaderOGL.cpp */; };
 		5673025520504AFC0066993D /* deferredLightingShaderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5673025220504AFC0066993D /* deferredLightingShaderOGL.hpp */; };
+		56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56736CAF206453F500CE636A /* postprocessDrawer.hpp */; };
+		56736CBC2064572400CE636A /* postprocessDrawerOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */; };
+		56736CBD2064572400CE636A /* postprocessDrawerOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */; };
+		56736CBE2064572400CE636A /* postprocessDrawerOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56736CBB2064572400CE636A /* postprocessDrawerOGL.hpp */; };
+		56736CC42064745D00CE636A /* hdr_vshader.glsl in Sources */ = {isa = PBXBuildFile; fileRef = 56736CC22064745D00CE636A /* hdr_vshader.glsl */; };
+		56736CC52064745D00CE636A /* hdr_vshader.glsl in Sources */ = {isa = PBXBuildFile; fileRef = 56736CC22064745D00CE636A /* hdr_vshader.glsl */; };
+		56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */ = {isa = PBXBuildFile; fileRef = 56736CC32064745D00CE636A /* hdr_fshader.glsl */; };
 		5674534120540C6F000E7EBD /* textureOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* textureOGL.cpp */; };
 		5674534220540C6F000E7EBD /* textureOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* textureOGL.cpp */; };
 		5674534320540C6F000E7EBD /* textureOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5674534020540C6F000E7EBD /* textureOGL.hpp */; };
@@ -201,6 +208,11 @@
 		56730250205046A80066993D /* deferredLightingShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredLightingShader.hpp; sourceTree = "<group>"; };
 		5673025120504AFC0066993D /* deferredLightingShaderOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredLightingShaderOGL.cpp; sourceTree = "<group>"; };
 		5673025220504AFC0066993D /* deferredLightingShaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredLightingShaderOGL.hpp; sourceTree = "<group>"; };
+		56736CAF206453F500CE636A /* postprocessDrawer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = postprocessDrawer.hpp; sourceTree = "<group>"; };
+		56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = postprocessDrawerOGL.cpp; sourceTree = "<group>"; };
+		56736CBB2064572400CE636A /* postprocessDrawerOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = postprocessDrawerOGL.hpp; sourceTree = "<group>"; };
+		56736CC22064745D00CE636A /* hdr_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = hdr_vshader.glsl; sourceTree = "<group>"; };
+		56736CC32064745D00CE636A /* hdr_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = hdr_fshader.glsl; sourceTree = "<group>"; };
 		5674533F20540C6F000E7EBD /* textureOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = textureOGL.cpp; sourceTree = "<group>"; };
 		5674534020540C6F000E7EBD /* textureOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = textureOGL.hpp; sourceTree = "<group>"; };
 		567453482054B391000E7EBD /* deferredRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredRender.cpp; sourceTree = "<group>"; };
@@ -342,6 +354,7 @@
 		5633FABA204C9EB3003449EE /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				56736CC02064744B00CE636A /* postprocess */,
 				56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */,
 				56F5447C205ECCCE00431095 /* materialDeclarations.glsl */,
 				56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */,
@@ -417,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				569A899C204FFF6200A9A292 /* reusableGeometry.hpp */,
+				56736CAF206453F500CE636A /* postprocessDrawer.hpp */,
 				5671680B204ADFAE0028EFAA /* ogl */,
 				5671680E204ADFAE0028EFAA /* shaders */,
 				56716811204ADFAE0028EFAA /* render.hpp */,
@@ -443,6 +457,8 @@
 				560627C920633B5F005085CD /* framebufferOGL.hpp */,
 				560627CD20633B69005085CD /* renderbufferOGL.cpp */,
 				560627CE20633B69005085CD /* renderbufferOGL.hpp */,
+				56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */,
+				56736CBB2064572400CE636A /* postprocessDrawerOGL.hpp */,
 			);
 			path = ogl;
 			sourceTree = "<group>";
@@ -528,6 +544,23 @@
 			path = ogl;
 			sourceTree = "<group>";
 		};
+		56736CC02064744B00CE636A /* postprocess */ = {
+			isa = PBXGroup;
+			children = (
+				56736CC12064745100CE636A /* hdr */,
+			);
+			path = postprocess;
+			sourceTree = "<group>";
+		};
+		56736CC12064745100CE636A /* hdr */ = {
+			isa = PBXGroup;
+			children = (
+				56736CC22064745D00CE636A /* hdr_vshader.glsl */,
+				56736CC32064745D00CE636A /* hdr_fshader.glsl */,
+			);
+			path = hdr;
+			sourceTree = "<group>";
+		};
 		5676F292205222B7002EAB31 /* ogl */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +610,7 @@
 			files = (
 				5629672A204F3CCD00685BAE /* deferredShaderOGL.hpp in Headers */,
 				5674534320540C6F000E7EBD /* textureOGL.hpp in Headers */,
+				56736CBE2064572400CE636A /* postprocessDrawerOGL.hpp in Headers */,
 				5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */,
 				5671684E204ADFAE0028EFAA /* scene.hpp in Headers */,
 				5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */,
@@ -594,6 +628,7 @@
 				5676D569204E16AA005E4AFA /* forwardShader.hpp in Headers */,
 				5633FA9B204B6FCB003449EE /* geometryOGL.hpp in Headers */,
 				5668DD93205FCAE900D0EEA6 /* pointLightOGL.hpp in Headers */,
+				56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */,
 				5668DD98205FD51E00D0EEA6 /* lightSourceRenderOGL.hpp in Headers */,
 				5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */,
 				560627D120633B69005085CD /* renderbufferOGL.hpp in Headers */,
@@ -603,6 +638,7 @@
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
 				560627CC20633B5F005085CD /* framebufferOGL.hpp in Headers */,
 				5676D56E204E1869005E4AFA /* forwardShaderOGL.hpp in Headers */,
+				56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */,
 				56DF0F452057233900713420 /* loaderOGL.hpp in Headers */,
 				56DF0F3D20571B6D00713420 /* loader.hpp in Headers */,
 				5633FAB2204C64D7003449EE /* drawableOGL.hpp in Headers */,
@@ -718,6 +754,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56736CC52064745D00CE636A /* hdr_vshader.glsl in Sources */,
 				560627D020633B69005085CD /* renderbufferOGL.cpp in Sources */,
 				5633FA9D204B6FCB003449EE /* geometryOGL.cpp in Sources */,
 				5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
@@ -742,6 +779,7 @@
 				5633FAB4204C64D7003449EE /* drawableOGL.cpp in Sources */,
 				5640FED6204AE77600512938 /* shaderOGL.cpp in Sources */,
 				566BCF2D204EAF6500E90246 /* scene.cpp in Sources */,
+				56736CBD2064572400CE636A /* postprocessDrawerOGL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +787,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56736CC42064745D00CE636A /* hdr_vshader.glsl in Sources */,
 				560627CF20633B69005085CD /* renderbufferOGL.cpp in Sources */,
 				5633FA9C204B6FCB003449EE /* geometryOGL.cpp in Sources */,
 				5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
@@ -773,6 +812,7 @@
 				5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5633FAB3204C64D7003449EE /* drawableOGL.cpp in Sources */,
 				566BCF2C204EAF6500E90246 /* scene.cpp in Sources */,
+				56736CBC2064572400CE636A /* postprocessDrawerOGL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

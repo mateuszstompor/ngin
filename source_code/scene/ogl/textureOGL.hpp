@@ -21,7 +21,7 @@ namespace ms {
 		
 	public:
 		
-						TextureOGL			(	GLenum 			target,
+		TextureOGL								(Texture::Type 	type,
 											 	std::string		name,
 											 	Format			format,
 											 	AssociatedType	associatedType,
@@ -45,7 +45,8 @@ namespace ms {
 		static 	GLenum	to_ogl				(MagFilter 			magFilter);
 		static 	GLenum	to_ogl				(Wrapping 			wrapping);
 		static	GLenum	to_ogl				(Format 			format);
-		static 	GLenum	to_ogl				(AssociatedType 	type) ;
+		static 	GLenum	to_ogl				(AssociatedType 	type);
+		static 	GLenum	to_ogl				(Texture::Type 		type);
 				GLenum	underlying_type		() const;
 		
 	protected:

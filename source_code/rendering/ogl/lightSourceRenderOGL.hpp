@@ -23,15 +23,12 @@ namespace ms {
 		
 		LightSourceRenderOGL			(std::string vertexShaderSource,
 										 std::string fragmentShaderSource,
-										 unsigned int screenWidth,
-										 unsigned int screenHeight,
-										 unsigned int frameBufferWidth,
-										 unsigned int frameBufferHeight);
+										 std::shared_ptr<Framebuffer> framebuffer);
 		
 		void	use     				() 												override;
 		void 	clear_frame				()												override;
 		void	draw  					(Drawable * node, const Scene * scene)			override;
-		void 	setup_uniforms			(const Scene * scene)							;
+		void 	setup_uniforms			(const Scene * scene);
 		void	load					() 												override;
 		bool	is_loaded				() 												override;
 		void 	unload					() 												override;

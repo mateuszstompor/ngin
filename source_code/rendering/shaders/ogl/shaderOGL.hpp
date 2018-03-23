@@ -48,16 +48,18 @@ namespace ms {
 		
 	public:
 		
-						ShaderOGL	(std::string vertexShader,
-									 std::string tessellationControlShader,
-									 std::string tessellationEvaluationShader,
-									 std::string geometryShader,
-									 std::string fragmentShader);
+								ShaderOGL	(std::string vertexShader,
+											 std::string tessellationControlShader,
+											 std::string tessellationEvaluationShader,
+											 std::string geometryShader,
+											 std::string fragmentShader);
 		
-		virtual void 	use			() override;
-		virtual void 	load		() override;
-		virtual void 	unload		() override;
-		virtual 		~ShaderOGL	() = default;
+		virtual void 			bind_texture(unsigned int index, Texture & texture) override;
+		virtual void 			use			() override;
+		virtual void 			load		() override;
+		virtual void 			unload		() override;
+		virtual 				~ShaderOGL	() = default;
+				GLuint 			get_gl_id	() const;
 		
 	protected:
 		

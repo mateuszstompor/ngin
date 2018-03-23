@@ -30,51 +30,79 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	std::string deferredRenderLightingFragmentShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_light_pass_fshader);
 	std::string lightSourceDrawerVertexShader = shader::get_shader_of_type(shader::Type::forward_render_light_drawer_vshader);
 	std::string lightSourceDrawerFragmentShader = shader::get_shader_of_type(shader::Type::forward_render_light_drawer_fshader);
+	std::string hdrVertexShader = shader::get_shader_of_type(shader::Type::post_process_hdr_vshader);
+	std::string hdrFragmentShader = shader::get_shader_of_type(shader::Type::post_process_hdr_fshader);
+	
+	
+	std::shared_ptr<FramebufferOGL> windowFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(0,0,screenWidth, screenHeight));
+	windowFramebuffer->load();
+	windowFramebuffer->framebuffer = 0;
+	
+	std::shared_ptr<FramebufferOGL> tempBuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
+																									1,
+																									frameBufferWidth,
+																									frameBufferHeight));
+	
+	
+	std::shared_ptr<Renderbuffer> renderbuf = std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
+																								Texture::AssociatedType::UNSIGNED_BYTE,
+																								0,
+																								frameBufferWidth,
+																								frameBufferHeight));
+	tempBuffer->bind_depth_buffer(renderbuf);
+	std::shared_ptr<Texture> color = std::shared_ptr<Texture>(new TextureOGL(	 Texture::Type::tex_2d, "",
+																				 Texture::Format::rgba_8_8_8_8,
+																				 Texture::AssociatedType::UNSIGNED_BYTE,
+																				 Texture::MinFilter::linear,
+																				 Texture::MagFilter::linear,
+																				 Texture::Wrapping::clamp_to_edge,
+																				 Texture::Wrapping::clamp_to_edge,
+																				 0,
+																				 frameBufferWidth,
+																			 	 frameBufferHeight));
+	tempBuffer->bind_depth_buffer(renderbuf);
+	tempBuffer->bind_color_buffer(0, color);
+	
+	tempBuffer->configure();
 	
 	unsigned int AOL = 200;
 	
 	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourceRenderOGL(lightSourceDrawerVertexShader,
 																					   lightSourceDrawerFragmentShader,
-																					   screenWidth,
-																					   screenHeight,
-																					   frameBufferWidth,
-																					   frameBufferHeight));
-	
+																					   tempBuffer));
+
     phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(AOL,
 																			   forwardRenderVertexShaderSource,
 																			   forwardRenderFragmentShaderSource,
-																			   screenWidth,
-																			   screenHeight,
-																			   frameBufferWidth,
-																			   frameBufferHeight));
+																			   tempBuffer));
 
 	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(AOL,
 																				 gouraudVertexShaderSource,
 																				 gouraudRenderFragmentShaderSource,
-																				 screenWidth,
-																				 screenHeight,
-																				 frameBufferWidth,
-																				 frameBufferHeight));
-	
-	auto defPtr = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(  AOL,
+																				 tempBuffer));
+
+	deferredRenderer = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL(  AOL,
 																			  deferredRenderVertexShaderSource,
 																			  deferredRenderFragmentShaderSource,
 																			  deferredRenderLightingVertexShaderSource,
 																			  deferredRenderLightingFragmentShaderSource,
-																			  screenWidth,
-																			  screenHeight,
-																			  frameBufferWidth,
-																			  frameBufferHeight));
-	defPtr->set_default_FBO(defaultFBO);
-	deferredRenderer = std::move(defPtr);
+																			  tempBuffer));
+	
+	std::shared_ptr<Framebuffer> framebuffer = std::shared_ptr<Framebuffer>(new FramebufferOGL(1, 0, frameBufferWidth, frameBufferHeight));
+
+	auto hdrprogram = std::shared_ptr<Shader>(new ShaderOGL(hdrVertexShader, "", "", "", hdrFragmentShader));
+	
+	hdrRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(tempBuffer->get_colors()[0], windowFramebuffer));
+	hdrRenderer->shaderProgram = hdrprogram;
 	
 }
 
 void ms::NGinOGL::load () {
-//	phongForwardRenderer->load();
-//	gouraudForwardRenderer->load();
+	phongForwardRenderer->load();
+	gouraudForwardRenderer->load();
 	deferredRenderer->load();
 	lightSourceRenderer->load();
+	hdrRenderer->load();
 }
 
 std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,

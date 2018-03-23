@@ -27,10 +27,7 @@ namespace ms {
 		ForwardRenderOGL			(unsigned int 	maximalAmountOfLights,
 									 std::string vertexShaderSource,
 									 std::string fragmentShaderSource,
-									 unsigned int screenWidth,
-									 unsigned int screenHeight,
-									 unsigned int frameBufferWidth,
-									 unsigned int frameBufferHeight);
+									 std::shared_ptr<Framebuffer> framebuffer);
 		
 		void	use     			() 												override;
 		void 	clear_frame			()												override;

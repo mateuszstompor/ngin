@@ -13,8 +13,8 @@ namespace ms {
 	typedef unsigned int ui;
 }
 
-ms::LightSourceRenderOGL::LightSourceRenderOGL (std::string vSS, std::string fSS, ui sW, ui sH, ui fbW, ui fbH) :
-ms::LightSourcesRender(sW, sH, fbW, fbH, vSS, fSS) {
+ms::LightSourceRenderOGL::LightSourceRenderOGL (std::string vSS, std::string fSS, std::shared_ptr<Framebuffer> framebuffer) :
+ms::LightSourcesRender(framebuffer, vSS, fSS) {
 	shader = std::unique_ptr<LightSourceDrawerShader>(new LightSourceDrawerShaderOGL(vSS, fSS));
 }
 
@@ -25,14 +25,14 @@ void ms::LightSourceRenderOGL::use () {
 	
 	shader->use();
 	
-	mglViewport(0, 0, screenWidth, screenHeight);
+	framebuffer->use();
 	mglEnable(GL_DEPTH_TEST);
 	mglDepthFunc(GL_LEQUAL);
 }
 
 void ms::LightSourceRenderOGL::clear_frame () {
-	mglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mglClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	framebuffer->use();
+	framebuffer->clear_frame();
 }
 
 void ms::LightSourceRenderOGL::draw (Drawable * node, const Scene * scene) {
@@ -52,7 +52,6 @@ void ms::LightSourceRenderOGL::draw (Drawable * node, const Scene * scene) {
 	
 	node->geometry->use_indicies();
 	mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
-	
 	
 }
 

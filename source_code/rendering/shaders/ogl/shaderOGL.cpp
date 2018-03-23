@@ -115,6 +115,12 @@ void ms::ShaderOGL::compile_program() {
 	#endif
 }
 
+void ms::ShaderOGL::bind_texture(unsigned int index, Texture & texture) {
+	this->use();
+	glActiveTexture(GL_TEXTURE0 + index);
+	texture.use();
+}
+
 void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {
 	const char * sourcePtr = source.c_str();
 	mglShaderSource(shader, 1, &sourcePtr, nullptr);
@@ -132,4 +138,8 @@ int ms::ShaderOGL::get_shader_status(GLuint shader, GLenum statusType) {
 		assert(false);
 	}
 	return code;
+}
+
+GLuint ms::ShaderOGL::get_gl_id () const {
+	return program;
 }

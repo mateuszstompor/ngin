@@ -17,8 +17,6 @@ in 		vec3								worldPosition;
 in 		vec3								normalVector;
 in 		vec2 								texCoord;
 
-out 	vec4								FragColor;
-
 void main(){
 	
 	if(hasMaterial == 1) {

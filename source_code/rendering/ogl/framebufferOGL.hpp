@@ -35,13 +35,16 @@ namespace ms {
 		virtual void 	bind_color_buffer	(int index, std::shared_ptr<Texture> texture) override;
 		virtual void 	bind_color_buffer	(int index, std::shared_ptr<Renderbuffer> renderbuffer) override;
 		virtual void 	bind_depth_buffer	(std::shared_ptr<Renderbuffer> renderbuffer) override;
+		virtual void 	copy_depth_from		(Framebuffer & frame) override;
 		virtual bool	is_complete			() const override;
 		virtual void    load  				() override;
 		virtual void 	unload 				() override;
-		
+		virtual void	clear_color			() override;
+		virtual void	clear_depth			() override;
+		virtual void	clear_frame			() override;
 				GLuint	get_underlying_id	();
-		
-	protected:
+//	TODO make it protected
+//	protected:
 		
 		GLuint			framebuffer;
 		

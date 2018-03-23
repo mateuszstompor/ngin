@@ -10,6 +10,7 @@
 #define shader_hpp
 
 #include "../../resources/resource.hpp"
+#include "../../scene/texture.hpp"
 
 namespace ms {
     
@@ -17,8 +18,9 @@ namespace ms {
 		
 	public:
 		
-		virtual void 	use 	() = 0;
-		virtual 		~Shader	() = default;
+		virtual void 			bind_texture	(unsigned int index, Texture & texture) = 0;
+		virtual void 			use 			() = 0;
+		virtual 				~Shader			() = default;
     };
     
 }

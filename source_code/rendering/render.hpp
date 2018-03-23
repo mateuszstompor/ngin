@@ -13,6 +13,7 @@
 
 #include "../resources/resource.hpp"
 #include "../scene/scene.hpp"
+#include "framebuffer.hpp"
 
 namespace ms {
 	
@@ -20,27 +21,20 @@ namespace ms {
 		
     public:
 		
-		inline			Render(unsigned int screenWidth, unsigned int screenHeight,
-							   unsigned int frameBufferWidth, unsigned int frameBufferHeight);
-		
+		inline			Render			(std::shared_ptr<Framebuffer> framebuffer);
         virtual void	use		     	() 												= 0;
 		virtual void 	clear_frame		()												= 0;
 		virtual void	draw  			(Drawable * node, const Scene * scene)			= 0;
-		
 		virtual			~Render 		() = default;
 		
 	protected:
 		
-		unsigned int screenWidth;
-		unsigned int screenHeight;
-		unsigned int frameBufferWidth;
-		unsigned int frameBufferHeight;
+		std::shared_ptr<Framebuffer> framebuffer;
 		
     };
     
 }
 
-ms::Render::Render(unsigned int sW, unsigned int sH, unsigned int fbW, unsigned int fbH) :
-			screenHeight(sH), screenWidth(sW), frameBufferWidth(fbW), frameBufferHeight(fbH) { }
+ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer) : framebuffer(framebuffer) { }
 
 #endif /* render_h */

@@ -8,7 +8,7 @@
 
 #include "textureOGL.hpp"
 
-ms::TextureOGL::TextureOGL	(	GLenum 			tar,
+ms::TextureOGL::TextureOGL	(	Texture::Type 	textype,
 							 	std::string		name,
 							 	Format			internalF,
 							 	AssociatedType	typ,
@@ -18,7 +18,8 @@ ms::TextureOGL::TextureOGL	(	GLenum 			tar,
 							 	Wrapping 		tWrapping,
 							 	unsigned int 	mipMapLevel,
 							 	unsigned int 	wid,
-							 	unsigned int 	hei) : 	ms::Texture(name,
+							 	unsigned int 	hei) : 	ms::Texture(textype,
+																	name,
 																	internalF,
 																	typ,
 																	minFilter,
@@ -30,7 +31,7 @@ ms::TextureOGL::TextureOGL	(	GLenum 			tar,
 																	hei) {
 	
 	
-	target = tar;
+	target = to_ogl(textype);
 	type = TextureOGL::to_ogl(typ);
 	colorFormat = TextureOGL::to_ogl(internalF);
 	internalFormat = underlying_type();
@@ -127,6 +128,23 @@ GLenum ms::TextureOGL::to_ogl (Wrapping wrapping) {
 			assert(false);
 			break;
 	}
+}
+
+GLenum	ms::TextureOGL::to_ogl (Texture::Type type) {
+	
+	switch (type) {
+		case ms::Texture::Type::tex_2d:
+			return GL_TEXTURE_2D;
+		case ms::Texture::Type::tex_cube_map:
+			//TODO check if it is correct
+			assert(false);
+			return GL_TEXTURE_CUBE_MAP;
+		default:
+			break;
+	}
+	
+	std::cerr << "Texture type not supported" << std::endl;
+	assert(false);
 }
 
 const GLuint ms::TextureOGL::get_underlying_id () const {

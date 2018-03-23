@@ -31,6 +31,27 @@ void ms::FramebufferOGL::load () {
 	}
 }
 
+void ms::FramebufferOGL::clear_frame () {
+	glClearColor(clearingColor.x(), clearingColor.y(), clearingColor.z(), clearingColor.w());
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	
+}
+
+void ms::FramebufferOGL::copy_depth_from (Framebuffer & frame) {
+	frame.use_for_read();
+	(*this).use_for_write();
+	mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+}
+
+void ms::FramebufferOGL::clear_color () {
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void ms::FramebufferOGL::clear_depth () {
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
 void ms::FramebufferOGL::use () {
 	if(!is_loaded()) {
 		load();
@@ -96,6 +117,10 @@ void ms::FramebufferOGL::configure () {
 	if(!is_complete()) {
 		std::cerr << "FATAL ERROR" << std::endl;
 		assert(false);
+	} else {
+		#ifdef DEBUG
+			std::cout << "FRAMEBUFFER COMPLETE" << std::endl;
+		#endif
 	}
 
 	delete [] attachments;

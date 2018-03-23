@@ -19,6 +19,7 @@
 #include "../resources/resource.hpp"
 #include "../resources/resourceCoordinator.hpp"
 #include "../utils/loader.hpp"
+#include "../rendering/postprocessDrawer.hpp"
 
 namespace ms {
     
@@ -77,6 +78,7 @@ namespace ms {
 		std::unique_ptr<ForwardRender>          gouraudForwardRenderer;
 		std::unique_ptr<ForwardRender>          phongForwardRenderer;
 		std::unique_ptr<LightSourcesRender>     lightSourceRenderer;
+		std::unique_ptr<PostprocessDrawer>     	hdrRenderer;
 		
 		unsigned int 							screenWidth;
 		unsigned int 							screenHeight;

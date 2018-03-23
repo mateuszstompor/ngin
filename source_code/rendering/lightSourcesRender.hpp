@@ -18,12 +18,9 @@ namespace ms {
 		
 	public:
 		
-		inline 	LightSourcesRender(	unsigned int 	screenWidth,
-									unsigned int 	screenHeight,
-									unsigned int 	frameBufferWidth,
-									unsigned int 	frameBufferHeight,
-									std::string 	vertexShaderSource,
-									std::string 	fragmentShaderSource
+		inline 	LightSourcesRender(std::shared_ptr<Framebuffer> framebuffer,
+								   std::string 	vertexShaderSource,
+								   std::string 	fragmentShaderSource
 								   );
 		
 		virtual ~LightSourcesRender() = default;
@@ -32,20 +29,17 @@ namespace ms {
 		
 		std::string 								vertexShaderSource;
 		std::string 								fragmentShaderSource;
-		
 		std::unique_ptr<LightSourceDrawerShader>	shader;
 		
 	};
 	
 }
 
-ms::LightSourcesRender::LightSourcesRender(unsigned int sW,
-								 unsigned int sH,
-								 unsigned int fbW,
-								 unsigned int fbH,
+ms::LightSourcesRender::LightSourcesRender(
+								 std::shared_ptr<Framebuffer> framebuffer,
 								 std::string vertexShSource,
 								 std::string fragmentShSource
-								 ) : 	Render(sW, sH, fbW, fbH),
+								 ) : 	Render(framebuffer),
 										vertexShaderSource(vertexShSource),
 										fragmentShaderSource(fragmentShSource),
 										shader(nullptr) { }

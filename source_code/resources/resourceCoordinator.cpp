@@ -66,7 +66,7 @@ void ms::ResourceCoordinator::destroy_shared_instance () {
 
 void ms::ResourceCoordinator::unload_all_resources () {
 	std::set<std::string> tmp(loadedResources.begin(), loadedResources.end());
-	std::for_each(tmp.begin(), tmp.end(), [] (std::string res) { utils::ptr_from_string<Resource>(res)->unload(); });
+//	std::for_each(tmp.begin(), tmp.end(), [] (std::string res) { utils::ptr_from_string<Resource>(res)->unload(); });
 }
 
 std::shared_ptr<ms::ResourceCoordinator> ms::ResourceCoordinator::get_instance () {

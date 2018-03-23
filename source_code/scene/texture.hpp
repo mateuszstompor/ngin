@@ -33,11 +33,13 @@ namespace ms {
 
 		enum class MinFilter;
 		enum class MagFilter;
+		enum class Type;
 		enum class Wrapping;
 		enum class Format;
 		enum class AssociatedType;
 
-		 inline 		Texture				(std::string			name,
+		 inline 		Texture				(Type					type,
+											 std::string			name,
 											 Format					format,
 											 AssociatedType			associatedType,
 											 MinFilter 				minFilter,
@@ -59,6 +61,7 @@ namespace ms {
 	public:
 
 		std::string								name;
+		Type									type;
 		Format									format;
 		AssociatedType							associatedType;
 		MinFilter 								minFilter;
@@ -95,6 +98,11 @@ enum class ms::Texture::Wrapping {
 	clamp_to_border
 };
 
+enum class ms::Texture::Type {
+	tex_2d,
+	tex_cube_map
+};
+
 enum class ms::Texture::Format {
 	rgb_16_16_16,
 	rgb_8_8_8,
@@ -110,8 +118,8 @@ enum class ms::Texture::AssociatedType {
 	UNSIGNED_BYTE
 };
 
-ms::Texture::Texture (std::string nam,  Format f, AssociatedType aT,MinFilter minF, MagFilter magF,
-					  Wrapping sWrap, Wrapping tWrap, unsigned int mipMapL, unsigned int wid, unsigned int hei) :
+ms::Texture::Texture (Type t, std::string nam, Format f, AssociatedType aT,MinFilter minF, MagFilter magF,
+					  Wrapping sWrap, Wrapping tWrap, unsigned int mipMapL, unsigned int wid, unsigned int hei) :							type(t),
 																																			minFilter(minF),
 																																			magFilter(magF),
 																																			sWrapping(sWrap),

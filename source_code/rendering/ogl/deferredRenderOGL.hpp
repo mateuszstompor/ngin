@@ -30,10 +30,7 @@ namespace ms {
 												 std::string gBufferFragmentShaderSource,
 												 std::string lightingVertexShaderSource,
 												 std::string lightingFragmentShaderSource,
-												 unsigned int screenWidth,
-												 unsigned int screenHeight,
-												 unsigned int frameBufferWidth,
-												 unsigned int frameBufferHeight);
+												 std::shared_ptr<Framebuffer> framebuffer);
 		
 			void	use     					() 												override;
 			void 	clear_frame					()												override;
@@ -41,14 +38,11 @@ namespace ms {
 			void	load						() 												override;
 			bool	is_loaded					() 												override;
 			void 	unload						() 												override;
-			void 	set_default_FBO				(GLuint defFBO);
 			void 	perform_light_pass			(const Scene * scene) 							override;
 			virtual	~DeferredRenderOGL 			() = default;
 		
 		protected:
-		
-			GLuint						defaultFBO;
-		
+				
 			GLuint						quadVAO;
 			GLuint						quadVBO;
 		
