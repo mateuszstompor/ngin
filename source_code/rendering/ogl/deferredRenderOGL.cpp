@@ -25,7 +25,7 @@ ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	maxAOLights,
 										  std::string 	lFS,
 										  std::shared_ptr<Framebuffer> framebuffer) :
 
-ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS), quadVAO(0), quadVBO(0) {
+ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS) {
 	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
 	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(maxAOLights, lVS, lFS));
 	
