@@ -29,7 +29,7 @@
 //#define LD_MAT_SUMMARY
 
 //ProxyOGL
-//#define POGL_UNEXISING_UNIFORMS
+#define POGL_UNEXISING_UNIFORMS
 
 //NGin
 #define NGIN_COUNT_FPS

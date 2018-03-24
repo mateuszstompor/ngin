@@ -20,12 +20,13 @@ namespace ms {
 		
 		friend class Loader;
 		
-					DrawableOGL	();
-		void 		use				() override;
-		void		load			() override;
-		void 		unload			() override;
-		std::string get_class 		() override;
-		virtual		~DrawableOGL	() = default;
+						DrawableOGL		();
+		void 			use				() override;
+		void			load			() override;
+		void 			unload			() override;
+		std::string 	get_class 		() override;
+		void			draw			() override;
+		virtual			~DrawableOGL	() = default;
 		
 	protected:
 		

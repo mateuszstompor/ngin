@@ -19,13 +19,15 @@ namespace ms {
 	
 	class Geometry : public Resource {
 	
+		friend class Drawable;
+		friend class DrawableOGL;
+		
 	public:
 		
 		friend class Loader;
 		
 				virtual void 			use_normals 		() = 0;
 				virtual void 			use_vertices 		() = 0;
-				virtual void 			use_indicies 		() = 0;
 				virtual void 			use_texture_coord 	() = 0;
 		
 						void			set_material		(std::string name);
@@ -41,6 +43,8 @@ namespace ms {
 				virtual					~Geometry			() = default;
 		
 	protected:
+
+				virtual void 			use_indicies 		() = 0;
 				
 		std::vector <Vertex> 			vertices;
 		std::vector <unsigned int> 		indices;

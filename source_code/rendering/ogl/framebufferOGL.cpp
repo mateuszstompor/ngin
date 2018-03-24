@@ -12,7 +12,10 @@
 ms::FramebufferOGL::FramebufferOGL(int colorAttachmentsAmount,
 								   int renderbufferAttachmentsAmount,
 								   int width,
-								   int height) : ms::Framebuffer(colorAttachmentsAmount, renderbufferAttachmentsAmount, width, height), framebuffer(0), is_default_framebuffer(false) {
+								   int height) : ms::Framebuffer(colorAttachmentsAmount,
+																 renderbufferAttachmentsAmount,
+																 width,
+																 height), framebuffer(0), is_default_framebuffer(false) {
 	
 }
 
@@ -58,6 +61,14 @@ void ms::FramebufferOGL::use () {
 	if(!is_loaded()) {
 		load();
 	}
+	
+	if(isDepthTestEnabled) {
+		mglEnable(GL_DEPTH_TEST);
+		mglDepthFunc(GL_LEQUAL);
+	} else {
+		mglDisable(GL_DEPTH_TEST);
+	}
+	
 	mglViewport(0, 0, width, height);
 	mglBindFramebuffer(GL_FRAMEBUFFER, this->framebuffer);
 }

@@ -175,12 +175,14 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += postprocess::hdrVshader;
 			break;
 		case ms::shader::Type::post_process_hdr_fshader:
+			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::hdrFshader;
 			break;
 		case ms::shader::Type::post_process_bloom_vshader:
 			shaderContent += postprocess::bloomVshader;
 			break;
 		case ms::shader::Type::post_process_bloom_fshader:
+			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::bloomFshader;
 			break;
 		default:

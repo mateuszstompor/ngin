@@ -191,6 +191,11 @@ void _mglTexParameteri (GLenum target, GLenum pname, GLint param) {
 	ms::utils::check_gl_error();
 }
 
+void _mglDisable (GLenum cap) {
+	glDisable(cap);
+	ms::utils::check_gl_error();
+}
+
 void _mglFramebufferTexture2D (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
 	glFramebufferTexture2D(target, attachment, textarget, texture, level);
 	ms::utils::check_gl_error();

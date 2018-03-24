@@ -12,6 +12,10 @@ R"(
 #define SPOT_LIGHT_INNER_CUTOFF		0.50f
 #define SPOT_LIGHT_OUTER_CUTOFF		0.91f
 
+#define RED_VALUE_WEIGHT			0.2126
+#define GREEN_VALUE_WEIGHT			0.7152
+#define BLUE_VALUE_WEIGHT			0.0722
+
 struct DirectionalLight {
 	vec3    	direction;
 	vec3    	color;
@@ -156,6 +160,10 @@ vec3 count_light_influence(SpotLight 	light,
 
 	return intensity * color;
 
+}
+
+float get_luminance(vec3 color) {
+	return dot(color, vec3(RED_VALUE_WEIGHT, GREEN_VALUE_WEIGHT, BLUE_VALUE_WEIGHT));
 }
 
 )";

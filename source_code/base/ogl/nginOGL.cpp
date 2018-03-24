@@ -1,4 +1,4 @@
-//
+
 //  nginOGL.cpp
 //  ngin
 //
@@ -49,7 +49,7 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																									frameBufferWidth,
 																									frameBufferHeight));
 	
-	std::shared_ptr<FramebufferOGL> tempBuffer2 = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
+	std::shared_ptr<FramebufferOGL> tempBuffer2 = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(2,
 																									1,
 																									frameBufferWidth,
 																									frameBufferHeight));
@@ -90,6 +90,17 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																			  frameBufferWidth,
 																			  frameBufferHeight));
 	
+	std::shared_ptr<Texture> color22 = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d, "",
+																			  Texture::Format::rgb_16_16_16,
+																			  Texture::AssociatedType::FLOAT,
+																			  Texture::MinFilter::nearest,
+																			  Texture::MagFilter::nearest,
+																			  Texture::Wrapping::clamp_to_edge,
+																			  Texture::Wrapping::clamp_to_edge,
+																			  0,
+																			  frameBufferWidth,
+																			  frameBufferHeight));
+	
 	
 	tempBuffer1->bind_depth_buffer(renderbuf1);
 	tempBuffer1->bind_color_buffer(0, color1);
@@ -97,23 +108,24 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	
 	tempBuffer2->bind_depth_buffer(renderbuf2);
 	tempBuffer2->bind_color_buffer(0, color2);
+	tempBuffer2->bind_color_buffer(1, color22);
 	tempBuffer2->configure();
 	
 	unsigned int AOL = 200;
 	
-	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourceRenderOGL(lightSourceDrawerVertexShader,
-																					   lightSourceDrawerFragmentShader,
-																					   tempBuffer1));
 
-    phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(AOL,
-																			   forwardRenderVertexShaderSource,
-																			   forwardRenderFragmentShaderSource,
-																			   tempBuffer1));
 
-	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRenderOGL(AOL,
-																				 gouraudVertexShaderSource,
-																				 gouraudRenderFragmentShaderSource,
-																				 tempBuffer1));
+	std::unique_ptr<ForwardShader> phongforwardShader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(AOL, forwardRenderVertexShaderSource, forwardRenderFragmentShaderSource));
+	std::unique_ptr<ForwardShader> gouraudforwardShader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(AOL, gouraudVertexShaderSource, gouraudRenderFragmentShaderSource));
+	std::unique_ptr<LightSourceDrawerShader> lightSourceforwardShader = std::unique_ptr<LightSourceDrawerShader>(new LightSourceDrawerShaderOGL(lightSourceDrawerVertexShader, lightSourceDrawerFragmentShader));
+	std::unique_ptr<DeferredShader> deferredShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource));
+	
+	
+	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender(tempBuffer1, std::move(lightSourceforwardShader)));
+	
+	phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL, tempBuffer1, std::move(phongforwardShader)));
+	
+	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL, tempBuffer1, std::move(gouraudforwardShader)));
 
 	deferredRenderer = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL( AOL,
 																				  deferredRenderVertexShaderSource,

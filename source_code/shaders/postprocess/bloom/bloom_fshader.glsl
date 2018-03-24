@@ -4,10 +4,11 @@ in 		vec2		texCoords;
 
 out 	vec4 		out0;
 
-uniform sampler2D 	passedtexture;
+uniform sampler2D 	in0;
+uniform sampler2D 	in1;
 
 void main() {
-	out0 = texture(passedtexture, texCoords);
+	out0 = texture(in0, texCoords) + texture(in1, texCoords);
 }
 
 )";

@@ -18,32 +18,19 @@ ms::PostprocessDrawerOGL::PostprocessDrawerOGL(std::vector<std::shared_ptr<Textu
 
 void ms::PostprocessDrawerOGL::draw_quad() {
 	framebuffer->use();
-	shaderProgram->use();
+	shader->use();
 	
 	mglBindVertexArray(quadVAO);
 	
 	{
-		ShaderOGL* shader = dynamic_cast<ShaderOGL*>(shaderProgram.get());
+		ShaderOGL* shad = dynamic_cast<ShaderOGL*>(shader.get());
 		for(int i = 0; i<inputTextures.size(); ++i) {
-			shader->set_uniform("in" + std::to_string(i), i);
-			shaderProgram->bind_texture(0, *(inputTextures[i]));
+			shad->set_uniform("in" + std::to_string(i), i);
+			shader->bind_texture(i, *(inputTextures[i]));
 		}
 	}
 
 	mglDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
-void ms::PostprocessDrawerOGL::use () {
-	if(!is_loaded()) {
-		load();
-	}
-	
-	shaderProgram->use();
-}
-
-void ms::PostprocessDrawerOGL::clear_frame () {
-	framebuffer->use();
-	framebuffer->clear_frame();
 }
 
 void ms::PostprocessDrawerOGL::draw (Drawable * node, const Scene * scene) {
@@ -53,9 +40,9 @@ void ms::PostprocessDrawerOGL::draw (Drawable * node, const Scene * scene) {
 void ms::PostprocessDrawerOGL::load () {
 	if(!is_loaded()) {
 		
-		shaderProgram->load();
-		shaderProgram->use();
-		GLuint a = glGetUniformLocation(dynamic_cast<ShaderOGL*>(shaderProgram.get())->get_gl_id(), "passedtexture");
+		shader->load();
+		shader->use();
+		GLuint a = glGetUniformLocation(dynamic_cast<ShaderOGL*>(shader.get())->get_gl_id(), "passedtexture");
 		glUniform1i(a, 0);
 		
 		
@@ -88,7 +75,6 @@ void ms::PostprocessDrawerOGL::load () {
 std::string ms::PostprocessDrawerOGL::get_class () {
 	return "ms::PostprocessDrawerOGL";
 }
-
 
 void ms::PostprocessDrawerOGL::unload () {
 	if(is_loaded()) {

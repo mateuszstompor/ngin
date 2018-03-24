@@ -19,21 +19,22 @@
 namespace ms {
 	
 	class Drawable : public virtual Resource {
-	
+		
 	public:
 		
 		friend class Loader;
 		
 	inline								Drawable	();
-			virtual 	void 			use			() = 0;
 	inline	virtual 	std::string 	get_class	() = 0;
-
+			virtual		void			draw		() = 0;
 			virtual 					~Drawable	() = default;
 		
 		PositionedObject				modelTransformation;
-		
-		// Shared resources
 		std::shared_ptr<Geometry> 		geometry;
+
+	protected:
+		
+			virtual 	void 			use			() = 0;
 		
 	};
 	

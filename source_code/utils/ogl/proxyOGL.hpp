@@ -11,6 +11,7 @@
 
 #include <cassert>
 
+#include "../../config.hpp"
 #include "utilsOGL.hpp"
 
 #ifdef __WIN32__

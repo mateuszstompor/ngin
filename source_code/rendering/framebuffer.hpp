@@ -17,6 +17,14 @@
 #include "../scene/texture.hpp"
 #include "renderbuffer.hpp"
 
+
+				//											//
+				//											//
+				// 	DEPTH TESTING IS TURNED ON BY DEFAULT	//
+				//											//
+				//											//
+
+
 namespace ms {
 	
 	class Framebuffer : public Resource {
@@ -28,10 +36,11 @@ namespace ms {
 		
 	public:
 		
-		inline 						Framebuffer			(int colorAttachmentsAmount,
-														int renderbufferAttachmentsAmount,
-														int width,
-														int height);
+		inline 						Framebuffer			(int 	colorAttachmentsAmount,
+														int 	renderbufferAttachmentsAmount,
+														int 	width,
+														int 	height);
+		
 									Framebuffer			(const Framebuffer &) = delete;
 		Framebuffer & 				operator = 			(const Framebuffer &) = delete;
 		
@@ -40,7 +49,11 @@ namespace ms {
 		virtual void 				bind_color_buffer	(int index,
 														 std::shared_ptr<Renderbuffer> renderbuffer) = 0;
 		virtual void 				bind_depth_buffer	(std::shared_ptr<Renderbuffer> renderbuffer) = 0;
-		// Checks completeness and merge all things together
+		
+					//														//
+					// 	Checks completeness and merge all things together	//
+					//														//
+		
 inline  virtual void				configure			();
 		virtual void				use					() = 0;
 		virtual void				use_for_read		() = 0;
@@ -52,6 +65,7 @@ inline  virtual bool				is_configured		() const;
 		virtual void				clear_color			() = 0;
 		virtual void				clear_depth			() = 0;
 		virtual void				clear_frame			() = 0;
+inline	virtual void				set_depth_test		(bool enabled);
 		inline	void				set_clear_color		(math::vec4 color);
 		inline 	int					get_height			() const;
 		inline 	int					get_width			() const;
@@ -63,6 +77,7 @@ inline  virtual bool				is_configured		() const;
 		
 		int 										width;
 		int 										height;
+		bool										isDepthTestEnabled;
 		
 		math::vec4									clearingColor;
 		int 										colorAttachmentsAmount;
@@ -85,7 +100,9 @@ ms::Framebuffer::Framebuffer(int colorAttachmentsAmount,
 							 int height) : 	width(width),
 											height(height),
 											colorAttachmentsAmount(colorAttachmentsAmount),
-											renderbufferAttachmentsAmount(renderbufferAttachmentsAmount) {
+											renderbufferAttachmentsAmount(renderbufferAttachmentsAmount),
+											isDepthTestEnabled(true) {
+												
 	colorAttachments.resize(colorAttachmentsAmount);
 	renderbufferAttachments.resize(renderbufferAttachmentsAmount);
 }
@@ -116,6 +133,10 @@ int ms::Framebuffer::get_width () const {
 
 const ms::Framebuffer::colors_att & ms::Framebuffer::get_colors() {
 	return colorAttachments;
+}
+
+void ms::Framebuffer::set_depth_test (bool enabled) {
+	isDepthTestEnabled = enabled;
 }
 
 #endif /* framebuffer_hpp */

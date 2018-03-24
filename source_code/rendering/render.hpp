@@ -14,32 +14,34 @@
 #include "../resources/resource.hpp"
 #include "../scene/scene.hpp"
 #include "framebuffer.hpp"
+#include "shaders/shader.hpp"
 
 namespace ms {
 	
     class Render : public Resource {
 		
     public:
+		Render			(std::shared_ptr<Framebuffer> 	framebuffer) : framebuffer(framebuffer) {}
+								Render			(std::shared_ptr<Framebuffer> 	framebuffer,
+												 std::unique_ptr<Shader> 		shader);
 		
-		inline							Render			(std::shared_ptr<Framebuffer> framebuffer);
-        		virtual void			use		     	() 												= 0;
-				virtual void 			clear_frame		()												= 0;
-		inline	virtual std::string 	get_class		();
-				virtual void			draw  			(Drawable * node, const Scene * scene)			= 0;
-				virtual					~Render 		() = default;
+		virtual void			use		     	();
+		virtual	void			load			() override;
+		virtual	void 			unload			() override;
+		virtual void 			clear_frame		();
+		virtual std::string 	get_class		() override;
+		virtual void			draw  			(Drawable * node, const Scene * scene) = 0;
+		virtual					~Render 		() = default;
 		
 	protected:
 		
-		std::shared_ptr<Framebuffer> framebuffer;
-		
+		std::shared_ptr<Framebuffer> 	framebuffer;
+		std::unique_ptr<Shader>			shader;
+
     };
     
 }
 
-ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer) : framebuffer(framebuffer) { }
 
-std::string ms::Render::get_class () {
-	return "ms::Render";
-}
 
 #endif /* render_h */

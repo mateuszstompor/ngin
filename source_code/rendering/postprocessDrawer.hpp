@@ -31,7 +31,6 @@ namespace ms {
 
 	protected:
 	
-		std::unique_ptr<Shader> 				shaderProgram;
 		std::vector<std::shared_ptr<Texture>> 	inputTextures;
 		
 	};
@@ -40,9 +39,8 @@ namespace ms {
 
 ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::shared_ptr<Texture>> 	input,
 										 std::shared_ptr<Framebuffer> 			framebuffer,
-										 std::unique_ptr<Shader> 				shaderProgram) : 	Render(framebuffer),
-																									inputTextures(input),
-																									shaderProgram(std::move(shaderProgram)) {}
+										 std::unique_ptr<Shader> 				shaderProgram) : 	Render(framebuffer, std::move(shaderProgram)),
+																									inputTextures(input) {}
 
 std::string ms::PostprocessDrawer::get_class () {
 	return "ms::PostprocessDrawer";

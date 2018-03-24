@@ -18,29 +18,19 @@ namespace ms {
 		
 	public:
 		
-		inline 	LightSourcesRender(std::shared_ptr<Framebuffer> framebuffer,
-								   std::string 	vertexShaderSource,
-								   std::string 	fragmentShaderSource);
+		 		LightSourcesRender		(std::shared_ptr<Framebuffer> 				framebuffer,
+										 std::unique_ptr<LightSourceDrawerShader>  	shader);
 		
-		virtual ~LightSourcesRender() = default;
+		virtual ~LightSourcesRender		() = default;
+		void	draw  					(Drawable * node, const Scene * scene)			override;
 		
 	protected:
 		
 		std::string 								vertexShaderSource;
 		std::string 								fragmentShaderSource;
-		std::unique_ptr<LightSourceDrawerShader>	shader;
-		
+
 	};
 	
 }
-
-ms::LightSourcesRender::LightSourcesRender(
-								 std::shared_ptr<Framebuffer> framebuffer,
-								 std::string vertexShSource,
-								 std::string fragmentShSource
-								 ) : 	Render(framebuffer),
-										vertexShaderSource(vertexShSource),
-										fragmentShaderSource(fragmentShSource),
-										shader(nullptr) { }
 
 #endif /* lightSourcesRender_hpp */

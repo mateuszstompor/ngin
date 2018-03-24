@@ -16,6 +16,8 @@ namespace ms {
 	
 	class GeometryOGL : public Geometry {
 		
+		friend class DrawableOGL;
+		
 	public:
 		
 				void 			use_normals 			() override;

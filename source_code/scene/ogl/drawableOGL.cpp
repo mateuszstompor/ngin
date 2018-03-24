@@ -23,6 +23,12 @@ std::string ms::DrawableOGL::get_class () {
 	return "ms::DrawableOGL";
 }
 
+void ms::DrawableOGL::draw () {
+	use();
+	geometry->use_indicies();
+	mglDrawElements(GL_TRIANGLES, geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
+}
+
 void ms::DrawableOGL::load	() {
 	
 	if (!is_loaded()) {

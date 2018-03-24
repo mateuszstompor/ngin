@@ -95,11 +95,11 @@ void ms::DeferredRenderOGL::clear_frame () {
 void ms::DeferredRenderOGL::draw (Drawable * node, const Scene * scene) {
 	gShader->set_model_transformation(node->modelTransformation.get_transformation());
 	
-	node->use();
+	
 	
 	DeferredRender::setup_material_uniforms(scene, node);
 	
-	node->geometry->use_indicies();
+	node->draw();
 	
 	mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 

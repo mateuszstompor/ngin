@@ -10,10 +10,11 @@
 #define nginOGL_hpp
 
 #include "../ngin.hpp"
-#include "../../rendering/ogl/forwardRenderOGL.hpp"
 #include "../../rendering/ogl/deferredRenderOGL.hpp"
-#include "../../rendering/ogl/lightSourceRenderOGL.hpp"
 #include "../../rendering/ogl/postprocessDrawerOGL.hpp"
+#include "../../rendering/shaders/ogl/forwardShaderOGL.hpp"
+#include "../../rendering/shaders/ogl/deferredShaderOGL.hpp"
+#include "../../rendering/shaders/ogl/lightSourceDrawerShaderOGL.hpp"
 
 #include "../../utils/ogl/loaderOGL.hpp"
 #include "../../scene/ogl/drawableOGL.hpp"
