@@ -41,11 +41,6 @@ namespace ms {
 			void 					perform_light_pass	(const Scene * scene) 							override;
 			virtual					~DeferredRenderOGL 	() = default;
 		
-		protected:
-				
-			GLuint						quadVAO;
-			GLuint						quadVBO;
-		
 	};
 	
 }
