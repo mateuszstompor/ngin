@@ -42,14 +42,14 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	std::string bloomFragmentShader = shader::get_shader_of_type(shader::Type::post_process_bloom_fshader);
 	
 	
-	std::shared_ptr<Framebuffer> windowFramebuffer = FramebufferOGL::window_framebuffer(screenWidth, screenHeight);
+	windowFramebuffer = FramebufferOGL::window_framebuffer(screenWidth, screenHeight);
 	
-	std::shared_ptr<FramebufferOGL> tempBuffer1 = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
+	tempBuffer1 = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
 																									1,
 																									frameBufferWidth,
 																									frameBufferHeight));
 	
-	std::shared_ptr<FramebufferOGL> tempBuffer2 = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(2,
+	tempBuffer2 = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(2,
 																									1,
 																									frameBufferWidth,
 																									frameBufferHeight));
@@ -89,17 +89,17 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																			  0,
 																			  frameBufferWidth,
 																			  frameBufferHeight));
-	
-	std::shared_ptr<Texture> color22 = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d, "",
-																			  Texture::Format::rgb_16_16_16,
-																			  Texture::AssociatedType::FLOAT,
-																			  Texture::MinFilter::nearest,
-																			  Texture::MagFilter::nearest,
-																			  Texture::Wrapping::clamp_to_edge,
-																			  Texture::Wrapping::clamp_to_edge,
-																			  0,
-																			  frameBufferWidth,
-																			  frameBufferHeight));
+//
+//	std::shared_ptr<Texture> color22 = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d, "",
+//																			  Texture::Format::rgb_16_16_16,
+//																			  Texture::AssociatedType::FLOAT,
+//																			  Texture::MinFilter::nearest,
+//																			  Texture::MagFilter::nearest,
+//																			  Texture::Wrapping::clamp_to_edge,
+//																			  Texture::Wrapping::clamp_to_edge,
+//																			  0,
+//																			  frameBufferWidth,
+//																			  frameBufferHeight));
 	
 	
 	tempBuffer1->bind_depth_buffer(renderbuf1);
@@ -108,7 +108,7 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	
 	tempBuffer2->bind_depth_buffer(renderbuf2);
 	tempBuffer2->bind_color_buffer(0, color2);
-	tempBuffer2->bind_color_buffer(1, color22);
+//	tempBuffer2->bind_color_buffer(1, color22);
 	tempBuffer2->configure();
 	
 	unsigned int AOL = 200;
@@ -121,7 +121,7 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	std::unique_ptr<DeferredShader> deferredShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource));
 	
 	
-	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender(tempBuffer1, std::move(lightSourceforwardShader)));
+	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender(windowFramebuffer, std::move(lightSourceforwardShader)));
 	
 	phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL, tempBuffer1, std::move(phongforwardShader)));
 	
@@ -135,12 +135,12 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																				  tempBuffer1));
 	
 	auto hdrProgram = std::unique_ptr<Shader>(new ShaderOGL(hdrVertexShader, "", "", "", hdrFragmentShader));
-	auto bloomProgram = std::unique_ptr<Shader>(new ShaderOGL(bloomVertexShader, "", "", "", bloomFragmentShader));
+//	auto bloomProgram = std::unique_ptr<Shader>(new ShaderOGL(bloomVertexShader, "", "", "", bloomFragmentShader));
 
 	
 
-	hdrRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(tempBuffer1->get_colors(), tempBuffer2, std::move(hdrProgram)));
-	bloomRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(tempBuffer2->get_colors(), windowFramebuffer, std::move(bloomProgram)));
+	hdrRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(tempBuffer1->get_colors(), windowFramebuffer, std::move(hdrProgram)));
+//	bloomRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(tempBuffer2->get_colors(), windowFramebuffer, std::move(bloomProgram)));
 
 	
 }
@@ -151,7 +151,7 @@ void ms::NGinOGL::load () {
 	deferredRenderer->load();
 	lightSourceRenderer->load();
 	hdrRenderer->load();
-	bloomRenderer->load();
+//	bloomRenderer->load();
 }
 
 std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,

@@ -16,6 +16,11 @@ R"(
 #define GREEN_VALUE_WEIGHT			0.7152
 #define BLUE_VALUE_WEIGHT			0.0722
 
+#define RED_WEIGHT_ADAPTIVE_TONE	0.3
+#define GREEN_WEIGHT_ADAPTIVE_TONE	0.59
+#define BLUE_WEIGHT_ADAPTIVE_TONE	0.11
+
+
 struct DirectionalLight {
 	vec3    	direction;
 	vec3    	color;
@@ -162,8 +167,16 @@ vec3 count_light_influence(SpotLight 	light,
 
 }
 
+vec3 color_with_exposure(vec3 color, float exposure) {
+	return 1.0f - exp2(-color * exposure);
+}
+
 float get_luminance(vec3 color) {
 	return dot(color, vec3(RED_VALUE_WEIGHT, GREEN_VALUE_WEIGHT, BLUE_VALUE_WEIGHT));
+}
+
+float get_luminance_for_adaptive_tone(vec3 color) {
+	return dot(color, vec3(RED_WEIGHT_ADAPTIVE_TONE, GREEN_WEIGHT_ADAPTIVE_TONE, BLUE_WEIGHT_ADAPTIVE_TONE));
 }
 
 )";

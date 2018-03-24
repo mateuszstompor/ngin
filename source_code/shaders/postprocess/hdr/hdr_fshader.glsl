@@ -1,50 +1,41 @@
 R"(
 
+//adaptive tone mapping
+//25 samples
+
 in vec2 texCoords;
 
-layout (location = 0) out vec4 fragment;
-layout (location = 1) out vec4 bright;
+layout (location = 0) out vec4 out1;
 
-uniform sampler2D passedtexture;
+uniform sampler2D in0;
 
 void main() {
 
-//	int i;
-//	float lum[25];
-//	vec2 tex_scale = vec2(1.0) / textureSize(passedtexture, 0);
-//	for (i = 0; i < 25; i++)
-//	{
-//		vec2 tc = (2.0 * gl_FragCoord.xy +
-//				   3.5 * vec2(i % 5 - 2, i / 5 - 2));
-//		vec3 col = texture(passedtexture, tc * tex_scale).rgb;
-//		lum[i] = dot(col, vec3(0.3, 0.59, 0.11)); }
-//	
-//	
-//	vec3 vColor = texelFetch(passedtexture, 2 * ivec2(gl_FragCoord.xy), 0).rgb;
-//	float kernelLuminance = (
-//							 (1.0 * (lum[0] + lum[4] + lum[20] + lum[24])) + (4.0 * (lum[1] + lum[3] + lum[5] + lum[9] +
-//																					 lum[15] + lum[19] + lum[21] + lum[23])) +
-//							 (7.0 * (lum[2] + lum[10] + lum[14] + lum[22])) +
-//							 (16.0 * (lum[6] + lum[8] + lum[16] + lum[18])) +
-//							 (26.0 * (lum[7] + lum[11] + lum[13] + lum[17])) +
-//							 (41.0 * lum[12])
-//							 ) / 273.0;
-//	// Compute the corresponding exposure
-//	float exposure = sqrt(8.0 / (kernelLuminance + 0.25));
-//	// Apply the exposure to this texel
-//	FragColor.rgb = 1.0 - exp2(-vColor * exposure);
-//	FragColor.a = 1.0f;
-
-	vec4 color = texture(passedtexture, texCoords);
+	//stores samples
+	float bf[25];
+	vec2 texelScale = vec2(1.0) / textureSize(in0, 0);
 	
-	fragment = color;
-	
-	if (get_luminance(color.xyz) > 1.0f) {
-		bright = vec4(color.rgb, 1.0f);
-	} else {
-		bright = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	for (int i = 0; i < 25; ++i) {
+		vec2 tc = (gl_FragCoord.xy + vec2(i % 5 - 2, i / 5 - 2));
+		vec3 col = texture(in0, tc * texelScale).rgb;
+		bf[i] = get_luminance_for_adaptive_tone(col);
 	}
 	
+	float weightsSum = 273.0f; // 4 * 26.0 + 4 * 16.0 + 4 * 7.0 + 8 * 4.0 + 4 * 1.0 + 1 * 41.0
+	
+	vec3 color = texelFetch(in0, ivec2(gl_FragCoord.xy), 0).rgb;
+	float weightedAvarageLuminance = ((1.0 * (bf[0] + bf[4] + bf[20] + bf[24])) +
+									  (4.0 * (bf[1] + bf[3] + bf[5] + bf[9])) +
+									  (4.0 * (bf[15] + bf[19] + bf[21] + bf[23])) +
+									  (7.0 * (bf[2] + bf[10] + bf[14] + bf[22])) +
+									  (16.0 * (bf[6] + bf[8] + bf[16] + bf[18])) +
+									  (26.0 * (bf[7] + bf[11] + bf[13] + bf[17])) +
+									  (41.0 * bf[12])) / weightsSum;
+
+	float exposure = sqrt(8.0f / (weightedAvarageLuminance + 0.25f));
+	out1.rgb = color_with_exposure(color, exposure);
+	out1.a = 1.0f;
+
 }
 
 )";

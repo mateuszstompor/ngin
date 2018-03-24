@@ -81,6 +81,10 @@ namespace ms {
 		std::unique_ptr<PostprocessDrawer>     	hdrRenderer;
 		std::unique_ptr<PostprocessDrawer>     	bloomRenderer;
 		
+		
+		std::shared_ptr<Framebuffer> tempBuffer1;
+		std::shared_ptr<Framebuffer> tempBuffer2;
+		std::shared_ptr<Framebuffer> windowFramebuffer;
 		unsigned int 							screenWidth;
 		unsigned int 							screenHeight;
 		

@@ -150,7 +150,7 @@ void ms::NGin::draw_scene() {
 	}
 	deferredRenderer->perform_light_pass(scene.get());
 
-	
+//
 //	phongForwardRenderer->use();
 //	phongForwardRenderer->clear_frame();
 //	phongForwardRenderer->setup_uniforms(scene.get());
@@ -165,7 +165,16 @@ void ms::NGin::draw_scene() {
 //		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 	
+	
+
+	
+	hdrRenderer->clear_frame();
+	hdrRenderer->draw_quad();
+	
+	windowFramebuffer->copy_depth_from(*tempBuffer1.get());
+	
 	lightSourceRenderer->use();
+//	lightSourceRenderer->clear_frame();
 	for(int i = 0; i < scene->pointLights.size(); ++i) {
 		lightSourceRenderer->draw(scene->pointLights[i].get(), scene.get());
 	}
@@ -173,9 +182,7 @@ void ms::NGin::draw_scene() {
 		lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
 	}
 	
-	hdrRenderer->clear_frame();
-	hdrRenderer->draw_quad();
-	bloomRenderer->clear_frame();
-	bloomRenderer->draw_quad();
+//	bloomRenderer->clear_frame();
+//	bloomRenderer->draw_quad();
 
 }
