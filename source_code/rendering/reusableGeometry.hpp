@@ -15,22 +15,45 @@ namespace ms {
 		
 		const static float vertices[] = {
 			
-			-1, 1, 0,
-			1, 1, 0,
-			-1, -1, 0,
-			-1, -1, 0,
-			1, 1, 0,
-			1, -1, 0
+			-1.0f, 1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f,
+			1.0, -1.0f, 0.0f
 			
 		};
 		
 		const static float textureCoordinates[] = {
-			0, 1,
-			1, 1,
-			0, 0,
-			0, 0,
-			1, 1,
-			1, 0
+			0.0f, 1.0f,
+			1.0f, 1.0f,
+			0.0f, 0.0f,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			1.0f, 0.0f
+		};
+		
+	}
+	
+	namespace quad_indicies {
+		
+		const static float vertices[] = {
+			-1.0f, -1.0f, 0.0f,
+			-1.0, 1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f
+		};
+		
+		const static float textureCoordinates[] = {
+			0.0f, 0.0f,
+			0.0f, 1.0f,
+			1.0f, 1.0f,
+			1.0f, 0.0f
+		};
+		
+		const static unsigned int indicies[] = {
+			0, 1, 2,
+			0, 2, 3
 		};
 		
 	}

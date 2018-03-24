@@ -29,6 +29,37 @@ void ms::DrawableOGL::draw () {
 	mglDrawElements(GL_TRIANGLES, geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 }
 
+std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
+	
+	//TODO
+	
+	std::shared_ptr<ms::DrawableOGL>	drawable(new DrawableOGL());
+	std::shared_ptr<ms::Geometry> 		quad(new GeometryOGL());
+	
+	for(int i = 0; i < 4; ++i) {
+		int positionOffset = 3 * i;
+		int textureOffset = 2 * i;
+		
+		math::vec3 position = math::vec3{quad_indicies::vertices[positionOffset],
+										quad_indicies::vertices[positionOffset+1],
+										quad_indicies::vertices[positionOffset+2]};
+		
+		math::vec2 textureCoordinate = math::vec2{quad_indicies::textureCoordinates[textureOffset],
+												  quad_indicies::textureCoordinates[textureOffset+1]};
+		
+		math::vec3 normal = math::vec3(0.0f);
+		quad->vertices.push_back(Vertex{position, normal, textureCoordinate});
+	}
+	
+	for(int i = 0; i < 6; ++i) {
+		quad->indices.push_back(quad_indicies::indicies[i]);
+	}
+	
+	drawable->geometry = std::move(quad);
+	
+	return drawable;
+}
+
 void ms::DrawableOGL::load	() {
 	
 	if (!is_loaded()) {

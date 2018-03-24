@@ -11,6 +11,8 @@
 
 #include "../drawable.hpp"
 #include "../../utils/ogl/proxyOGL.hpp"
+#include "../../rendering/reusableGeometry.hpp"
+#include "geometryOGL.hpp"
 
 namespace ms {
 	
@@ -20,13 +22,14 @@ namespace ms {
 		
 		friend class Loader;
 		
-						DrawableOGL		();
-		void 			use				() override;
-		void			load			() override;
-		void 			unload			() override;
-		std::string 	get_class 		() override;
-		void			draw			() override;
-		virtual			~DrawableOGL	() = default;
+												DrawableOGL		();
+				void 							use				() override;
+				void							load			() override;
+				void 							unload			() override;
+				std::string 					get_class 		() override;
+				void							draw			() override;
+		static	std::shared_ptr<DrawableOGL>	get_quad		();
+		virtual									~DrawableOGL	() = default;
 		
 	protected:
 		

@@ -32,7 +32,7 @@ namespace ms {
 	protected:
 	
 		std::vector<std::shared_ptr<Texture>> 	inputTextures;
-		
+		std::shared_ptr<Drawable> 				quad;
 	};
 	
 }
@@ -40,7 +40,7 @@ namespace ms {
 ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::shared_ptr<Texture>> 	input,
 										 std::shared_ptr<Framebuffer> 			framebuffer,
 										 std::unique_ptr<Shader> 				shaderProgram) : 	Render(framebuffer, std::move(shaderProgram)),
-																									inputTextures(input) {}
+																									inputTextures(input), quad(nullptr) {}
 
 std::string ms::PostprocessDrawer::get_class () {
 	return "ms::PostprocessDrawer";

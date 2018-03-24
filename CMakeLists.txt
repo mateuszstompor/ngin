@@ -78,13 +78,11 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/deferredLightingShader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/lightSourceDrawerShader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/lightSourceDrawerShaderOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/forwardRenderOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/framebufferOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/renderbufferOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/lightSourceRenderOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/render.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.hpp
@@ -110,9 +108,13 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/scene/positionedObject.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/texture.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/vertex.hpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.hpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/postprocessDrawerOGL.hpp
 
         #cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/postprocessDrawerOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/render.cpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/proxyOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/utilsOGL.cpp
@@ -122,13 +124,13 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/deferredShaderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/deferredLightingShaderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/lightSourceDrawerShaderOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/forwardRenderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/framebufferOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/renderbufferOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/lightSourceRenderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resourceCoordinator.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/drawableOGL.cpp

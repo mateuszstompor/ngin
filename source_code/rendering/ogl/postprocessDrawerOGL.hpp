@@ -12,6 +12,7 @@
 #include "../../utils/ogl/proxyOGL.hpp"
 #include "../postprocessDrawer.hpp"
 #include "../reusableGeometry.hpp"
+#include "../../scene/ogl/drawableOGL.hpp"
 #include "../shaders/ogl/shaderOGL.hpp"
 
 namespace ms {
@@ -20,18 +21,19 @@ namespace ms {
 	
 	public:
 		
-								PostprocessDrawerOGL	(std::vector<std::shared_ptr<Texture>> 		input,
-														 std::shared_ptr<Framebuffer> 				framebuffer,
-														 std::unique_ptr<Shader>					shaderProgram);
+									PostprocessDrawerOGL	(std::vector<std::shared_ptr<Texture>> 	input,
+															 std::shared_ptr<Framebuffer> 			framebuffer,
+															 std::unique_ptr<Shader>				shaderProgram);
 
-		virtual void 			draw_quad				() 										override;
-		virtual void    		load  					() 										override;
-		virtual void 			unload 					() 										override;
-		virtual std::string		get_class				() 										override;
-		virtual void			draw  					(Drawable * node, const Scene * scene)	override;
-		
+		virtual void 				draw_quad				() 										override;
+		virtual void    			load  					() 										override;
+		virtual void 				unload 					() 										override;
+		virtual std::string			get_class				() 										override;
+		virtual void				draw  					(Drawable * node, const Scene * scene)	override;
+	
 		GLuint					quadVAO;
 		GLuint					quadVBO;
+		
 	};
 	
 }
