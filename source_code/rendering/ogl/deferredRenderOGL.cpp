@@ -73,6 +73,7 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS), quadVAO(0), qu
 	
 	
 
+	quad = DrawableOGL::get_quad();
 	
 }
 
@@ -92,32 +93,8 @@ void ms::DeferredRenderOGL::load () {
 		gFramebuffer->configure();
 		framebuffer->use();
 		
-		//setup quad
-		mglGenVertexArrays(1, &quadVAO);
-		mglBindVertexArray(quadVAO);
-
-		mglGenBuffers(1, &quadVBO);
-		mglBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		mglBufferData(GL_ARRAY_BUFFER, sizeof(quad::vertices) + sizeof(quad::textureCoordinates), nullptr, GL_STATIC_DRAW);
-		mglBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quad::vertices), quad::vertices);
-		mglBufferSubData(GL_ARRAY_BUFFER, sizeof(quad::vertices), sizeof(quad::textureCoordinates), quad::textureCoordinates);
-
-		//vertices
-		mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-		mglEnableVertexAttribArray(0);
-
-		//texturecoordinates
-		mglVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)(18 * sizeof(GL_FLOAT)));
-		mglEnableVertexAttribArray(1);
-
-		mglBindBuffer(GL_ARRAY_BUFFER, 0);
-		mglBindVertexArray(0);
-
-		//end
-
-		mglEnable(GL_DEPTH_TEST);
-		mglDepthFunc(GL_LEQUAL);
-
+		quad->load();
+		
 		Resource::load();
 	}
 }
@@ -128,10 +105,6 @@ bool ms::DeferredRenderOGL::is_loaded () {
 
 void ms::DeferredRenderOGL::unload () {
 	if (is_loaded()) {
-		
-		mglDeleteVertexArrays(1, &quadVAO);
-		mglDeleteBuffers(1, &quadVBO);
-		
 		this->gAlbedo->unload();
 		this->gNormal->unload();
 		this->gPosition->unload();
@@ -153,13 +126,11 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	DeferredRender::setup_lightpass_uniforms(scene);
 	
-	mglBindVertexArray(quadVAO);
-	
 	lightingShader->bind_g_buf_posiitons(*gPosition);
 	lightingShader->bind_g_buf_albedo(*gAlbedo);
 	lightingShader->bind_g_buf_normals(*gNormal);
 	
-	mglDrawArrays(GL_TRIANGLES, 0, 6);
+	quad->draw();
 	
 	framebuffer->copy_depth_from(*gFramebuffer);
 	

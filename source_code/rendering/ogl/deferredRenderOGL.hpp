@@ -18,6 +18,7 @@
 #include "../../scene/ogl/textureOGL.hpp"
 #include "framebufferOGL.hpp"
 #include "renderbufferOGL.hpp"
+#include "../../scene/ogl/drawableOGL.hpp"
 
 namespace ms {
 	

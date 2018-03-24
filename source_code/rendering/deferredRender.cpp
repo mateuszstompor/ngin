@@ -43,6 +43,7 @@ lightingShader(nullptr),
 gNormal(nullptr),
 gPosition(nullptr),
 gAlbedo(nullptr),
+quad(nullptr),
 renderMode(0),
 debugMode(false),
 debugType(DeferredRender::DebugType::position) { }

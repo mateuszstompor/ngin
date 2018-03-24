@@ -26,14 +26,9 @@ namespace ms {
 															 std::unique_ptr<Shader>				shaderProgram);
 
 		virtual void 				draw_quad				() 										override;
-		virtual void    			load  					() 										override;
-		virtual void 				unload 					() 										override;
 		virtual std::string			get_class				() 										override;
 		virtual void				draw  					(Drawable * node, const Scene * scene)	override;
 	
-		GLuint					quadVAO;
-		GLuint					quadVBO;
-		
 	};
 	
 }

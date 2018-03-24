@@ -64,7 +64,7 @@ namespace ms {
 		bool										debugMode;
 		DebugType									debugType;
 		std::unique_ptr<Framebuffer>				gFramebuffer;
-		
+		std::shared_ptr<Drawable> 					quad;
 		
 	};
 	
