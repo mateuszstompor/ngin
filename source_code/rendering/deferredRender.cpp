@@ -106,6 +106,27 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
 	
 }
 
+void ms::DeferredRender::draw (Drawable * node, const Scene * scene) {
+	gShader->set_model_transformation(node->modelTransformation.get_transformation());
+	DeferredRender::setup_material_uniforms(scene, node);
+	node->draw();
+}
+
+void ms::DeferredRender::use () {
+	if(!gShader->is_loaded() || !lightingShader->is_loaded()) {
+		gShader->load();
+		lightingShader->load();
+	}
+	
+	gShader->use();
+	gFramebuffer->use();
+}
+
+void ms::DeferredRender::clear_frame () {
+	gFramebuffer->use();
+	gFramebuffer->clear_frame();
+}
+
 void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Drawable * node) {
 	
 	auto material = scene->materials.find(node->geometry->get_material_name());

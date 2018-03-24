@@ -34,7 +34,9 @@ namespace ms {
 															std::string lightingVertexShaderSource,
 															std::string lightingFragmentShaderSource
 															 );
-		
+				void 		clear_frame						() override;
+				void		use				     			() override;
+				void 		draw							(Drawable * node, const Scene * scene) override;
 		virtual void 		perform_light_pass				(const Scene * scene) = 0;
 		virtual void 		setup_material_uniforms			(const Scene * scene, const Drawable * node);
 		virtual void 		setup_lightpass_uniforms		(const Scene * scene);

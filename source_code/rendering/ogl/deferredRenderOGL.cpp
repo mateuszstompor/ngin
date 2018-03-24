@@ -76,35 +76,6 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS), quadVAO(0), qu
 	
 }
 
-void ms::DeferredRenderOGL::use () {
-	if(!gShader->is_loaded() || !lightingShader->is_loaded()) {
-		gShader->load();
-		lightingShader->load();
-	}
-
-	gShader->use();
-	mglEnable(GL_DEPTH_TEST);
-	mglDepthFunc(GL_LEQUAL);
-}
-
-void ms::DeferredRenderOGL::clear_frame () {
-	gFramebuffer->use();
-	gFramebuffer->clear_frame();
-}
-
-void ms::DeferredRenderOGL::draw (Drawable * node, const Scene * scene) {
-	gShader->set_model_transformation(node->modelTransformation.get_transformation());
-	
-	
-	
-	DeferredRender::setup_material_uniforms(scene, node);
-	
-	node->draw();
-	
-	mglDrawElements(GL_TRIANGLES, node->geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
-
-}
-
 void ms::DeferredRenderOGL::load () {
 	
 	if (!is_loaded()) {
