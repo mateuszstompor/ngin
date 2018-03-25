@@ -93,11 +93,17 @@ namespace ms {
 			const std::string hdrFshader =
 			#include "./postprocess/hdr/hdr_fshader.glsl"
 			
-			const std::string bloomVshader =
-			#include "./postprocess/bloom/bloom_vshader.glsl"
+			const std::string bloom_merger_vshader =
+			#include "./postprocess/bloom/bloom_merger_vshader.glsl"
 			
-			const std::string bloomFshader =
-			#include "./postprocess/bloom/bloom_fshader.glsl"
+			const std::string bloom_merger_fshader =
+			#include "./postprocess/bloom/bloom_merger_fshader.glsl"
+			
+			const std::string bloom_splitter_vshader =
+			#include "./postprocess/bloom/bloom_splitter_vshader.glsl"
+			
+			const std::string bloom_splitter_fshader =
+			#include "./postprocess/bloom/bloom_splitter_fshader.glsl"
 			
 		}
 		
@@ -120,8 +126,10 @@ enum class ms::shader::Type {
 	forward_render_light_drawer_fshader,
 	post_process_hdr_vshader,
 	post_process_hdr_fshader,
-	post_process_bloom_vshader,
-	post_process_bloom_fshader
+	post_process_bloom_merger_vshader,
+	post_process_bloom_merger_fshader,
+	post_process_bloom_splitter_vshader,
+	post_process_bloom_splitter_fshader
 };
 
 
@@ -178,12 +186,20 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::hdrFshader;
 			break;
-		case ms::shader::Type::post_process_bloom_vshader:
-			shaderContent += postprocess::bloomVshader;
+		case ms::shader::Type::post_process_bloom_merger_vshader:
+			shaderContent += postprocess::bloom_merger_vshader;
 			break;
-		case ms::shader::Type::post_process_bloom_fshader:
+		case ms::shader::Type::post_process_bloom_merger_fshader:
 			shaderContent += functionsDefinitions;
-			shaderContent += postprocess::bloomFshader;
+			shaderContent += postprocess::bloom_merger_fshader;
+			break;
+		case ms::shader::Type::post_process_bloom_splitter_vshader:
+			shaderContent += functionsDefinitions;
+			shaderContent += postprocess::bloom_splitter_vshader;
+			break;
+		case ms::shader::Type::post_process_bloom_splitter_fshader:
+			shaderContent += functionsDefinitions;
+			shaderContent += postprocess::bloom_splitter_fshader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

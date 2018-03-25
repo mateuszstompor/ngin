@@ -38,6 +38,7 @@ namespace ms {
 							 GLuint defaultFBO
 							 );
 		
+		void 							unload				() 							override;
 		void 							load				() 							override;
 		std::unique_ptr<Loader>			get_loader			() 							override;
 		std::shared_ptr<Drawable>		get_drawable		() 							override;

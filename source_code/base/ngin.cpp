@@ -17,7 +17,8 @@ ms::NGin::NGin(unsigned int scW, unsigned int scH, float camNear, float camFar, 
 	deferredRenderer(nullptr),
 	lightSourceRenderer(nullptr),
 	hdrRenderer(nullptr),
-	bloomRenderer(nullptr) {
+	bloomSplitRenderer(nullptr),
+	bloomMergeRenderer(nullptr) {
 		
 }
 
@@ -165,16 +166,9 @@ void ms::NGin::draw_scene() {
 //		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 	
-	
-
-	
-	hdrRenderer->clear_frame();
-	hdrRenderer->draw_quad();
-	
-	windowFramebuffer->copy_depth_from(*tempBuffer1.get());
+	secondOneColorDepthFramebuffer->copy_depth_from(*oneColorDepthFramebuffer.get());
 	
 	lightSourceRenderer->use();
-//	lightSourceRenderer->clear_frame();
 	for(int i = 0; i < scene->pointLights.size(); ++i) {
 		lightSourceRenderer->draw(scene->pointLights[i].get(), scene.get());
 	}
@@ -182,7 +176,15 @@ void ms::NGin::draw_scene() {
 		lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
 	}
 	
-//	bloomRenderer->clear_frame();
-//	bloomRenderer->draw_quad();
-
+	bloomSplitRenderer->use();
+	bloomSplitRenderer->clear_frame();
+	bloomSplitRenderer->draw_quad();
+	
+	bloomMergeRenderer->use();
+	bloomMergeRenderer->clear_frame();
+	bloomMergeRenderer->draw_quad();
+	
+	hdrRenderer->clear_frame();
+	hdrRenderer->draw_quad();
+	
 }

@@ -40,7 +40,16 @@ namespace ms {
 													 unsigned int 	width,
 													 unsigned int 	height);
 		
-		const GLuint			get_underlying_id	() const;
+								TextureOGL			(Texture::Type 	type,
+													 Format			format,
+													 AssociatedType	associatedType,
+													 unsigned int 	width,
+													 unsigned int 	height);
+		
+								TextureOGL			(const TextureOGL & texture) = delete;
+				TextureOGL &	operator =			(const TextureOGL & texture) = delete;
+		
+		const 	GLuint			get_underlying_id	() const;
 		
 		virtual void    		load  				() override;
 		virtual void 			unload 				() override;
@@ -48,6 +57,7 @@ namespace ms {
 
 		virtual void 			use					() override;
 								~TextureOGL			() = default;
+	protected:
 		
 		static 	GLenum			to_ogl				(MinFilter 			minFilter);
 		static 	GLenum			to_ogl				(MagFilter 			magFilter);

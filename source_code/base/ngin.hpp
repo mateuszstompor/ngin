@@ -34,7 +34,6 @@ namespace ms {
 																	 float 			fovDegrees,
 																	 float 			aspect);
 		
-		virtual void							load_model			(std::string 	absolutePath);
 		virtual void							load_point_light	(float 			power,
 																	 math::vec3 	color,
 																	 math::vec3 	position,
@@ -51,12 +50,13 @@ namespace ms {
 		virtual void 							unload 				();
         virtual void							draw_scene  		();
 		DeferredRender & 						get_deferred_render	() const;
+		virtual void							load_model			(std::string 	absolutePath);
 		virtual        							~NGin       		() = default;
-		
 		std::unique_ptr<Scene>                  scene;
 		
 	protected:
 		
+		void									count_fps			();
 		virtual std::unique_ptr<Loader>			get_loader			() = 0;
 		virtual std::shared_ptr<Drawable>		get_drawable		() = 0;
 		
@@ -70,7 +70,7 @@ namespace ms {
 																	 float 			lightingAngleDegrees,
 																	 math::vec3 	direction) = 0;
 		
-		void									count_fps			();
+		
 		
 		
 		std::unique_ptr<Loader>					loader;
@@ -79,12 +79,14 @@ namespace ms {
 		std::unique_ptr<ForwardRender>          phongForwardRenderer;
 		std::unique_ptr<LightSourcesRender>     lightSourceRenderer;
 		std::unique_ptr<PostprocessDrawer>     	hdrRenderer;
-		std::unique_ptr<PostprocessDrawer>     	bloomRenderer;
+		std::unique_ptr<PostprocessDrawer>     	bloomSplitRenderer;
+		std::unique_ptr<PostprocessDrawer>     	bloomMergeRenderer;
 		
+		std::shared_ptr<Framebuffer> 			oneColorDepthFramebuffer;
+		std::shared_ptr<Framebuffer> 			secondOneColorDepthFramebuffer;
+		std::shared_ptr<Framebuffer> 			twoColorsDepthFramebuffer;
+		std::shared_ptr<Framebuffer> 			windowFramebuffer;
 		
-		std::shared_ptr<Framebuffer> tempBuffer1;
-		std::shared_ptr<Framebuffer> tempBuffer2;
-		std::shared_ptr<Framebuffer> windowFramebuffer;
 		unsigned int 							screenWidth;
 		unsigned int 							screenHeight;
 		

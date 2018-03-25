@@ -8,12 +8,22 @@
 
 #include "textureOGL.hpp"
 
-
-ms::TextureOGL::TextureOGL ( Texture::Type 	type,
-							 std::string	name,
+ms::TextureOGL::TextureOGL 	(Texture::Type 	type,
 							 Format			format,
 							 AssociatedType	associatedType,
 							 unsigned int 	width,
+							 unsigned int 	height) : TextureOGL(type,
+																 "",
+																 format,
+																 associatedType,
+																 width,
+																 height) { }
+
+ms::TextureOGL::TextureOGL (Texture::Type 	type,
+							std::string	name,
+							Format			format,
+							AssociatedType	associatedType,
+							unsigned int 	width,
 							unsigned int 	height) : TextureOGL(type,
 																 name,
 																 format,
@@ -24,29 +34,29 @@ ms::TextureOGL::TextureOGL ( Texture::Type 	type,
 																 Wrapping::clamp_to_edge,
 																 0,
 																 width,
-																 height){ }
+																 height) { }
 
-ms::TextureOGL::TextureOGL	(	Texture::Type 	textype,
-							 	std::string		name,
-							 	Format			internalF,
-							 	AssociatedType	typ,
-							 	MinFilter 		minFilter,
-							 	MagFilter 		magFilter,
-							 	Wrapping 		sWrapping,
-							 	Wrapping 		tWrapping,
-							 	unsigned int 	mipMapLevel,
-							 	unsigned int 	wid,
-							 	unsigned int 	hei) : 	ms::Texture(textype,
-																	name,
-																	internalF,
-																	typ,
-																	minFilter,
-																	magFilter,
-																	sWrapping,
-																	tWrapping,
-																	mipMapLevel,
-																	wid,
-																	hei) {
+ms::TextureOGL::TextureOGL	(Texture::Type 	textype,
+							std::string		name,
+							Format			internalF,
+							AssociatedType	typ,
+							MinFilter 		minFilter,
+							MagFilter 		magFilter,
+							Wrapping 		sWrapping,
+							Wrapping 		tWrapping,
+							unsigned int 	mipMapLevel,
+							unsigned int 	wid,
+							unsigned int 	hei) : 	ms::Texture(textype,
+																name,
+																internalF,
+																typ,
+																minFilter,
+																magFilter,
+																sWrapping,
+																tWrapping,
+																mipMapLevel,
+																wid,
+																hei) {
 	
 	
 	target = to_ogl(textype);

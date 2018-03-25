@@ -236,8 +236,8 @@
 		56BD165E205759D8001B02C5 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/libIrrXML.a"; sourceTree = "<group>"; };
 		56BD165F205759D8001B02C5 /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/libzlibstatic.a"; sourceTree = "<group>"; };
 		56C3C6A920655EFE0003F630 /* config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
-		56C3C6AD206584420003F630 /* bloom_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_fshader.glsl; sourceTree = "<group>"; };
-		56C3C6AE206584420003F630 /* bloom_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_vshader.glsl; sourceTree = "<group>"; };
+		56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_fshader.glsl; sourceTree = "<group>"; };
+		56C3C6AE206584420003F630 /* bloom_merger_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_vshader.glsl; sourceTree = "<group>"; };
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
 		56DF0F3920571B6D00713420 /* loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loader.cpp; sourceTree = "<group>"; };
 		56DF0F3A20571B6D00713420 /* loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
@@ -247,6 +247,8 @@
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = constantsDefinitions.glsl; sourceTree = "<group>"; };
 		56F5447C205ECCCE00431095 /* materialDeclarations.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = materialDeclarations.glsl; sourceTree = "<group>"; };
+		56FD82022066FB2E00B57BB6 /* bloom_splitter_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_vshader.glsl; sourceTree = "<group>"; };
+		56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_fshader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -607,8 +609,10 @@
 		56C3C6AC206582A60003F630 /* bloom */ = {
 			isa = PBXGroup;
 			children = (
-				56C3C6AD206584420003F630 /* bloom_fshader.glsl */,
-				56C3C6AE206584420003F630 /* bloom_vshader.glsl */,
+				56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */,
+				56C3C6AE206584420003F630 /* bloom_merger_vshader.glsl */,
+				56FD82022066FB2E00B57BB6 /* bloom_splitter_vshader.glsl */,
+				56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */,
 			);
 			path = bloom;
 			sourceTree = "<group>";
