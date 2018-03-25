@@ -29,6 +29,7 @@ void ms::NGin::unload() {
 ms::DeferredRender & ms::NGin::get_deferred_render () const {
 	return *deferredRenderer;
 }
+
 //TODO this function is implemented three times
 void ms::NGin::load_model (std::string absolutePath) {
 	
@@ -57,6 +58,7 @@ void ms::NGin::load_model (std::string absolutePath) {
 	
 }
 
+//TODO
 void ms::NGin::load_point_light	(float power,
 								 math::vec3 color,
 								 math::vec3 position,
@@ -87,6 +89,7 @@ void ms::NGin::load_point_light	(float power,
 	
 }
 
+//TODO
 void ms::NGin::load_spot_light (float power,
 								math::vec3 color,
 								math::vec3 position,
@@ -166,7 +169,7 @@ void ms::NGin::draw_scene() {
 //		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
 //	}
 	
-	secondOneColorDepthFramebuffer->copy_depth_from(*oneColorDepthFramebuffer.get());
+	secondOneColorFramebuffer->copy_depth_from(*oneColorDepthFramebuffer.get());
 	
 	lightSourceRenderer->use();
 	for(int i = 0; i < scene->pointLights.size(); ++i) {
@@ -180,13 +183,13 @@ void ms::NGin::draw_scene() {
 	bloomSplitRenderer->clear_frame();
 	bloomSplitRenderer->draw_quad();
 	
-	gaussianBlurRenderer->use();
-	gaussianBlurRenderer->clear_frame();
-	gaussianBlurRenderer->draw_quad();
+	gaussianBlurFirstStepRenderer->use();
+	gaussianBlurFirstStepRenderer->clear_frame();
+	gaussianBlurFirstStepRenderer->draw_quad();
 	
-	gaussianBlurRenderer2->use();
-	gaussianBlurRenderer2->clear_frame();
-	gaussianBlurRenderer2->draw_quad();
+	gaussianBlurSecondStepRenderer->use();
+	gaussianBlurSecondStepRenderer->clear_frame();
+	gaussianBlurSecondStepRenderer->draw_quad();
 	
 	bloomMergeRenderer->use();
 	bloomMergeRenderer->clear_frame();
@@ -194,6 +197,5 @@ void ms::NGin::draw_scene() {
 	
 	hdrRenderer->clear_frame();
 	hdrRenderer->draw_quad();
-	
 	
 }

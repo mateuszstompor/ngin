@@ -81,15 +81,15 @@ namespace ms {
 		std::unique_ptr<PostprocessDrawer>     	hdrRenderer;
 		std::unique_ptr<PostprocessDrawer>     	bloomSplitRenderer;
 		std::unique_ptr<PostprocessDrawer>     	bloomMergeRenderer;
-		std::unique_ptr<PostprocessDrawer>     	gaussianBlurRenderer;
-		std::unique_ptr<PostprocessDrawer>     	gaussianBlurRenderer2;
+		std::unique_ptr<PostprocessDrawer>     	gaussianBlurFirstStepRenderer;
+		std::unique_ptr<PostprocessDrawer>     	gaussianBlurSecondStepRenderer;
 		
 		std::shared_ptr<Framebuffer> 			oneColorDepthFramebuffer;
-		std::shared_ptr<Framebuffer> 			secondOneColorDepthFramebuffer;
-		std::shared_ptr<Framebuffer> 			thirdOneColorDepthFramebuffer;
-		std::shared_ptr<Framebuffer> 			fourthOneColorDepthFramebuffer;
+		std::shared_ptr<Framebuffer> 			secondOneColorFramebuffer;
+		std::shared_ptr<Framebuffer> 			thirdOneColorFramebuffer;
+		std::shared_ptr<Framebuffer> 			fourthOneColorFramebuffer;
 
-		std::shared_ptr<Framebuffer> 			twoColorsDepthFramebuffer;
+		std::shared_ptr<Framebuffer> 			twoColorsFramebuffer;
 		std::shared_ptr<Framebuffer> 			windowFramebuffer;
 		
 		unsigned int 							screenWidth;
