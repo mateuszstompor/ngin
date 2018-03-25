@@ -1,5 +1,8 @@
 # ngin
 
+## 24.03.2018 Gaussian blur, Bloom
+<img src="/screenshots/bloom.jpg" width="100%" style="float: left; display:inline-block;"/>
+
 ## 24.03.2018 HDR + Adaptive tone mapping
 <img src="/screenshots/hdr_tone_mapping.jpg" width="100%" style="float: left; display:inline-block;"/>
 
