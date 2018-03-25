@@ -13,7 +13,7 @@ void main() {
 
 	//stores samples
 	float bf[25];
-	vec2 texelScale = vec2(1.0) / textureSize(in0, 0);
+	vec2 texelScale = vec2(1.0) / vec2(textureSize(in0, 0));
 	
 	for (int i = 0; i < 25; ++i) {
 		vec2 tc = (gl_FragCoord.xy + vec2(i % 5 - 2, i / 5 - 2));

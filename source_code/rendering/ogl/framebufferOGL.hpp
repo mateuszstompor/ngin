@@ -53,8 +53,8 @@ namespace ms {
 		virtual void		clear_depth						() override;
 		virtual void		clear_frame						() override;
 		static 	fb_ptr 		window_framebuffer				(int width, int height);
-				GLuint		get_underlying_id				();
-
+				GLuint		get_underlying_id				() const;
+				void		set_underlying_id				(GLuint framebufferID);
 	protected:
 		
 		bool				is_default_framebuffer;

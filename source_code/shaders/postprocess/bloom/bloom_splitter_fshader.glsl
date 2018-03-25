@@ -14,7 +14,7 @@ void main() {
 	fragment = color;
 	
 	if (get_luminance(color.xyz) > 1.0f) {
-		bright = vec4(color.rgb, 1.0f);
+		bright = 2.0f * vec4(color.rgb, 1.0f);
 	} else {
 		bright = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	}

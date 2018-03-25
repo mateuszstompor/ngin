@@ -292,7 +292,7 @@ int main(int argc, const char * argv[]) { {
 	
 	bool useCommandLineArguments = argc == 5;
 
-	int width = 1500;
+	int width = 1000;
 	int height = 1000;
 	int framebufferWidth;
 	int framebufferHeight;
@@ -333,7 +333,7 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight, 0));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight));
 		
 	engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
@@ -341,22 +341,22 @@ int main(int argc, const char * argv[]) { {
 	
 	auto scale = ms::math::transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 	
-	for (int i = 0; i < 15; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
 		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
 		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
 		
-		engine->load_point_light(50, ms::math::vec3{0.0f, 1.0f, 1.0f},
+		engine->load_point_light(50, ms::math::vec3{1.0f, 1.0f, 1.0f},
 								 res, useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
 		engine->scene->pointLights[i]->modelTransformation.set_transformation(translation * scale * engine->scene->pointLights[i]->modelTransformation.get_transformation());
 	}
 	
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
 		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
 		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
 	
-		engine->load_spot_light(50, ms::math::vec3{1.0f, 1.0f, 0.0f}, res,
+		engine->load_spot_light(50, ms::math::vec3{1.0f, 1.0f, 1.0f}, res,
 								50, ms::math::vec3{0.0f, -1.0f, 0.0f},  useCommandLineArguments ? argv[3] : "./cone/cone.obj");
 		engine->scene->spotLights[i]->modelTransformation.set_transformation(translation * scale * engine->scene->spotLights[i]->modelTransformation.get_transformation());
 	}

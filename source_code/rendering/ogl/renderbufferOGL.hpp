@@ -22,10 +22,15 @@ namespace ms {
 	public:
 		
 							RenderbufferOGL		(Texture::Format			format,
-												Texture::AssociatedType	associatedType,
+												Texture::AssociatedType		associatedType,
 												unsigned int 				mipMapLevel,
 												unsigned int 				width,
 												unsigned int 				height);
+		
+							RenderbufferOGL		(Texture::Format			format,
+												 Texture::AssociatedType	associatedType,
+												 unsigned int 				width,
+												 unsigned int 				height);
 		
 		virtual std::string	get_class			() override;
 		virtual void 		use					() override;

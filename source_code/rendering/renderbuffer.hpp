@@ -23,6 +23,11 @@ namespace ms {
 													 unsigned int 				width,
 													 unsigned int 				height);
 		
+		inline 					Renderbuffer		(Texture::Format			format,
+													 Texture::AssociatedType	associatedType,
+													 unsigned int 				width,
+													 unsigned int 				height);
+		
 								Renderbuffer		(const Texture &) = delete;
 			Renderbuffer &		operator = 			(const Renderbuffer &) = delete;
 			virtual void 		use					() = 0;
@@ -51,6 +56,12 @@ ms::Renderbuffer::Renderbuffer(Texture::Format 			format,
 																	mipMapLevel(mipMapLevel),
 																	width(width),
 																	height(height) { }
+
+ms::Renderbuffer::Renderbuffer(Texture::Format 			format,
+							   Texture::AssociatedType 	associatedType,
+							   unsigned int 			width,
+							   unsigned int 			height) : Renderbuffer(format, associatedType, 0, width, height) { }
+
 
 std::string ms::Renderbuffer::get_class () {
 	return "ms::Renderbuffer";

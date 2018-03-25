@@ -19,6 +19,12 @@ ms::RenderbufferOGL::RenderbufferOGL (Texture::Format			format,
 	
 }
 
+ms::RenderbufferOGL::RenderbufferOGL (Texture::Format			format,
+									  Texture::AssociatedType	associatedType,
+									  unsigned int 				width,
+									  unsigned int 				height
+									  ) : RenderbufferOGL(format, associatedType, 0, width, height) {}
+
 std::string ms::RenderbufferOGL::get_class () {
 	return "ms::RenderbufferOGL";
 }

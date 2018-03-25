@@ -108,9 +108,17 @@ void ms::FramebufferOGL::bind_color_buffer	(int index, std::shared_ptr<Texture> 
 }
 
 void ms::FramebufferOGL::bind_color_buffer	(int index, std::shared_ptr<Renderbuffer> renderbuffer) {
-	//TODO not implemented yet
-	std::cerr << "NOT IMPLEMENTED YET" << std::endl;
+	this->use();
+	renderbuffer->use();
+	GLuint renderbufferID = (dynamic_cast<RenderbufferOGL*>(renderbuffer.get()))->get_underlying_id();
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_RENDERBUFFER, renderbufferID);
+	//TODO
+	
+	//TODO
+	//TODO
+	//Store somewhere this renderbuffer
 	assert(false);
+	
 }
 
 void ms::FramebufferOGL::bind_depth_buffer	(std::shared_ptr<Renderbuffer> renderbuffer) {
@@ -143,8 +151,16 @@ std::string ms::FramebufferOGL::get_class () {
 	return "ms::FramebufferOGL";
 }
 
-GLuint ms::FramebufferOGL::get_underlying_id () {
+GLuint ms::FramebufferOGL::get_underlying_id () const {
 	return framebuffer;
+}
+
+void ms::FramebufferOGL::set_underlying_id (GLuint framebufferID) {
+	if(!is_default_framebuffer) {
+		std::cerr << "ONLY DEFAULT FRAMEBUFFER'S ID CAN BE CHANGED" << std::endl;
+		assert(false);
+	}
+	framebuffer = framebufferID;
 }
 
 std::shared_ptr<ms::FramebufferOGL> ms::FramebufferOGL::window_framebuffer	(int width, int height) {

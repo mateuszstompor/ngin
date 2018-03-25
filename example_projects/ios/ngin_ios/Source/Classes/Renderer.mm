@@ -4,11 +4,11 @@
 
 #import "Renderer.h"
 #import "../../../../../source_code/umbrellaHeader.hpp"
-#import "../../../../../source_code/scene/ogl/geometryOGL.hpp"
-#import "../../../../../source_code/scene/ogl/drawableOGL.hpp"
 
 std::unique_ptr<ms::NGin> engine;
+std::shared_ptr<ms::FramebufferOGL> framebuffer;
 
+using namespace ms;
 
 @interface Renderer ()
 {
@@ -26,8 +26,10 @@ std::unique_ptr<ms::NGin> engine;
 
 - (instancetype)initWithContext:(EAGLContext*)context AndDrawable:(id<EAGLDrawable>)drawable {
 
+	framebuffer = FramebufferOGL::window_framebuffer(375, 680);
+	
 	glGenFramebuffers(1, &_defaultFBOName);
-
+	framebuffer->set_underlying_id(_defaultFBOName);
 	glGenRenderbuffers(1, &_colorRenderbuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, _defaultFBOName);
 	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
@@ -55,7 +57,7 @@ std::unique_ptr<ms::NGin> engine;
 	float width = backingWidth;
 	float height = backingHeight;
 
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, width, height, 0.01, 100, 90, width/height, _defaultFBOName));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, width, height, 0.01, 100, 90, width/height, framebuffer));
 	std::unique_ptr<ms::Loader> loader = std::unique_ptr<ms::Loader>(new ms::LoaderOGL());
 	
 	NSString* model = [[NSBundle mainBundle] pathForResource:@"classroom" ofType:@"obj"];

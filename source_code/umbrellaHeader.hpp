@@ -17,5 +17,8 @@
 #include "scene/ogl/drawableOGL.hpp"
 #include "scene/lights/ogl/pointLightOGL.hpp"
 #include "utils/ogl/loaderOGL.hpp"
+#include "scene/ogl/drawableOGL.hpp"
+#include "scene/ogl/geometryOGL.hpp"
+#include "rendering/ogl/framebufferOGL.hpp"
 
 #endif /* umbrella_header_hpp */

@@ -6,7 +6,7 @@ uniform vec3 lightSourceColor;
 
 void main(void){
 	//I multiply to make sure that they are the brightest spots in scene
-	FragColor = vec4(4 * lightSourceColor,1.0f);
+	FragColor = vec4(4.0f * lightSourceColor, 1.0f);
 }
 
 )";
