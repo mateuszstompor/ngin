@@ -149,6 +149,8 @@
 		561664312061353000915042 /* light_source_drawer_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = light_source_drawer_vshader.glsl; sourceTree = "<group>"; };
 		561664332061358D00915042 /* gouraud_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud_vshader.glsl; sourceTree = "<group>"; };
 		561664342061359A00915042 /* gouraud_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud_fshader.glsl; sourceTree = "<group>"; };
+		561EFE95206727F60097D9B7 /* gaussian_blur_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gaussian_blur_vshader.glsl; sourceTree = "<group>"; };
+		561EFE96206727F60097D9B7 /* gaussian_blur_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gaussian_blur_fshader.glsl; sourceTree = "<group>"; };
 		561F2EF9204F041D00D7E875 /* material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = material.hpp; sourceTree = "<group>"; };
 		562138212060212C00ABA354 /* spotLightOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = spotLightOGL.hpp; sourceTree = "<group>"; };
 		56267870204AC01000A203F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -299,6 +301,15 @@
 				561664342061359A00915042 /* gouraud_fshader.glsl */,
 			);
 			path = gouraud;
+			sourceTree = "<group>";
+		};
+		561EFE92206727DD0097D9B7 /* gaussian_blur */ = {
+			isa = PBXGroup;
+			children = (
+				561EFE95206727F60097D9B7 /* gaussian_blur_vshader.glsl */,
+				561EFE96206727F60097D9B7 /* gaussian_blur_fshader.glsl */,
+			);
+			path = gaussian_blur;
 			sourceTree = "<group>";
 		};
 		5626786D204AC01000A203F2 /* Frameworks */ = {
@@ -551,6 +562,7 @@
 		56736CC02064744B00CE636A /* postprocess */ = {
 			isa = PBXGroup;
 			children = (
+				561EFE92206727DD0097D9B7 /* gaussian_blur */,
 				56C3C6AC206582A60003F630 /* bloom */,
 				56736CC12064745100CE636A /* hdr */,
 			);

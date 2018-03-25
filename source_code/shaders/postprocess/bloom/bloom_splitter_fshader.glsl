@@ -2,8 +2,8 @@ R"(
 
 in vec2 texCoords;
 
-layout (location = 0) out vec4 fragment;
-layout (location = 1) out vec4 bright;
+layout (location = 1) out vec4 fragment;
+layout (location = 0) out vec4 bright;
 
 uniform sampler2D in1;
 

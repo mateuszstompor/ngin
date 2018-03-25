@@ -180,11 +180,20 @@ void ms::NGin::draw_scene() {
 	bloomSplitRenderer->clear_frame();
 	bloomSplitRenderer->draw_quad();
 	
+	gaussianBlurRenderer->use();
+	gaussianBlurRenderer->clear_frame();
+	gaussianBlurRenderer->draw_quad();
+	
+	gaussianBlurRenderer2->use();
+	gaussianBlurRenderer2->clear_frame();
+	gaussianBlurRenderer2->draw_quad();
+	
 	bloomMergeRenderer->use();
 	bloomMergeRenderer->clear_frame();
 	bloomMergeRenderer->draw_quad();
 	
 	hdrRenderer->clear_frame();
 	hdrRenderer->draw_quad();
+	
 	
 }

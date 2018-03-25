@@ -105,6 +105,12 @@ namespace ms {
 			const std::string bloom_splitter_fshader =
 			#include "./postprocess/bloom/bloom_splitter_fshader.glsl"
 			
+			const std::string gaussian_blur_vshader =
+			#include "./postprocess/gaussian_blur/gaussian_blur_vshader.glsl"
+			
+			const std::string gaussian_blur_fshader =
+			#include "./postprocess/gaussian_blur/gaussian_blur_fshader.glsl"
+			
 		}
 		
 		inline std::string get_shader_of_type(Type type);
@@ -129,7 +135,9 @@ enum class ms::shader::Type {
 	post_process_bloom_merger_vshader,
 	post_process_bloom_merger_fshader,
 	post_process_bloom_splitter_vshader,
-	post_process_bloom_splitter_fshader
+	post_process_bloom_splitter_fshader,
+	post_process_gaussian_blur_vshader,
+	post_process_gaussian_blur_fshader
 };
 
 
@@ -200,6 +208,12 @@ std::string ms::shader::get_shader_of_type(Type type) {
 		case ms::shader::Type::post_process_bloom_splitter_fshader:
 			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::bloom_splitter_fshader;
+			break;
+		case ms::shader::Type::post_process_gaussian_blur_vshader:
+			shaderContent += postprocess::gaussian_blur_vshader;
+			break;
+		case ms::shader::Type::post_process_gaussian_blur_fshader:
+			shaderContent += postprocess::gaussian_blur_fshader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

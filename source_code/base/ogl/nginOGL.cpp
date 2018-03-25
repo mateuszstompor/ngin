@@ -44,9 +44,16 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	std::string bloomMergerVertexShader = shader::get_shader_of_type(shader::Type::post_process_bloom_merger_vshader);
 	std::string bloomMergerFragmentShader = shader::get_shader_of_type(shader::Type::post_process_bloom_merger_fshader);
 	
+	std::string gaussianBlurVertexShader = shader::get_shader_of_type(shader::Type::post_process_gaussian_blur_vshader);
+	std::string gaussianBlurFragmentShader = shader::get_shader_of_type(shader::Type::post_process_gaussian_blur_fshader);
+	
 	
 	windowFramebuffer = FramebufferOGL::window_framebuffer(screenWidth, screenHeight);
-	
+	auto aa = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
+													  Texture::Format::rgb_16_16_16,
+													  Texture::AssociatedType::FLOAT,
+													  frameBufferWidth,
+													  frameBufferHeight));
 	oneColorDepthFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
 																				  1,
 																				  frameBufferWidth,
@@ -57,6 +64,15 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 																				   frameBufferWidth,
 																				   frameBufferHeight));
 	
+	thirdOneColorDepthFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
+																					   1,
+																					   frameBufferWidth,
+																					   frameBufferHeight));
+	
+	fourthOneColorDepthFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
+																						1,
+																						frameBufferWidth,
+																						frameBufferHeight));
 	
 	secondOneColorDepthFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
 																						1,
@@ -93,17 +109,37 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	
 	secondOneColorDepthFramebuffer->configure();
 	
+	fourthOneColorDepthFramebuffer->bind_color_buffer(0, aa);
+	
+	fourthOneColorDepthFramebuffer->bind_depth_buffer(std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
+																										Texture::AssociatedType::UNSIGNED_BYTE,
+																										0,
+																										frameBufferWidth,
+																										frameBufferHeight)));
+	
+	fourthOneColorDepthFramebuffer->configure();
+	
+	thirdOneColorDepthFramebuffer->bind_color_buffer(0, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
+																								Texture::Format::rgb_16_16_16,
+																								Texture::AssociatedType::FLOAT,
+																								frameBufferWidth,
+																								frameBufferHeight)));
+	
+	thirdOneColorDepthFramebuffer->bind_depth_buffer(std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
+																									   Texture::AssociatedType::UNSIGNED_BYTE,
+																									   0,
+																									   frameBufferWidth,
+																									   frameBufferHeight)));
+	
+	thirdOneColorDepthFramebuffer->configure();
+	
 	twoColorsDepthFramebuffer->bind_depth_buffer(std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
 																								   Texture::AssociatedType::UNSIGNED_BYTE,
 																								   0,
 																								   frameBufferWidth,
 																								   frameBufferHeight)));
 	
-	twoColorsDepthFramebuffer->bind_color_buffer(0, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																							Texture::Format::rgb_16_16_16,
-																							Texture::AssociatedType::FLOAT,
-																							frameBufferWidth,
-																							frameBufferHeight)));
+	twoColorsDepthFramebuffer->bind_color_buffer(0, aa);
 	
 	twoColorsDepthFramebuffer->bind_color_buffer(1, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
 																							Texture::Format::rgb_16_16_16,
@@ -131,7 +167,9 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	auto bloomSplitProgram = std::unique_ptr<Shader>(new ShaderOGL(bloomSplitterVertexShader, "", "", "", bloomSplitterFragmentShader));
 	auto bloomMergeProgram = std::unique_ptr<Shader>(new ShaderOGL(bloomMergerVertexShader, "", "", "", bloomMergerFragmentShader));
 	auto hdrProgram = std::unique_ptr<Shader>(new ShaderOGL(hdrVertexShader, "", "", "", hdrFragmentShader));
-	
+	auto gaussianBlurProgram = std::unique_ptr<Shader>(new ShaderOGL(gaussianBlurVertexShader, "", "", "", gaussianBlurFragmentShader));
+	auto gaussianBlurProgram2 = std::unique_ptr<Shader>(new ShaderOGL(gaussianBlurVertexShader, "", "", "", gaussianBlurFragmentShader));
+
 	deferredRenderer = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL( AOL,
 																				  deferredRenderVertexShaderSource,
 																				  deferredRenderFragmentShaderSource,
@@ -153,6 +191,18 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 	bloomSplitRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(oneColorDepthFramebuffer->get_colors(),
 																					 twoColorsDepthFramebuffer, std::move(bloomSplitProgram)));
 	
+	std::vector<std::shared_ptr<Texture>> tex;
+	tex.push_back(twoColorsDepthFramebuffer->get_colors()[0]);
+	
+	gaussianBlurRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(tex,
+																					   thirdOneColorDepthFramebuffer,
+																					   std::move(gaussianBlurProgram)));
+	
+	gaussianBlurRenderer2 = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(thirdOneColorDepthFramebuffer->get_colors(),
+																					   	fourthOneColorDepthFramebuffer,
+																					   	std::move(gaussianBlurProgram2)));
+	
+	
 	bloomMergeRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(twoColorsDepthFramebuffer->get_colors(),
 																					 secondOneColorDepthFramebuffer,
 																					 std::move(bloomMergeProgram)));
@@ -171,6 +221,8 @@ void ms::NGinOGL::load () {
 	hdrRenderer->load();
 	bloomSplitRenderer->load();
 	bloomMergeRenderer->load();
+	gaussianBlurRenderer->load();
+	gaussianBlurRenderer2->load();
 }
 
 void ms::NGinOGL::unload () {
@@ -180,7 +232,8 @@ void ms::NGinOGL::unload () {
 	lightSourceRenderer->unload();
 	hdrRenderer->unload();
 	bloomSplitRenderer->unload();
-	bloomMergeRenderer->unload();
+//	bloomMergeRenderer->unload();
+//	gaussianBlurRenderer2->unload();
 }
 
 std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,

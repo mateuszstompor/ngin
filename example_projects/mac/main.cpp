@@ -314,8 +314,8 @@ int main(int argc, const char * argv[]) { {
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 	glfwGetFramebufferSize(window, &width, &height);
 	
-	framebufferWidth = width/2;
-	framebufferHeight = height/2;
+	framebufferWidth = width;
+	framebufferHeight = height;
 	
 	if(window == nullptr){
 		std::cerr << ms::windowCreationError << std::endl;
@@ -346,7 +346,7 @@ int main(int argc, const char * argv[]) { {
 		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
 		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
 		
-		engine->load_point_light(50, ms::math::vec3{1.0f, 1.0f, 0.0f},
+		engine->load_point_light(50, ms::math::vec3{0.0f, 1.0f, 1.0f},
 								 res, useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
 		engine->scene->pointLights[i]->modelTransformation.set_transformation(translation * scale * engine->scene->pointLights[i]->modelTransformation.get_transformation());
 	}
@@ -356,7 +356,7 @@ int main(int argc, const char * argv[]) { {
 		auto result = translation * ms::math::vec4{0.0f, -1.0f, 0.0f, 1.0f};
 		auto res = ms::math::vec3{result.x(), result.y(), result.z()};
 	
-		engine->load_spot_light(50, ms::math::vec3{0.0f, 1.0f, 1.0f}, res,
+		engine->load_spot_light(50, ms::math::vec3{1.0f, 1.0f, 0.0f}, res,
 								50, ms::math::vec3{0.0f, -1.0f, 0.0f},  useCommandLineArguments ? argv[3] : "./cone/cone.obj");
 		engine->scene->spotLights[i]->modelTransformation.set_transformation(translation * scale * engine->scene->spotLights[i]->modelTransformation.get_transformation());
 	}
