@@ -38,20 +38,14 @@ GLint ms::ShaderOGL::set_uniform (std::string name, int value) {
 	return location;
 }
 
-void ms::ShaderOGL::load() {
-	if (!is_loaded()) {
-		program = mglCreateProgram();
-		compile_program();
-		Resource::load();
-	}
+void ms::ShaderOGL::_load() {
+	program = mglCreateProgram();
+	compile_program();
 }
 
-void ms::ShaderOGL::unload() {
-	if(is_loaded()) {
-		mglDeleteProgram(program);
-		program = 0;
-		Resource::unload();
-	}
+void ms::ShaderOGL::_unload() {
+	mglDeleteProgram(program);
+	program = 0;
 }
 
 void ms::ShaderOGL::compile_program() {

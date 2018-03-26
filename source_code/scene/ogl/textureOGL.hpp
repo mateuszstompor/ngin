@@ -51,8 +51,8 @@ namespace ms {
 		
 		const 	GLuint			get_underlying_id	() const;
 		
-		virtual void    		load  				() override;
-		virtual void 			unload 				() override;
+		virtual void    		_load  				() override;
+		virtual void 			_unload 			() override;
 		virtual std::string		get_class			() override;
 
 		virtual void 			use					() override;

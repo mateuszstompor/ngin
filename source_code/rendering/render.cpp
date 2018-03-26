@@ -19,11 +19,8 @@ void ms::Render::clear_frame () {
 	framebuffer->clear_frame();
 }
 
-void ms::Render::load () {
-	if(!is_loaded()) {
-		this->shader->load();
-		Resource::load();
-	}
+void ms::Render::_load () {
+	this->shader->load();
 }
 
 void ms::Render::use () {
@@ -35,9 +32,6 @@ void ms::Render::use () {
 	framebuffer->use();
 }
 
-void ms::Render::unload ()  {
-	if(is_loaded()) {
-		this->shader->unload();
-		Resource::unload();
-	}
+void ms::Render::_unload ()  {
+	this->shader->unload();
 }

@@ -11,9 +11,9 @@
 
 ms::DeferredShaderOGL::DeferredShaderOGL(std::string vSS, std::string fSS) : ms::ShaderOGL(vSS, "", "", "", fSS) { }
 
-void  ms::DeferredShaderOGL::load () {
-	ShaderOGL::load();
-	
+void  ms::DeferredShaderOGL::_load () {
+	ShaderOGL::_load();
+
 	mglUseProgram(program);
 	
 	GLint diffuseTextureLocation = mglGetUniformLocation(program, "diffuseTexture");

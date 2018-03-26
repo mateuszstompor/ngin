@@ -35,9 +35,8 @@ namespace ms {
 		
 									DeferredRenderOGL	(const DeferredRenderOGL &) = delete;
 			DeferredRenderOGL & 	operator = 			(const DeferredRenderOGL &) = delete;
-			void					load				() 												override;
-			bool					is_loaded			() 												override;
-			void 					unload				() 												override;
+			void					_load				() 												override;
+			void 					_unload				() 												override;
 			void 					perform_light_pass	(const Scene * scene) 							override;
 			virtual					~DeferredRenderOGL 	() = default;
 		

@@ -17,8 +17,8 @@ ms::ForwardShaderOGL::ForwardShaderOGL(unsigned int maximalAmountOfLights,
 	
 }
 
-void  ms::ForwardShaderOGL::load () {
-	ShaderOGL::load();
+void  ms::ForwardShaderOGL::_load () {
+	ShaderOGL::_load();
 	
 	mglUseProgram(program);
 	

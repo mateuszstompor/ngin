@@ -77,41 +77,29 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS) {
 	
 }
 
-void ms::DeferredRenderOGL::load () {
+void ms::DeferredRenderOGL::_load () {
+	this->gShader->load();
+	this->lightingShader->load();
 	
-	if (!is_loaded()) {
-		this->gShader->load();
-		this->lightingShader->load();
-		
-		gFramebuffer->use();
-		
-		gFramebuffer->bind_color_buffer(0, gPosition);
-		gFramebuffer->bind_color_buffer(1, gNormal);
-		gFramebuffer->bind_color_buffer(2, gAlbedo);
-		gFramebuffer->bind_depth_buffer(depthRenderbuffer);
-		
-		gFramebuffer->configure();
-		framebuffer->use();
-		
-		quad->load();
-		
-		Resource::load();
-	}
+	gFramebuffer->use();
+	
+	gFramebuffer->bind_color_buffer(0, gPosition);
+	gFramebuffer->bind_color_buffer(1, gNormal);
+	gFramebuffer->bind_color_buffer(2, gAlbedo);
+	gFramebuffer->bind_depth_buffer(depthRenderbuffer);
+	
+	gFramebuffer->configure();
+	framebuffer->use();
+	
+	quad->load();
 }
 
-bool ms::DeferredRenderOGL::is_loaded () {
-	return this->gShader->is_loaded();
-}
-
-void ms::DeferredRenderOGL::unload () {
-	if (is_loaded()) {
-		this->gAlbedo->unload();
-		this->gNormal->unload();
-		this->gPosition->unload();
-		this->gShader->unload();
-		this->lightingShader->unload();
-		Resource::unload();
-	}
+void ms::DeferredRenderOGL::_unload () {
+	this->gAlbedo->unload();
+	this->gNormal->unload();
+	this->gPosition->unload();
+	this->gShader->unload();
+	this->lightingShader->unload();
 }
 
 void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {

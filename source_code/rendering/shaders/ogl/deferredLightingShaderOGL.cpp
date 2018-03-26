@@ -20,86 +20,82 @@ ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(unsigned int maximalAmo
 
 }
 
-void  ms::DeferredLightingShaderOGL::load () {
+void  ms::DeferredLightingShaderOGL::_load () {
 	
-	if(!is_loaded()) {
+	ShaderOGL::_load();
 	
-		ShaderOGL::load();
+	mglUseProgram(program);
+	
+	GLint gPosition = mglGetUniformLocation(program, "gPosition");
+	mglUniform1i(gPosition, 0);
+	
+	GLint gNormal = mglGetUniformLocation(program, "gNormal");
+	mglUniform1i(gNormal, 1);
+	
+	GLint gAlbedo = mglGetUniformLocation(program, "gAlbedo");
+	mglUniform1i(gAlbedo, 2);
+	
+	directionalLightColorLocation = mglGetUniformLocation(program, "dirLight.color");
+	directionalLightDirectionLocation = mglGetUniformLocation(program, "dirLight.direction");
+	hasDirectionalLightLocation = mglGetUniformLocation(program, "hasDirLight");
+	
+	cameraTransformationLocation = mglGetUniformLocation(program, "cameraTransformation");
+	renderModeLocation = mglGetUniformLocation(program, "renderMode");
+	
+	spotLightsAmount = mglGetUniformLocation(program, "spotLightsAmount");
+	
+	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
 		
-		mglUseProgram(program);
-		
-		GLint gPosition = mglGetUniformLocation(program, "gPosition");
-		mglUniform1i(gPosition, 0);
-		
-		GLint gNormal = mglGetUniformLocation(program, "gNormal");
-		mglUniform1i(gNormal, 1);
-		
-		GLint gAlbedo = mglGetUniformLocation(program, "gAlbedo");
-		mglUniform1i(gAlbedo, 2);
-		
-		directionalLightColorLocation = mglGetUniformLocation(program, "dirLight.color");
-		directionalLightDirectionLocation = mglGetUniformLocation(program, "dirLight.direction");
-		hasDirectionalLightLocation = mglGetUniformLocation(program, "hasDirLight");
-		
-		cameraTransformationLocation = mglGetUniformLocation(program, "cameraTransformation");
-		renderModeLocation = mglGetUniformLocation(program, "renderMode");
-		
-		spotLightsAmount = mglGetUniformLocation(program, "spotLightsAmount");
-		
-		for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
-			
-			{
-				GLint colorLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].color").c_str());
-				spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_COLOR) ] = colorLocation;
-			}
-			
-			{
-				GLint positionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].position").c_str());
-				spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_POSITION) ] = positionLocation;
-			}
-			
-			{
-				GLint powerLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].power").c_str());
-				spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_POWER) ] = powerLocation;
-			}
-			
-			{
-				GLint angleLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].angleDegrees").c_str());
-				spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_ANGLE_DEGREES) ] = angleLocation;
-			}
-			
-			{
-				GLint directionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].direction").c_str());
-				spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_DIRECTION) ] = directionLocation;
-			}
-			
+		{
+			GLint colorLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].color").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_COLOR) ] = colorLocation;
 		}
 		
-		pointLightsAmount = mglGetUniformLocation(program, "pointLightsAmount");
-		
-		for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
-			
-			{
-				GLint colorLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].color").c_str());
-				pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_COLOR) ] = colorLocation;
-			}
-			
-			{
-				GLint positionLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].position").c_str());
-				pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_POSITION) ] = positionLocation;
-			}
-			
-			{
-				GLint powerLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].power").c_str());
-				pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_POWER) ] = powerLocation;
-			}
-			
+		{
+			GLint positionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].position").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_POSITION) ] = positionLocation;
 		}
 		
-		mglUseProgram(0);
+		{
+			GLint powerLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].power").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_POWER) ] = powerLocation;
+		}
+		
+		{
+			GLint angleLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].angleDegrees").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_ANGLE_DEGREES) ] = angleLocation;
+		}
+		
+		{
+			GLint directionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].direction").c_str());
+			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_DIRECTION) ] = directionLocation;
+		}
 		
 	}
 	
+	pointLightsAmount = mglGetUniformLocation(program, "pointLightsAmount");
+	
+	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
+		
+		{
+			GLint colorLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].color").c_str());
+			pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_COLOR) ] = colorLocation;
+		}
+		
+		{
+			GLint positionLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].position").c_str());
+			pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_POSITION) ] = positionLocation;
+		}
+		
+		{
+			GLint powerLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].power").c_str());
+			pointLightsLocations[(i * AMOUNT_POINT_LIGHT_PROPERTIES) + (PL_POWER) ] = powerLocation;
+		}
+		
+	}
+	
+	mglUseProgram(0);
+
 }
 
 void ms::DeferredLightingShaderOGL::set_amount_of_point_lights (int amount) {

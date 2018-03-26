@@ -66,8 +66,7 @@ ms::TextureOGL::TextureOGL	(Texture::Type 	textype,
 	this->texture = 0;
 }
 
-void ms::TextureOGL::load () {
-	if(!is_loaded()) {
+void ms::TextureOGL::_load () {
 		mglGenTextures(1, &this->texture);
 		
 		mglBindTexture(this->target, this->texture);
@@ -81,8 +80,6 @@ void ms::TextureOGL::load () {
 		mglTexParameteri(this->target, GL_TEXTURE_WRAP_T, to_ogl(this->tWrapping));
 		
 		mglBindTexture(this->target, 0);
-		Resource::load();
-	}
 }
 
 void ms::TextureOGL::use () {
@@ -92,12 +89,9 @@ void ms::TextureOGL::use () {
 	mglBindTexture(this->target, this->texture);
 }
 
-void ms::TextureOGL::unload () {
-	if(is_loaded()) {
-		mglDeleteTextures(1, &this->texture);
-		this->texture = 0;
-		Resource::unload();
-	}
+void ms::TextureOGL::_unload () {
+	mglDeleteTextures(1, &this->texture);
+	this->texture = 0;
 }
 
 GLenum ms::TextureOGL::to_ogl (MinFilter minFilter) {

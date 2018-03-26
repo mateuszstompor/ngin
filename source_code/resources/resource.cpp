@@ -14,23 +14,25 @@ bool ms::Resource::is_loaded () {
 }
 
 void ms::Resource::load () {
-	
-	#ifdef R_LOADS
-		std::cout << "#Resource::load " << this << std::endl;
-	#endif
-	
-	isLoaded = true;
-	ResourceCoordinator::get_instance()->register_load(this);
+	if(!isLoaded) {
+		isLoaded = true;
+		ResourceCoordinator::get_instance()->register_load(this);
+		#ifdef R_LOADS
+			std::cout << "#Resource::load " << this << std::endl;
+		#endif
+		_load();
+	}
 }
 
 void ms::Resource::unload () {
-	
-	#ifdef R_UNLOADS
-		std::cout << "#Resource::unload " << this << std::endl;
-	#endif
-	
-	isLoaded = false;
-	ResourceCoordinator::get_instance()->register_unload(this);
+	if(isLoaded) {
+		isLoaded = false;
+		ResourceCoordinator::get_instance()->register_unload(this);
+		#ifdef R_UNLOADS
+			std::cout << "#Resource::unload " << this << std::endl;
+		#endif
+		_unload();
+	}
 }
 
 ms::Resource::Resource () : isLoaded(false) {

@@ -24,8 +24,8 @@ namespace ms {
 		
 												DrawableOGL		();
 				void 							use				() override;
-				void							load			() override;
-				void 							unload			() override;
+				void							_load			() override;
+				void 							_unload			() override;
 				std::string 					get_class 		() override;
 				void							draw			() override;
 		static	std::shared_ptr<DrawableOGL>	get_quad		();

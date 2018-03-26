@@ -48,7 +48,7 @@ namespace ms {
 		
 		virtual void 	set_rendering_mode					(unsigned int settings) 								override;
 
-		virtual void	load								()														override;
+		virtual void	_load								()														override;
 		
 						~DeferredLightingShaderOGL			();
 		

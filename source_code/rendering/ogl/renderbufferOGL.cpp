@@ -29,21 +29,15 @@ std::string ms::RenderbufferOGL::get_class () {
 	return "ms::RenderbufferOGL";
 }
 
-void ms::RenderbufferOGL::load () {
-	if(!is_loaded()) {
-		mglGenRenderbuffers(1, &this->renderBuffer);
-		mglBindRenderbuffer(GL_RENDERBUFFER, this->renderBuffer);
-		mglRenderbufferStorage(GL_RENDERBUFFER, RenderbufferOGL::get_internal_format(format, associatedType), width, height);
-		ms::Resource::load();
-	}
+void ms::RenderbufferOGL::_load () {
+	mglGenRenderbuffers(1, &this->renderBuffer);
+	mglBindRenderbuffer(GL_RENDERBUFFER, this->renderBuffer);
+	mglRenderbufferStorage(GL_RENDERBUFFER, RenderbufferOGL::get_internal_format(format, associatedType), width, height);
 }
 
-void ms::RenderbufferOGL::unload () {
-	if(is_loaded()) {
-		mglDeleteRenderbuffers(1, &this->renderBuffer);
-		this->renderBuffer = 0;
-		ms::Resource::unload();
-	}
+void ms::RenderbufferOGL::_unload () {
+	mglDeleteRenderbuffers(1, &this->renderBuffer);
+	this->renderBuffer = 0;
 }
 
 void ms::RenderbufferOGL::use () {

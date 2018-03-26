@@ -59,9 +59,9 @@ namespace ms {
 		
 		virtual void 			bind_texture(unsigned int index, Texture & texture) override;
 		virtual void 			use			() override;
-		virtual void 			load		() override;
+		virtual void 			_load		() override;
+		virtual void 			_unload		() override;
 		virtual std::string		get_class	() override;
-		virtual void 			unload		() override;
 		virtual 				~ShaderOGL	() = default;
 				GLuint 			get_gl_id	() const;
 				GLint			set_uniform	(std::string name, int value);

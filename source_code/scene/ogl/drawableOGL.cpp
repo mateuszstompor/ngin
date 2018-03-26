@@ -31,8 +31,6 @@ void ms::DrawableOGL::draw () {
 
 std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 	
-	//TODO
-	
 	std::shared_ptr<ms::DrawableOGL>	drawable(new DrawableOGL());
 	std::shared_ptr<ms::Geometry> 		quad(new GeometryOGL());
 	
@@ -40,9 +38,9 @@ std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 		int positionOffset = 3 * i;
 		int textureOffset = 2 * i;
 		
-		math::vec3 position = math::vec3{quad_indicies::vertices[positionOffset],
-										quad_indicies::vertices[positionOffset+1],
-										quad_indicies::vertices[positionOffset+2]};
+		math::vec3 position = math::vec3{	quad_indicies::vertices[positionOffset],
+											quad_indicies::vertices[positionOffset+1],
+											quad_indicies::vertices[positionOffset+2]};
 		
 		math::vec2 textureCoordinate = math::vec2{quad_indicies::textureCoordinates[textureOffset],
 												  quad_indicies::textureCoordinates[textureOffset+1]};
@@ -58,41 +56,33 @@ std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 	drawable->geometry = std::move(quad);
 	
 	return drawable;
-}
-
-void ms::DrawableOGL::load	() {
-	
-	if (!is_loaded()) {
-		
-		mglGenVertexArrays(1, &vertexArray);
-		
-		mglBindVertexArray(vertexArray);
-		
-		if(geometry) {
-			
-			geometry->use_vertices();
-			mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-			mglEnableVertexAttribArray(0);
-			
-			geometry->use_normals();
-			mglVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-			mglEnableVertexAttribArray(1);
-			
-			geometry->use_texture_coord();
-			mglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), nullptr);
-			mglEnableVertexAttribArray(2);
-			
-		}
-		
-		Resource::load();
-		
-	}
 	
 }
 
-void ms::DrawableOGL::unload () {
-	if(is_loaded()) {
-		mglDeleteVertexArrays(1, &vertexArray);
-		Resource::unload();
+void ms::DrawableOGL::_load	() {
+
+	mglGenVertexArrays(1, &vertexArray);
+	
+	mglBindVertexArray(vertexArray);
+	
+	if(geometry) {
+		
+		geometry->use_vertices();
+		mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+		mglEnableVertexAttribArray(0);
+		
+		geometry->use_normals();
+		mglVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+		mglEnableVertexAttribArray(1);
+		
+		geometry->use_texture_coord();
+		mglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), nullptr);
+		mglEnableVertexAttribArray(2);
+		
 	}
+
+}
+
+void ms::DrawableOGL::_unload () {
+	mglDeleteVertexArrays(1, &vertexArray);
 }

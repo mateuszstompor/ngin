@@ -23,20 +23,27 @@ namespace ms {
 		
 	protected:
 		
-		 						Resource	();
+		 						Resource		();
 		
     public:
 	
-		virtual void    		load  		() = 0;
-		virtual bool    		is_loaded   ();
-		virtual void 			unload 		() = 0;
-		virtual std::string 	get_class	();
-		virtual         		~Resource   ();
+		virtual void    		load  			() final;
+		virtual void 			unload 			() final;
+		
+		virtual bool    		is_loaded   	() final;
+		
+		virtual std::string 	get_class		();
+		virtual         		~Resource   	();
 	
+	protected:
+		
+		virtual void			_load			() = 0;
+		virtual void			_unload			() = 0;
+		
 	private:
 		
 				bool			isLoaded;
-	        
+		
     };
     
 }

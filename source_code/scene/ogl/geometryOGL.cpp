@@ -8,16 +8,8 @@
 
 #include "geometryOGL.hpp"
 
-void ms::GeometryOGL::load() {
-	
-	if (!is_loaded()) {
-		
-		load_vertices_to_buffer();
-		
-		Resource::load();
-		
-	}
-	
+void ms::GeometryOGL::_load() {
+	load_vertices_to_buffer();
 }
 
 void ms::GeometryOGL::use_texture_coord () {
@@ -114,12 +106,9 @@ std::string ms::GeometryOGL::get_class () {
 	return "ms::GeometryOGL";
 }
 
-void ms::GeometryOGL::unload() {
-	if(is_loaded()) {
-		mglDeleteBuffers(1, &positionsBuffer);
-		mglDeleteBuffers(1, &normalsBuffer);
-		mglDeleteBuffers(1, &texturesCooridnatesBuffer);
-		mglDeleteBuffers(1, &indiciesBuffer);
-		Resource::unload();
-	}
+void ms::GeometryOGL::_unload() {
+	mglDeleteBuffers(1, &positionsBuffer);
+	mglDeleteBuffers(1, &normalsBuffer);
+	mglDeleteBuffers(1, &texturesCooridnatesBuffer);
+	mglDeleteBuffers(1, &indiciesBuffer);
 }

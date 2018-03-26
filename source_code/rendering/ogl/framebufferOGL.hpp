@@ -46,8 +46,8 @@ namespace ms {
 		virtual void 		bind_depth_buffer				(std::shared_ptr<Renderbuffer> renderbuffer) override;
 		virtual void 		copy_depth_from					(Framebuffer & frame) override;
 		virtual bool		is_complete						() const override;
-		virtual void    	load  							() override;
-		virtual void 		unload 							() override;
+		virtual void    	_load  							() override;
+		virtual void 		_unload 						() override;
 		virtual std::string	get_class						() override;
 		virtual void		clear_color						() override;
 		virtual void		clear_depth						() override;

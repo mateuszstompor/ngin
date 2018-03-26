@@ -27,12 +27,9 @@ bool ms::FramebufferOGL::is_complete () const {
 	return true;
 }
 
-void ms::FramebufferOGL::load () {
-	if(!is_loaded()) {
-		if(!is_default_framebuffer) {
-			mglGenFramebuffers(1, &this->framebuffer);
-		}
-		Resource::load();
+void ms::FramebufferOGL::_load () {
+	if(!is_default_framebuffer) {
+		mglGenFramebuffers(1, &this->framebuffer);
 	}
 }
 
@@ -89,13 +86,10 @@ void ms::FramebufferOGL::use_for_read () {
 	mglBindFramebuffer(GL_READ_FRAMEBUFFER, this->framebuffer);
 }
 
-void ms::FramebufferOGL::unload () {
-	if(is_loaded()) {
-		if(!is_default_framebuffer) {
-			mglDeleteFramebuffers(1, &this->framebuffer);
-			this->framebuffer = 0;
-		}
-		Resource::unload();
+void ms::FramebufferOGL::_unload () {
+	if(!is_default_framebuffer) {
+		mglDeleteFramebuffers(1, &this->framebuffer);
+		this->framebuffer = 0;
 	}
 }
 

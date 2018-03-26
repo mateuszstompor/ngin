@@ -25,8 +25,8 @@ namespace ms {
 				void 			use_indicies 			() override;
 				void 			use_texture_coord	 	() override;
 		virtual	std::string		get_class				() override;
-				void 			load					() override;
-				void 			unload					() override;
+				void 			_load					() override;
+				void 			_unload					() override;
 				void 			load_vertices_to_buffer	();
 		
 	protected:

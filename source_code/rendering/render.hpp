@@ -26,8 +26,8 @@ namespace ms {
 												 std::unique_ptr<Shader> 		shader);
 		
 		virtual void			use		     	();
-		virtual	void			load			() override;
-		virtual	void 			unload			() override;
+		virtual	void			_load			() override;
+		virtual	void 			_unload			() override;
 		virtual void 			clear_frame		();
 		virtual std::string 	get_class		() override;
 		virtual void			draw  			(Drawable * node, const Scene * scene) = 0;
