@@ -12,8 +12,9 @@
 #include <iostream>
 #include <fstream>
 #include <streambuf>
+#include <chrono>
 #include <sstream>
-
+#include <functional>
 #include <vector>
 
 namespace ms {
@@ -50,6 +51,14 @@ namespace ms {
 			std::stringstream strStream;
 			strStream << inputStream.rdbuf();
 			return strStream.str();
+		}
+		
+		template<typename T>
+		inline long measure_time(std::function<void(void)> lambda) {
+			auto start = std::chrono::high_resolution_clock::now();
+			lambda();
+			auto now = std::chrono::high_resolution_clock::now();
+			return std::chrono::duration_cast<T>(now - start).count();
 		}
 		
 	}

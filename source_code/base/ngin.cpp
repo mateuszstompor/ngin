@@ -122,7 +122,6 @@ void ms::NGin::load_point_light	(float power,
 	}
 	
 }
-
 //TODO
 void ms::NGin::load_spot_light (float power,
 								math::vec3 color,
@@ -175,19 +174,30 @@ void ms::NGin::count_fps () {
 }
 
 void ms::NGin::draw_scene() {
+	static int framesGenerated = 0;
+	static int framesSpan = 150;
+	
+	static long deferredRenderDrawingTime,	lightSourceDrawingTime, 	bloomSplitDrawingTime;
+	static long firstStepBlurDrawingTime, 	secondStepBlurDrawingTime, 	bloomMergerDrawingTime;
+	static long hdrDrawingTime, 			lightPassTime, 				geometryPassTime;
 	
 	#ifdef NGIN_COUNT_FPS
 		count_fps();
 	#endif
-	
-	deferredRenderer->use();
-	deferredRenderer->setup_g_buffer_uniforms(scene.get());
-	deferredRenderer->clear_frame();
-	for(int i = 0; i < scene->nodes.size(); ++i) {
-		deferredRenderer->draw(scene->nodes[i].get(), scene.get());
-	}
-	deferredRenderer->perform_light_pass(scene.get());
-
+	deferredRenderDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		deferredRenderer->use();
+		deferredRenderer->setup_g_buffer_uniforms(scene.get());
+		deferredRenderer->clear_frame();
+		geometryPassTime = utils::measure_time<std::chrono::microseconds>([&](){
+			for(int i = 0; i < scene->nodes.size(); ++i) {
+				deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+			}
+		});
+		
+		lightPassTime = utils::measure_time<std::chrono::microseconds>([&](){
+			deferredRenderer->perform_light_pass(scene.get());
+		});
+	});
 
 //	phongForwardRenderer->use();
 //	phongForwardRenderer->clear_frame();
@@ -204,32 +214,58 @@ void ms::NGin::draw_scene() {
 //	}
 	
 	secondOneColorFramebuffer->copy_depth_from(*oneColorDepthFramebuffer.get());
+
+	lightSourceDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		lightSourceRenderer->use();
+		for(int i = 0; i < scene->pointLights.size(); ++i) {
+			lightSourceRenderer->draw(scene->pointLights[i].get(), scene.get());
+		}
+		for(int i = 0; i < scene->spotLights.size(); ++i) {
+			lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
+		}
+	});
 	
-	lightSourceRenderer->use();
-	for(int i = 0; i < scene->pointLights.size(); ++i) {
-		lightSourceRenderer->draw(scene->pointLights[i].get(), scene.get());
+	bloomSplitDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		bloomSplitRenderer->use();
+		bloomSplitRenderer->clear_frame();
+		bloomSplitRenderer->draw_quad();
+	});
+	
+	firstStepBlurDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		gaussianBlurFirstStepRenderer->use();
+		gaussianBlurFirstStepRenderer->clear_frame();
+		gaussianBlurFirstStepRenderer->draw_quad();
+	});
+	
+	secondStepBlurDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		gaussianBlurSecondStepRenderer->use();
+		gaussianBlurSecondStepRenderer->clear_frame();
+		gaussianBlurSecondStepRenderer->draw_quad();
+	});
+	
+	bloomMergerDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		bloomMergeRenderer->use();
+		bloomMergeRenderer->clear_frame();
+		bloomMergeRenderer->draw_quad();
+	});
+	
+	hdrDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+		hdrRenderer->clear_frame();
+		hdrRenderer->draw_quad();
+	});
+	
+	framesGenerated += 1;
+	if(framesGenerated > framesSpan) {
+		std::cout << "Geometry Pass: " 			<< geometryPassTime 			<< std::endl;
+		std::cout << "Light Pass: " 			<< lightPassTime 				<< std::endl;
+		std::cout << "Deferred Render: "	 	<< deferredRenderDrawingTime	<< std::endl;
+		std::cout << "Light Sources Render: " 	<< lightSourceDrawingTime 		<< std::endl;
+		std::cout << "Bloom Split: " 			<< bloomSplitDrawingTime 		<< std::endl;
+		std::cout << "Blur first step: " 		<< firstStepBlurDrawingTime 	<< std::endl;
+		std::cout << "Blur second step: " 		<< secondStepBlurDrawingTime 	<< std::endl;
+		std::cout << "Bloom Merge: " 			<< bloomMergerDrawingTime 		<< std::endl;
+		std::cout << "Hdr draw: " 				<< hdrDrawingTime 				<< std::endl;
+		framesGenerated = 0;
 	}
-	for(int i = 0; i < scene->spotLights.size(); ++i) {
-		lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
-	}
-	
-	bloomSplitRenderer->use();
-	bloomSplitRenderer->clear_frame();
-	bloomSplitRenderer->draw_quad();
-	
-	gaussianBlurFirstStepRenderer->use();
-	gaussianBlurFirstStepRenderer->clear_frame();
-	gaussianBlurFirstStepRenderer->draw_quad();
-	
-	gaussianBlurSecondStepRenderer->use();
-	gaussianBlurSecondStepRenderer->clear_frame();
-	gaussianBlurSecondStepRenderer->draw_quad();
-	
-	bloomMergeRenderer->use();
-	bloomMergeRenderer->clear_frame();
-	bloomMergeRenderer->draw_quad();
-	
-	hdrRenderer->clear_frame();
-	hdrRenderer->draw_quad();
 	
 }
