@@ -392,6 +392,8 @@ int main(int argc, const char * argv[]) { {
 
 	engine = nullptr;	
 	
+	std::cout<<get_allocation_statistics()<<std::endl;
+	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
 	glfwTerminate();

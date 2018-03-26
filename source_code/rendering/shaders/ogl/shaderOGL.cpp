@@ -56,39 +56,44 @@ void ms::ShaderOGL::unload() {
 
 void ms::ShaderOGL::compile_program() {
 	
-	GLuint vshader 		= mglCreateShader(GL_VERTEX_SHADER);
+	GLuint vshader 		= 0;
 	
 	#ifndef ios_build
 	
-	GLuint cshader		= mglCreateShader(GL_TESS_CONTROL_SHADER);
-	GLuint evalshader 	= mglCreateShader(GL_TESS_EVALUATION_SHADER);
-	GLuint gshader 		= mglCreateShader(GL_GEOMETRY_SHADER);
+	GLuint cshader 		= 0;
+	GLuint evalshader 	= 0;
+	GLuint gshader 		= 0;
 	
 	#endif
 	
-	GLuint fshader 		= mglCreateShader(GL_FRAGMENT_SHADER);
+	GLuint fshader 		= 0;
 	
 	if (!vertexSource.empty()) {
+		vshader = mglCreateShader(GL_VERTEX_SHADER);
 		compile_shader(program, vshader, GL_VERTEX_SHADER, vertexSource);
 	}
 	
 	#ifndef ios_build
 
 	if (!tesselationControlSource.empty()) {
+		cshader = mglCreateShader(GL_TESS_CONTROL_SHADER);
 		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, tesselationControlSource);
 	}
 	
 	if (!tesselationEvalutationSource.empty()) {
+		evalshader = mglCreateShader(GL_TESS_EVALUATION_SHADER);
 		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, tesselationEvalutationSource);
 	}
 
 	if (!geometrySource.empty()) {
+		gshader = mglCreateShader(GL_GEOMETRY_SHADER);
 		compile_shader(program, gshader, GL_GEOMETRY_SHADER, geometrySource);
 	}
 	
 	#endif
 	
 	if (!fragmentSource.empty()) {
+		fshader = mglCreateShader(GL_FRAGMENT_SHADER);
 		compile_shader(program, fshader, GL_FRAGMENT_SHADER, fragmentSource);
 	}
 	

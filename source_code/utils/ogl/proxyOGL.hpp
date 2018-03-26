@@ -218,4 +218,6 @@ GLenum 		_mglCheckFramebufferStatus (GLenum target);
 
 #endif
 
+std::string get_allocation_statistics();
+
 #endif /* proxy_ogl_h */

@@ -8,6 +8,27 @@
 
 #include "proxyOGL.hpp"
 
+static int glGenBuffersCallsAmount 			= 0;
+static int glDeleteBuffersCallsAmount 		= 0;
+
+static int glGenVertexArraysCallsAmount 	= 0;
+static int glDeleteVertexArraysCallsAmount 	= 0;
+
+static int glGenRenderbuffersCallsAmount 	= 0;
+static int glDeleteRenderbuffersCallsAmount = 0;
+
+static int glGenFramebuffersCallsAmount 	= 0;
+static int glDeleteFramebuffersCallsAmount 	= 0;
+
+static int glCreateShaderCallsAmount		= 0;
+static int glDeleteShaderCallsAmount		= 0;
+
+static int glCreateProgramCallsAmount		= 0;
+static int glDeleteProgramCallsAmount		= 0;
+
+static int glGenTexturesCallsAmount			= 0;
+static int glDeleteTexturesCallsAmount		= 0;
+
 void _mglDrawBuffers (GLsizei n, const GLenum* bufs) {
 	glDrawBuffers(n, bufs);
 	ms::utils::check_gl_error();
@@ -27,11 +48,13 @@ GLboolean _mglUnmapBuffer (GLenum target) {
 
 void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays) {
 	glDeleteVertexArrays(n, arrays);
+	glDeleteVertexArraysCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglGenRenderbuffers (GLsizei n, GLuint* renderbuffers) {
 	glGenRenderbuffers(n, renderbuffers);
+	glGenRenderbuffersCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
@@ -67,11 +90,13 @@ void _mglViewport (GLint x, GLint y, GLsizei width, GLsizei height) {
 
 void _mglGenBuffers (GLsizei n, GLuint *buffers) {
 	glGenBuffers(n, buffers);
+	glGenBuffersCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglGenVertexArrays (GLsizei n, GLuint *arrays) {
 	glGenVertexArrays(n, arrays);
+	glGenVertexArraysCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
@@ -138,6 +163,7 @@ void _mglUniformMatrix4fv (GLint location, GLsizei count, GLboolean transpose, c
 
 void _mglGenTextures (GLsizei n, GLuint* textures) {
 	glGenTextures(n, textures);
+	glGenTexturesCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
@@ -173,6 +199,7 @@ void _mglEnable (GLenum cap) {
 
 void _mglGenFramebuffers (GLsizei n, GLuint* framebuffers) {
 	glGenFramebuffers(n, framebuffers);
+	glGenFramebuffersCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
@@ -203,31 +230,37 @@ void _mglFramebufferTexture2D (GLenum target, GLenum attachment, GLenum textarge
 
 void _mglDeleteBuffers (GLsizei n, const GLuint* buffers) {
 	glDeleteBuffers(n, buffers);
+	glDeleteBuffersCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglDeleteFramebuffers (GLsizei n, const GLuint* framebuffers) {
 	glDeleteFramebuffers(n, framebuffers);
+	glDeleteFramebuffersCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglDeleteProgram (GLuint program) {
 	glDeleteProgram(program);
+	glDeleteProgramCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglDeleteRenderbuffers (GLsizei n, const GLuint* renderbuffers) {
 	glDeleteRenderbuffers(n, renderbuffers);
+	glDeleteRenderbuffersCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglDeleteShader (GLuint shader) {
 	glDeleteShader(shader);
+	glDeleteShaderCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
 void _mglDeleteTextures (GLsizei n, const GLuint* textures) {
 	glDeleteTextures(n, textures);
+	glDeleteTexturesCallsAmount += 1;
 	ms::utils::check_gl_error();
 }
 
@@ -248,12 +281,14 @@ void _mglUseProgram (GLuint program) {
 
 GLuint _mglCreateShader (GLenum type) {
 	GLuint tmp = glCreateShader(type);
+	glCreateShaderCallsAmount += 1;
 	ms::utils::check_gl_error();
 	return tmp;
 }
 
 GLuint _mglCreateProgram (void) {
 	GLuint tmp = glCreateProgram();
+	glCreateProgramCallsAmount += 1;
 	ms::utils::check_gl_error();
 	return tmp;
 }
@@ -298,4 +333,25 @@ GLenum _mglCheckFramebufferStatus (GLenum target) {
 	ms::utils::check_gl_error();
 	return status;
 }
+
+
+std::string get_allocation_statistics() {
+	std::string output = "";
+	output += "glGenBuffers calls: " 			+ std::to_string(glGenBuffersCallsAmount) 			+ "\n";
+	output += "glDeleteBuffers calls: " 		+ std::to_string(glDeleteBuffersCallsAmount) 		+ "\n";
+	output += "glGenRenderbuffers calls: " 		+ std::to_string(glGenRenderbuffersCallsAmount) 	+ "\n";
+	output += "glDeleteRenderbuffers calls: " 	+ std::to_string(glDeleteRenderbuffersCallsAmount) 	+ "\n";
+	output += "glGenVertexArrays calls: " 		+ std::to_string(glGenVertexArraysCallsAmount) 		+ "\n";
+	output += "glDeleteVertexArrays calls: " 	+ std::to_string(glDeleteVertexArraysCallsAmount) 	+ "\n";
+	output += "glGenFramebuffer calls: " 		+ std::to_string(glGenFramebuffersCallsAmount) 		+ "\n";
+	output += "glDeleteFramebuffer calls: " 	+ std::to_string(glDeleteFramebuffersCallsAmount) 	+ "\n";
+	output += "glCreateShader calls: " 			+ std::to_string(glCreateShaderCallsAmount) 		+ "\n";
+	output += "glDeleteShader calls: " 			+ std::to_string(glDeleteShaderCallsAmount) 		+ "\n";
+	output += "glCreateProgram calls: " 		+ std::to_string(glCreateProgramCallsAmount) 		+ "\n";
+	output += "glDeleteProgram calls: " 		+ std::to_string(glDeleteProgramCallsAmount) 		+ "\n";
+	output += "glGenTextures calls: " 			+ std::to_string(glGenTexturesCallsAmount) 			+ "\n";
+	output += "glDeleteTextures calls: " 		+ std::to_string(glDeleteTexturesCallsAmount) 		+ "\n";
+	return output;
+}
+
 

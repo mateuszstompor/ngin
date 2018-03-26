@@ -20,5 +20,6 @@
 #include "scene/ogl/drawableOGL.hpp"
 #include "scene/ogl/geometryOGL.hpp"
 #include "rendering/ogl/framebufferOGL.hpp"
+#include "utils/ogl/proxyOGL.hpp"
 
 #endif /* umbrella_header_hpp */

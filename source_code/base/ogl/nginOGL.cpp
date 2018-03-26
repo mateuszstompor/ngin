@@ -224,6 +224,7 @@ void ms::NGinOGL::load () {
 }
 
 void ms::NGinOGL::unload () {
+	NGin::unload();
 	phongForwardRenderer->unload();
 	gouraudForwardRenderer->unload();
 	deferredRenderer->unload();
