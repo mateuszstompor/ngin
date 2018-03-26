@@ -87,26 +87,17 @@ namespace ms {
 		
 		namespace postprocess {
 			
-			const std::string hdrVshader =
-			#include "./postprocess/hdr/hdr_vshader.glsl"
+			const std::string passTroughVshader =
+			#include "./postprocess/pass_trough_vshader.glsl"
 			
 			const std::string hdrFshader =
 			#include "./postprocess/hdr/hdr_fshader.glsl"
 			
-			const std::string bloom_merger_vshader =
-			#include "./postprocess/bloom/bloom_merger_vshader.glsl"
-			
 			const std::string bloom_merger_fshader =
 			#include "./postprocess/bloom/bloom_merger_fshader.glsl"
 			
-			const std::string bloom_splitter_vshader =
-			#include "./postprocess/bloom/bloom_splitter_vshader.glsl"
-			
 			const std::string bloom_splitter_fshader =
 			#include "./postprocess/bloom/bloom_splitter_fshader.glsl"
-			
-			const std::string gaussian_blur_vshader =
-			#include "./postprocess/gaussian_blur/gaussian_blur_vshader.glsl"
 			
 			const std::string gaussian_blur_fshader =
 			#include "./postprocess/gaussian_blur/gaussian_blur_fshader.glsl"
@@ -188,14 +179,14 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += forwardrenderer::gouraudFragmentShader;
 			break;
 		case ms::shader::Type::post_process_hdr_vshader:
-			shaderContent += postprocess::hdrVshader;
+			shaderContent += postprocess::passTroughVshader;
 			break;
 		case ms::shader::Type::post_process_hdr_fshader:
 			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::hdrFshader;
 			break;
 		case ms::shader::Type::post_process_bloom_merger_vshader:
-			shaderContent += postprocess::bloom_merger_vshader;
+			shaderContent += postprocess::passTroughVshader;
 			break;
 		case ms::shader::Type::post_process_bloom_merger_fshader:
 			shaderContent += functionsDefinitions;
@@ -203,14 +194,14 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::post_process_bloom_splitter_vshader:
 			shaderContent += functionsDefinitions;
-			shaderContent += postprocess::bloom_splitter_vshader;
+			shaderContent += postprocess::passTroughVshader;
 			break;
 		case ms::shader::Type::post_process_bloom_splitter_fshader:
 			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::bloom_splitter_fshader;
 			break;
 		case ms::shader::Type::post_process_gaussian_blur_vshader:
-			shaderContent += postprocess::gaussian_blur_vshader;
+			shaderContent += postprocess::passTroughVshader;
 			break;
 		case ms::shader::Type::post_process_gaussian_blur_fshader:
 			shaderContent += postprocess::gaussian_blur_fshader;

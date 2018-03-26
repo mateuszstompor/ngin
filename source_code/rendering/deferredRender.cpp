@@ -130,45 +130,29 @@ void ms::DeferredRender::clear_frame () {
 
 void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Drawable * node) {
 	
-	auto material = scene->materials.find(node->geometry->get_material_name());
-	
-	if (material != scene->materials.end()) {
+	if (auto mat = node->boundedMaterial.lock()) {
 		gShader->set_has_material(true);
 		
-		if(material->second->diffuseTexturesNames.size() > 0) {
-			
-			auto textureIt = scene->textures.find(material->second->diffuseTexturesNames[0]);
-			
-			if ( textureIt != scene->textures.end()) {
-				gShader->bind_diffuse_texture(*textureIt->second);
-				gShader->set_has_diffuse_texture(true);
-			} else {
-				gShader->set_has_diffuse_texture(false);
-			}
-			
+		if(auto diff = mat->boundedDiffuseTexture.lock()) {
+			gShader->bind_diffuse_texture(*diff);
+			gShader->set_has_diffuse_texture(true);
 		} else {
 			gShader->set_has_diffuse_texture(false);
+			gShader->set_material_diffuse_color(mat->diffuseColor);
 		}
 		
-		if(material->second->specularTexturesNames.size() > 0) {
-			auto textureIt = scene->textures.find(material->second->specularTexturesNames[0]);
-			if ( textureIt != scene->textures.end()) {
-				gShader->bind_specular_texture(*textureIt->second);
-				gShader->set_has_specular_texture(true);
-			} else {
-				gShader->set_has_specular_texture(false);
-			}
-			
+		if(auto spec = mat->boundedSpecularTexture.lock()) {
+			gShader->bind_specular_texture(*spec);
+			gShader->set_has_specular_texture(true);
 		} else {
 			gShader->set_has_specular_texture(false);
+			gShader->set_material_specular_color(mat->specularColor);
 		}
 		
-		
-		gShader->set_material_ambient_color(material->second->ambientColor);
-		gShader->set_material_diffuse_color(material->second->diffuseColor);
-		gShader->set_material_specular_color(material->second->specularColor);
-		gShader->set_material_opacity(material->second->opacity);
-		gShader->set_material_shininess(material->second->shininess);
+		// add uniform blocks
+		gShader->set_material_ambient_color(mat->ambientColor);
+		gShader->set_material_opacity(mat->opacity);
+		gShader->set_material_shininess(mat->shininess);
 	} else {
 		gShader->set_has_material(false);
 	}

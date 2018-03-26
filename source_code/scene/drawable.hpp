@@ -31,6 +31,8 @@ namespace ms {
 		
 		PositionedObject				modelTransformation;
 		std::shared_ptr<Geometry> 		geometry;
+		//avoid reference cycles with weak pointers!!
+		std::weak_ptr<Material>			boundedMaterial;
 
 	protected:
 		
@@ -40,7 +42,7 @@ namespace ms {
 	
 }
 
-ms::Drawable::Drawable() : geometry(nullptr), modelTransformation(PositionedObject()) { }
+ms::Drawable::Drawable() : modelTransformation(PositionedObject()) { }
 
 std::string ms::Drawable::get_class () {
 	return "ms::Drawable";

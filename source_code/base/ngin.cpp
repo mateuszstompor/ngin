@@ -45,6 +45,40 @@ void ms::NGin::load_model (std::string absolutePath) {
 	for (auto geometry : geo) {
 		std::shared_ptr<ms::Drawable> node = get_drawable();
 		node->geometry=geometry;
+		auto nodeMaterial = mat.find(geometry->get_material_name());
+		if(nodeMaterial != mat.end()) {
+			
+			node->boundedMaterial = nodeMaterial->second;
+			
+			if(nodeMaterial->second->diffuseTexturesNames.size() > 0) {
+				auto diffuseTexture = tex.find(nodeMaterial->second->diffuseTexturesNames[0]);
+				if(diffuseTexture != tex.end()) {
+					nodeMaterial->second->boundedDiffuseTexture = diffuseTexture->second;
+				}
+			}
+			
+			if(nodeMaterial->second->specularTexturesNames.size() > 0) {
+				auto specularTexture = tex.find(nodeMaterial->second->specularTexturesNames[0]);
+				if(specularTexture != tex.end()) {
+					nodeMaterial->second->boundedSpecularTexture = specularTexture->second;
+				}
+			}
+			
+			if(nodeMaterial->second->heightTexturesNames.size() > 0) {
+				auto heightTexture = tex.find(nodeMaterial->second->heightTexturesNames[0]);
+				if(heightTexture != tex.end()) {
+					nodeMaterial->second->boundedHeightTexture = heightTexture->second;
+				}
+			}
+			
+			if(nodeMaterial->second->normalTexturesNames.size() > 0) {
+				auto normalTexture = tex.find(nodeMaterial->second->normalTexturesNames[0]);
+				if(normalTexture != tex.end()) {
+					nodeMaterial->second->boundedNormalTexture = normalTexture->second;
+				}
+			}
+			
+		}
 		scene->nodes.push_back(node);
 	}
 	
@@ -154,7 +188,7 @@ void ms::NGin::draw_scene() {
 	}
 	deferredRenderer->perform_light_pass(scene.get());
 
-//
+
 //	phongForwardRenderer->use();
 //	phongForwardRenderer->clear_frame();
 //	phongForwardRenderer->setup_uniforms(scene.get());

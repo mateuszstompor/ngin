@@ -54,49 +54,36 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
 }
 
 void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const Drawable * node) {
-	auto material = scene->materials.find(node->geometry->get_material_name());
+
 	ForwardShader* shad = dynamic_cast<ForwardShader*>(shader.get());
 
-	if (material != scene->materials.end()) {
+	if (auto mat = node->boundedMaterial.lock()) {
 		shad->set_has_material(true);
 		
-		if(material->second->diffuseTexturesNames.size() > 0) {
-			
-			auto textureIt = scene->textures.find(material->second->diffuseTexturesNames[0]);
-			
-			if ( textureIt != scene->textures.end()) {
-				shad->bind_diffuse_texture(*textureIt->second);
-				shad->set_has_diffuse_texture(true);
-			} else {
-				shad->set_has_diffuse_texture(false);
-			}
-			
+		if(auto diff = mat->boundedDiffuseTexture.lock()) {
+			shad->bind_diffuse_texture(*diff);
+			shad->set_has_diffuse_texture(true);
 		} else {
 			shad->set_has_diffuse_texture(false);
+			shad->set_material_diffuse_color(mat->diffuseColor);
 		}
 		
-		if(material->second->specularTexturesNames.size() > 0) {
-			auto textureIt = scene->textures.find(material->second->specularTexturesNames[0]);
-			if ( textureIt != scene->textures.end()) {
-				shad->bind_specular_texture(*textureIt->second);
-				shad->set_has_specular_texture(true);
-			} else {
-				shad->set_has_specular_texture(false);
-			}
-			
+		if(auto spec = mat->boundedSpecularTexture.lock()) {
+			shad->bind_specular_texture(*spec);
+			shad->set_has_specular_texture(true);
 		} else {
 			shad->set_has_specular_texture(false);
+			shad->set_material_specular_color(mat->specularColor);
 		}
 		
-		
-		shad->set_material_ambient_color(material->second->ambientColor);
-		shad->set_material_diffuse_color(material->second->diffuseColor);
-		shad->set_material_specular_color(material->second->specularColor);
-		shad->set_material_opacity(material->second->opacity);
-		shad->set_material_shininess(material->second->shininess);
+		// add uniform blocks
+		shad->set_material_ambient_color(mat->ambientColor);
+		shad->set_material_opacity(mat->opacity);
+		shad->set_material_shininess(mat->shininess);
 	} else {
 		shad->set_has_material(false);
 	}
+
 }
 
 void ms::ForwardRender::draw (Drawable * node, const Scene * scene) {

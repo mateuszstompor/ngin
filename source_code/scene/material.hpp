@@ -10,8 +10,10 @@
 #define material_hpp
 
 #include <string>
+#include <memory>
 
 #include "../../libs/source/glMath.h"
+#include "texture.hpp"
 
 namespace ms {
 	
@@ -30,6 +32,12 @@ namespace ms {
 		std::vector <std::string> 	specularTexturesNames;
 		std::vector <std::string> 	normalTexturesNames;
 		std::vector <std::string> 	heightTexturesNames;
+		
+		std::weak_ptr<Texture> boundedDiffuseTexture;
+		std::weak_ptr<Texture> boundedSpecularTexture;
+		std::weak_ptr<Texture> boundedNormalTexture;
+		std::weak_ptr<Texture> boundedHeightTexture;
+		
 	};
 	
 }

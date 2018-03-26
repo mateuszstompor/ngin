@@ -78,8 +78,6 @@
 		56736CBC2064572400CE636A /* postprocessDrawerOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */; };
 		56736CBD2064572400CE636A /* postprocessDrawerOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */; };
 		56736CBE2064572400CE636A /* postprocessDrawerOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56736CBB2064572400CE636A /* postprocessDrawerOGL.hpp */; };
-		56736CC42064745D00CE636A /* hdr_vshader.glsl in Sources */ = {isa = PBXBuildFile; fileRef = 56736CC22064745D00CE636A /* hdr_vshader.glsl */; };
-		56736CC52064745D00CE636A /* hdr_vshader.glsl in Sources */ = {isa = PBXBuildFile; fileRef = 56736CC22064745D00CE636A /* hdr_vshader.glsl */; };
 		56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */ = {isa = PBXBuildFile; fileRef = 56736CC32064745D00CE636A /* hdr_fshader.glsl */; };
 		5674534120540C6F000E7EBD /* textureOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* textureOGL.cpp */; };
 		5674534220540C6F000E7EBD /* textureOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* textureOGL.cpp */; };
@@ -149,7 +147,6 @@
 		561664312061353000915042 /* light_source_drawer_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = light_source_drawer_vshader.glsl; sourceTree = "<group>"; };
 		561664332061358D00915042 /* gouraud_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud_vshader.glsl; sourceTree = "<group>"; };
 		561664342061359A00915042 /* gouraud_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud_fshader.glsl; sourceTree = "<group>"; };
-		561EFE95206727F60097D9B7 /* gaussian_blur_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gaussian_blur_vshader.glsl; sourceTree = "<group>"; };
 		561EFE96206727F60097D9B7 /* gaussian_blur_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gaussian_blur_fshader.glsl; sourceTree = "<group>"; };
 		561F2EF9204F041D00D7E875 /* material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = material.hpp; sourceTree = "<group>"; };
 		562138212060212C00ABA354 /* spotLightOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = spotLightOGL.hpp; sourceTree = "<group>"; };
@@ -183,6 +180,7 @@
 		56407D7F2054034800EB1061 /* texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		5640FED2204AE77600512938 /* shaderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shaderOGL.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5640FED3204AE77600512938 /* shaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderOGL.cpp; sourceTree = "<group>"; usesTabs = 1; };
+		5642559D2068865200AF650F /* pass_trough_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pass_trough_vshader.glsl; sourceTree = "<group>"; };
 		5668DD90205FCAE900D0EEA6 /* pointLightOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = pointLightOGL.hpp; sourceTree = "<group>"; };
 		566BCF2B204EAF6500E90246 /* scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
 		566D1E1A205F4CAE00CE2F84 /* lightSourcesRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lightSourcesRender.hpp; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 		56736CAF206453F500CE636A /* postprocessDrawer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = postprocessDrawer.hpp; sourceTree = "<group>"; };
 		56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = postprocessDrawerOGL.cpp; sourceTree = "<group>"; };
 		56736CBB2064572400CE636A /* postprocessDrawerOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = postprocessDrawerOGL.hpp; sourceTree = "<group>"; };
-		56736CC22064745D00CE636A /* hdr_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = hdr_vshader.glsl; sourceTree = "<group>"; };
 		56736CC32064745D00CE636A /* hdr_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = hdr_fshader.glsl; sourceTree = "<group>"; };
 		5674533F20540C6F000E7EBD /* textureOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = textureOGL.cpp; sourceTree = "<group>"; };
 		5674534020540C6F000E7EBD /* textureOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = textureOGL.hpp; sourceTree = "<group>"; };
@@ -239,7 +236,6 @@
 		56BD165F205759D8001B02C5 /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/libzlibstatic.a"; sourceTree = "<group>"; };
 		56C3C6A920655EFE0003F630 /* config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
 		56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_fshader.glsl; sourceTree = "<group>"; };
-		56C3C6AE206584420003F630 /* bloom_merger_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_vshader.glsl; sourceTree = "<group>"; };
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
 		56DF0F3920571B6D00713420 /* loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loader.cpp; sourceTree = "<group>"; };
 		56DF0F3A20571B6D00713420 /* loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
@@ -249,7 +245,6 @@
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = constantsDefinitions.glsl; sourceTree = "<group>"; };
 		56F5447C205ECCCE00431095 /* materialDeclarations.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = materialDeclarations.glsl; sourceTree = "<group>"; };
-		56FD82022066FB2E00B57BB6 /* bloom_splitter_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_vshader.glsl; sourceTree = "<group>"; };
 		56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_fshader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -306,7 +301,6 @@
 		561EFE92206727DD0097D9B7 /* gaussian_blur */ = {
 			isa = PBXGroup;
 			children = (
-				561EFE95206727F60097D9B7 /* gaussian_blur_vshader.glsl */,
 				561EFE96206727F60097D9B7 /* gaussian_blur_fshader.glsl */,
 			);
 			path = gaussian_blur;
@@ -565,6 +559,7 @@
 				561EFE92206727DD0097D9B7 /* gaussian_blur */,
 				56C3C6AC206582A60003F630 /* bloom */,
 				56736CC12064745100CE636A /* hdr */,
+				5642559D2068865200AF650F /* pass_trough_vshader.glsl */,
 			);
 			path = postprocess;
 			sourceTree = "<group>";
@@ -572,7 +567,6 @@
 		56736CC12064745100CE636A /* hdr */ = {
 			isa = PBXGroup;
 			children = (
-				56736CC22064745D00CE636A /* hdr_vshader.glsl */,
 				56736CC32064745D00CE636A /* hdr_fshader.glsl */,
 			);
 			path = hdr;
@@ -622,8 +616,6 @@
 			isa = PBXGroup;
 			children = (
 				56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */,
-				56C3C6AE206584420003F630 /* bloom_merger_vshader.glsl */,
-				56FD82022066FB2E00B57BB6 /* bloom_splitter_vshader.glsl */,
 				56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */,
 			);
 			path = bloom;
@@ -780,7 +772,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56736CC52064745D00CE636A /* hdr_vshader.glsl in Sources */,
 				560627D020633B69005085CD /* renderbufferOGL.cpp in Sources */,
 				5633FA9D204B6FCB003449EE /* geometryOGL.cpp in Sources */,
 				563B996A2065B66900B54626 /* forwardRender.cpp in Sources */,
@@ -814,7 +805,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56736CC42064745D00CE636A /* hdr_vshader.glsl in Sources */,
 				560627CF20633B69005085CD /* renderbufferOGL.cpp in Sources */,
 				5633FA9C204B6FCB003449EE /* geometryOGL.cpp in Sources */,
 				563B99692065B66900B54626 /* forwardRender.cpp in Sources */,
