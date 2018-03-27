@@ -62,7 +62,7 @@ void main(){
 	}
 	
 	vec3 normal_N 			= normalize(transpose(inverse(mat3(modelTransformation))) * normalVector);
-	vec3 cameraPosition 	= (cameraTransformation * vec4(1.0f)).xyz;
+	vec3 cameraPosition 	= (cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - worldPosition_vec3);
 	
 	if (hasDirLight == 1) {

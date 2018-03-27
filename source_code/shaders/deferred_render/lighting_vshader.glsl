@@ -10,7 +10,7 @@ out vec3 		cameraPosition;
 
 void main() {
 	
-	cameraPosition = vec3(cameraTransformation[3][0], cameraTransformation[3][1], cameraTransformation[3][2]);
+	cameraPosition = (cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
 	gl_Position = vec4(position, 1.0f);
 	texCoords = textureCoord;
 	

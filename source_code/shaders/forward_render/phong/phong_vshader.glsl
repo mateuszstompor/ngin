@@ -18,7 +18,7 @@ void main(){
 	normal_N = normalize(transpose(inverse(mat3(modelTransformation))) * normal);
 	vec4 pos = modelTransformation * vec4(position, 1.0f);
 	fragmentPosition = pos.xyz;
-	cameraPosition = (cameraTransformation * vec4(1.0f)).xyz;
+	cameraPosition = (cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
 	surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
 	texCoord = textureCoordinates;
 	gl_Position = perspectiveProjection * cameraTransformation * pos;
