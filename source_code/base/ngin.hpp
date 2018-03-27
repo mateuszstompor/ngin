@@ -27,8 +27,8 @@ namespace ms {
       
     public:
         
-												NGin        		(unsigned int 	screenWidth,
-																	 unsigned int 	screenHeight,
+												NGin        		(unsigned int 	framebufferWidth,
+																	 unsigned int 	framebufferHeight,
 																	 float 			camNear,
 																	 float 			camFar,
 																	 float 			fovDegrees,
@@ -92,8 +92,8 @@ namespace ms {
 		std::shared_ptr<Framebuffer> 			twoColorsFramebuffer;
 		std::shared_ptr<Framebuffer> 			windowFramebuffer;
 		
-		unsigned int 							screenWidth;
-		unsigned int 							screenHeight;
+		unsigned int 							framebufferWidth;
+		unsigned int 							framebufferHeight;
 		
     };
     

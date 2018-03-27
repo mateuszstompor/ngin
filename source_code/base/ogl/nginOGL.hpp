@@ -27,9 +27,7 @@ namespace ms {
     class NGinOGL : public NGin {
         
     public:
-				NGinOGL     (unsigned int screenWidth,
-							 unsigned int screenHeight,
-							 unsigned int frameBufferWidth,
+				NGinOGL     (unsigned int frameBufferWidth,
 							 unsigned int frameBufferHeight,
 							 float camNear,
 							 float camFar,
@@ -37,9 +35,7 @@ namespace ms {
 							 float aspect
 							 );
 		
-				NGinOGL     (unsigned int screenWidth,
-							 unsigned int screenHeight,
-							 unsigned int frameBufferWidth,
+				NGinOGL     (unsigned int frameBufferWidth,
 							 unsigned int frameBufferHeight,
 							 float camNear,
 							 float camFar,

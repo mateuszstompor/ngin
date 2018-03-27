@@ -8,10 +8,10 @@
 
 #include "ngin.hpp"
 
-ms::NGin::NGin(unsigned int scW, unsigned int scH, float camNear, float camFar, float fovDegrees, float aspect) :
+ms::NGin::NGin(unsigned int framebufferWidth, unsigned int framebufferHeight, float camNear, float camFar, float fovDegrees, float aspect) :
 	scene(new Scene(camNear, camFar, fovDegrees, aspect)),
-	screenWidth(scW),
-	screenHeight(scH),
+	framebufferWidth(framebufferWidth),
+	framebufferHeight(framebufferHeight),
 	phongForwardRenderer(nullptr),
 	gouraudForwardRenderer(nullptr),
 	deferredRenderer(nullptr),

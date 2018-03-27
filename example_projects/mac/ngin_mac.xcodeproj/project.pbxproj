@@ -11,6 +11,8 @@
 		56329ED4204ABC0600AF29CA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56329ED3204ABC0600AF29CA /* main.cpp */; };
 		56329EE2204ABC1D00AF29CA /* libngin_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56329EDC204ABC0C00AF29CA /* libngin_mac.a */; };
 		5640FED0204AE52D00512938 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5640FECE204AE52D00512938 /* OpenGL.framework */; };
+		56D39929206AFB2A00E71A59 /* controlls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D39927206AFB2A00E71A59 /* controlls.cpp */; };
+		56D3992C206B014700E71A59 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D3992A206B014700E71A59 /* utils.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,10 @@
 		56329ED3204ABC0600AF29CA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ngin.xcodeproj; path = ../../ngin.xcodeproj; sourceTree = "<group>"; };
 		5640FECE204AE52D00512938 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		56D39927206AFB2A00E71A59 /* controlls.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = controlls.cpp; sourceTree = "<group>"; };
+		56D39928206AFB2A00E71A59 /* controlls.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = controlls.hpp; sourceTree = "<group>"; };
+		56D3992A206B014700E71A59 /* utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cpp; sourceTree = "<group>"; };
+		56D3992B206B014700E71A59 /* utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,10 @@
 			children = (
 				56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */,
 				56329ED3204ABC0600AF29CA /* main.cpp */,
+				56D3992A206B014700E71A59 /* utils.cpp */,
+				56D3992B206B014700E71A59 /* utils.hpp */,
+				56D39927206AFB2A00E71A59 /* controlls.cpp */,
+				56D39928206AFB2A00E71A59 /* controlls.hpp */,
 				56329ECA204ABBEA00AF29CA /* Products */,
 				56329EE1204ABC1D00AF29CA /* Frameworks */,
 			);
@@ -188,6 +198,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56D3992C206B014700E71A59 /* utils.cpp in Sources */,
+				56D39929206AFB2A00E71A59 /* controlls.cpp in Sources */,
 				56329ED4204ABC0600AF29CA /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

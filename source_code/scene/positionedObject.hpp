@@ -23,6 +23,8 @@ namespace ms {
 		
 		inline math::mat4 const & 		get_transformation	() const;
 		inline void						set_transformation	(math::mat4 transformation);
+		inline void						post_transform		(math::mat4 transformation);
+		inline void						pre_transform		(math::mat4 transformation);
 		
 	protected:
 		
@@ -44,5 +46,12 @@ ms::math::mat4 const & ms::PositionedObject::get_transformation	() const {
 	return transformation;
 }
 
+void ms::PositionedObject::post_transform (math::mat4 t) {
+	transformation = transformation * t;
+}
+
+void ms::PositionedObject::pre_transform (math::mat4 t) {
+	transformation = t * transformation;
+}
 
 #endif /* positioned_object_hpp */

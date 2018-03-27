@@ -45,7 +45,7 @@ std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 		math::vec2 textureCoordinate = math::vec2{quad_indicies::textureCoordinates[textureOffset],
 												  quad_indicies::textureCoordinates[textureOffset+1]};
 		
-		math::vec3 normal = math::vec3(0.0f);
+		math::vec3 normal = math::vec3(0.0f, 0.0f, 0.0f);
 		quad->vertices.push_back(Vertex{position, normal, textureCoordinate});
 	}
 	
