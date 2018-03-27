@@ -27,13 +27,11 @@ void  ms::DeferredShaderOGL::_load () {
 	modelTransformationLocation 	= mglGetUniformLocation(program, "modelTransformation");
 	
 	hasMaterialLocation 			= mglGetUniformLocation(program, "hasMaterial");
-	ambientColorLocation		 	= mglGetUniformLocation(program, "material.ambient");
-	diffuseColorLocation			= mglGetUniformLocation(program, "material.diffuse");
-	specularColorLocation 			= mglGetUniformLocation(program, "material.specular");
-	opacityLocation					= mglGetUniformLocation(program, "material.opacity");
-	shininessLocation				= mglGetUniformLocation(program, "material.shininess");
 	hasDiffuseTextureLocation	 	= mglGetUniformLocation(program, "hasDiffuseTexture");
 	hasSpecularTextureLocation 		= mglGetUniformLocation(program, "hasSpecularTexture");
+	materialBlockLocation			= mglGetUniformBlockIndex(program, "MaterialBlock");
+
+	mglUniformBlockBinding(program, materialBlockLocation, 0);
 	
 	mglUseProgram(0);
 	
@@ -61,26 +59,6 @@ void ms::DeferredShaderOGL::set_model_transformation (const math::mat4 & modelTr
 
 void ms::DeferredShaderOGL::set_has_material (bool doesItHave) {
 	mglUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
-}
-
-void ms::DeferredShaderOGL::set_material_ambient_color (const math::vec3 & ambient) {
-	mglUniform3fv(ambientColorLocation, 1, ambient.c_array());
-}
-
-void ms::DeferredShaderOGL::set_material_diffuse_color (const math::vec3 & diffuse) {
-	mglUniform3fv(diffuseColorLocation, 1, diffuse.c_array());
-}
-
-void ms::DeferredShaderOGL::set_material_specular_color (const math::vec3 & specular) {
-	mglUniform3fv(specularColorLocation, 1, specular.c_array());
-}
-
-void ms::DeferredShaderOGL::set_material_opacity (float opacity) {
-	mglUniform1f(opacityLocation, opacity);
-}
-
-void ms::DeferredShaderOGL::set_material_shininess (float shininess) {
-	mglUniform1f(shininessLocation, shininess);
 }
 
 void ms::DeferredShaderOGL::bind_diffuse_texture (Texture & texture) {

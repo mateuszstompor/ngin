@@ -10,7 +10,14 @@ uniform	int 								hasDirLight;
 uniform DirectionalLight 					dirLight;
 
 uniform int 								hasMaterial;
-uniform Material							material;
+
+layout (std140) uniform MaterialBlock {
+	vec3 	ambient;
+	vec3 	diffuse;
+	vec3 	specular;
+	float 	shininess;
+	float	opacity;
+} materialBlock;
 
 uniform int 								hasDiffuseTexture;
 uniform sampler2D 							diffuseTexture;
@@ -28,18 +35,21 @@ in vec3 surfaceZCamera_N;
 
 void main(){
 	
+	vec3 	ambientColor;
 	vec3 	diffuseColor;
 	vec3 	specularColor;
 	float 	shininess;
 	vec3 	result = vec3(0.0f);
 
+	ambientColor = materialBlock.ambient;
+	
 	if(hasMaterial == 1) {
-		diffuseColor 	= hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : material.diffuse;
-		specularColor 	= hasSpecularTexture == 1 ? texture(specularTexture, texCoord).xyz : material.specular;
-		shininess		= material.shininess;
+		diffuseColor 	= hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : materialBlock.diffuse;
+		specularColor 	= hasSpecularTexture == 1 ? texture(specularTexture, texCoord).xyz : materialBlock.specular;
+		shininess		= materialBlock.shininess;
 	} else {
 		// some default colors
-		diffuseColor 	= vec3(0.0f, 1.0f, 0.0f);
+		diffuseColor 	= vec3(1.0f, 1.0f, 0.0f);
 		specularColor 	= vec3(1.0f, 0.0f, 0.0f);
 		shininess		= 0.0f;
 	}
@@ -51,7 +61,7 @@ void main(){
 	for(int j=0; j < spotLightsAmount; ++j) {
 		result += count_light_influence(spotLights[j],
 										fragmentPosition,
-										diffuseColor,
+										ambientColor,
 										diffuseColor,
 										specularColor,
 										shininess,
@@ -63,7 +73,7 @@ void main(){
 	for (int i = 0; i < pointLightsAmount; ++i) {
 		result += count_light_influence(pointLights[i],
 										fragmentPosition,
-										diffuseColor,
+										ambientColor,
 										diffuseColor,
 										specularColor,
 										shininess,

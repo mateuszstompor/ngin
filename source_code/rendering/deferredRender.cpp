@@ -131,6 +131,7 @@ void ms::DeferredRender::clear_frame () {
 void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Drawable * node) {
 	
 	if (auto mat = node->boundedMaterial.lock()) {
+		mat->use();
 		gShader->set_has_material(true);
 		
 		if(auto diff = mat->boundedDiffuseTexture.lock()) {
@@ -138,7 +139,6 @@ void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Draw
 			gShader->set_has_diffuse_texture(true);
 		} else {
 			gShader->set_has_diffuse_texture(false);
-			gShader->set_material_diffuse_color(mat->diffuseColor);
 		}
 		
 		if(auto spec = mat->boundedSpecularTexture.lock()) {
@@ -146,16 +146,11 @@ void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Draw
 			gShader->set_has_specular_texture(true);
 		} else {
 			gShader->set_has_specular_texture(false);
-			gShader->set_material_specular_color(mat->specularColor);
 		}
-		
-		// add uniform blocks
-		gShader->set_material_ambient_color(mat->ambientColor);
-		gShader->set_material_opacity(mat->opacity);
-		gShader->set_material_shininess(mat->shininess);
 	} else {
 		gShader->set_has_material(false);
 	}
+	
 }
 
 void ms::DeferredRender::setup_g_buffer_uniforms (const Scene * scene) {

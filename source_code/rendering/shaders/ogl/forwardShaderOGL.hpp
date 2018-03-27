@@ -45,17 +45,9 @@ namespace ms {
 		virtual void	set_directional_light_color	(const math::vec3 & color) 							override;
 		
 		virtual void	set_has_material			(bool doesItHave)	 								override;
-		virtual void	set_material_ambient_color	(const math::vec3 & ambient)						override;
 
-		
-		
-		virtual void	set_material_diffuse_color	(const math::vec3 & diffuse)						override;
 		virtual void	bind_diffuse_texture		(Texture & texture)									override;
-		virtual void	set_material_specular_color	(const math::vec3 & specular)						override;
 		virtual void	bind_specular_texture		(Texture & texture)									override;
-		virtual void	set_material_opacity		(float opacity)										override;
-		virtual void	set_material_shininess		(float shininess)									override;
-		
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 								override;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 								override;
 		
@@ -68,11 +60,7 @@ namespace ms {
 		GLint			modelTransformationLocation;
 		
 		GLint			hasMaterialLocation;
-		GLint			ambientColorLocation;
-		GLint			diffuseColorLocation;
-		GLint			specularColorLocation;
-		GLint			opacityLocation;
-		GLint			shininessLocation;
+		
 		GLint			hasDiffuseTextureLocation;
 		GLint			hasSpecularTextureLocation;
 		
@@ -87,6 +75,8 @@ namespace ms {
 		
 		GLint			pointLightsAmount;
 		GLint*			pointLightsLocations;
+		
+		GLint			materialBlockLocation;
 		
 	};
 	

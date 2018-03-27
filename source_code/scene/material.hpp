@@ -14,18 +14,31 @@
 
 #include "../../libs/source/glMath.h"
 #include "texture.hpp"
+#include "../resources/resource.hpp"
 
 namespace ms {
 	
-	struct Material {
+	class Material : public Resource {
+	public:
 		
-		inline Material(math::vec3 ambient, math::vec3 diffuse, math::vec3 specular, float shininess, float opacity, std::string name);
+		inline 						Material(math::vec3 ambient,
+											 math::vec3 diffuse,
+											 math::vec3 specular,
+											 float shininess,
+											 float opacity,
+											 std::string name);
+		
+		virtual	void				use		() = 0;
+		
+		
 		
 		math::vec3 					diffuseColor;
 		math::vec3 					ambientColor;
 		math::vec3 					specularColor;
+		
 		float 						shininess;
 		float						opacity;
+		
 		std::string					name;
 		
 		std::vector <std::string> 	diffuseTexturesNames;
@@ -33,10 +46,10 @@ namespace ms {
 		std::vector <std::string> 	normalTexturesNames;
 		std::vector <std::string> 	heightTexturesNames;
 		
-		std::weak_ptr<Texture> boundedDiffuseTexture;
-		std::weak_ptr<Texture> boundedSpecularTexture;
-		std::weak_ptr<Texture> boundedNormalTexture;
-		std::weak_ptr<Texture> boundedHeightTexture;
+		std::weak_ptr<Texture> 		boundedDiffuseTexture;
+		std::weak_ptr<Texture> 		boundedSpecularTexture;
+		std::weak_ptr<Texture> 		boundedNormalTexture;
+		std::weak_ptr<Texture> 		boundedHeightTexture;
 		
 	};
 	

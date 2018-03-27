@@ -12,6 +12,7 @@
 #include "../loader.hpp"
 #include "../../scene/ogl/geometryOGL.hpp"
 #include "../../scene/ogl/textureOGL.hpp"
+#include "../../scene/ogl/materialOGL.hpp"
 
 namespace ms {
 
@@ -32,6 +33,13 @@ namespace ms {
 																		 unsigned int 				mipMapLevel,
 																		 unsigned int 				width,
 																		 unsigned int 				height) override;
+		
+		inline virtual std::shared_ptr<Material> 		get_material	(math::vec3 ambient,
+																		 math::vec3 diffuse,
+																		 math::vec3 specular,
+																		 float shininess,
+																		 float opacity,
+																		 std::string name) override;
 	};
 	
 }
@@ -64,5 +72,16 @@ std::shared_ptr<ms::Texture> ms::LoaderOGL::get_texture (std::string				name,
 													   height));
 	
 }
+
+std::shared_ptr<ms::Material> ms::LoaderOGL::get_material (math::vec3 ambient,
+														   math::vec3 diffuse,
+														   math::vec3 specular,
+														   float shininess,
+														   float opacity,
+														   std::string name) {
+	
+	return std::shared_ptr<Material>(new MaterialOGL(ambient, diffuse, specular, shininess, opacity, name));
+}
+
 
 #endif /* loaderOGL_hpp */

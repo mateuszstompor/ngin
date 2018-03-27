@@ -46,6 +46,17 @@ GLboolean _mglUnmapBuffer (GLenum target) {
 	return tmp;
 }
 
+GLuint _mglGetUniformBlockIndex (GLuint program, const GLchar *uniformBlockName) {
+	GLuint location = glGetUniformBlockIndex(program, uniformBlockName);
+	if(location == -1) {
+		#ifdef POGL_UNEXISING_BLOCK_UNIFORMS
+			std::cerr<< "UNIFORM_BLOCK_DOESNT_EXIST" << " " << uniformBlockName <<  std::endl;
+		#endif
+	}
+	ms::utils::check_gl_error();
+	return location;
+}
+
 void _mglDeleteVertexArrays (GLsizei n, const GLuint *arrays) {
 	glDeleteVertexArrays(n, arrays);
 	glDeleteVertexArraysCallsAmount += 1;
@@ -334,6 +345,15 @@ GLenum _mglCheckFramebufferStatus (GLenum target) {
 	return status;
 }
 
+void _mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding) {
+	glUniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding);
+	ms::utils::check_gl_error();
+}
+
+void _mglBindBufferBase (GLenum target, GLuint index, GLuint buffer) {
+	glBindBufferBase(target, index, buffer);
+	ms::utils::check_gl_error();
+}
 
 std::string get_allocation_statistics() {
 	std::string output = "";

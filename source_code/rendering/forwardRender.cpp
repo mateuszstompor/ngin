@@ -59,13 +59,13 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
 
 	if (auto mat = node->boundedMaterial.lock()) {
 		shad->set_has_material(true);
+		mat->use();
 		
 		if(auto diff = mat->boundedDiffuseTexture.lock()) {
 			shad->bind_diffuse_texture(*diff);
 			shad->set_has_diffuse_texture(true);
 		} else {
 			shad->set_has_diffuse_texture(false);
-			shad->set_material_diffuse_color(mat->diffuseColor);
 		}
 		
 		if(auto spec = mat->boundedSpecularTexture.lock()) {
@@ -73,13 +73,8 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
 			shad->set_has_specular_texture(true);
 		} else {
 			shad->set_has_specular_texture(false);
-			shad->set_material_specular_color(mat->specularColor);
 		}
 		
-		// add uniform blocks
-		shad->set_material_ambient_color(mat->ambientColor);
-		shad->set_material_opacity(mat->opacity);
-		shad->set_material_shininess(mat->shininess);
 	} else {
 		shad->set_has_material(false);
 	}
@@ -88,7 +83,6 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
 
 void ms::ForwardRender::draw (Drawable * node, const Scene * scene) {
 	ForwardShader* shad = dynamic_cast<ForwardShader*>(shader.get());
-
 	shad->set_model_transformation(node->modelTransformation.get_transformation());
 	ForwardRender::setup_material_uniforms_for(scene, node);
 	node->draw();

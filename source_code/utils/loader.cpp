@@ -54,12 +54,12 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (const aiScene * s
 		
 		std::string name (aiName.C_Str());
 		
-		std::shared_ptr<Material> msMaterial(new Material(to_vec3(ambient),
-														  to_vec3(diffuse),
-														  to_vec3(specular),
-														  shininess,
-														  opacity,
-														  name));
+		std::shared_ptr<Material> msMaterial = get_material(to_vec3(ambient),
+														  	to_vec3(diffuse),
+														  	to_vec3(specular),
+														  	shininess,
+														  	opacity,
+														  	name);
 		
 		msMaterial->diffuseTexturesNames 	= get_texture_paths(aiTextureType_DIFFUSE, mat, directoryPath);
 		msMaterial->specularTexturesNames 	= get_texture_paths(aiTextureType_SPECULAR, mat, directoryPath);

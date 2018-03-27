@@ -41,9 +41,6 @@ namespace ms {
 		const std::string constantsDefinitions =
 		#include "./constantsDefinitions.glsl"
 		
-		const std::string materialsDeclarations =
-		#include "./materialDeclarations.glsl"
-		
 		const std::string functionsDefinitions =
 		#include "./functions.glsl"
 		
@@ -143,7 +140,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += deferredrenderer::gBufferPassVertexShader;
 			break;
 		case ms::shader::Type::deferred_render_g_buf_fragment_shader:
-			shaderContent += materialsDeclarations;
 			shaderContent += deferredrenderer::gBufferPassFragmentShader;
 			break;
 		case ms::shader::Type::deferred_render_light_pass_vshader:
@@ -159,7 +155,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::forward_render_phong_fshader:
 			shaderContent += constantsDefinitions;
-			shaderContent += materialsDeclarations;
 			shaderContent += functionsDefinitions;
 			shaderContent += forwardrenderer::phongFragmentShader;
 			break;
@@ -171,7 +166,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::forward_render_gouraud_vshader:
 			shaderContent += constantsDefinitions;
-			shaderContent += materialsDeclarations;
 			shaderContent += functionsDefinitions;
 			shaderContent += forwardrenderer::gouraudVertexShader;
 			break;

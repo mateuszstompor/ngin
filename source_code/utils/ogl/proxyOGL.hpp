@@ -95,6 +95,9 @@ void 		_mglUniform1ui (GLint location, GLuint v0);
 void 		_mglDrawElements (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 void		_mglBlitFramebuffer (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
 GLenum 		_mglCheckFramebufferStatus (GLenum target);
+GLuint 		_mglGetUniformBlockIndex (GLuint program, const GLchar *uniformBlockName);
+void		_mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
+void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 
 #define mglDrawElements				_mglDrawElements
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
@@ -154,6 +157,9 @@ GLenum 		_mglCheckFramebufferStatus (GLenum target);
 #define mglUniform1ui				_mglUniform1ui
 #define mglBlitFramebuffer			_mglBlitFramebuffer
 #define mglCheckFramebufferStatus	_mglCheckFramebufferStatus
+#define mglGetUniformBlockIndex		_mglGetUniformBlockIndex
+#define mglBindBufferBase			_mglBindBufferBase
+#define mglUniformBlockBinding		_mglUniformBlockBinding
 
 #else
 
@@ -215,6 +221,9 @@ GLenum 		_mglCheckFramebufferStatus (GLenum target);
 #define mglUniform1ui				glUniform1ui
 #define mglBlitFramebuffer			glBlitFramebuffer
 #define mglCheckFramebufferStatus	glCheckFramebufferStatus
+#define mglGetUniformBlockIndex		glGetUniformBlockIndex
+#define mglBindBufferBase			glBindBufferBase
+#define mglUniformBlockBinding		glUniformBlockBinding
 
 #endif
 

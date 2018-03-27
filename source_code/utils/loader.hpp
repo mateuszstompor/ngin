@@ -21,6 +21,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "../scene/ogl/materialOGL.hpp"
 #include "../scene/texture.hpp"
 #include "../scene/drawable.hpp"
 
@@ -50,6 +51,14 @@ namespace ms {
 		std::vector<std::string>			get_texture_paths		(aiTextureType type, aiMaterial * mat, std::string directoryPath);
 		ms::math::vec3						to_vec3					(aiColor3D color);
 		virtual std::shared_ptr<Geometry> 	get_geometry			() = 0;
+		
+		virtual std::shared_ptr<Material> 	get_material			(math::vec3 ambient,
+																	 math::vec3 diffuse,
+																	 math::vec3 specular,
+																	 float shininess,
+																	 float opacity,
+																	 std::string name) = 0;
+		
 		virtual std::shared_ptr<Texture> 	get_texture				(std::string				name,
 																	 Texture::Format			format,
 																	 Texture::AssociatedType	associatedType,
