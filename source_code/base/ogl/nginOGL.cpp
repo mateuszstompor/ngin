@@ -8,17 +8,19 @@
 
 #include "nginOGL.hpp"
 
-ms::NGinOGL::NGinOGL (  unsigned int frameBufferWidth,
+ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
+                        unsigned int screenHeight,
+                        unsigned int frameBufferWidth,
 						unsigned int frameBufferHeight,
 						float camNear,
 						float camFar,
 						float fovDegrees,
 						float aspect,
 						std::shared_ptr<Framebuffer>	defaultFramebuffer
-					  ) : NGin(frameBufferWidth, frameBufferHeight, camNear, camFar, fovDegrees, aspect) {
+					  ) : NGin(screenWidth, screenHeight, frameBufferWidth, frameBufferHeight, camNear, camFar, fovDegrees, aspect) {
 	
 	if(defaultFramebuffer == nullptr) {
-		windowFramebuffer = FramebufferOGL::window_framebuffer(frameBufferWidth, frameBufferHeight);
+		windowFramebuffer = FramebufferOGL::window_framebuffer(screenWidth, screenHeight);
 	} else {
 		windowFramebuffer = defaultFramebuffer;
 	}
@@ -194,13 +196,15 @@ ms::NGinOGL::NGinOGL (  unsigned int frameBufferWidth,
 }
 
 
-ms::NGinOGL::NGinOGL (	unsigned int frameBufferWidth,
+ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
+                        unsigned int screenHeight,
+                        unsigned int frameBufferWidth,
 						unsigned int frameBufferHeight,
 						float camNear,
 						float camFar,
 						float fovDegrees,
 						float aspect
-						) : NGinOGL(frameBufferWidth, frameBufferHeight, camNear, camFar, fovDegrees, aspect, nullptr) {
+						) : NGinOGL(screenWidth, screenHeight, frameBufferWidth, frameBufferHeight, camNear, camFar, fovDegrees, aspect, nullptr) {
 	
 	
 

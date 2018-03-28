@@ -10,6 +10,8 @@
 #define proxy_ogl_h
 
 #include <cassert>
+#include <string>
+#include <iostream>
 
 #include "../../config.hpp"
 #include "utilsOGL.hpp"

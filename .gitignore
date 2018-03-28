@@ -1,2 +1,5 @@
 # XCode
 xcuserdata/
+.vs/
+cmake-build-debug/
+third-party-libs/assimp-master/include/assimp/config.h

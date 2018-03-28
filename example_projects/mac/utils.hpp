@@ -9,7 +9,11 @@
 #ifndef utils_example_hpp
 #define utils_example_hpp
 
+#include <cassert>
+#include <iostream>
+
 #ifdef __WIN32__
+	#include <glad/glad.h>
 	#include "../../third-party-libs/renderdoc.h"
 #endif
 
