@@ -72,9 +72,9 @@ int main(int argc, const char * argv[]) { {
 	actualScreenHeight = framebufferHeight;
 	
 	//Configure rendering resoultion here
-	framebufferWidth /= 4;
-	framebufferHeight /= 4;
-	//
+	framebufferWidth /= 2;
+	framebufferHeight /= 2;
+	
 	
 	if(window == nullptr){
 		std::cerr << ms::windowCreationError << std::endl;
@@ -92,7 +92,7 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight));
+	engine = std::make_unique<NGinOGL>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
 		
 	engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 

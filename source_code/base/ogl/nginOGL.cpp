@@ -8,6 +8,9 @@
 
 #include "nginOGL.hpp"
 
+using namespace ms;
+using namespace shader;
+
 ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                         unsigned int screenHeight,
                         unsigned int frameBufferWidth,
@@ -25,100 +28,118 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 		windowFramebuffer = defaultFramebuffer;
 	}
 	
-	std::string forwardRenderVertexShaderSource = shader::get_shader_of_type(shader::Type::forward_render_phong_vshader);
-	std::string forwardRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::forward_render_phong_fshader);
+	auto forwardRenderVertexShaderSource = get_shader_of_type(Type::forward_render_phong_vshader);
+	auto forwardRenderFragmentShaderSource = get_shader_of_type(Type::forward_render_phong_fshader);
 	
-	std::string gouraudVertexShaderSource = shader::get_shader_of_type(shader::Type::forward_render_gouraud_vshader);
-	std::string gouraudRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::forward_render_gouraud_fshader);
+	auto gouraudVertexShaderSource = get_shader_of_type(Type::forward_render_gouraud_vshader);
+	auto gouraudRenderFragmentShaderSource = get_shader_of_type(Type::forward_render_gouraud_fshader);
 	
-	std::string deferredRenderVertexShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_g_buf_vertex_shader);
-	std::string deferredRenderFragmentShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_g_buf_fragment_shader);
+	auto deferredRenderVertexShaderSource = get_shader_of_type(Type::deferred_render_g_buf_vertex_shader);
+	auto deferredRenderFragmentShaderSource = get_shader_of_type(Type::deferred_render_g_buf_fragment_shader);
 	
-	std::string deferredRenderLightingVertexShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_light_pass_vshader);
-	std::string deferredRenderLightingFragmentShaderSource = shader::get_shader_of_type(shader::Type::deferred_render_light_pass_fshader);
+	auto deferredRenderLightingVertexShaderSource = get_shader_of_type(Type::deferred_render_light_pass_vshader);
+	auto deferredRenderLightingFragmentShaderSource = get_shader_of_type(Type::deferred_render_light_pass_fshader);
 	
-	std::string lightSourceDrawerVertexShader = shader::get_shader_of_type(shader::Type::forward_render_light_drawer_vshader);
-	std::string lightSourceDrawerFragmentShader = shader::get_shader_of_type(shader::Type::forward_render_light_drawer_fshader);
+	auto lightSourceDrawerVertexShader = get_shader_of_type(Type::forward_render_light_drawer_vshader);
+	auto lightSourceDrawerFragmentShader = get_shader_of_type(Type::forward_render_light_drawer_fshader);
 	
-	std::string hdrVertexShader = shader::get_shader_of_type(shader::Type::post_process_hdr_vshader);
-	std::string hdrFragmentShader = shader::get_shader_of_type(shader::Type::post_process_hdr_fshader);
+	auto hdrVertexShader = get_shader_of_type(Type::post_process_hdr_vshader);
+	auto hdrFragmentShader = get_shader_of_type(Type::post_process_hdr_fshader);
 	
-	std::string bloomSplitterVertexShader = shader::get_shader_of_type(shader::Type::post_process_bloom_splitter_vshader);
-	std::string bloomSplitterFragmentShader = shader::get_shader_of_type(shader::Type::post_process_bloom_splitter_fshader);
+	auto bloomSplitterVertexShader = get_shader_of_type(Type::post_process_bloom_splitter_vshader);
+	auto bloomSplitterFragmentShader = get_shader_of_type(Type::post_process_bloom_splitter_fshader);
 	
-	std::string bloomMergerVertexShader = shader::get_shader_of_type(shader::Type::post_process_bloom_merger_vshader);
-	std::string bloomMergerFragmentShader = shader::get_shader_of_type(shader::Type::post_process_bloom_merger_fshader);
+	auto bloomMergerVertexShader = get_shader_of_type(Type::post_process_bloom_merger_vshader);
+	auto bloomMergerFragmentShader = get_shader_of_type(Type::post_process_bloom_merger_fshader);
 	
-	std::string gaussianBlurVertexShader = shader::get_shader_of_type(shader::Type::post_process_gaussian_blur_vshader);
-	std::string gaussianBlurFragmentShader = shader::get_shader_of_type(shader::Type::post_process_gaussian_blur_fshader);
+	auto gaussianBlurVertexShader = get_shader_of_type(Type::post_process_gaussian_blur_vshader);
+	auto gaussianBlurFragmentShader = get_shader_of_type(Type::post_process_gaussian_blur_fshader);
 	
-	std::string scaleVertexShader = shader::get_shader_of_type(shader::Type::post_process_scale_vshader);
-	std::string scaleFragmentShader = shader::get_shader_of_type(shader::Type::post_process_scale_fshader);
+    auto vignetteVertexShader = get_shader_of_type(Type::post_process_vignette_vshader);
+    auto vignetteFragmentShader = get_shader_of_type(Type::post_process_vignette_fshader);
+    
+	auto scaleVertexShader = get_shader_of_type(Type::post_process_scale_vshader);
+	auto scaleFragmentShader = get_shader_of_type(Type::post_process_scale_fshader);
 	
-	auto colorTexture = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																Texture::Format::rgb_16_16_16,
-																Texture::AssociatedType::FLOAT,
-																frameBufferWidth,
-																frameBufferHeight));
+	auto colorTexture = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                    Texture::Format::rgb_16_16_16,
+                                                    Texture::AssociatedType::FLOAT,
+                                                    frameBufferWidth,
+                                                    frameBufferHeight);
 	
-	oneColorDepthFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
-																				  1,
-																				  frameBufferWidth,
-																				  frameBufferHeight));
+    vignetteFramebuffer = std::make_shared<FramebufferOGL>(1,
+                                                           0,
+                                                           frameBufferWidth,
+                                                           frameBufferHeight);
+    
+	oneColorDepthFramebuffer = std::make_shared<FramebufferOGL>(1,
+                                                                1,
+                                                                frameBufferWidth,
+                                                                frameBufferHeight);
 	
-	twoColorsFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(2,
-																			  0,
-																			  frameBufferWidth,
-																			  frameBufferHeight));
-	fifthOneColorFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
-																				  0,
-																				  frameBufferWidth,
-																				  frameBufferHeight));
+	twoColorsFramebuffer = std::make_shared<FramebufferOGL>(2,
+                                                            0,
+                                                            frameBufferWidth,
+                                                            frameBufferHeight);
+    
+	fifthOneColorFramebuffer = std::make_shared<FramebufferOGL>(1,
+                                                                0,
+                                                                frameBufferWidth,
+                                                                frameBufferHeight);
 	
-	thirdOneColorFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
-																				  0,
-																				  frameBufferWidth,
-																				  frameBufferHeight));
+	thirdOneColorFramebuffer = std::make_shared<FramebufferOGL>(1,
+																0,
+                                                                frameBufferWidth,
+                                                                frameBufferHeight);
 	
-	fourthOneColorFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
-																				   0,
-																				   frameBufferWidth,
-																				   frameBufferHeight));
+	fourthOneColorFramebuffer = std::make_shared<FramebufferOGL>(1,
+                                                                 0,
+                                                                 frameBufferWidth,
+                                                                 frameBufferHeight);
 	
-	secondOneColorFramebuffer = std::shared_ptr<FramebufferOGL>(new FramebufferOGL(1,
-																				   0,
-																				   frameBufferWidth,
-																				   frameBufferHeight));
+	secondOneColorFramebuffer = std::make_shared<FramebufferOGL>(1,
+                                                                 0,
+                                                                 frameBufferWidth,
+                                                                 frameBufferHeight);
 	
-	oneColorDepthFramebuffer->bind_depth_buffer(std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
-																								  Texture::AssociatedType::UNSIGNED_BYTE,
-																								  0,
-																								  frameBufferWidth,
-																								  frameBufferHeight)));
+	oneColorDepthFramebuffer->bind_depth_buffer(std::make_shared<RenderbufferOGL>(Texture::Format::depth_24,
+                                                                                  Texture::AssociatedType::UNSIGNED_BYTE,
+                                                                                  0,
+                                                                                  frameBufferWidth,
+                                                                                  frameBufferHeight));
 	
-	oneColorDepthFramebuffer->bind_color_buffer(0, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																						   Texture::Format::rgb_16_16_16,
-																						   Texture::AssociatedType::FLOAT,
-																						   frameBufferWidth,
-																						   frameBufferHeight)));
+	oneColorDepthFramebuffer->bind_color_buffer(0, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                                                Texture::Format::rgb_16_16_16,
+                                                                                Texture::AssociatedType::FLOAT,
+                                                                                frameBufferWidth,
+                                                                                frameBufferHeight));
 	
 	
 	
 	oneColorDepthFramebuffer->configure();
 	
-	fifthOneColorFramebuffer->bind_color_buffer(0, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																						   Texture::Format::rgb_16_16_16,
-																						   Texture::AssociatedType::FLOAT,
-																						   frameBufferWidth,
-																						   frameBufferHeight)));
+	fifthOneColorFramebuffer->bind_color_buffer(0, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                                                Texture::Format::rgb_16_16_16,
+                                                                                Texture::AssociatedType::FLOAT,
+                                                                                frameBufferWidth,
+                                                                                frameBufferHeight));
 	
 	fifthOneColorFramebuffer->configure();
+    
+    vignetteFramebuffer->bind_color_buffer(0, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                                           Texture::Format::rgb_16_16_16,
+                                                                           Texture::AssociatedType::FLOAT,
+                                                                           frameBufferWidth,
+                                                                           frameBufferHeight));
+    
+    vignetteFramebuffer->configure();
+    
 	
-	secondOneColorFramebuffer->bind_color_buffer(0, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																								 Texture::Format::rgb_16_16_16,
-																								 Texture::AssociatedType::FLOAT,
-																								 frameBufferWidth,
-																								 frameBufferHeight)));
+	secondOneColorFramebuffer->bind_color_buffer(0, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                                                 Texture::Format::rgb_16_16_16,
+                                                                                 Texture::AssociatedType::FLOAT,
+                                                                                 frameBufferWidth,
+                                                                                 frameBufferHeight));
 	
 	secondOneColorFramebuffer->configure();
 	
@@ -127,92 +148,98 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 	
 	fourthOneColorFramebuffer->configure();
 	
-	thirdOneColorFramebuffer->bind_color_buffer(0, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																								Texture::Format::rgb_16_16_16,
-																								Texture::AssociatedType::FLOAT,
-																								frameBufferWidth,
-																								frameBufferHeight)));
+	thirdOneColorFramebuffer->bind_color_buffer(0, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                                                Texture::Format::rgb_16_16_16,
+                                                                                Texture::AssociatedType::FLOAT,
+                                                                                frameBufferWidth,
+                                                                                frameBufferHeight));
 	
 	
 	thirdOneColorFramebuffer->configure();
 	
 	twoColorsFramebuffer->bind_color_buffer(0, colorTexture);
 	
-	twoColorsFramebuffer->bind_color_buffer(1, std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-																							Texture::Format::rgb_16_16_16,
-																							Texture::AssociatedType::FLOAT,
-																							frameBufferWidth,
-																							frameBufferHeight)));
+	twoColorsFramebuffer->bind_color_buffer(1, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                                            Texture::Format::rgb_16_16_16,
+                                                                            Texture::AssociatedType::FLOAT,
+                                                                            frameBufferWidth,
+                                                                            frameBufferHeight));
 	twoColorsFramebuffer->configure();
 	
 	unsigned int AOL = 100;
 	
-	auto phongforwardShader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(AOL,
-																				  forwardRenderVertexShaderSource,
-																				  forwardRenderFragmentShaderSource));
+	auto phongforwardShader = std::make_unique<ForwardShaderOGL>(AOL,
+                                                                 forwardRenderVertexShaderSource,
+                                                                 forwardRenderFragmentShaderSource);
 	
-	auto gouraudforwardShader = std::unique_ptr<ForwardShader>(new ForwardShaderOGL(AOL,
-																					gouraudVertexShaderSource,
-																					gouraudRenderFragmentShaderSource));
+	auto gouraudforwardShader = std::make_unique<ForwardShaderOGL>(AOL,
+                                                                   gouraudVertexShaderSource,
+                                                                   gouraudRenderFragmentShaderSource);
 	
-	auto lightSourceforwardShader = std::unique_ptr<LightSourceDrawerShader>(new LightSourceDrawerShaderOGL(lightSourceDrawerVertexShader,
-																											lightSourceDrawerFragmentShader));
+	auto lightSourceforwardShader = std::make_unique<LightSourceDrawerShaderOGL>(lightSourceDrawerVertexShader,
+                                                                                 lightSourceDrawerFragmentShader);
 	
-	auto deferredShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(deferredRenderVertexShaderSource,
-																				deferredRenderFragmentShaderSource));
+	auto deferredShader = std::make_unique<DeferredShaderOGL>(deferredRenderVertexShaderSource,
+                                                              deferredRenderFragmentShaderSource);
 	
-	auto bloomSplitProgram = std::unique_ptr<Shader>(new ShaderOGL(bloomSplitterVertexShader, "", "", "", bloomSplitterFragmentShader));
-	auto bloomMergeProgram = std::unique_ptr<Shader>(new ShaderOGL(bloomMergerVertexShader, "", "", "", bloomMergerFragmentShader));
-	auto hdrProgram = std::unique_ptr<Shader>(new ShaderOGL(hdrVertexShader, "", "", "", hdrFragmentShader));
-	auto gaussianBlurProgram = std::unique_ptr<Shader>(new ShaderOGL(gaussianBlurVertexShader, "", "", "", gaussianBlurFragmentShader));
-	auto secondGaussianBlurProgram = std::unique_ptr<Shader>(new ShaderOGL(gaussianBlurVertexShader, "", "", "", gaussianBlurFragmentShader));
-	auto scaleProgram = std::unique_ptr<Shader>(new ShaderOGL(scaleVertexShader, "", "", "", scaleFragmentShader));
-
+    auto bloomSplitProgram = std::make_unique<ShaderOGL>(bloomSplitterVertexShader, "", "", "", bloomSplitterFragmentShader);
+	auto bloomMergeProgram = std::make_unique<ShaderOGL>(bloomMergerVertexShader, "", "", "", bloomMergerFragmentShader);
+	auto hdrProgram = std::make_unique<ShaderOGL>(hdrVertexShader, "", "", "", hdrFragmentShader);
+	auto gaussianBlurProgram = std::make_unique<ShaderOGL>(gaussianBlurVertexShader, "", "", "", gaussianBlurFragmentShader);
+	auto secondGaussianBlurProgram = std::make_unique<ShaderOGL>(gaussianBlurVertexShader, "", "", "", gaussianBlurFragmentShader);
+	auto vignetteProgram = std::make_unique<ShaderOGL>(vignetteVertexShader, "", "", "", vignetteFragmentShader);
+    auto scaleProgram = std::make_unique<ShaderOGL>(scaleVertexShader, "", "", "", scaleFragmentShader);
+    
 	
-	deferredRenderer = std::unique_ptr<DeferredRenderOGL> (new DeferredRenderOGL( AOL,
-																				 deferredRenderVertexShaderSource,
-																				 deferredRenderFragmentShaderSource,
-																				 deferredRenderLightingVertexShaderSource,
-																				 deferredRenderLightingFragmentShaderSource,
-																				 oneColorDepthFramebuffer));
+	deferredRenderer = std::make_unique<DeferredRenderOGL> (AOL,
+                                                            deferredRenderVertexShaderSource,
+                                                            deferredRenderFragmentShaderSource,
+                                                            deferredRenderLightingVertexShaderSource,
+                                                            deferredRenderLightingFragmentShaderSource,
+                                                            oneColorDepthFramebuffer);
 	
-	phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL,
-																			oneColorDepthFramebuffer,
-																			std::move(phongforwardShader)));
+	phongForwardRenderer = std::make_unique<ForwardRender>(AOL,
+                                                              oneColorDepthFramebuffer,
+                                                              std::move(phongforwardShader));
 	
-	gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL,
-																			  oneColorDepthFramebuffer,
-																			  std::move(gouraudforwardShader)));
+	gouraudForwardRenderer = std::make_unique<ForwardRender>(AOL,
+                                                                oneColorDepthFramebuffer,
+                                                                std::move(gouraudforwardShader));
 	
-	lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender(oneColorDepthFramebuffer,
-																					 std::move(lightSourceforwardShader)));
+    lightSourceRenderer = std::make_unique<LightSourcesRender>(oneColorDepthFramebuffer,
+                                                               std::move(lightSourceforwardShader));
 	
-	bloomSplitRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(oneColorDepthFramebuffer->get_colors(),
-																					 twoColorsFramebuffer, std::move(bloomSplitProgram)));
+	bloomSplitRenderer = std::make_unique<PostprocessDrawerOGL>(oneColorDepthFramebuffer->get_colors(),
+                                                                twoColorsFramebuffer,
+                                                                std::move(bloomSplitProgram));
 	
 	std::vector<std::shared_ptr<Texture>> textures;
 	textures.push_back(twoColorsFramebuffer->get_colors()[0]);
 	
-	gaussianBlurFirstStepRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(textures,
-																								thirdOneColorFramebuffer,
-																								std::move(gaussianBlurProgram)));
+	gaussianBlurFirstStepRenderer = std::make_unique<PostprocessDrawerOGL>(textures,
+                                                                           thirdOneColorFramebuffer,
+                                                                           std::move(gaussianBlurProgram));
 	
-	gaussianBlurSecondStepRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(thirdOneColorFramebuffer->get_colors(),
-																								 fourthOneColorFramebuffer,
-																								 std::move(secondGaussianBlurProgram)));
+	gaussianBlurSecondStepRenderer = std::make_unique<PostprocessDrawerOGL>(thirdOneColorFramebuffer->get_colors(),
+                                                                           fourthOneColorFramebuffer,
+                                                                           std::move(secondGaussianBlurProgram));
 	
 	
-	bloomMergeRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(twoColorsFramebuffer->get_colors(),
-																					 secondOneColorFramebuffer,
-																					 std::move(bloomMergeProgram)));
+	bloomMergeRenderer = std::make_unique<PostprocessDrawerOGL>(twoColorsFramebuffer->get_colors(),
+                                                                secondOneColorFramebuffer,
+                                                                std::move(bloomMergeProgram));
 	
-	hdrRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(secondOneColorFramebuffer->get_colors(),
-																			  fifthOneColorFramebuffer,
-																			  std::move(hdrProgram)));
+	hdrRenderer = std::make_unique<PostprocessDrawerOGL>(secondOneColorFramebuffer->get_colors(),
+                                                         fifthOneColorFramebuffer,
+                                                         std::move(hdrProgram));
 	
-	scaleRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawerOGL(fifthOneColorFramebuffer->get_colors(),
-																				  windowFramebuffer,
-																				  std::move(scaleProgram)));
+    vignetteRenderer = std::make_unique<PostprocessDrawerOGL>(fifthOneColorFramebuffer->get_colors(),
+                                                              vignetteFramebuffer,
+                                                              std::move(vignetteProgram));
+    
+	scaleRenderer = std::make_unique<PostprocessDrawerOGL>(vignetteFramebuffer->get_colors(),
+                                                           windowFramebuffer,
+                                                           std::move(scaleProgram));
 	
 }
 
@@ -243,6 +270,7 @@ void ms::NGinOGL::load () {
 	gaussianBlurFirstStepRenderer->load();
 	gaussianBlurSecondStepRenderer->load();
 	scaleRenderer->load();
+    vignetteRenderer->load();
 }
 
 void ms::NGinOGL::unload () {
@@ -257,22 +285,23 @@ void ms::NGinOGL::unload () {
 	gaussianBlurFirstStepRenderer->unload();
 	gaussianBlurSecondStepRenderer->unload();
 	scaleRenderer->unload();
+    vignetteRenderer->unload();
 }
 
 std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,
 														   math::vec3 	color,
 														   math::vec3 	position) {
 	
-	return std::shared_ptr<PointLight>(new PointLightOGL(power, color, position));
+	return std::make_shared<PointLightOGL>(power, color, position);
 	
 }
 
 std::shared_ptr<ms::Drawable> ms::NGinOGL::get_drawable() {
-	return std::shared_ptr<Drawable>(new DrawableOGL());
+	return std::make_shared<DrawableOGL>();
 }
 
 std::unique_ptr<ms::Loader> ms::NGinOGL::get_loader () {
-	return std::unique_ptr<Loader>(new LoaderOGL());
+	return std::make_unique<LoaderOGL>();
 }
 
 std::shared_ptr<ms::SpotLight> ms::NGinOGL::get_spot_light (float 		power,
@@ -281,7 +310,7 @@ std::shared_ptr<ms::SpotLight> ms::NGinOGL::get_spot_light (float 		power,
 															float 		lightingAngleDegrees,
 															math::vec3 	direction) {
 	
-	return std::shared_ptr<SpotLight>(new SpotLightOGL(power, color, position, lightingAngleDegrees, direction));
+	return std::make_shared<SpotLightOGL>(power, color, position, lightingAngleDegrees, direction);
 	
 }
 

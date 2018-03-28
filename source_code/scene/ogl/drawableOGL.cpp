@@ -31,8 +31,8 @@ void ms::DrawableOGL::draw () {
 
 std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 	
-	std::shared_ptr<ms::DrawableOGL>	drawable(new DrawableOGL());
-	std::shared_ptr<ms::Geometry> 		quad(new GeometryOGL());
+    auto drawable = std::make_shared<DrawableOGL>();
+    auto quad = std::make_shared<GeometryOGL>();
 	
 	for(int i = 0; i < 4; ++i) {
 		int positionOffset = 3 * i;

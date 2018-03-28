@@ -12,7 +12,7 @@ ms::Scene::Scene (float nearPlan, float farPlan, float fovDegress, float cameraA
 																							nodes(std::vector<std::shared_ptr<Drawable>>()),
 																							materials(std::map<std::string, std::shared_ptr<Material>>()){
 																								
-	cam = std::unique_ptr<Camera>( new PerspectiveCamera(nearPlan, farPlan, fovDegress, cameraAspect) );
+	cam = std::make_unique<PerspectiveCamera>(nearPlan, farPlan, fovDegress, cameraAspect);
 																								
 }
 
@@ -33,7 +33,7 @@ ms::DirectionalLight * ms::Scene::get_directional_light() const {
 }
 
 void ms::Scene::set_directional_light(float power, math::vec3 color, math::vec3 direction) {
-	directionalLight = std::unique_ptr<ms::DirectionalLight>(new DirectionalLight(color, direction));
+	directionalLight = std::make_unique<DirectionalLight>(color, direction);
 }
 
 const std::vector<std::shared_ptr<ms::Drawable>> & ms::Scene::get_nodes() const {

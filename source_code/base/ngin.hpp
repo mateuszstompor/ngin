@@ -85,6 +85,7 @@ namespace ms {
 		std::unique_ptr<PostprocessDrawer>     	bloomMergeRenderer;
 		std::unique_ptr<PostprocessDrawer>     	gaussianBlurFirstStepRenderer;
 		std::unique_ptr<PostprocessDrawer>     	gaussianBlurSecondStepRenderer;
+        std::unique_ptr<PostprocessDrawer>      vignetteRenderer;
 		std::unique_ptr<PostprocessDrawer>     	scaleRenderer;
 		
 		std::shared_ptr<Framebuffer> 			oneColorDepthFramebuffer;
@@ -94,6 +95,9 @@ namespace ms {
 		std::shared_ptr<Framebuffer> 			fifthOneColorFramebuffer;
 
 		std::shared_ptr<Framebuffer> 			twoColorsFramebuffer;
+        
+        
+        std::shared_ptr<Framebuffer>            vignetteFramebuffer;
 		std::shared_ptr<Framebuffer> 			windowFramebuffer;
 
 		unsigned int							screenWidth;

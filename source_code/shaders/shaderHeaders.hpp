@@ -101,6 +101,9 @@ namespace ms {
 			
 			const std::string scale_fshader =
 			#include "./postprocess/scale_fshader.glsl"
+            
+            const std::string vignette_fshader =
+            #include "./postprocess/vignette_fshader.glsl"
 			
 		}
 		
@@ -130,7 +133,9 @@ enum class ms::shader::Type {
 	post_process_gaussian_blur_vshader,
 	post_process_gaussian_blur_fshader,
 	post_process_scale_fshader,
-	post_process_scale_vshader
+	post_process_scale_vshader,
+    post_process_vignette_vshader,
+    post_process_vignette_fshader
 };
 
 
@@ -198,9 +203,14 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			break;
 		case ms::shader::Type::post_process_hdr_vshader:
 		case ms::shader::Type::post_process_scale_vshader:
+        case ms::shader::Type::post_process_vignette_vshader:
 		case ms::shader::Type::post_process_gaussian_blur_vshader:
 			shaderContent += postprocess::passTroughVshader;
 			break;
+        case ms::shader::Type::post_process_vignette_fshader:
+            shaderContent += functionsDefinitions;
+            shaderContent += postprocess::vignette_fshader;
+            break;
 		case ms::shader::Type::post_process_gaussian_blur_fshader:
 			shaderContent += postprocess::gaussian_blur_fshader;
 			break;

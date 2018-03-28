@@ -45,7 +45,7 @@ namespace ms {
 }
 
 std::shared_ptr<ms::Geometry> ms::LoaderOGL::get_geometry() {
-	return std::shared_ptr<ms::Geometry>(new GeometryOGL());
+	return std::make_shared<ms::GeometryOGL>();
 }
 
 std::shared_ptr<ms::Texture> ms::LoaderOGL::get_texture (std::string				name,
@@ -59,17 +59,17 @@ std::shared_ptr<ms::Texture> ms::LoaderOGL::get_texture (std::string				name,
 														 unsigned int 				width,
 														 unsigned int 				height) {
 	
-	return std::shared_ptr<ms::Texture>(new TextureOGL(Texture::Type::tex_2d,
-													   name,
-													   format,
-													   associatedType,
-													   minFilter,
-													   magFilter,
-													   sWrapping,
-													   tWrapping,
-													   mipMapLevel,
-													   width,
-													   height));
+	return std::make_shared<ms::TextureOGL>(Texture::Type::tex_2d,
+                                            name,
+                                            format,
+                                            associatedType,
+                                            minFilter,
+                                            magFilter,
+                                            sWrapping,
+                                            tWrapping,
+                                            mipMapLevel,
+                                            width,
+                                            height);
 	
 }
 
@@ -80,7 +80,7 @@ std::shared_ptr<ms::Material> ms::LoaderOGL::get_material (math::vec3 ambient,
 														   float opacity,
 														   std::string name) {
 	
-	return std::shared_ptr<Material>(new MaterialOGL(ambient, diffuse, specular, shininess, opacity, name));
+	return std::make_shared<MaterialOGL>(ambient, diffuse, specular, shininess, opacity, name);
 }
 
 

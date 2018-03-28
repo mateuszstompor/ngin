@@ -18,58 +18,58 @@ namespace ms {
 	
 }
 
-ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	maxAOLights,
-										  std::string 	gVS,
-										  std::string 	gFS,
-										  std::string 	lVS,
-										  std::string 	lFS,
-										  std::shared_ptr<Framebuffer> framebuffer) :
+ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	                maxAOLights,
+										  std::string 	                gVS,
+										  std::string 	                gFS,
+										  std::string 	                lVS,
+										  std::string 	                lFS,
+										  std::shared_ptr<Framebuffer>  framebuffer) :
 
 ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS) {
-	gShader = std::unique_ptr<DeferredShader>(new DeferredShaderOGL(gVS, gFS));
-	lightingShader = std::unique_ptr<DeferredLightingShader>(new DeferredLightingShaderOGL(maxAOLights, lVS, lFS));
+	gShader = std::make_unique<DeferredShaderOGL>(gVS, gFS);
+	lightingShader = std::make_unique<DeferredLightingShaderOGL>(maxAOLights, lVS, lFS);
 	
 	
-	gPosition = std::shared_ptr<Texture>(new TextureOGL(Texture::Type::tex_2d,
-														G_BUF_POSITIONS,
-														Texture::Format::rgb_16_16_16,
-														Texture::AssociatedType::FLOAT,
-														Texture::MinFilter::linear,
-														Texture::MagFilter::linear,
-														Texture::Wrapping::clamp_to_edge,
-														Texture::Wrapping::clamp_to_edge,
-														0, framebuffer->get_width(), framebuffer->get_height()));
+	gPosition = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                             G_BUF_POSITIONS,
+                                             Texture::Format::rgb_16_16_16,
+                                             Texture::AssociatedType::FLOAT,
+                                             Texture::MinFilter::linear,
+                                             Texture::MagFilter::linear,
+                                             Texture::Wrapping::clamp_to_edge,
+                                             Texture::Wrapping::clamp_to_edge,
+                                             0, framebuffer->get_width(), framebuffer->get_height());
 
-	gNormal = std::shared_ptr<Texture>(new TextureOGL(	Texture::Type::tex_2d,
-														G_BUF_NORMALS,
-														Texture::Format::rgb_16_16_16,
-														Texture::AssociatedType::FLOAT,
-														Texture::MinFilter::linear,
-														Texture::MagFilter::linear,
-														Texture::Wrapping::clamp_to_edge,
-														Texture::Wrapping::clamp_to_edge,
-														0, framebuffer->get_width(), framebuffer->get_height()));
+	gNormal = std::make_shared<TextureOGL>( Texture::Type::tex_2d,
+                                            G_BUF_NORMALS,
+                                            Texture::Format::rgb_16_16_16,
+                                            Texture::AssociatedType::FLOAT,
+                                            Texture::MinFilter::linear,
+                                            Texture::MagFilter::linear,
+                                            Texture::Wrapping::clamp_to_edge,
+                                            Texture::Wrapping::clamp_to_edge,
+                                            0, framebuffer->get_width(), framebuffer->get_height());
 	
-	gAlbedo = std::shared_ptr<Texture>(new TextureOGL(	Texture::Type::tex_2d,
-														G_BUF_ALBEDO,
-													  	Texture::Format::rgba_8_8_8_8,
-														Texture::AssociatedType::UNSIGNED_BYTE,
-														Texture::MinFilter::linear,
-														Texture::MagFilter::linear,
-														Texture::Wrapping::clamp_to_edge,
-														Texture::Wrapping::clamp_to_edge,
-														0, framebuffer->get_width(), framebuffer->get_height()));
+	gAlbedo = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                           G_BUF_ALBEDO,
+                                           Texture::Format::rgba_8_8_8_8,
+                                           Texture::AssociatedType::UNSIGNED_BYTE,
+                                           Texture::MinFilter::linear,
+                                           Texture::MagFilter::linear,
+                                           Texture::Wrapping::clamp_to_edge,
+                                           Texture::Wrapping::clamp_to_edge,
+                                           0, framebuffer->get_width(), framebuffer->get_height());
 
-	gFramebuffer = std::unique_ptr<Framebuffer>(new FramebufferOGL(3,
-																   1,
-																   framebuffer->get_width(),
-																   framebuffer->get_height()));
+	gFramebuffer = std::make_unique<FramebufferOGL>(3,
+                                                    1,
+                                                    framebuffer->get_width(),
+                                                    framebuffer->get_height());
 	
-	depthRenderbuffer = std::shared_ptr<Renderbuffer>(new RenderbufferOGL(Texture::Format::depth_24,
-																		  Texture::AssociatedType::UNSIGNED_BYTE,
-																		  0,
-																		  framebuffer->get_width(),
-																		  framebuffer->get_height()));
+	depthRenderbuffer = std::make_shared<RenderbufferOGL>(Texture::Format::depth_24,
+                                                          Texture::AssociatedType::UNSIGNED_BYTE,
+                                                          0,
+                                                          framebuffer->get_width(),
+                                                          framebuffer->get_height());
 	
 	
 

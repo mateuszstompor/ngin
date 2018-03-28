@@ -227,6 +227,7 @@
 		5676F296205222CB002EAB31 /* utilsOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utilsOGL.hpp; sourceTree = "<group>"; };
 		5676F29A20522919002EAB31 /* proxyOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = proxyOGL.hpp; sourceTree = "<group>"; };
 		5676F29B20522AD1002EAB31 /* proxyOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = proxyOGL.cpp; sourceTree = "<group>"; };
+		5677DF06206C049000AD3590 /* vignette_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vignette_fshader.glsl; sourceTree = "<group>"; };
 		568A18A22049846C0017B5CF /* libngin_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
@@ -567,6 +568,7 @@
 				56736CC12064745100CE636A /* hdr */,
 				5642559D2068865200AF650F /* pass_trough_vshader.glsl */,
 				565231B0206B9598001766F3 /* scale_fshader.glsl */,
+				5677DF06206C049000AD3590 /* vignette_fshader.glsl */,
 			);
 			path = postprocess;
 			sourceTree = "<group>";

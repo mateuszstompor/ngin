@@ -179,4 +179,16 @@ float get_luminance_for_adaptive_tone(vec3 color) {
 	return dot(color, vec3(RED_WEIGHT_ADAPTIVE_TONE, GREEN_WEIGHT_ADAPTIVE_TONE, BLUE_WEIGHT_ADAPTIVE_TONE));
 }
 
+float length2(vec2 v) {
+	return dot(v, v);
+}
+
+float length2(vec3 v) {
+	return dot(v, v);
+}
+
+float length2(vec4 v) {
+	return dot(v, v);
+}
+
 )";

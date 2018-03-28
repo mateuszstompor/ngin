@@ -263,6 +263,9 @@ void ms::NGin::draw_scene() {
 		hdrRenderer->draw_quad();
 	});
 	
+    vignetteRenderer->clear_frame();
+    vignetteRenderer->draw_quad();
+    
 	scaleRenderer->clear_frame();
 	scaleRenderer->draw_quad();
 	
