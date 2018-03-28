@@ -1,7 +1,7 @@
 # ngin
 
 ## 29.03.2018 Current pipeline
-<img src="/screenshots/pipeline_compressed.jpg" width="100%" style="float: left; display:inline-block;"/>
+<img src="/screenshots/pipeline.png" width="100%" style="float: left; display:inline-block;"/>
 
 ## 29.03.2018 Vignette
 <img src="/screenshots/vignette.jpg" width="100%" style="float: left; display:inline-block;"/>
