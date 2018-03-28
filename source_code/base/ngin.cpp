@@ -263,6 +263,9 @@ void ms::NGin::draw_scene() {
 		hdrRenderer->draw_quad();
 	});
 	
+	scaleRenderer->clear_frame();
+	scaleRenderer->draw_quad();
+	
 	framesGenerated += 1;
 	if(framesGenerated > framesSpan) {
 		std::cout << "Geometry Pass: " 			<< geometryPassTime 			<< std::endl;

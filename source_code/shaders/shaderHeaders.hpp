@@ -99,6 +99,9 @@ namespace ms {
 			const std::string gaussian_blur_fshader =
 			#include "./postprocess/gaussian_blur/gaussian_blur_fshader.glsl"
 			
+			const std::string scale_fshader =
+			#include "./postprocess/scale_fshader.glsl"
+			
 		}
 		
 		inline std::string get_shader_of_type(Type type);
@@ -125,7 +128,9 @@ enum class ms::shader::Type {
 	post_process_bloom_splitter_vshader,
 	post_process_bloom_splitter_fshader,
 	post_process_gaussian_blur_vshader,
-	post_process_gaussian_blur_fshader
+	post_process_gaussian_blur_fshader,
+	post_process_scale_fshader,
+	post_process_scale_vshader
 };
 
 
@@ -172,9 +177,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 		case ms::shader::Type::forward_render_gouraud_fshader:
 			shaderContent += forwardrenderer::gouraudFragmentShader;
 			break;
-		case ms::shader::Type::post_process_hdr_vshader:
-			shaderContent += postprocess::passTroughVshader;
-			break;
 		case ms::shader::Type::post_process_hdr_fshader:
 			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::hdrFshader;
@@ -194,11 +196,16 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += functionsDefinitions;
 			shaderContent += postprocess::bloom_splitter_fshader;
 			break;
+		case ms::shader::Type::post_process_hdr_vshader:
+		case ms::shader::Type::post_process_scale_vshader:
 		case ms::shader::Type::post_process_gaussian_blur_vshader:
 			shaderContent += postprocess::passTroughVshader;
 			break;
 		case ms::shader::Type::post_process_gaussian_blur_fshader:
 			shaderContent += postprocess::gaussian_blur_fshader;
+			break;
+		case ms::shader::Type::post_process_scale_fshader:
+			shaderContent += postprocess::scale_fshader;
 			break;
 		default:
 			std::cout << "critical error, shader type not recognized" << std::endl;

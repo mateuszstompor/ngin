@@ -46,6 +46,8 @@ int main(int argc, const char * argv[]) { {
 
 	int width = 1000;
 	int height = 1000;
+	int actualScreenWidth;
+	int actualScreenHeight;
 	int framebufferWidth;
 	int framebufferHeight;
 	
@@ -66,8 +68,13 @@ int main(int argc, const char * argv[]) { {
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 	
-	framebufferWidth = width/2;
-	framebufferHeight = height/2;
+	actualScreenWidth = framebufferWidth;
+	actualScreenHeight = framebufferHeight;
+	
+	//Configure rendering resoultion here
+	framebufferWidth /= 4;
+	framebufferHeight /= 4;
+	//
 	
 	if(window == nullptr){
 		std::cerr << ms::windowCreationError << std::endl;
@@ -85,7 +92,7 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(width, height, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight));
+	engine = std::unique_ptr<ms::NGin>(new ms::NGinOGL(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight));
 		
 	engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 

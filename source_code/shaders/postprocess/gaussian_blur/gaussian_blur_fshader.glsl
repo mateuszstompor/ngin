@@ -1,8 +1,5 @@
 R"(
 
-//adaptive tone mapping
-//25 samples
-
 in vec2 texCoords;
 
 layout (location = 0) out vec4 out1;

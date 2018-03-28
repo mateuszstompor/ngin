@@ -184,6 +184,7 @@
 		5640FED2204AE77600512938 /* shaderOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shaderOGL.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5640FED3204AE77600512938 /* shaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderOGL.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		5642559D2068865200AF650F /* pass_trough_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pass_trough_vshader.glsl; sourceTree = "<group>"; };
+		565231B0206B9598001766F3 /* scale_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = scale_fshader.glsl; sourceTree = "<group>"; };
 		565AAAC62069B5F3002B6C6B /* materialOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = materialOGL.cpp; sourceTree = "<group>"; };
 		565AAAC72069B5F3002B6C6B /* materialOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = materialOGL.hpp; sourceTree = "<group>"; };
 		5668DD90205FCAE900D0EEA6 /* pointLightOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = pointLightOGL.hpp; sourceTree = "<group>"; };
@@ -565,6 +566,7 @@
 				56C3C6AC206582A60003F630 /* bloom */,
 				56736CC12064745100CE636A /* hdr */,
 				5642559D2068865200AF650F /* pass_trough_vshader.glsl */,
+				565231B0206B9598001766F3 /* scale_fshader.glsl */,
 			);
 			path = postprocess;
 			sourceTree = "<group>";
