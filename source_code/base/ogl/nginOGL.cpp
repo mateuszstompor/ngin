@@ -199,12 +199,12 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                                                             oneColorDepthFramebuffer);
 	
 	phongForwardRenderer = std::make_unique<ForwardRender>(AOL,
-                                                              oneColorDepthFramebuffer,
-                                                              std::move(phongforwardShader));
+                                                           oneColorDepthFramebuffer,
+                                                           std::move(phongforwardShader));
 	
 	gouraudForwardRenderer = std::make_unique<ForwardRender>(AOL,
-                                                                oneColorDepthFramebuffer,
-                                                                std::move(gouraudforwardShader));
+                                                             oneColorDepthFramebuffer,
+                                                             std::move(gouraudforwardShader));
 	
     lightSourceRenderer = std::make_unique<LightSourcesRender>(oneColorDepthFramebuffer,
                                                                std::move(lightSourceforwardShader));
