@@ -26,6 +26,12 @@ namespace ms {
 	class NGin {
       
     public:
+    
+        enum class Renderer  {
+            deferred,
+            forward_fragment,
+            forward_vertex
+        };
         
 												NGin        		(unsigned int 	screenWidth,
 																	 unsigned int 	screenHeight,
@@ -47,7 +53,7 @@ namespace ms {
 																	 float			lightingAngleDegrees,
 																	 math::vec3 	direction,
 																	 std::string 	absolutePath);
-		
+        virtual void                            set_renderer        (Renderer r);
 		virtual void 							load 				() = 0;
 		virtual void 							unload 				();
         virtual void							draw_scene  		();
@@ -105,9 +111,13 @@ namespace ms {
 
 		unsigned int 							framebufferWidth;
 		unsigned int 							framebufferHeight;
+        
+        Renderer                                chosenRenderer {Renderer::deferred};
 		
     };
     
 }
+
+
 
 #endif /* ngin_hpp */

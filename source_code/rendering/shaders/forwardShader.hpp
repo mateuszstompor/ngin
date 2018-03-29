@@ -42,10 +42,9 @@ namespace ms {
 		virtual void	set_directional_light_color	(const math::vec3 & color) 							= 0;
 
 		virtual void	set_has_material			(bool doesItHave)	 								= 0;
-		virtual void	bind_diffuse_texture		(Texture & texture)									= 0;
-		virtual void	bind_specular_texture		(Texture & texture)									= 0;
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 								= 0;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 								= 0;
+		virtual void	set_has_normal_texture		(bool doesItHave)	 								= 0;
 		
 		virtual 		~ForwardShader()																= default;
 		

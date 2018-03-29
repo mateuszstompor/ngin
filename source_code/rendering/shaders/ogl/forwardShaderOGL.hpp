@@ -46,10 +46,10 @@ namespace ms {
 		
 		virtual void	set_has_material			(bool doesItHave)	 								override;
 
-		virtual void	bind_diffuse_texture		(Texture & texture)									override;
-		virtual void	bind_specular_texture		(Texture & texture)									override;
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 								override;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 								override;
+		virtual void	set_has_normal_texture		(bool doesItHave)	 								override;
+
 		
 						~ForwardShaderOGL();
 		
@@ -63,6 +63,7 @@ namespace ms {
 		
 		GLint			hasDiffuseTextureLocation;
 		GLint			hasSpecularTextureLocation;
+		GLint			hasNormalTextureLocation;
 		
 		GLint			directionalLightColorLocation;
 		GLint			directionalLightDirectionLocation;
@@ -72,6 +73,7 @@ namespace ms {
 		
 		GLint			spotLightsAmount;
 		GLint*			spotLightsLocations;
+		
 		
 		GLint			pointLightsAmount;
 		GLint*			pointLightsLocations;

@@ -16,6 +16,8 @@ namespace ms {
 	struct Vertex {
 		math::vec3 position;
 		math::vec3 normal;
+        math::vec3 tangent;
+        math::vec3 bitangent;
 		math::vec2 textureCoordinates;
 	};
 

@@ -13,7 +13,7 @@
 ms::Loader::model_data ms::Loader::load_model(std::string path) {
 	
 	Assimp::Importer importer;
-	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 		assert(false);
@@ -191,10 +191,24 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 			vertex.position.y() = mesh->mVertices[i].y;
 			vertex.position.z() = mesh->mVertices[i].z;
 
-			vertex.normal.x() = mesh->mNormals[i].x;
-			vertex.normal.y() = mesh->mNormals[i].y;
-			vertex.normal.z() = mesh->mNormals[i].z;
-
+            if(mesh->HasNormals()) {
+                vertex.normal.x() = mesh->mNormals[i].x;
+                vertex.normal.y() = mesh->mNormals[i].y;
+                vertex.normal.z() = mesh->mNormals[i].z;
+            }
+        
+            if(mesh->HasTangentsAndBitangents()) {
+                vertex.bitangent.x() = mesh->mBitangents[i].x;
+                vertex.bitangent.y() = mesh->mBitangents[i].y;
+                vertex.bitangent.z() = mesh->mBitangents[i].z;
+                
+                vertex.tangent.x() = mesh->mTangents[i].x;
+                vertex.tangent.y() = mesh->mTangents[i].y;
+                vertex.tangent.z() = mesh->mTangents[i].z;
+            }else {
+                std::cout<<"dupa"<<std::endl;
+            }
+        
 			if(mesh->mTextureCoords[0]) {
 				vertex.textureCoordinates.x() = mesh->mTextureCoords[0][i].x;
 				vertex.textureCoordinates.y() = mesh->mTextureCoords[0][i].y;

@@ -78,7 +78,8 @@ void main(){
 										shininess,
 										normal_N,
 										cameraPosition,
-										surfaceZCamera_N);
+										surfaceZCamera_N,
+                                        mat3(1.0f));
 	}
 
 	for (int i = 0; i < pointLightsAmount; ++i) {
@@ -90,7 +91,8 @@ void main(){
 										shininess,
 										normal_N,
 										cameraPosition,
-										surfaceZCamera_N);
+										surfaceZCamera_N,
+                                        mat3(1.0f));
 	}
 
 	Fragmentcolor = vec4(result, 1.0f);

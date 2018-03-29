@@ -229,6 +229,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 				usedSpotLightIndex++;
 			}
 			break;
+        case GLFW_KEY_M:
+        engine->set_renderer(ms::NGin::Renderer::deferred);
+        break;
+        case GLFW_KEY_N:
+        engine->set_renderer(ms::NGin::Renderer::forward_fragment);
+        break;
+        case GLFW_KEY_B:
+        engine->set_renderer(ms::NGin::Renderer::forward_vertex);
+        break;
 		default:
 			break;
 	}

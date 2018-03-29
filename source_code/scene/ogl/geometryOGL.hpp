@@ -23,8 +23,10 @@ namespace ms {
 				void 			use_normals 			() override;
 				void 			use_vertices 			() override;
 				void 			use_indicies 			() override;
+                void            use_tangents            () override;
+                void            use_bitangents          () override;
 				void 			use_texture_coord	 	() override;
-		virtual	std::string		get_class				() override;
+                std::string		get_class				() override;
 				void 			_load					() override;
 				void 			_unload					() override;
 				void 			load_vertices_to_buffer	();
@@ -32,6 +34,8 @@ namespace ms {
 	protected:
 		
 		GLuint 	normalsBuffer;
+        GLuint  tangents;
+        GLuint  bitangents;
 		GLuint 	positionsBuffer;
 		GLuint 	texturesCooridnatesBuffer;
 		

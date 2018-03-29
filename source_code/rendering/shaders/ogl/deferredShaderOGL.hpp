@@ -27,10 +27,9 @@ namespace ms {
 		virtual void 	set_camera_transformation	(const math::mat4 & transf)			override;
 		virtual void	set_model_transformation	(const math::mat4 & modelTransf)	override;
 		virtual void	set_has_material			(bool doesItHave)	 				override;
-		virtual void	bind_diffuse_texture		(Texture & texture)					override;
-		virtual void	bind_specular_texture		(Texture & texture)					override;
 		virtual void	set_has_diffuse_texture		(bool doesItHave)	 				override;
 		virtual void	set_has_specular_texture	(bool doesItHave)	 				override;
+		virtual void	set_has_normal_texture		(bool doesItHave)	 				override;
 		
 	protected:
 		
@@ -41,6 +40,7 @@ namespace ms {
 		GLint			hasMaterialLocation;
 		GLint			hasDiffuseTextureLocation;
 		GLint			hasSpecularTextureLocation;
+		GLint			hasNormalTextureLocation;
 		
 		GLint			materialBlockLocation;
 		

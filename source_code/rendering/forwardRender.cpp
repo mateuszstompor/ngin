@@ -62,18 +62,26 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
 		mat->use();
 		
 		if(auto diff = mat->boundedDiffuseTexture.lock()) {
-			shad->bind_diffuse_texture(*diff);
+            shad->bind_texture(0, *diff);
 			shad->set_has_diffuse_texture(true);
 		} else {
 			shad->set_has_diffuse_texture(false);
 		}
 		
 		if(auto spec = mat->boundedSpecularTexture.lock()) {
-			shad->bind_specular_texture(*spec);
+            shad->bind_texture(1, *spec);
 			shad->set_has_specular_texture(true);
 		} else {
 			shad->set_has_specular_texture(false);
 		}
+        
+        if(auto normal = mat->boundedHeightTexture.lock()) {
+            //index of diffuse texture is 1
+            shad->bind_texture(2, *normal);
+            shad->set_has_normal_texture(true);
+        } else {
+            shad->set_has_normal_texture(false);
+        }
 		
 	} else {
 		shad->set_has_material(false);

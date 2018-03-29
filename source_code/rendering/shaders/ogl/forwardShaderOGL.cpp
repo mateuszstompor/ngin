@@ -22,11 +22,9 @@ void  ms::ForwardShaderOGL::_load () {
 	
 	mglUseProgram(program);
 	
-	GLint diffuseTextureLocation 		= mglGetUniformLocation(program, "diffuseTexture");
-	mglUniform1i(diffuseTextureLocation, 0);
-	
-	GLint specularTextureLocation 		= mglGetUniformLocation(program, "specularTexture");
-	mglUniform1i(specularTextureLocation, 1);
+	mglUniform1i(mglGetUniformLocation(program, "diffuseTexture"), 0);
+	mglUniform1i(mglGetUniformLocation(program, "specularTexture"), 1);
+	mglUniform1i(mglGetUniformLocation(program, "normalTexture"), 2);
 	
 	projectionMatrixLocation 			= mglGetUniformLocation(program, "perspectiveProjection");
 	cameraTransformationLocation 		= mglGetUniformLocation(program, "cameraTransformation");
@@ -35,7 +33,7 @@ void  ms::ForwardShaderOGL::_load () {
 	hasMaterialLocation 				= mglGetUniformLocation(program, "hasMaterial");
 	hasDiffuseTextureLocation	 		= mglGetUniformLocation(program, "hasDiffuseTexture");
 	hasSpecularTextureLocation 			= mglGetUniformLocation(program, "hasSpecularTexture");
-	
+	hasNormalTextureLocation			= mglGetUniformLocation(program, "hasNormalTexture");
 	directionalLightColorLocation 		= mglGetUniformLocation(program, "dirLight.color");
 	directionalLightDirectionLocation	= mglGetUniformLocation(program, "dirLight.direction");
 	hasDirectionalLightLocation	 		= mglGetUniformLocation(program, "hasDirLight");
@@ -43,6 +41,7 @@ void  ms::ForwardShaderOGL::_load () {
 	renderModeLocation 					= mglGetUniformLocation(program, "renderMode");
 	
 	spotLightsAmount 					= mglGetUniformLocation(program, "spotLightsAmount");
+	
 	
 	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
 		
@@ -136,6 +135,10 @@ void ms::ForwardShaderOGL::set_point_light_position (unsigned int index, const m
 	mglUniform3fv(positionLocation, 1, position.c_array());
 }
 
+void ms::ForwardShaderOGL::set_has_normal_texture(bool doesItHave) {
+	mglUniform1i(hasNormalTextureLocation, doesItHave == true ? 1 : 0);
+}
+
 void ms::ForwardShaderOGL::set_amount_of_spot_lights (int amount) {
 	mglUniform1i(spotLightsAmount, amount);
 }
@@ -183,16 +186,6 @@ void ms::ForwardShaderOGL::set_has_diffuse_texture (bool doesItHave) {
 
 void ms::ForwardShaderOGL::set_has_specular_texture (bool doesItHave) {
 	mglUniform1i(hasSpecularTextureLocation, doesItHave == true ? 1 : 0);
-}
-
-void ms::ForwardShaderOGL::bind_diffuse_texture (Texture & texture) {
-	mglActiveTexture(GL_TEXTURE0);
-	texture.use();
-}
-
-void ms::ForwardShaderOGL::bind_specular_texture (Texture & texture) {
-	mglActiveTexture(GL_TEXTURE1);
-	texture.use();
 }
 
 ms::ForwardShaderOGL::~ForwardShaderOGL() {

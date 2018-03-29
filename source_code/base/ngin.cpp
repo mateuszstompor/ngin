@@ -183,45 +183,47 @@ void ms::NGin::count_fps () {
 }
 
 void ms::NGin::draw_scene() {
-	static int framesGenerated = 0;
-	static int framesSpan = 150;
+
+    #ifdef CALLS_TIME_CONSUMPTION
+        static int framesGenerated = 0;
+        static int framesSpan = 150;
+    
 	
-	static long deferredRenderDrawingTime,	lightSourceDrawingTime, 	bloomSplitDrawingTime;
-	static long firstStepBlurDrawingTime, 	secondStepBlurDrawingTime, 	bloomMergerDrawingTime;
-	static long hdrDrawingTime, 			lightPassTime, 				geometryPassTime;
-	
+        static long modelsDrawingTime,	        lightSourceDrawingTime, 	bloomSplitDrawingTime;
+        static long firstStepBlurDrawingTime, 	secondStepBlurDrawingTime, 	bloomMergerDrawingTime;
+        static long hdrDrawingTime;
+	#endif
 	#ifdef NGIN_COUNT_FPS
 		count_fps();
 	#endif
-	deferredRenderDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-		deferredRenderer->use();
-		deferredRenderer->setup_g_buffer_uniforms(scene.get());
-		deferredRenderer->clear_frame();
-		geometryPassTime = utils::measure_time<std::chrono::microseconds>([&](){
-			for(int i = 0; i < scene->nodes.size(); ++i) {
-				deferredRenderer->draw(scene->nodes[i].get(), scene.get());
-			}
-		});
-		
-		lightPassTime = utils::measure_time<std::chrono::microseconds>([&](){
-			deferredRenderer->perform_light_pass(scene.get());
-		});
-	});
+    modelsDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+        if(chosenRenderer == Renderer::deferred) {
+            deferredRenderer->use();
+            deferredRenderer->setup_g_buffer_uniforms(scene.get());
+            deferredRenderer->clear_frame();
+            for(int i = 0; i < scene->nodes.size(); ++i) {
+                deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+            }
+            deferredRenderer->perform_light_pass(scene.get());
+           
+        } else if(chosenRenderer == Renderer::forward_fragment) {
+            phongForwardRenderer->use();
+            phongForwardRenderer->clear_frame();
+            phongForwardRenderer->setup_uniforms(scene.get());
+            for(int i = 0; i < scene->nodes.size(); ++i) {
+                phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+            }
+        } else {
+            gouraudForwardRenderer->use();
+            gouraudForwardRenderer->clear_frame();
+            gouraudForwardRenderer->setup_uniforms(scene.get());
+            for(int i = 0; i < scene->nodes.size(); ++i) {
+                gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+            }
 
-//	phongForwardRenderer->use();
-//	phongForwardRenderer->clear_frame();
-//	phongForwardRenderer->setup_uniforms(scene.get());
-//	for(int i = 0; i < scene->nodes.size(); ++i) {
-//		phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-//	}
-	
-//	gouraudForwardRenderer->use();
-//	gouraudForwardRenderer->clear_frame();
-//	gouraudForwardRenderer->setup_uniforms(scene.get());
-//	for(int i = 0; i < scene->nodes.size(); ++i) {
-//		gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-//	}
-	
+        }
+    });
+    
 	secondOneColorFramebuffer->copy_depth_from(*oneColorDepthFramebuffer.get());
 
 	lightSourceDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
@@ -269,11 +271,10 @@ void ms::NGin::draw_scene() {
 	scaleRenderer->clear_frame();
 	scaleRenderer->draw_quad();
 	
+    #ifdef CALLS_TIME_CONSUMPTION
 	framesGenerated += 1;
 	if(framesGenerated > framesSpan) {
-		std::cout << "Geometry Pass: " 			<< geometryPassTime 			<< std::endl;
-		std::cout << "Light Pass: " 			<< lightPassTime 				<< std::endl;
-		std::cout << "Deferred Render: "	 	<< deferredRenderDrawingTime	<< std::endl;
+		std::cout << "Models Pass: " 			<< modelsDrawingTime 			<< std::endl;
 		std::cout << "Light Sources Render: " 	<< lightSourceDrawingTime 		<< std::endl;
 		std::cout << "Bloom Split: " 			<< bloomSplitDrawingTime 		<< std::endl;
 		std::cout << "Blur first step: " 		<< firstStepBlurDrawingTime 	<< std::endl;
@@ -282,5 +283,10 @@ void ms::NGin::draw_scene() {
 		std::cout << "Hdr draw: " 				<< hdrDrawingTime 				<< std::endl;
 		framesGenerated = 0;
 	}
-	
+    #endif
 }
+
+void ms::NGin::set_renderer (Renderer r) {
+    this->chosenRenderer = r;
+}
+

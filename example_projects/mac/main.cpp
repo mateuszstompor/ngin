@@ -72,8 +72,8 @@ int main(int argc, const char * argv[]) { {
 	actualScreenHeight = framebufferHeight;
 	
 	//Configure rendering resoultion here
-	framebufferWidth /= 2;
-	framebufferHeight /= 2;
+//    framebufferWidth /= 2;
+//    framebufferHeight /= 2;
 	
 	
 	if(window == nullptr){

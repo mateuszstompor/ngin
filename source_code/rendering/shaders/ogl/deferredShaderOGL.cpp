@@ -16,11 +16,9 @@ void  ms::DeferredShaderOGL::_load () {
 
 	mglUseProgram(program);
 	
-	GLint diffuseTextureLocation = mglGetUniformLocation(program, "diffuseTexture");
-	mglUniform1i(diffuseTextureLocation, 0);
-	
-	GLint specularTextureLocation = mglGetUniformLocation(program, "specularTexture");
-	mglUniform1i(specularTextureLocation, 1);
+	mglUniform1i(mglGetUniformLocation(program, "diffuseTexture"), 0);
+	mglUniform1i(mglGetUniformLocation(program, "specularTexture"), 1);
+	mglUniform1i(mglGetUniformLocation(program, "normalTexture"), 2);
 	
 	projectionMatrixLocation 		= mglGetUniformLocation(program, "perspectiveProjection");
 	cameraTransformationLocation 	= mglGetUniformLocation(program, "cameraTransformation");
@@ -29,8 +27,10 @@ void  ms::DeferredShaderOGL::_load () {
 	hasMaterialLocation 			= mglGetUniformLocation(program, "hasMaterial");
 	hasDiffuseTextureLocation	 	= mglGetUniformLocation(program, "hasDiffuseTexture");
 	hasSpecularTextureLocation 		= mglGetUniformLocation(program, "hasSpecularTexture");
+	hasNormalTextureLocation 		= mglGetUniformBlockIndex(program, "hasNormalTexture");
 	materialBlockLocation			= mglGetUniformBlockIndex(program, "MaterialBlock");
-
+	
+	
 	mglUniformBlockBinding(program, materialBlockLocation, 0);
 	
 	mglUseProgram(0);
@@ -61,12 +61,6 @@ void ms::DeferredShaderOGL::set_has_material (bool doesItHave) {
 	mglUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
 }
 
-void ms::DeferredShaderOGL::bind_diffuse_texture (Texture & texture) {
-	mglActiveTexture(GL_TEXTURE0);
-	texture.use();
-}
-
-void ms::DeferredShaderOGL::bind_specular_texture (Texture & texture) {
-	mglActiveTexture(GL_TEXTURE1);
-	texture.use();
+void ms::DeferredShaderOGL::set_has_normal_texture (bool doesItHave) {
+	mglUniform1i(hasNormalTextureLocation, doesItHave == true ? 1 : 0);
 }

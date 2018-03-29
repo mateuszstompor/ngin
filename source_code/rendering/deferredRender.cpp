@@ -135,18 +135,31 @@ void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Draw
 		gShader->set_has_material(true);
 		
 		if(auto diff = mat->boundedDiffuseTexture.lock()) {
-			gShader->bind_diffuse_texture(*diff);
+            //index of diffuse texture is 0
+            gShader->bind_texture(0, *diff);
 			gShader->set_has_diffuse_texture(true);
 		} else {
 			gShader->set_has_diffuse_texture(false);
 		}
 		
 		if(auto spec = mat->boundedSpecularTexture.lock()) {
-			gShader->bind_specular_texture(*spec);
+            //index of diffuse texture is 1
+            gShader->bind_texture(1, *spec);
 			gShader->set_has_specular_texture(true);
 		} else {
 			gShader->set_has_specular_texture(false);
 		}
+        
+        // Assimp bug "Normals maps actually laoded as height maps #430"
+        // I need to treat height map as normal map
+        if(auto normal = mat->boundedHeightTexture.lock()) {
+            //index of diffuse texture is 1
+            gShader->bind_texture(2, *normal);
+            gShader->set_has_normal_texture(true);
+        } else {
+            gShader->set_has_normal_texture(false);
+        }
+        
 	} else {
 		gShader->set_has_material(false);
 	}

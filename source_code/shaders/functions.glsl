@@ -26,12 +26,15 @@ struct DirectionalLight {
 	vec3    	color;
 };
 
+
+//position in world cooridnates
 struct PointLight {
 	float 		power;
 	vec3		color;
 	vec3		position;
 };
 
+//position in world cooridnates
 struct SpotLight {
 	float 		power;
 	vec3 		color;
@@ -111,9 +114,11 @@ vec3 count_light_influence(PointLight 	light,
 						   float		shininess,
 						   vec3 		normal_N,
 						   vec3 		cameraPosition,
-						   vec3 		fragmentZCamera_N) {
+						   vec3 		fragmentZCamera_N,
+                           mat3         lightTransformation) {
 	
-	vec3 surfaceZLight = light.position - surfacePosition;
+    vec3 transformatedLightPosition = lightTransformation * light.position;
+	vec3 surfaceZLight = transformatedLightPosition - surfacePosition;
 	vec3 surfaceZLight_N = normalize(surfaceZLight);
 	return count_light_influence(light,
 								 surfacePosition,
@@ -141,10 +146,12 @@ vec3 count_light_influence(SpotLight 	light,
 						   float		shininess,
 						   vec3 		normal_N,
 						   vec3 		cameraPosition,
-						   vec3 		fragmentZCamera_N) {
+						   vec3 		fragmentZCamera_N,
+                           mat3         lightTransformation) {
 
-	vec3 lightZFragment 	= surfacePosition - light.position;
-	vec3 lightZFragment_N	= normalize(lightZFragment);
+    vec3 transformatedLightPosition = lightTransformation * light.position;
+	vec3 lightZFragment 	        = surfacePosition - transformatedLightPosition;
+	vec3 lightZFragment_N	        = normalize(lightZFragment);
 	
 	float angleRadians = radians(max(dot(lightZFragment, light.direction), 0.0f));
 

@@ -27,6 +27,8 @@ namespace ms {
 		friend class Loader;
 		
 				virtual void 			use_normals 		() = 0;
+                virtual void            use_tangents        () = 0;
+                virtual void            use_bitangents      () = 0;
 				virtual void 			use_vertices 		() = 0;
 				virtual void 			use_texture_coord 	() = 0;
 		

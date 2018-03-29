@@ -45,8 +45,11 @@ std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 		math::vec2 textureCoordinate = math::vec2{quad_indicies::textureCoordinates[textureOffset],
 												  quad_indicies::textureCoordinates[textureOffset+1]};
 		
-		math::vec3 normal = math::vec3(0.0f, 0.0f, 0.0f);
-		quad->vertices.push_back(Vertex{position, normal, textureCoordinate});
+        math::vec3 normal;
+        math::vec3 tangent;
+        math::vec3 bitangent;
+        
+        quad->vertices.push_back(Vertex{std::move(position), std::move(normal), std::move(tangent), std::move(bitangent), std::move(textureCoordinate)});
 	}
 	
 	for(int i = 0; i < 6; ++i) {
@@ -79,6 +82,14 @@ void ms::DrawableOGL::_load	() {
 		mglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), nullptr);
 		mglEnableVertexAttribArray(2);
 		
+        geometry->use_tangents();
+        mglVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+        mglEnableVertexAttribArray(3);
+        
+        geometry->use_bitangents();
+        mglVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+        mglEnableVertexAttribArray(4);
+        
 	}
 
 }

@@ -20,7 +20,10 @@ uniform sampler2D 							diffuseTexture;
 uniform int 								hasSpecularTexture;
 uniform sampler2D 							specularTexture;
 
-in 		vec3								worldPosition;
+uniform int                                 hasNormalTexture;
+uniform sampler2D                           normalTexture;
+
+in      vec3                                worldPosition;
 in 		vec3								normalVector;
 in 		vec2 								texCoord;
 
