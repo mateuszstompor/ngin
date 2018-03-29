@@ -187,12 +187,12 @@ void ms::NGin::draw_scene() {
     #ifdef CALLS_TIME_CONSUMPTION
         static int framesGenerated = 0;
         static int framesSpan = 150;
+	#endif
     
-	
         static long modelsDrawingTime,	        lightSourceDrawingTime, 	bloomSplitDrawingTime;
         static long firstStepBlurDrawingTime, 	secondStepBlurDrawingTime, 	bloomMergerDrawingTime;
-        static long hdrDrawingTime;
-	#endif
+        static long hdrDrawingTime,             vignetteDrawingTime,        upScallingTime;
+	
 	#ifdef NGIN_COUNT_FPS
 		count_fps();
 	#endif
@@ -205,7 +205,6 @@ void ms::NGin::draw_scene() {
                 deferredRenderer->draw(scene->nodes[i].get(), scene.get());
             }
             deferredRenderer->perform_light_pass(scene.get());
-           
         } else if(chosenRenderer == Renderer::forward_fragment) {
             phongForwardRenderer->use();
             phongForwardRenderer->clear_frame();
@@ -265,11 +264,15 @@ void ms::NGin::draw_scene() {
 		hdrRenderer->draw_quad();
 	});
 	
-    vignetteRenderer->clear_frame();
-    vignetteRenderer->draw_quad();
+    vignetteDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
+        vignetteRenderer->clear_frame();
+        vignetteRenderer->draw_quad();
+    });
     
-	scaleRenderer->clear_frame();
-	scaleRenderer->draw_quad();
+    upScallingTime = utils::measure_time<std::chrono::microseconds>([&](){
+        scaleRenderer->clear_frame();
+        scaleRenderer->draw_quad();
+    });
 	
     #ifdef CALLS_TIME_CONSUMPTION
 	framesGenerated += 1;
@@ -281,6 +284,8 @@ void ms::NGin::draw_scene() {
 		std::cout << "Blur second step: " 		<< secondStepBlurDrawingTime 	<< std::endl;
 		std::cout << "Bloom Merge: " 			<< bloomMergerDrawingTime 		<< std::endl;
 		std::cout << "Hdr draw: " 				<< hdrDrawingTime 				<< std::endl;
+        std::cout << "Vignette draw: "          << vignetteDrawingTime          << std::endl;
+        std::cout << "Upscalling draw: "        << upScallingTime               << std::endl;
 		framesGenerated = 0;
 	}
     #endif

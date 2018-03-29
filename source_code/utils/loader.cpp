@@ -205,8 +205,6 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
                 vertex.tangent.x() = mesh->mTangents[i].x;
                 vertex.tangent.y() = mesh->mTangents[i].y;
                 vertex.tangent.z() = mesh->mTangents[i].z;
-            }else {
-                std::cout<<"dupa"<<std::endl;
             }
         
 			if(mesh->mTextureCoords[0]) {

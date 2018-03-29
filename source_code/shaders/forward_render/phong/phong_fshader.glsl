@@ -38,7 +38,7 @@ in vec3 fragmentPosition;
 in vec3 cameraPosition;
 in vec3 surfaceZCamera_N;
 
-in mat3 lightTransformationMatrix;
+in mat4 lightTransformationMatrix;
 
 void main(){
 	
@@ -51,15 +51,15 @@ void main(){
 
 	
 	if(hasMaterial == 1) {
-        ambientColor    = materialBlock.ambient;
 		diffuseColor 	= hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : materialBlock.diffuse;
+        ambientColor    = diffuseColor;
 		specularColor 	= hasSpecularTexture == 1 ? texture(specularTexture, texCoord).xyz : materialBlock.specular;
 		shininess		= materialBlock.shininess;
 	} else {
 		// some default colors
-        ambientColor    = vec3(1.0f, 0.0f, 0.0f);
-        diffuseColor 	= vec3(1.0f, 0.0f, 0.0f);
-		specularColor 	= vec3(1.0f, 0.0f, 0.0f);
+        ambientColor    = vec3(0.0f, 0.0f, 0.0f);
+        diffuseColor 	= vec3(0.0f, 0.0f, 0.0f);
+		specularColor 	= vec3(0.0f, 0.0f, 0.0f);
 		shininess		= 1.0f;
 	}
     

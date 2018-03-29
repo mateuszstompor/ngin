@@ -54,22 +54,22 @@ void main() {
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
-	if (hasDirLight == 1) {
-		result += count_light_influence(dirLight, diffuseColor, normal_N);
-	}
-	
-	for(int j=0; j < spotLightsAmount; ++j) {
-		result += count_light_influence(spotLights[j],
-										fragmentPosition,
-										diffuseColor,
-										diffuseColor,
-										specularColor,
-										shininess,
-										normal_N,
-										cameraPosition,
-										surfaceZCamera_N,
-                                        mat3(1.0f));
-	}
+    if (hasDirLight == 1) {
+        result += count_light_influence(dirLight, diffuseColor, normal_N);
+    }
+    
+    for(int j=0; j < spotLightsAmount; ++j) {
+        result += count_light_influence(spotLights[j],
+                                        fragmentPosition,
+                                        diffuseColor,
+                                        diffuseColor,
+                                        specularColor,
+                                        shininess,
+                                        normal_N,
+                                        cameraPosition,
+                                        surfaceZCamera_N,
+                                        mat4(1.0f));
+    }
 
 	for (int i = 0; i < pointLightsAmount; ++i) {
 		result += count_light_influence(pointLights[i],
@@ -81,7 +81,7 @@ void main() {
 										normal_N,
 										cameraPosition,
 										surfaceZCamera_N,
-                                        mat3(1.0f));
+                                        mat4(1.0f));
 	}
 
 	FragColor = vec4(result, 1.0f);

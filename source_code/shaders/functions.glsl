@@ -74,14 +74,12 @@ float count_attenuation_factor(float distance) {
 	return 1.0f/(B_PARAM * distance * distance + A_PARAM * distance + C_PARAM);
 }
 
-vec3 count_light_influence(PointLight 	light,
-						   vec3 		surfacePosition,
+vec3 count_light_influence(vec3         lightColor,
 						   vec3 		ambientColor,
 						   vec3 		diffuseColor,
 						   vec3 		specularColor,
 						   float		shininess,
 						   vec3 		normal_N,
-						   vec3 		cameraPosition,
 						   vec3 		fragmentZCamera_N,
 						   vec3			surfaceZLight,
 						   vec3			surfaceZLight_N) {
@@ -94,12 +92,11 @@ vec3 count_light_influence(PointLight 	light,
 	
 	vec3 result = vec3(0.0f, 0.0f, 0.0f);
 	
-	result += light.color.xyz * ambientColor * attenuation * AMBIENT_STRENGTH;
+	result += lightColor * ambientColor * attenuation * AMBIENT_STRENGTH;
 	
 	if(attenuation > MIN_ATTENUATION) {
-		result += light.color.xyz * diffuseColor * count_diffuse_factor(normal_N, surfaceZLight_N) * attenuation * DIFFUSE_STRENGTH;
-		result += light.color.xyz * specularColor *
-		count_blinn_phong_specular_factor(fragmentZCamera_N, surfaceZLight_N, normal_N, shininess) * attenuation * SPECULAR_STRENGTH;
+		result += lightColor * diffuseColor * count_diffuse_factor(normal_N, surfaceZLight_N) * attenuation * DIFFUSE_STRENGTH;
+		result += lightColor * specularColor * count_blinn_phong_specular_factor(fragmentZCamera_N, surfaceZLight_N, normal_N, shininess) * attenuation * SPECULAR_STRENGTH;
 	}
 	
 	return result;
@@ -115,19 +112,17 @@ vec3 count_light_influence(PointLight 	light,
 						   vec3 		normal_N,
 						   vec3 		cameraPosition,
 						   vec3 		fragmentZCamera_N,
-                           mat3         lightTransformation) {
+                           mat4         lightTransformation) {
 	
-    vec3 transformatedLightPosition = lightTransformation * light.position;
+    vec3 transformatedLightPosition = (lightTransformation * vec4(light.position, 1.0f)).xyz;
 	vec3 surfaceZLight = transformatedLightPosition - surfacePosition;
 	vec3 surfaceZLight_N = normalize(surfaceZLight);
-	return count_light_influence(light,
-								 surfacePosition,
+	return count_light_influence(light.color,
 								 ambientColor,
 								 diffuseColor,
 								 specularColor,
 								 shininess,
 								 normal_N,
-								 cameraPosition,
 								 fragmentZCamera_N,
 								 surfaceZLight,
 								 surfaceZLight_N);
@@ -138,39 +133,37 @@ vec3 count_light_influence(DirectionalLight light, vec3 diffuseColor, vec3 norma
 	return light.color.xyz * diffuseColor * count_diffuse_factor(normal_N, light.direction) * DIFFUSE_STRENGTH;
 }
 
-vec3 count_light_influence(SpotLight 	light,
-						   vec3 		surfacePosition,
-						   vec3 		ambientColor,
-						   vec3 		diffuseColor,
-						   vec3 		specularColor,
-						   float		shininess,
-						   vec3 		normal_N,
-						   vec3 		cameraPosition,
-						   vec3 		fragmentZCamera_N,
-                           mat3         lightTransformation) {
+vec3 count_light_influence(SpotLight    light,
+                           vec3         surfacePosition,
+                           vec3         ambientColor,
+                           vec3         diffuseColor,
+                           vec3         specularColor,
+                           float        shininess,
+                           vec3         normal_N,
+                           vec3         cameraPosition,
+                           vec3         fragmentZCamera_N,
+                           mat4         lightTransformation) {
 
-    vec3 transformatedLightPosition = lightTransformation * light.position;
-	vec3 lightZFragment 	        = surfacePosition - transformatedLightPosition;
-	vec3 lightZFragment_N	        = normalize(lightZFragment);
-	
-	float angleRadians = radians(max(dot(lightZFragment, light.direction), 0.0f));
+    vec3 transformatedLightPosition = (lightTransformation * vec4(light.position, 1.0f)).xyz;
+    vec3 lightZFragment             = surfacePosition - transformatedLightPosition;
+    vec3 lightZFragment_N            = normalize(lightZFragment);
 
-	vec3 color = count_light_influence(PointLight(light.power, light.color, light.position),
-									   surfacePosition,
-									   ambientColor,
-									   diffuseColor,
-									   specularColor,
-									   shininess,
-									   normal_N,
-									   cameraPosition,
-									   fragmentZCamera_N,
-									   -lightZFragment,
-									   -lightZFragment_N);
+    float angleRadians = radians(max(dot(lightZFragment, light.direction), 0.0f));
 
-	float epsilon   = SPOT_LIGHT_OUTER_CUTOFF - SPOT_LIGHT_INNER_CUTOFF;
-	float intensity = clamp((dot(lightZFragment_N, normalize(light.direction)) - SPOT_LIGHT_INNER_CUTOFF) / epsilon, 0.0f, 1.0f);
+    vec3 color = count_light_influence(light.color,
+                                       ambientColor,
+                                       diffuseColor,
+                                       specularColor,
+                                       shininess,
+                                       normal_N,
+                                       fragmentZCamera_N,
+                                       -lightZFragment,
+                                       -lightZFragment_N);
 
-	return intensity * color;
+    float epsilon   = SPOT_LIGHT_OUTER_CUTOFF - SPOT_LIGHT_INNER_CUTOFF;
+    float intensity = clamp((dot(lightZFragment_N, normalize(light.direction)) - SPOT_LIGHT_INNER_CUTOFF) / epsilon, 0.0f, 1.0f);
+
+    return intensity * color;
 
 }
 
