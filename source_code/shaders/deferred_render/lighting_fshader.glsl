@@ -55,7 +55,7 @@ void main() {
 	float shininess 		= 32.0f;
 	
     if (hasDirLight == 1) {
-        result += count_light_influence(dirLight, diffuseColor, normal_N);
+        result += count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
     }
     
     for(int j=0; j < spotLightsAmount; ++j) {

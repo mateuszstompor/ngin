@@ -48,16 +48,19 @@ void main(){
 	
 	vec3 result = vec3(0.0f);
 	
-	ambientColor = materialBlock.ambient;
-	
+
 	if(hasMaterial == 1) {
 		diffuseColor 	= hasDiffuseTexture == 1 ? texture(diffuseTexture, texCoord).xyz : materialBlock.diffuse;
 		specularColor 	= hasSpecularTexture == 1 ? texture(specularTexture, texCoord).xyz : materialBlock.specular;
-		shininess		= materialBlock.shininess;
+//		shininess		= materialBlock.shininess;
+//		ambientColor    = materialBlock.ambient;
+		shininess		= 1.0f;
+        ambientColor    = vec3(1.0f);
 	} else {
 		// some default colors
 		diffuseColor 	= vec3(0.0f, 1.0f, 0.0f);
 		specularColor 	= vec3(1.0f, 0.0f, 0.0f);
+		ambientColor    = vec3(0.0f);
 		shininess		= 0.0f;
 	}
 	
@@ -66,7 +69,7 @@ void main(){
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - worldPosition_vec3);
 	
 	if (hasDirLight == 1) {
-		result += count_light_influence(dirLight, diffuseColor, normal_N);
+		result += count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
 	}
 
 	for(int j = 0; j < spotLightsAmount; ++j) {

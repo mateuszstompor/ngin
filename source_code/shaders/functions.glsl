@@ -57,8 +57,8 @@ struct SpotLight {
 					//////////////////////////////////////////////////////////////////////////////////////
 					//////////////////////////////////////////////////////////////////////////////////////
 
-float count_diffuse_factor(vec3 normal_N, vec3 surfaceZCamera_N) {
-	return max(dot(normal_N, surfaceZCamera_N), 0.0f);
+float count_diffuse_factor(vec3 normal_N, vec3 surfaceZLight_N) {
+	return max(dot(normal_N, surfaceZLight_N), 0.0f);
 }
 
 float count_phong_specular_factor(vec3 surfaceZCamera_N, vec3 surfaceZLight_N, vec3 normal_N, float shininess) {
@@ -129,8 +129,9 @@ vec3 count_light_influence(PointLight 	light,
 	
 }
 
-vec3 count_light_influence(DirectionalLight light, vec3 diffuseColor, vec3 normal_N) {
-	return light.color.xyz * diffuseColor * count_diffuse_factor(normal_N, light.direction) * DIFFUSE_STRENGTH;
+vec3 count_light_influence(DirectionalLight light, vec3 diffuseColor, vec3 normal_N, mat4 lightTransformation) {
+    vec3 lightDirection = normalize(mat3(lightTransformation) * light.direction);
+	return light.color.xyz * diffuseColor * count_diffuse_factor(normal_N, lightDirection) * DIFFUSE_STRENGTH;
 }
 
 vec3 count_light_influence(SpotLight    light,
@@ -145,10 +146,11 @@ vec3 count_light_influence(SpotLight    light,
                            mat4         lightTransformation) {
 
     vec3 transformatedLightPosition = (lightTransformation * vec4(light.position, 1.0f)).xyz;
+    vec3 lightDirection             = normalize(mat3(lightTransformation) * light.direction);
     vec3 lightZFragment             = surfacePosition - transformatedLightPosition;
-    vec3 lightZFragment_N            = normalize(lightZFragment);
+    vec3 lightZFragment_N           = normalize(lightZFragment);
 
-    float angleRadians = radians(max(dot(lightZFragment, light.direction), 0.0f));
+    float angleRadians = radians(max(dot(lightZFragment, lightDirection), 0.0f));
 
     vec3 color = count_light_influence(light.color,
                                        ambientColor,
@@ -161,7 +163,7 @@ vec3 count_light_influence(SpotLight    light,
                                        -lightZFragment_N);
 
     float epsilon   = SPOT_LIGHT_OUTER_CUTOFF - SPOT_LIGHT_INNER_CUTOFF;
-    float intensity = clamp((dot(lightZFragment_N, normalize(light.direction)) - SPOT_LIGHT_INNER_CUTOFF) / epsilon, 0.0f, 1.0f);
+    float intensity = clamp((dot(lightZFragment_N, lightDirection) - SPOT_LIGHT_INNER_CUTOFF) / epsilon, 0.0f, 1.0f);
 
     return intensity * color;
 
