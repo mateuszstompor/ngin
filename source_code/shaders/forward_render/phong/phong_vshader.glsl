@@ -19,8 +19,6 @@ out mat4 lightTransformationMatrix;
 
 //tangent
 void main(){
-
-
     mat3 normalsTransformationMatrix = transpose(inverse(mat3(modelTransformation)));
 
     vec3 N_N = normalize(normalsTransformationMatrix * normal);

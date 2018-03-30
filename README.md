@@ -3,6 +3,9 @@
 ## 29.03.2018 Current pipeline
 <img src="/screenshots/pipeline.png" width="100%" style="float: left; display:inline-block;"/>
 
+## 30.03.2018 Normal mapping
+<img src="/screenshots/normal_mapping.jpg" width="100%" style="float: left; display:inline-block;"/>
+
 ## 29.03.2018 Vignette
 <img src="/screenshots/vignette.jpg" width="100%" style="float: left; display:inline-block;"/>
 
