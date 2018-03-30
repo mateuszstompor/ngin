@@ -63,13 +63,12 @@ void main(){
 		shininess		= 1.0f;
 	}
     
-//    if(hasNormalTexture == 1) {
-//        normalToUse_N = normalize(texture(normalTexture, texCoord).xyz);
-//        normalToUse_N = normalize(normalToUse_N * 2.0 - 1.0);
-//        normalToUse_N = normalize(mat3(lightTransformationMatrix) * normalToUse_N);
-//    } else {
+    if(hasNormalTexture == 1) {
+        normalToUse_N = texture(normalTexture, texCoord).xyz;
+        normalToUse_N = normalize(normalToUse_N * 2.0 - 1.0);
+    } else {
         normalToUse_N = normal_N;
-//    }
+    }
 
 	if (hasDirLight == 1) {
 		result += count_light_influence(dirLight, diffuseColor, normalToUse_N, lightTransformationMatrix);

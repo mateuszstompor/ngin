@@ -18,32 +18,30 @@ out vec3 surfaceZCamera_N;
 out mat4 lightTransformationMatrix;
 
 //tangent
-//void main(){
-//
-//
-//    mat3 normalsTransformationMatrix = transpose(inverse(mat3(cameraTransformation * modelTransformation)));
-//
-//    vec3 n = normalize(normalsTransformationMatrix * normal);
-//    vec3 tangent_N = normalize(normalsTransformationMatrix * tangent);
-//    vec3 bitangent_N = normalize(normalsTransformationMatrix * bitangent);
-//
-//    normal_N = n;
-//
-//    mat4 tangentSpace = mat4(
-//        tangent_N.x,     bitangent_N.x,    n.x,  0.0f,
-//        tangent_N.y,     -bitangent_N.y,    n.y,  0.0f,
-//        tangent_N.z,     bitangent_N.z,    n.z,  0.0f,
-//        0.0f,            0.0f,             0.0f,        1.0f
-//    );
-//
-//    vec4 pos = modelTransformation * vec4(position, 1.0f);
-//    fragmentPosition = (tangentSpace * cameraTransformation * pos).xyz;
-//    cameraPosition = (tangentSpace * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
-//    surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
-//    texCoord = textureCoordinates;
-//    lightTransformationMatrix = tangentSpace * cameraTransformation;
-//    gl_Position = perspectiveProjection * cameraTransformation * pos;
-//}
+void main(){
+
+
+    mat3 normalsTransformationMatrix = transpose(inverse(mat3(modelTransformation)));
+
+    vec3 N_N = normalize(normalsTransformationMatrix * normal);
+    vec3 T_N = normalize(normalsTransformationMatrix * tangent);
+    vec3 BT_N = normalize(normalsTransformationMatrix * bitangent);
+    if (dot(cross(N_N, T_N), BT_N) < 0.0f) {
+        T_N = T_N * -1.0f;
+    }
+    
+    normal_N = N_N;
+
+    mat4 TBN = mat4(transpose(mat3(T_N, BT_N, N_N)));
+
+    vec4 pos = modelTransformation * vec4(position, 1.0f);
+    fragmentPosition = (TBN * pos).xyz;
+    cameraPosition = (TBN * cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
+    surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
+    texCoord = textureCoordinates;
+    lightTransformationMatrix = TBN;
+    gl_Position = perspectiveProjection * cameraTransformation * pos;
+}
 
 //view
 //void main(){
@@ -61,21 +59,21 @@ out mat4 lightTransformationMatrix;
 
 
 //world
-void main(){
-
-
-    mat3 normalsTransformationMatrix = transpose(inverse(mat3(modelTransformation)));
-
-    normal_N = normalize(normalsTransformationMatrix * normal);
-
-    vec4 pos = modelTransformation * vec4(position, 1.0f);
-    fragmentPosition = pos.xyz;
-    cameraPosition = (cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
-    surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
-    texCoord = textureCoordinates;
-    lightTransformationMatrix = mat4(1.0f);
-    gl_Position = perspectiveProjection * cameraTransformation * pos;
-
-}
+//void main(){
+//
+//
+//    mat3 normalsTransformationMatrix = transpose(inverse(mat3(modelTransformation)));
+//
+//    normal_N = normalize(normalsTransformationMatrix * normal);
+//
+//    vec4 pos = modelTransformation * vec4(position, 1.0f);
+//    fragmentPosition = pos.xyz;
+//    cameraPosition = (cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
+//    surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
+//    texCoord = textureCoordinates;
+//    lightTransformationMatrix = mat4(1.0f);
+//    gl_Position = perspectiveProjection * cameraTransformation * pos;
+//
+//}
 
 )";
