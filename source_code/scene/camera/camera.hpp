@@ -24,8 +24,8 @@ namespace ms {
         
 		inline 						            Camera                  ();
 		virtual 					            ~Camera                 () = default;
-        inline virtual bool                     is_in_camera_sight      (math::mat4 boundingBoxTransformation,
-                                                                         math::BoundingBox<float> boundingBox) final;
+        inline virtual bool                     is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
+                                                                         math::BoundingBox<float> const & boundingBox) final;
         virtual math::Plane<float>              get_camera_plane        (FrustumPlane plane) = 0;
 		inline virtual math::mat4 	            get_projection_matrix   ();
 	
@@ -88,7 +88,7 @@ enum class ms::Camera::FrustumPlane {
     top, bottom
 };
 
-bool ms::Camera::is_in_camera_sight(math::mat4 boundingBoxTransformation, math::BoundingBox<float> boundingBox) {
+bool ms::Camera::is_in_camera_sight(math::mat4 const & boundingBoxTransformation, math::BoundingBox<float> const & boundingBox) {
     auto finalTransformation = this->transformation * boundingBoxTransformation;
     
     if(back->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
