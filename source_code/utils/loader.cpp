@@ -183,10 +183,45 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 
 	std::shared_ptr<ms::Geometry> geometry = get_geometry();
 
+    float minX = 0, maxX = 0;
+    float minY = 0, maxY = 0;
+    float minZ = 0, maxZ = 0;
+
+    if(mesh->mNumVertices > 0) {
+        maxX = minX = mesh->mVertices[0].x;
+        maxY = minY = mesh->mVertices[0].y;
+        maxZ = minZ = mesh->mVertices[0].z;
+    }
+    
 	for(unsigned int i = 0; i < mesh->mNumVertices; ++i) {
 
 			Vertex vertex;
 
+            if(mesh->mVertices[i].x > maxX) {
+                maxX = mesh->mVertices[i].x;
+            }
+        
+            if(mesh->mVertices[i].x < minX) {
+                minX = mesh->mVertices[i].x;
+            }
+        
+            if(mesh->mVertices[i].y > maxY) {
+                maxY = mesh->mVertices[i].y;
+            }
+        
+            if(mesh->mVertices[i].y < minY) {
+                minY = mesh->mVertices[i].y;
+            }
+        
+            if(mesh->mVertices[i].z > maxZ) {
+                maxZ = mesh->mVertices[i].z;
+            }
+        
+            if(mesh->mVertices[i].z < minZ) {
+                minZ = mesh->mVertices[i].z;
+            }
+        
+        
 			vertex.position.x() = mesh->mVertices[i].x;
 			vertex.position.y() = mesh->mVertices[i].y;
 			vertex.position.z() = mesh->mVertices[i].z;
@@ -217,6 +252,8 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh *mesh, const a
 			geometry->vertices.push_back(vertex);
 
 	}
+    
+    geometry->boundingBox = std::make_unique<math::BoundingBox<float>>(minX, maxX, minY, maxY, minZ, maxZ);
 
 	if(mesh->mMaterialIndex > 0) {
 		

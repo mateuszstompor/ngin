@@ -17,8 +17,19 @@ namespace ms {
 
 	public:
 		
-		PerspectiveCamera(float nearPlane, float farPlane, float fovDegrees, float aspectRatio);
-
+                                        PerspectiveCamera   (float nearPlane,
+                                                             float farPlane,
+                                                             float fovDegrees,
+                                                             float aspectRatio);
+        
+        math::Plane<float>              get_camera_plane    (FrustumPlane plane) override;
+    protected:
+        
+        float nearPlane;
+        float farPlane;
+        float fovDegrees;
+        float aspectRatio;
+                
 	};
 	
 }

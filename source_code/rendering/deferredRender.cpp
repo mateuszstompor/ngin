@@ -108,9 +108,15 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
 }
 
 void ms::DeferredRender::draw (Drawable * node, const Scene * scene) {
-	gShader->set_model_transformation(node->modelTransformation.get_transformation());
-	DeferredRender::setup_material_uniforms(scene, node);
-	node->draw();
+//    if(scene->cam->is_in_camera_sight(node->modelTransformation.get_transformation(), *node->geometry->get_bounding_box())) {
+        gShader->set_model_transformation(node->modelTransformation.get_transformation());
+        DeferredRender::setup_material_uniforms(scene, node);
+        node->draw();
+//    }
+//    else {
+//        std::cout<< "culled" << std::endl;
+//    }
+    
 }
 
 void ms::DeferredRender::use () {

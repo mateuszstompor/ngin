@@ -184,6 +184,8 @@ void ms::NGin::count_fps () {
 
 void ms::NGin::draw_scene() {
 
+    static size_t geometryRendered = 0;
+    
     #ifdef CALLS_TIME_CONSUMPTION
         static int framesGenerated = 0;
         static int framesSpan = 150;
@@ -202,7 +204,11 @@ void ms::NGin::draw_scene() {
             deferredRenderer->setup_g_buffer_uniforms(scene.get());
             deferredRenderer->clear_frame();
             for(int i = 0; i < scene->nodes.size(); ++i) {
-                deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+                auto node = scene->nodes[i];
+                if(scene->cam->is_in_camera_sight(node->modelTransformation.get_transformation(), *node->geometry->get_bounding_box())) {
+                    deferredRenderer->draw(scene->nodes[i].get(), scene.get());
+                    geometryRendered += scene->nodes[i]->geometry->amount_of_indices();
+                }
             }
             deferredRenderer->perform_light_pass(scene.get());
         } else if(chosenRenderer == Renderer::forward_fragment) {
@@ -211,6 +217,7 @@ void ms::NGin::draw_scene() {
             phongForwardRenderer->setup_uniforms(scene.get());
             for(int i = 0; i < scene->nodes.size(); ++i) {
                 phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+                geometryRendered += scene->nodes[i]->geometry->amount_of_indices();
             }
         } else {
             gouraudForwardRenderer->use();
@@ -218,6 +225,7 @@ void ms::NGin::draw_scene() {
             gouraudForwardRenderer->setup_uniforms(scene.get());
             for(int i = 0; i < scene->nodes.size(); ++i) {
                 gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
+                geometryRendered += scene->nodes[i]->geometry->amount_of_indices();
             }
 
         }
@@ -229,9 +237,11 @@ void ms::NGin::draw_scene() {
 		lightSourceRenderer->use();
 		for(int i = 0; i < scene->pointLights.size(); ++i) {
 			lightSourceRenderer->draw(scene->pointLights[i].get(), scene.get());
+//            geometryRendered += scene->pointLights[i]->geometry->amount_of_indices();
 		}
 		for(int i = 0; i < scene->spotLights.size(); ++i) {
 			lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
+//            geometryRendered += scene->spotLights[i]->geometry->amount_of_indices();
 		}
 	});
 	
@@ -286,7 +296,9 @@ void ms::NGin::draw_scene() {
 		std::cout << "Hdr draw: " 				<< hdrDrawingTime 				<< std::endl;
         std::cout << "Vignette draw: "          << vignetteDrawingTime          << std::endl;
         std::cout << "Upscalling draw: "        << upScallingTime               << std::endl;
+        std::cout << "Vertices drawn: "         << geometryRendered             << std::endl;
 		framesGenerated = 0;
+        geometryRendered = 0;
 	}
     #endif
 }

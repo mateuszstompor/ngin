@@ -30,3 +30,6 @@ bool ms::Geometry::has_material () const {
 	return !associatedMaterial.empty();
 }
 
+ms::math::BoundingBox<float>* ms::Geometry::get_bounding_box () const {
+    return boundingBox.get();
+}
