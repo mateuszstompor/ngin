@@ -1,5 +1,31 @@
 # ngin
 
+## Requirements
+
+#### macOS
+<ul>
+  <li>CMake</li>
+  <li>clang (tested on <b>clang-900.0.39.2</b>)</li>
+</ul>
+
+#### Windows
+<ul>
+  <li>CMake</li>
+  <li>Visual Studio compiler</li>
+</ul>
+
+#### iOS
+<ul>
+  <li>XCode 9+</li>
+</ul>
+
+## Installation
+
+Project works on both Windows and macOS platforms. Use cmake in order to copile and run. macOS version can be opened as xcode project from
+ngin/example_projects/mac/ngin_mac.xcodeproj as well
+
+
+
 ## 29.03.2018 Current pipeline
 <img src="/screenshots/pipeline.png" width="100%" style="float: left; display:inline-block;"/>
 
