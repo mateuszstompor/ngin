@@ -14,7 +14,7 @@ uniform sampler2D in0;
 
 void main() {
     
-    vec2 relativePosition = gl_FragCoord.xy / textureSize(in0, 0) - 0.5f;
+    vec2 relativePosition = gl_FragCoord.xy / vec2(textureSize(in0, 0)) - 0.5f;
     float distanceToCenter = length2(relativePosition);
     vec4 sampledColor = texture(in0, texCoords);
     

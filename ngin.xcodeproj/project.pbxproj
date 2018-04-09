@@ -99,9 +99,40 @@
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
 		56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
-		56BD165D205759D7001B02C5 /* libassimp-fat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E611B720574FFF0036FA07 /* libassimp-fat.a */; };
-		56BD1660205759D8001B02C5 /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BD165E205759D8001B02C5 /* libIrrXML.a */; };
-		56BD1661205759D8001B02C5 /* libzlibstatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BD165F205759D8001B02C5 /* libzlibstatic.a */; };
+		56D29AA4207B8DED0080CB3B /* renderbufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627CD20633B69005085CD /* renderbufferOGL.cpp */; };
+		56D29AA5207B8DED0080CB3B /* geometryOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA9A204B6FCA003449EE /* geometryOGL.cpp */; };
+		56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99682065B66900B54626 /* forwardRender.cpp */; };
+		56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
+		56D29AA8207B8DED0080CB3B /* textureOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* textureOGL.cpp */; };
+		56D29AA9207B8DED0080CB3B /* deferredRenderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5629671B204F317900685BAE /* deferredRenderOGL.cpp */; };
+		56D29AAA207B8DED0080CB3B /* nginOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716828204ADFAE0028EFAA /* nginOGL.cpp */; };
+		56D29AAB207B8DED0080CB3B /* lightSourceDrawerShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5632E390205EF83000A323A4 /* lightSourceDrawerShaderOGL.cpp */; };
+		56D29AAC207B8DED0080CB3B /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
+		56D29AAD207B8DED0080CB3B /* deferredShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56296726204F3CCD00685BAE /* deferredShaderOGL.cpp */; };
+		56D29AAE207B8DED0080CB3B /* lightSourcesRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B996B2065BF3000B54626 /* lightSourcesRender.cpp */; };
+		56D29AAF207B8DED0080CB3B /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
+		56D29AB0207B8DED0080CB3B /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
+		56D29AB1207B8DED0080CB3B /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
+		56D29AB2207B8DED0080CB3B /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
+		56D29AB3207B8DED0080CB3B /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
+		56D29AB4207B8DED0080CB3B /* forwardShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676D56A204E1869005E4AFA /* forwardShaderOGL.cpp */; };
+		56D29AB5207B8DED0080CB3B /* framebufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627C820633B5F005085CD /* framebufferOGL.cpp */; };
+		56D29AB6207B8DED0080CB3B /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99632065A7BA00B54626 /* render.cpp */; };
+		56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
+		56D29AB8207B8DED0080CB3B /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
+		56D29AB9207B8DED0080CB3B /* deferredLightingShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5673025120504AFC0066993D /* deferredLightingShaderOGL.cpp */; };
+		56D29ABA207B8DED0080CB3B /* drawableOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FAB1204C64D7003449EE /* drawableOGL.cpp */; };
+		56D29ABB207B8DED0080CB3B /* shaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shaderOGL.cpp */; };
+		56D29ABC207B8DED0080CB3B /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566BCF2B204EAF6500E90246 /* scene.cpp */; };
+		56D29ABD207B8DED0080CB3B /* materialOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 565AAAC62069B5F3002B6C6B /* materialOGL.cpp */; };
+		56D29ABE207B8DED0080CB3B /* postprocessDrawerOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawerOGL.cpp */; };
+		56D29AC3207B8DED0080CB3B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
+		56D29ACC207B8E120080CB3B /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29AC9207B8E120080CB3B /* libassimp.a */; };
+		56D29ACD207B8E120080CB3B /* libzlibstatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29ACA207B8E120080CB3B /* libzlibstatic.a */; };
+		56D29ACE207B8E120080CB3B /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29ACB207B8E120080CB3B /* libIrrXML.a */; };
+		56D29AD2207B8E2B0080CB3B /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29ACF207B8E2B0080CB3B /* libassimp.a */; };
+		56D29AD3207B8E2B0080CB3B /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29AD0207B8E2B0080CB3B /* libIrrXML.a */; };
+		56D29AD4207B8E2B0080CB3B /* libzlibstatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29AD1207B8E2B0080CB3B /* libzlibstatic.a */; };
 		56DF0F3B20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56DF0F3C20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56DF0F3D20571B6D00713420 /* loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F3A20571B6D00713420 /* loader.hpp */; };
@@ -123,10 +154,33 @@
 			remoteGlobalIDString = 568BCA1F203F192800E02F23;
 			remoteInfo = matrix_tests;
 		};
+		56B12324207B79CA001046CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 567B5F692070248B00855C50;
+			remoteInfo = boundingbox_tests;
+		};
+		56B12326207B79CA001046CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 567B5F7620703AF700855C50;
+			remoteInfo = plane_tests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		568A18A02049846C0017B5CF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56D29AC4207B8DED0080CB3B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -228,12 +282,13 @@
 		5676F29A20522919002EAB31 /* proxyOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = proxyOGL.hpp; sourceTree = "<group>"; };
 		5676F29B20522AD1002EAB31 /* proxyOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = proxyOGL.cpp; sourceTree = "<group>"; };
 		5677DF06206C049000AD3590 /* vignette_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vignette_fshader.glsl; sourceTree = "<group>"; };
-		568A18A22049846C0017B5CF /* libngin_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		568A18A22049846C0017B5CF /* libngin_ios_arm64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios_arm64.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
 		569A899C204FFF6200A9A292 /* reusableGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = reusableGeometry.hpp; sourceTree = "<group>"; };
 		56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shaderHeaders.hpp; sourceTree = "<group>"; };
 		56AB0ED92058552300B8E964 /* geometry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
+		56B12337207B7E5F001046CD /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/libassimp.a"; sourceTree = "<group>"; };
 		56BD164F205757D8001B02C5 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56BD1651205757DD001B02C5 /* libIrrXML 2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libIrrXML 2.a"; path = "third-party-libs/assimp_iOS/lib/libIrrXML 2.a"; sourceTree = "<group>"; };
 		56BD1652205757DD001B02C5 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/lib/libIrrXML.a"; sourceTree = "<group>"; };
@@ -244,6 +299,13 @@
 		56C3C6A920655EFE0003F630 /* config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
 		56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_fshader.glsl; sourceTree = "<group>"; };
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
+		56D29AC8207B8DED0080CB3B /* libngin_ios_x86_64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios_x86_64.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		56D29AC9207B8E120080CB3B /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/x86_64/libassimp.a"; sourceTree = "<group>"; };
+		56D29ACA207B8E120080CB3B /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/x86_64/libzlibstatic.a"; sourceTree = "<group>"; };
+		56D29ACB207B8E120080CB3B /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/x86_64/libIrrXML.a"; sourceTree = "<group>"; };
+		56D29ACF207B8E2B0080CB3B /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/arm64/libassimp.a"; sourceTree = "<group>"; };
+		56D29AD0207B8E2B0080CB3B /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrXML.a; path = "third-party-libs/assimp_iOS/arm64/libIrrXML.a"; sourceTree = "<group>"; };
+		56D29AD1207B8E2B0080CB3B /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/arm64/libzlibstatic.a"; sourceTree = "<group>"; };
 		56DF0F3920571B6D00713420 /* loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loader.cpp; sourceTree = "<group>"; };
 		56DF0F3A20571B6D00713420 /* loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
 		56DF0F422057233900713420 /* loaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loaderOGL.hpp; sourceTree = "<group>"; };
@@ -259,9 +321,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56BD1660205759D8001B02C5 /* libIrrXML.a in Frameworks */,
-				56BD1661205759D8001B02C5 /* libzlibstatic.a in Frameworks */,
-				56BD165D205759D7001B02C5 /* libassimp-fat.a in Frameworks */,
+				56D29AD2207B8E2B0080CB3B /* libassimp.a in Frameworks */,
+				56D29AD3207B8E2B0080CB3B /* libIrrXML.a in Frameworks */,
+				56D29AD4207B8E2B0080CB3B /* libzlibstatic.a in Frameworks */,
 				56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +333,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56D29ABF207B8DED0080CB3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56D29ACC207B8E120080CB3B /* libassimp.a in Frameworks */,
+				56D29ACD207B8E120080CB3B /* libzlibstatic.a in Frameworks */,
+				56D29ACE207B8E120080CB3B /* libIrrXML.a in Frameworks */,
+				56D29AC3207B8DED0080CB3B /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,8 +388,15 @@
 		5626786D204AC01000A203F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56B12337207B7E5F001046CD /* libassimp.a */,
 				56BD165E205759D8001B02C5 /* libIrrXML.a */,
+				56D29ACB207B8E120080CB3B /* libIrrXML.a */,
 				56BD165F205759D8001B02C5 /* libzlibstatic.a */,
+				56D29AC9207B8E120080CB3B /* libassimp.a */,
+				56D29ACA207B8E120080CB3B /* libzlibstatic.a */,
+				56D29ACF207B8E2B0080CB3B /* libassimp.a */,
+				56D29AD0207B8E2B0080CB3B /* libIrrXML.a */,
+				56D29AD1207B8E2B0080CB3B /* libzlibstatic.a */,
 				56BD165720575801001B02C5 /* libIrrXML2.a */,
 				56BD1651205757DD001B02C5 /* libIrrXML 2.a */,
 				56BD1652205757DD001B02C5 /* libIrrXML.a */,
@@ -607,7 +687,8 @@
 			isa = PBXGroup;
 			children = (
 				568FA8702048A2E2005BD711 /* libngin_mac.a */,
-				568A18A22049846C0017B5CF /* libngin_ios.a */,
+				568A18A22049846C0017B5CF /* libngin_ios_arm64.a */,
+				56D29AC8207B8DED0080CB3B /* libngin_ios_x86_64.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -617,6 +698,8 @@
 			children = (
 				568FA8852048A328005BD711 /* vector_tests */,
 				568FA8872048A328005BD711 /* matrix_tests */,
+				56B12325207B79CA001046CD /* boundingbox_tests */,
+				56B12327207B79CA001046CD /* plane_tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -683,9 +766,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		568A18A12049846C0017B5CF /* ngin_ios */ = {
+		568A18A12049846C0017B5CF /* ngin_ios_arm64 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 568A18A82049846D0017B5CF /* Build configuration list for PBXNativeTarget "ngin_ios" */;
+			buildConfigurationList = 568A18A82049846D0017B5CF /* Build configuration list for PBXNativeTarget "ngin_ios_arm64" */;
 			buildPhases = (
 				568A189E2049846C0017B5CF /* Sources */,
 				568A189F2049846C0017B5CF /* Frameworks */,
@@ -695,9 +778,9 @@
 			);
 			dependencies = (
 			);
-			name = ngin_ios;
+			name = ngin_ios_arm64;
 			productName = ngin_ios;
-			productReference = 568A18A22049846C0017B5CF /* libngin_ios.a */;
+			productReference = 568A18A22049846C0017B5CF /* libngin_ios_arm64.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		568FA86F2048A2E2005BD711 /* ngin_mac */ = {
@@ -717,6 +800,23 @@
 			productReference = 568FA8702048A2E2005BD711 /* libngin_mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		56D29AA2207B8DED0080CB3B /* ngin_ios_x86_64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56D29AC5207B8DED0080CB3B /* Build configuration list for PBXNativeTarget "ngin_ios_x86_64" */;
+			buildPhases = (
+				56D29AA3207B8DED0080CB3B /* Sources */,
+				56D29ABF207B8DED0080CB3B /* Frameworks */,
+				56D29AC4207B8DED0080CB3B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ngin_ios_x86_64;
+			productName = ngin_ios;
+			productReference = 56D29AC8207B8DED0080CB3B /* libngin_ios_x86_64.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -732,6 +832,9 @@
 					};
 					568FA86F2048A2E2005BD711 = {
 						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					56D29AA2207B8DED0080CB3B = {
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -755,7 +858,8 @@
 			projectRoot = "";
 			targets = (
 				568FA86F2048A2E2005BD711 /* ngin_mac */,
-				568A18A12049846C0017B5CF /* ngin_ios */,
+				568A18A12049846C0017B5CF /* ngin_ios_arm64 */,
+				56D29AA2207B8DED0080CB3B /* ngin_ios_x86_64 */,
 			);
 		};
 /* End PBXProject section */
@@ -773,6 +877,20 @@
 			fileType = "compiled.mach-o.executable";
 			path = matrix_tests;
 			remoteRef = 568FA8862048A328005BD711 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		56B12325207B79CA001046CD /* boundingbox_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = boundingbox_tests;
+			remoteRef = 56B12324207B79CA001046CD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		56B12327207B79CA001046CD /* plane_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = plane_tests;
+			remoteRef = 56B12326207B79CA001046CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -846,18 +964,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		56D29AA3207B8DED0080CB3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56D29AA4207B8DED0080CB3B /* renderbufferOGL.cpp in Sources */,
+				56D29AA5207B8DED0080CB3B /* geometryOGL.cpp in Sources */,
+				56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */,
+				56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */,
+				56D29AA8207B8DED0080CB3B /* textureOGL.cpp in Sources */,
+				56D29AA9207B8DED0080CB3B /* deferredRenderOGL.cpp in Sources */,
+				56D29AAA207B8DED0080CB3B /* nginOGL.cpp in Sources */,
+				56D29AAB207B8DED0080CB3B /* lightSourceDrawerShaderOGL.cpp in Sources */,
+				56D29AAC207B8DED0080CB3B /* resource.cpp in Sources */,
+				56D29AAD207B8DED0080CB3B /* deferredShaderOGL.cpp in Sources */,
+				56D29AAE207B8DED0080CB3B /* lightSourcesRender.cpp in Sources */,
+				56D29AAF207B8DED0080CB3B /* resourceCoordinator.cpp in Sources */,
+				56D29AB0207B8DED0080CB3B /* loader.cpp in Sources */,
+				56D29AB1207B8DED0080CB3B /* deferredRender.cpp in Sources */,
+				56D29AB2207B8DED0080CB3B /* perspectiveCamera.cpp in Sources */,
+				56D29AB3207B8DED0080CB3B /* utilsOGL.cpp in Sources */,
+				56D29AB4207B8DED0080CB3B /* forwardShaderOGL.cpp in Sources */,
+				56D29AB5207B8DED0080CB3B /* framebufferOGL.cpp in Sources */,
+				56D29AB6207B8DED0080CB3B /* render.cpp in Sources */,
+				56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */,
+				56D29AB8207B8DED0080CB3B /* ngin.cpp in Sources */,
+				56D29AB9207B8DED0080CB3B /* deferredLightingShaderOGL.cpp in Sources */,
+				56D29ABA207B8DED0080CB3B /* drawableOGL.cpp in Sources */,
+				56D29ABB207B8DED0080CB3B /* shaderOGL.cpp in Sources */,
+				56D29ABC207B8DED0080CB3B /* scene.cpp in Sources */,
+				56D29ABD207B8DED0080CB3B /* materialOGL.cpp in Sources */,
+				56D29ABE207B8DED0080CB3B /* postprocessDrawerOGL.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		568A18A92049846D0017B5CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"ios_build=1",
 					"DEBUG=1",
@@ -866,6 +1018,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/third-party-libs/assimp_iOS",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/arm64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -885,18 +1038,19 @@
 		568A18AA2049846D0017B5CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = "ios_build=1";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/third-party-libs/assimp_iOS",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/arm64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1073,10 +1227,76 @@
 			};
 			name = Release;
 		};
+		56D29AC6207B8DED0080CB3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R78NEXF6E2;
+				ENABLE_BITCODE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ios_build=1",
+					"DEBUG=1",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/x86_64",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = NO;
+			};
+			name = Debug;
+		};
+		56D29AC7207B8DED0080CB3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R78NEXF6E2;
+				ENABLE_BITCODE = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "ios_build=1";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS",
+					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/x86_64",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		568A18A82049846D0017B5CF /* Build configuration list for PBXNativeTarget "ngin_ios" */ = {
+		568A18A82049846D0017B5CF /* Build configuration list for PBXNativeTarget "ngin_ios_arm64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				568A18A92049846D0017B5CF /* Debug */,
@@ -1099,6 +1319,15 @@
 			buildConfigurations = (
 				568FA87C2048A2E2005BD711 /* Debug */,
 				568FA87D2048A2E2005BD711 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56D29AC5207B8DED0080CB3B /* Build configuration list for PBXNativeTarget "ngin_ios_x86_64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56D29AC6207B8DED0080CB3B /* Debug */,
+				56D29AC7207B8DED0080CB3B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
