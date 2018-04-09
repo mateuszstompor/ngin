@@ -67,83 +67,83 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 		case GLFW_KEY_Q: {
 			auto right = 0.2f * ms::math::up(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->get_camera().post_transform(transform);
 		}
 			break;
 
 		case GLFW_KEY_E: {
 			auto right = -0.2f * ms::math::up(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->get_camera().post_transform(transform);
 		}
 			break;
 
 		case GLFW_KEY_A: {
 			auto right = 0.2f * ms::math::right(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->get_camera().post_transform(transform);
 		}
 			break;
 
 		case GLFW_KEY_D: {
 			auto right = -0.2f * ms::math::right(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->get_camera().post_transform(transform);
 		}
 			break;
 
 		case GLFW_KEY_W: {
 			auto forward = 0.2f * ms::math::back(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->get_camera().post_transform(transform);
 		}
 			break;
 			
 		case GLFW_KEY_S: {
 			auto forward = -0.2f * ms::math::back(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->get_camera().post_transform(transform);
 		}
 			break;
 		case GLFW_KEY_J: {
 			auto right = 1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_L: {
 			auto right = -1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_K: {
 			auto forward = 1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_I: {
 			auto forward = -1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_U: {
 			auto forward = 1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_O: {
 			auto forward = -1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
@@ -151,42 +151,42 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			
 		case GLFW_KEY_F: {
 			auto right = 1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_H: {
 			auto right = -1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(right.xyz());
+			auto transform = translate<float, 4>(right);
 			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_G: {
 			auto forward = 1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_T: {
 			auto forward = -1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_R: {
 			auto forward = 1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_Y: {
 			auto forward = -1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
-			auto transform = translate<float, 4>(forward.xyz());
+			auto transform = translate<float, 4>(forward);
 			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
 			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}

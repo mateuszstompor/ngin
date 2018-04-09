@@ -16,7 +16,7 @@ ms::NGin::NGin(unsigned int screenWidth,
 			   float camFar,
 			   float fovDegrees,
 			   float aspect) :
-	scene(new Scene(camNear, camFar, fovDegrees, aspect)),
+    scene(std::make_unique<Scene>(camNear, camFar, fovDegrees, aspect)),
 	screenWidth(screenWidth),
 	screenHeight(screenHeight),
 	framebufferWidth(framebufferWidth),
