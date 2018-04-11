@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include "../../../libs/source/glMath.h"
+#include "../../../glMath/source/glMath.h"
 #include "../positionedObject.hpp"
 
 namespace ms {

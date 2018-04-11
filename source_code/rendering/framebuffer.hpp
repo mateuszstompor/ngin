@@ -12,7 +12,6 @@
 #include <vector>
 #include <memory>
 
-#include "../../libs/source/glMath.h"
 #include "../resources/resource.hpp"
 #include "../scene/texture.hpp"
 #include "renderbuffer.hpp"

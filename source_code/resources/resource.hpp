@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../libs/source/glMath.h"
+#include "../../glMath/source/glMath.h"
 
 namespace ms {
 

@@ -12,7 +12,7 @@
 #include "base/ngin.hpp"
 #include "base/ogl/nginOGL.hpp"
 #include "utils/utils.hpp"
-#include "../libs/source/glMath.h"
+#include "../glMath/source/glMath.h"
 #include "scene/ogl/geometryOGL.hpp"
 #include "scene/ogl/drawableOGL.hpp"
 #include "scene/lights/ogl/pointLightOGL.hpp"

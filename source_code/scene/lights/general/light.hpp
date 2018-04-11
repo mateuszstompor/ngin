@@ -9,7 +9,7 @@
 #ifndef light_hpp
 #define light_hpp
 
-#include "../../../../libs/source/glMath.h"
+#include "../../../../glMath/source/glMath.h"
 
 namespace ms {
 	

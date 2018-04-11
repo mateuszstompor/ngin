@@ -12,7 +12,6 @@
 #include <string>
 #include <memory>
 
-#include "../../libs/source/glMath.h"
 #include "texture.hpp"
 #include "../resources/resource.hpp"
 

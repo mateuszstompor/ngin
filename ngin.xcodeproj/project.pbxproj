@@ -140,30 +140,30 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		568FA8842048A328005BD711 /* PBXContainerItemProxy */ = {
+		56E62A42207CC77700F2FC05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 56443A85203E48A000A801A7;
 			remoteInfo = vector_tests;
 		};
-		568FA8862048A328005BD711 /* PBXContainerItemProxy */ = {
+		56E62A44207CC77700F2FC05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 568BCA1F203F192800E02F23;
 			remoteInfo = matrix_tests;
 		};
-		56B12324207B79CA001046CD /* PBXContainerItemProxy */ = {
+		56E62A46207CC77700F2FC05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 567B5F692070248B00855C50;
 			remoteInfo = boundingbox_tests;
 		};
-		56B12326207B79CA001046CD /* PBXContainerItemProxy */ = {
+		56E62A48207CC77700F2FC05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 567B5F7620703AF700855C50;
 			remoteInfo = plane_tests;
@@ -284,7 +284,6 @@
 		5677DF06206C049000AD3590 /* vignette_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vignette_fshader.glsl; sourceTree = "<group>"; };
 		568A18A22049846C0017B5CF /* libngin_ios_arm64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios_arm64.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		568FA87F2048A328005BD711 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = libs/glMath.xcodeproj; sourceTree = "<group>"; };
 		569A899C204FFF6200A9A292 /* reusableGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = reusableGeometry.hpp; sourceTree = "<group>"; };
 		56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shaderHeaders.hpp; sourceTree = "<group>"; };
 		56AB0ED92058552300B8E964 /* geometry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
@@ -312,6 +311,7 @@
 		56E611B720574FFF0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56E611BC2057520E0036FA07 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = ../assimp/lib/iOS/x86_64/libassimp.a; sourceTree = "<group>"; };
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
+		56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = glMath/glMath.xcodeproj; sourceTree = "<group>"; };
 		56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = constantsDefinitions.glsl; sourceTree = "<group>"; };
 		56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_fshader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -676,8 +676,8 @@
 		568FA8672048A2E2005BD711 = {
 			isa = PBXGroup;
 			children = (
+				56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */,
 				56716803204ADFAE0028EFAA /* source_code */,
-				568FA87F2048A328005BD711 /* glMath.xcodeproj */,
 				568FA8712048A2E2005BD711 /* Products */,
 				5626786D204AC01000A203F2 /* Frameworks */,
 			);
@@ -693,17 +693,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		568FA8802048A328005BD711 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				568FA8852048A328005BD711 /* vector_tests */,
-				568FA8872048A328005BD711 /* matrix_tests */,
-				56B12325207B79CA001046CD /* boundingbox_tests */,
-				56B12327207B79CA001046CD /* plane_tests */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		56C3C6AC206582A60003F630 /* bloom */ = {
 			isa = PBXGroup;
 			children = (
@@ -711,6 +700,17 @@
 				56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */,
 			);
 			path = bloom;
+			sourceTree = "<group>";
+		};
+		56E62A3C207CC77700F2FC05 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56E62A43207CC77700F2FC05 /* vector_tests */,
+				56E62A45207CC77700F2FC05 /* matrix_tests */,
+				56E62A47207CC77700F2FC05 /* boundingbox_tests */,
+				56E62A49207CC77700F2FC05 /* plane_tests */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -851,8 +851,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 568FA8802048A328005BD711 /* Products */;
-					ProjectRef = 568FA87F2048A328005BD711 /* glMath.xcodeproj */;
+					ProductGroup = 56E62A3C207CC77700F2FC05 /* Products */;
+					ProjectRef = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -865,32 +865,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		568FA8852048A328005BD711 /* vector_tests */ = {
+		56E62A43207CC77700F2FC05 /* vector_tests */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = vector_tests;
-			remoteRef = 568FA8842048A328005BD711 /* PBXContainerItemProxy */;
+			remoteRef = 56E62A42207CC77700F2FC05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		568FA8872048A328005BD711 /* matrix_tests */ = {
+		56E62A45207CC77700F2FC05 /* matrix_tests */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = matrix_tests;
-			remoteRef = 568FA8862048A328005BD711 /* PBXContainerItemProxy */;
+			remoteRef = 56E62A44207CC77700F2FC05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		56B12325207B79CA001046CD /* boundingbox_tests */ = {
+		56E62A47207CC77700F2FC05 /* boundingbox_tests */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = boundingbox_tests;
-			remoteRef = 56B12324207B79CA001046CD /* PBXContainerItemProxy */;
+			remoteRef = 56E62A46207CC77700F2FC05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		56B12327207B79CA001046CD /* plane_tests */ = {
+		56E62A49207CC77700F2FC05 /* plane_tests */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = plane_tests;
-			remoteRef = 56B12326207B79CA001046CD /* PBXContainerItemProxy */;
+			remoteRef = 56E62A48207CC77700F2FC05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

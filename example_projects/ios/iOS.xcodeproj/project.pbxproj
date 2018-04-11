@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		565402F8207E711E00AF5066 /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; };
+		565402F9207E711E00AF5066 /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56B12306207B79A0001046CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56B12304207B79A0001046CD /* Main.storyboard */; };
 		56B12308207B79A0001046CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56B12307207B79A0001046CD /* Assets.xcassets */; };
 		56B1230B207B79A0001046CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56B12309207B79A0001046CD /* LaunchScreen.storyboard */; };
 		56B1230E207B79A0001046CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1230D207B79A0001046CD /* main.m */; };
-		56B1231F207B79BC001046CD /* libngin_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B1231D207B79B4001046CD /* libngin_ios.a */; };
+		56B1231F207B79BC001046CD /* libngin_ios_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B1231D207B79B4001046CD /* libngin_ios_arm64.a */; };
 		56B12330207B7A76001046CD /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56B1232A207B7A76001046CD /* Renderer.mm */; };
 		56B12331207B7A76001046CD /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1232B207B7A76001046CD /* EAGLView.m */; };
 		56B12332207B7A76001046CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1232E207B7A76001046CD /* AppDelegate.m */; };
@@ -113,9 +115,24 @@
 		56D29B12207B8E430080CB3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56B12307207B79A0001046CD /* Assets.xcassets */; };
 		56D29B13207B8E430080CB3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56B12304207B79A0001046CD /* Main.storyboard */; };
 		56D29B1B207B8E5B0080CB3B /* libngin_ios_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29AD8207B8E410080CB3B /* libngin_ios_x86_64.a */; };
+		56E62A1B207CC5EA00F2FC05 /* iOS_arm64-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56E62A19207CC5E400F2FC05 /* iOS_arm64-Info.plist */; };
+		56E62A1C207CC5EE00F2FC05 /* iOS_x86_64-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56E62A1A207CC5E400F2FC05 /* iOS_x86_64-Info.plist */; };
+		56E62A61207CCFBD00F2FC05 /* SceneViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */; };
+		56E62A62207CCFBD00F2FC05 /* SceneViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */; };
+		56F27924207EAB3800E63C0E /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F27923207EAB3800E63C0E /* MenuController.swift */; };
+		56F27925207EAB3800E63C0E /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F27923207EAB3800E63C0E /* MenuController.swift */; };
+		56F27928207EACA100E63C0E /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; };
+		56F27929207EACA100E63C0E /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		565402FA207E711E00AF5066 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
 		56B1231A207B79B4001046CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56B12314207B79B3001046CD /* ngin.xcodeproj */;
@@ -151,14 +168,59 @@
 			remoteGlobalIDString = 56D29AA2207B8DED0080CB3B;
 			remoteInfo = ngin_ios_x86_64;
 		};
+		56E62A33207CC75300F2FC05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56E62A2F207CC75300F2FC05 /* MSCirclePad.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56F3EA6D207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
+		56E62A39207CC76500F2FC05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56F3EA6D207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
+		56F2792A207EACA100E63C0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		56E62A54207CCA6000F2FC05 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				56F27929207EACA100E63C0E /* MSCirclePad.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56E62A59207CCA6A00F2FC05 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				565402F9207E711E00AF5066 /* MSCirclePad.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		56B122FB207B79A0001046CD /* iOS_arm64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_arm64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56B12305207B79A0001046CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		56B12307207B79A0001046CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56B1230A207B79A0001046CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		56B1230C207B79A0001046CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56B1230D207B79A0001046CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		56B12314207B79B3001046CD /* ngin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ngin.xcodeproj; path = ../../ngin.xcodeproj; sourceTree = "<group>"; };
 		56B1232A207B7A76001046CD /* Renderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Renderer.mm; sourceTree = "<group>"; };
@@ -326,7 +388,14 @@
 		56B123DB207B81AF001046CD /* sphere.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = sphere.obj; sourceTree = "<group>"; };
 		56B123DC207B81AF001046CD /* sphere.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = sphere.mtl; sourceTree = "<group>"; };
 		56D29B17207B8E430080CB3B /* iOS_x86_64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_x86_64.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		56D29B18207B8E440080CB3B /* iOS_arm64 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iOS_arm64 copy-Info.plist"; path = "/Users/mateuszstompor/Documents/ngin/example_projects/iOS/iOS_arm64 copy-Info.plist"; sourceTree = "<absolute>"; };
+		56E62A19207CC5E400F2FC05 /* iOS_arm64-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS_arm64-Info.plist"; sourceTree = "<group>"; };
+		56E62A1A207CC5E400F2FC05 /* iOS_x86_64-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS_x86_64-Info.plist"; sourceTree = "<group>"; };
+		56E62A2F207CC75300F2FC05 /* MSCirclePad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MSCirclePad.xcodeproj; path = MSCirclePad/circlepad/MSCirclePad.xcodeproj; sourceTree = "<group>"; };
+		56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MSCirclePad.xcodeproj; path = MSCirclePad/circlepad/MSCirclePad.xcodeproj; sourceTree = "<group>"; };
+		56E62A5B207CCAF600F2FC05 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		56E62A5F207CCFBD00F2FC05 /* SceneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneViewController.h; sourceTree = "<group>"; };
+		56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SceneViewController.mm; sourceTree = "<group>"; };
+		56F27923207EAB3800E63C0E /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,7 +404,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				56B12339207B80E8001046CD /* OpenGLES.framework in Frameworks */,
-				56B1231F207B79BC001046CD /* libngin_ios.a in Frameworks */,
+				56F27928207EACA100E63C0E /* MSCirclePad.framework in Frameworks */,
+				56B1231F207B79BC001046CD /* libngin_ios_arm64.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56D29B1B207B8E5B0080CB3B /* libngin_ios_x86_64.a in Frameworks */,
+				565402F8207E711E00AF5066 /* MSCirclePad.framework in Frameworks */,
 				56D29AE2207B8E430080CB3B /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,12 +425,12 @@
 		56B122F2207B79A0001046CD = {
 			isa = PBXGroup;
 			children = (
+				56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */,
 				56B1233A207B81AF001046CD /* models */,
 				56B12314207B79B3001046CD /* ngin.xcodeproj */,
 				56B122FD207B79A0001046CD /* iOS */,
 				56B122FC207B79A0001046CD /* Products */,
 				56B1231E207B79BC001046CD /* Frameworks */,
-				56D29B18207B8E440080CB3B /* iOS_arm64 copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -384,8 +455,13 @@
 				56B12304207B79A0001046CD /* Main.storyboard */,
 				56B12307207B79A0001046CD /* Assets.xcassets */,
 				56B12309207B79A0001046CD /* LaunchScreen.storyboard */,
-				56B1230C207B79A0001046CD /* Info.plist */,
+				56E62A19207CC5E400F2FC05 /* iOS_arm64-Info.plist */,
+				56E62A1A207CC5E400F2FC05 /* iOS_x86_64-Info.plist */,
 				56B1230D207B79A0001046CD /* main.m */,
+				56E62A5B207CCAF600F2FC05 /* Bridging-Header.h */,
+				56E62A5F207CCFBD00F2FC05 /* SceneViewController.h */,
+				56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */,
+				56F27923207EAB3800E63C0E /* MenuController.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -394,7 +470,7 @@
 			isa = PBXGroup;
 			children = (
 				56B1231B207B79B4001046CD /* libngin_mac.a */,
-				56B1231D207B79B4001046CD /* libngin_ios.a */,
+				56B1231D207B79B4001046CD /* libngin_ios_arm64.a */,
 				56D29AD8207B8E410080CB3B /* libngin_ios_x86_64.a */,
 			);
 			name = Products;
@@ -403,6 +479,7 @@
 		56B1231E207B79BC001046CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56E62A2F207CC75300F2FC05 /* MSCirclePad.xcodeproj */,
 				56B12333207B7C26001046CD /* OpenGLES.framework */,
 			);
 			name = Frameworks;
@@ -613,6 +690,22 @@
 			path = sphere;
 			sourceTree = "<group>";
 		};
+		56E62A30207CC75300F2FC05 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56E62A34207CC75300F2FC05 /* MSCirclePad.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		56E62A36207CC76500F2FC05 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -623,11 +716,13 @@
 				56B122F7207B79A0001046CD /* Sources */,
 				56B122F8207B79A0001046CD /* Frameworks */,
 				56B122F9207B79A0001046CD /* Resources */,
+				56E62A54207CCA6000F2FC05 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				56B12329207B79E0001046CD /* PBXTargetDependency */,
+				56F2792B207EACA100E63C0E /* PBXTargetDependency */,
 			);
 			name = iOS_arm64;
 			productName = iOS;
@@ -641,11 +736,13 @@
 				56D29ADC207B8E430080CB3B /* Sources */,
 				56D29AE1207B8E430080CB3B /* Frameworks */,
 				56D29AE4207B8E430080CB3B /* Resources */,
+				56E62A59207CCA6A00F2FC05 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				56D29B1A207B8E560080CB3B /* PBXTargetDependency */,
+				565402FB207E711E00AF5066 /* PBXTargetDependency */,
 			);
 			name = iOS_x86_64;
 			productName = iOS;
@@ -663,9 +760,11 @@
 				TargetAttributes = {
 					56B122FA207B79A0001046CD = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					56D29AD9207B8E430080CB3B = {
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -682,6 +781,14 @@
 			productRefGroup = 56B122FC207B79A0001046CD /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 56E62A36207CC76500F2FC05 /* Products */;
+					ProjectRef = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
+				},
+				{
+					ProductGroup = 56E62A30207CC75300F2FC05 /* Products */;
+					ProjectRef = 56E62A2F207CC75300F2FC05 /* MSCirclePad.xcodeproj */;
+				},
 				{
 					ProductGroup = 56B12315207B79B3001046CD /* Products */;
 					ProjectRef = 56B12314207B79B3001046CD /* ngin.xcodeproj */;
@@ -703,10 +810,10 @@
 			remoteRef = 56B1231A207B79B4001046CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		56B1231D207B79B4001046CD /* libngin_ios.a */ = {
+		56B1231D207B79B4001046CD /* libngin_ios_arm64.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libngin_ios.a;
+			path = libngin_ios_arm64.a;
 			remoteRef = 56B1231C207B79B4001046CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -715,6 +822,20 @@
 			fileType = archive.ar;
 			path = libngin_ios_x86_64.a;
 			remoteRef = 56D29AD7207B8E410080CB3B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		56E62A34207CC75300F2FC05 /* MSCirclePad.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MSCirclePad.framework;
+			remoteRef = 56E62A33207CC75300F2FC05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MSCirclePad.framework;
+			remoteRef = 56E62A39207CC76500F2FC05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -735,6 +856,7 @@
 				56B123E5207B81DA001046CD /* radiator_AO.png in Resources */,
 				56B123E6207B81DA001046CD /* childDrawing_05.jpg in Resources */,
 				56B123E7207B81DA001046CD /* childDrawing_04.jpg in Resources */,
+				56E62A1B207CC5EA00F2FC05 /* iOS_arm64-Info.plist in Resources */,
 				56B123E8207B81DA001046CD /* classroom.mtl in Resources */,
 				56B123E9207B81DA001046CD /* dustbin_wireframe.png in Resources */,
 				56B123EA207B81DA001046CD /* childDrawing_01.jpg in Resources */,
@@ -779,6 +901,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56D29AE5207B8E430080CB3B /* cork.jpg in Resources */,
+				56E62A1C207CC5EE00F2FC05 /* iOS_x86_64-Info.plist in Resources */,
 				56D29AE6207B8E430080CB3B /* base_bareMetal.png in Resources */,
 				56D29AE7207B8E430080CB3B /* base_paintedPlasterWall.jpg in Resources */,
 				56D29AE8207B8E430080CB3B /* base_darkWood.png in Resources */,
@@ -837,7 +960,9 @@
 			files = (
 				56B12332207B7A76001046CD /* AppDelegate.m in Sources */,
 				56B12331207B7A76001046CD /* EAGLView.m in Sources */,
+				56E62A61207CCFBD00F2FC05 /* SceneViewController.mm in Sources */,
 				56B12330207B7A76001046CD /* Renderer.mm in Sources */,
+				56F27924207EAB3800E63C0E /* MenuController.swift in Sources */,
 				56B1230E207B79A0001046CD /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -848,7 +973,9 @@
 			files = (
 				56D29ADD207B8E430080CB3B /* AppDelegate.m in Sources */,
 				56D29ADE207B8E430080CB3B /* EAGLView.m in Sources */,
+				56E62A62207CCFBD00F2FC05 /* SceneViewController.mm in Sources */,
 				56D29ADF207B8E430080CB3B /* Renderer.mm in Sources */,
+				56F27925207EAB3800E63C0E /* MenuController.swift in Sources */,
 				56D29AE0207B8E430080CB3B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -856,6 +983,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		565402FB207E711E00AF5066 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MSCirclePad;
+			targetProxy = 565402FA207E711E00AF5066 /* PBXContainerItemProxy */;
+		};
 		56B12329207B79E0001046CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ngin_ios;
@@ -865,6 +997,11 @@
 			isa = PBXTargetDependency;
 			name = ngin_ios_x86_64;
 			targetProxy = 56D29B19207B8E560080CB3B /* PBXContainerItemProxy */;
+		};
+		56F2792B207EACA100E63C0E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MSCirclePad;
+			targetProxy = 56F2792A207EACA100E63C0E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -939,7 +1076,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = nGin_iOS;
+				PRODUCT_NAME = iOS_x86_64;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "nGin_iOS-Swift.h";
 			};
 			name = Debug;
 		};
@@ -987,7 +1127,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_MODULE_NAME = nGin_iOS;
+				PRODUCT_NAME = iOS_x86_64;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "nGin_iOS-Swift.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -995,13 +1138,15 @@
 		56B12312207B79A0001046CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_FILE = "iOS/iOS_arm64-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -1010,6 +1155,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iOS/Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				SYSTEM_HEADER_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1018,13 +1166,15 @@
 		56B12313207B79A0001046CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_FILE = "iOS/iOS_arm64-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -1033,6 +1183,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iOS/Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				SYSTEM_HEADER_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1041,14 +1193,17 @@
 		56D29B15207B8E430080CB3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "iOS_arm64 copy-Info.plist";
+				INFOPLIST_FILE = "iOS/iOS_x86_64-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = "$(PRODUCT_MODULE_NAME)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(inherited)",
@@ -1056,6 +1211,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iOS/Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				SYSTEM_HEADER_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1064,14 +1222,17 @@
 		56D29B16207B8E430080CB3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "iOS_arm64 copy-Info.plist";
+				INFOPLIST_FILE = "iOS/iOS_x86_64-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = "$(PRODUCT_MODULE_NAME)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(inherited)",
@@ -1079,6 +1240,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.stompor.mateusz.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iOS/Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				SYSTEM_HEADER_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

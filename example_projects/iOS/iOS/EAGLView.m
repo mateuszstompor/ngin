@@ -12,20 +12,21 @@
 
 @implementation EAGLView
 
-// Must return the CAEAGLLayer class so that CA allocates an EAGLLayer backing for this view
 + (Class) layerClass {
     return [CAEAGLLayer class];
 }
 
-// The GL view is stored in the storyboard file. When it's unarchived it's sent -initWithCoder:
 - (instancetype) initWithCoder:(NSCoder*)coder {
     if ((self = [super initWithCoder:coder])) {
-        // Get the layer
+
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
         
         eaglLayer.opaque = TRUE;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
+                                        [NSNumber numberWithBool:FALSE],
+                                        kEAGLDrawablePropertyRetainedBacking,
+                                        kEAGLColorFormatRGBA8, 
+                                        kEAGLDrawablePropertyColorFormat, nil];
 		
 		
 		_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
@@ -63,15 +64,8 @@
 }
 
 - (void) setAnimationFrameInterval:(NSInteger)frameInterval {
-	// Frame interval defines how many display frames must pass between each time the
-	// display link fires. The display link will only fire 30 times a second when the
-	// frame internal is two on a display that refreshes 60 times a second. The default
-	// frame interval setting of one will fire 60 times a second when the display refreshes
-	// at 60 times a second. A frame interval setting of less than one results in undefined
-	// behavior.
 	if (frameInterval >= 1) {
 		_animationFrameInterval = frameInterval;
-		
 		if (_animating) {
 			[self stopAnimation];
 			[self startAnimation];
@@ -81,16 +75,10 @@
 
 - (void) startAnimation {
 	if (!_animating) {
-        // Create the display link and set the callback to our drawView method
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView:)];
-
-        // Set it to our _animationFrameInterval
         [_displayLink setFrameInterval:_animationFrameInterval];
-
-        // Have the display link run on the default runn loop (and the main thread)
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-		
-		_animating = TRUE;
+		_animating = YES;
 	}
 }
 
@@ -98,12 +86,11 @@
 	if (_animating) {
         [_displayLink invalidate];
         _displayLink = nil;		
-		_animating = FALSE;
+		_animating = NO;
 	}
 }
 
 - (void) dealloc {
-	// tear down context
 	if ([EAGLContext currentContext] == _context)
         [EAGLContext setCurrentContext:nil];
 }

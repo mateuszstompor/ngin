@@ -11,7 +11,7 @@
 
 #include "shader.hpp"
 #include "../../scene/texture.hpp"
-#include "../../../libs/source/glMath.h"
+#include "../../../glMath/source/glMath.h"
 
 namespace ms {
 	

@@ -14,7 +14,6 @@
 
 #include "vertex.hpp"
 #include "../resources/resource.hpp"
-#include "../../libs/source/glMath.h"
 
 namespace ms {
 	

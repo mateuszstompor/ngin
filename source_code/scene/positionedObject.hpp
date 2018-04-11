@@ -9,7 +9,7 @@
 #ifndef positioned_object_hpp
 #define positioned_object_hpp
 
-#include "../../libs/source/glMath.h"
+#include "../../glMath/source/glMath.h"
 
 namespace ms {
 
