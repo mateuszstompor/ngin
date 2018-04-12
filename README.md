@@ -29,6 +29,9 @@ ngin/example_projects/mac/ngin_mac.xcodeproj as well
 ## 29.03.2018 Current pipeline
 <img src="/screenshots/pipeline.png" width="100%" style="float: left; display:inline-block;"/>
 
+## 09.04.2018 Orthographic cameara
+<img src="/screenshots/projections.jpg" width="100%" style="float: left; display:inline-block;"/>
+
 ## 09.04.2018 Frustum culling
 <p>Removes models which aren't visible from point of view of camera from rendering pipeline. I marked using red color vector which describes direction in which camera looks to help you understand how does it work</p>
 <img src="/screenshots/frustum_culling.jpg" width="100%" style="float: left; display:inline-block;"/>

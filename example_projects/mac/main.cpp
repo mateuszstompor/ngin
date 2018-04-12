@@ -92,39 +92,46 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	engine = std::make_unique<NGinOGL>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, 0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
+    
+    float halfside = 2.0f;
+//    auto cam = std::make_unique<ms::OrthographicCamera>(halfside, -halfside, halfside, -halfside, halfside, -halfside);
+    auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
+    
+    engine = std::make_unique<NGinOGL>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, std::move(cam), nullptr);
 		
-	engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
+    
+//    engine->load_model("/Users/mateuszstompor/Documents/ngin/models/teapot/teapot.obj");
+    engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
 	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, 1.0f, -1.0f });
 
 	mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
-	for (int i = 0; i < 2; ++i) {
-		auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
-		auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-		auto lightPower = 50.0f;
-		
-		engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
-		engine->scene->pointLights[i]->modelTransformation.pre_transform(translation * scaleMat);
-	}
-
-    for (int i = 0; i < 5; ++i) {
-        auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
+    for (int i = 0; i < 2; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
         auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-        auto lightingDir = vec3{0.0f, -1.0f, 0.0f};
         auto lightPower = 50.0f;
-        auto spotLightAngle = 50.0f;
-
-        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
-        engine->scene->spotLights[i]->modelTransformation.pre_transform(translation * scaleMat);
+        
+        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
+        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
     }
+
+//    for (int i = 0; i < 5; ++i) {
+//        auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
+//        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
+//        auto lightingDir = vec3{0.0f, -1.0f, 0.0f};
+//        auto lightPower = 50.0f;
+//        auto spotLightAngle = 50.0f;
+//
+//        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
+//        engine->scene->get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+//    }
 
 	for(int i = 0; i < engine->scene->get_nodes().size(); ++i) {
 		engine->scene->get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}));
 	}
 
-	engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
+//    engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
 	
 	engine->load();
 	

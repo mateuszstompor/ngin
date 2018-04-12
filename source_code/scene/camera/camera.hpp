@@ -25,9 +25,9 @@ namespace ms {
 		inline 						            Camera                  ();
 		virtual 					            ~Camera                 () = default;
         inline virtual bool                     is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
-                                                                         math::BoundingBox<float> const & boundingBox) final;
-        virtual math::Plane<float>              get_camera_plane        (FrustumPlane plane) = 0;
-		inline virtual math::mat4 	            get_projection_matrix   ();
+                                                                         math::BoundingBox<float> const & boundingBox) const final;
+        inline math::Plane<float>               get_camera_plane        (FrustumPlane plane);
+		inline constexpr math::mat4 const & 	get_projection_matrix   () const;
 	
 	protected:
         
@@ -55,10 +55,70 @@ namespace ms {
 
 ms::Camera::Camera() : PositionedObject() {}
 
-ms::math::mat4 ms::Camera::get_projection_matrix() {
+constexpr ms::math::mat4 const & ms::Camera::get_projection_matrix() const {
 	return projectionMatrix;
 }
 
+enum class ms::Camera::FrustumPlane {
+    front, back,
+    left, right,
+    top, bottom
+};
+
+bool ms::Camera::is_in_camera_sight(math::mat4 const & boundingBoxTransformation, math::BoundingBox<float> const & boundingBox) const {
+    
+    auto finalTransformation = this->transformation * boundingBoxTransformation;
+// TODO BUG!!
+//    if(back->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+//        return false;
+//    }
+
+    if(left->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+        return false;
+    }
+
+    if(right->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+        return false;
+    }
+
+    if(front->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+        return false;
+    }
+
+    if(top->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+        return false;
+    }
+    
+    
+    if(bottom->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+        return false;
+    }
+    
+    return true;
+    
+}
+
+ms::math::Plane<float> ms::Camera::get_camera_plane (FrustumPlane plane) {
+    
+    switch (plane) {
+        case Camera::FrustumPlane::front:
+            return math::Plane<float>::from_points(c, a, b);
+        case Camera::FrustumPlane::back:
+            // TODO BUG!!
+            return math::Plane<float>::from_points(h, g, e); // not ok
+        case Camera::FrustumPlane::top:
+            return math::Plane<float>::from_points(e, f, b);
+        case Camera::FrustumPlane::bottom:
+            return math::Plane<float>::from_points(d, h, g);
+        case Camera::FrustumPlane::left:
+            return math::Plane<float>::from_points(e, a, c);
+        case Camera::FrustumPlane::right:
+            return math::Plane<float>::from_points(f, h, d);
+        default:
+            assert(false);
+            break;
+    }
+}
 
 //
 //               e-------f
@@ -80,40 +140,5 @@ ms::math::mat4 ms::Camera::get_projection_matrix() {
 // points {d, b, h, f} - plane right
 // points {a, b, c, d} - plane front
 // points {g, e, f, h} - plane back
-
-
-enum class ms::Camera::FrustumPlane {
-    front, back,
-    left, right,
-    top, bottom
-};
-
-bool ms::Camera::is_in_camera_sight(math::mat4 const & boundingBoxTransformation, math::BoundingBox<float> const & boundingBox) {
-    auto finalTransformation = this->transformation * boundingBoxTransformation;
-    
-    if(back->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-    if(left->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-    if(right->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-    if(front->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-    if(top->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-    return true;
-    
-}
-
 
 #endif /* camera_hpp */

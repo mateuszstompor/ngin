@@ -16,6 +16,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		560313EF207FA8EE00C37C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56D29AC8207B8DED0080CB3B;
+			remoteInfo = ngin_ios_x86_64;
+		};
 		56329EDB204ABC0C00AF29CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */;
@@ -103,7 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				56329EDC204ABC0C00AF29CA /* libngin_mac.a */,
-				56329EDE204ABC0C00AF29CA /* libngin_ios.a */,
+				56329EDE204ABC0C00AF29CA /* libngin_ios_arm64.a */,
+				560313F0207FA8EE00C37C68 /* libngin_ios_x86_64.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,6 +185,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		560313F0207FA8EE00C37C68 /* libngin_ios_x86_64.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libngin_ios_x86_64.a;
+			remoteRef = 560313EF207FA8EE00C37C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		56329EDC204ABC0C00AF29CA /* libngin_mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -184,10 +199,10 @@
 			remoteRef = 56329EDB204ABC0C00AF29CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		56329EDE204ABC0C00AF29CA /* libngin_ios.a */ = {
+		56329EDE204ABC0C00AF29CA /* libngin_ios_arm64.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libngin_ios.a;
+			path = libngin_ios_arm64.a;
 			remoteRef = 56329EDD204ABC0C00AF29CA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -221,7 +236,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -276,7 +291,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -321,6 +336,7 @@
 		56329ED1204ABBEA00AF29CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				HEADER_SEARCH_PATHS = /usr/local/Cellar/glfw/3.2.1/include;
@@ -343,6 +359,7 @@
 		56329ED2204ABBEA00AF29CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				HEADER_SEARCH_PATHS = /usr/local/Cellar/glfw/3.2.1/include;

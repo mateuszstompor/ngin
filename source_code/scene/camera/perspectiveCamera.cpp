@@ -36,37 +36,16 @@ ms::PerspectiveCamera::PerspectiveCamera(float nearPlane,
     a = nearPlaneOrigin - right * (nearPlaneWidth/2.0f) + up * (nearPlaneHeight/2.0f);
     b = nearPlaneOrigin + right * (nearPlaneWidth/2.0f) + up * (nearPlaneHeight/2.0f);
                                                                 
-    e = farPlaneOrigin - right * (farPlaneWidth/2.0f) - up * (farPlaneHeight/2.0f);
-    f = farPlaneOrigin + right * (farPlaneWidth/2.0f) - up * (farPlaneHeight/2.0f);
-    g = farPlaneOrigin - right * (farPlaneWidth/2.0f) + up * (farPlaneHeight/2.0f);
-    h = farPlaneOrigin + right * (farPlaneWidth/2.0f) + up * (farPlaneHeight/2.0f);
+    e = farPlaneOrigin - right * (farPlaneWidth/2.0f) + up * (farPlaneHeight/2.0f);
+    f = farPlaneOrigin + right * (farPlaneWidth/2.0f) + up * (farPlaneHeight/2.0f);
+    g = farPlaneOrigin - right * (farPlaneWidth/2.0f) - up * (farPlaneHeight/2.0f);
+    h = farPlaneOrigin + right * (farPlaneWidth/2.0f) - up * (farPlaneHeight/2.0f);
                                                                 
-    front = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::front));
-    back = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::back));
-    top = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::top));
-    bottom = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::bottom));
-    left = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::left));
+    Camera::front = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::front));
+    Camera::back = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::back));
+    Camera::top = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::top));
+    Camera::bottom = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::bottom));
+    Camera::left = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::left));
     Camera::right = std::make_unique<math::Plane<float>>(get_camera_plane(Camera::FrustumPlane::right));
     
-}
-
-ms::math::Plane<float> ms::PerspectiveCamera::get_camera_plane (FrustumPlane plane) {
-    
-    switch (plane) {
-        case Camera::FrustumPlane::front:
-            return math::Plane<float>::from_points(c, a, b);
-        case Camera::FrustumPlane::back:
-            return math::Plane<float>::from_points(f, e, g);
-        case Camera::FrustumPlane::top:
-            return math::Plane<float>::from_points(b, f, e);
-        case Camera::FrustumPlane::bottom:
-            return math::Plane<float>::from_points(g, h, d);
-        case Camera::FrustumPlane::left:
-            return math::Plane<float>::from_points(e, a, c);
-        case Camera::FrustumPlane::right:
-            return math::Plane<float>::from_points(d, h, f);
-        default:
-            assert(false);
-            break;
-    }
 }

@@ -64,6 +64,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			engine->scene->get_camera().pre_transform(rotation);
 		}
 			break;
+            
+        case GLFW_KEY_C: {
+            auto rotation = ms::math::transform::rotate_about_x_radians<float, 4>(0.1f);
+            engine->scene->get_camera().pre_transform(rotation);
+        }
+            break;
+        case GLFW_KEY_V: {
+            auto rotation = ms::math::transform::rotate_about_x_radians<float, 4>(-0.1f);
+            engine->scene->get_camera().pre_transform(rotation);
+        }
+            break;
 
 		case GLFW_KEY_Q: {
 			auto right = 0.2f * ms::math::up(engine->scene->get_camera().get_transformation());
@@ -109,104 +120,104 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_J: {
 			auto right = 1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(right);
-			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_point_lights()[usedPointLightIndex]->position = get_position(engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_L: {
 			auto right = -1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(right);
-			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_point_lights()[usedPointLightIndex]->position = get_position(engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_K: {
 			auto forward = 1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_point_lights()[usedPointLightIndex]->position = get_position(engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_I: {
 			auto forward = -1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_point_lights()[usedPointLightIndex]->position = get_position(engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_U: {
 			auto forward = 1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_point_lights()[usedPointLightIndex]->position = get_position(engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_O: {
 			auto forward = -1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->pointLights[usedPointLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->pointLights[usedPointLightIndex]->position = get_position(engine->scene->pointLights[usedPointLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_point_lights()[usedPointLightIndex]->position = get_position(engine->scene->get_point_lights()[usedPointLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 			
 		case GLFW_KEY_F: {
 			auto right = 1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(right);
-			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->position = get_position(engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_H: {
 			auto right = -1.6f * ms::math::right(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(right);
-			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->position = get_position(engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_G: {
 			auto forward = 1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->position = get_position(engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_T: {
 			auto forward = -1.6f * ms::math::back(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->position = get_position(engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_R: {
 			auto forward = 1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->position = get_position(engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_Y: {
 			auto forward = -1.6f * ms::math::up(engine->scene->get_camera().get_transformation());
 			auto transform = translate<float, 4>(forward);
-			engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.post_transform(transform);
-			engine->scene->spotLights[usedSpotLightIndex]->position = get_position(engine->scene->spotLights[usedSpotLightIndex]->modelTransformation.get_transformation());
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.post_transform(transform);
+			engine->scene->get_spot_lights()[usedSpotLightIndex]->position = get_position(engine->scene->get_spot_lights()[usedSpotLightIndex]->modelTransformation.get_transformation());
 		}
 			break;
 		case GLFW_KEY_8:
-			engine->scene->pointLights[usedPointLightIndex]->color[0] += 0.1f;
-			if(engine->scene->pointLights[usedPointLightIndex]->color[0] > 1.0f) {
-				engine->scene->pointLights[usedPointLightIndex]->color[0] = 0.0f;
+			engine->scene->get_point_lights()[usedPointLightIndex]->color[0] += 0.1f;
+			if(engine->scene->get_point_lights()[usedPointLightIndex]->color[0] > 1.0f) {
+				engine->scene->get_point_lights()[usedPointLightIndex]->color[0] = 0.0f;
 			}
 			break;
 		case GLFW_KEY_9:
-			engine->scene->pointLights[usedPointLightIndex]->color[1] += 0.1f;
-			if(engine->scene->pointLights[usedPointLightIndex]->color[1] > 1.0f) {
-				engine->scene->pointLights[usedPointLightIndex]->color[1] = 0.0f;
+			engine->scene->get_point_lights()[usedPointLightIndex]->color[1] += 0.1f;
+			if(engine->scene->get_point_lights()[usedPointLightIndex]->color[1] > 1.0f) {
+				engine->scene->get_point_lights()[usedPointLightIndex]->color[1] = 0.0f;
 			}
 			break;
 		case GLFW_KEY_0:
-			engine->scene->pointLights[usedPointLightIndex]->color[2] += 0.1f;
-			if(engine->scene->pointLights[usedPointLightIndex]->color[2] > 1.0f) {
-				engine->scene->pointLights[usedPointLightIndex]->color[2] = 0.0f;
+			engine->scene->get_point_lights()[usedPointLightIndex]->color[2] += 0.1f;
+			if(engine->scene->get_point_lights()[usedPointLightIndex]->color[2] > 1.0f) {
+				engine->scene->get_point_lights()[usedPointLightIndex]->color[2] = 0.0f;
 			}
 			break;
 		case GLFW_KEY_MINUS:
@@ -215,7 +226,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			}
 			break;
 		case GLFW_KEY_EQUAL:
-			if (usedPointLightIndex+1 < engine->scene->pointLights.size()) {
+			if (usedPointLightIndex+1 < engine->scene->get_point_lights().size()) {
 				usedPointLightIndex++;
 			}
 			break;
@@ -225,7 +236,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			}
 			break;
 		case GLFW_KEY_RIGHT_BRACKET:
-			if (usedSpotLightIndex+1 < engine->scene->spotLights.size()) {
+			if (usedSpotLightIndex+1 < engine->scene->get_spot_lights().size()) {
 				usedSpotLightIndex++;
 			}
 			break;

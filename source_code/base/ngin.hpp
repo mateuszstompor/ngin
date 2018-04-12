@@ -37,10 +37,7 @@ namespace ms {
 																	 unsigned int 	screenHeight,
 																	 unsigned int 	framebuffecrWidth,
 																	 unsigned int 	framebufferHeight,
-																	 float 			camNear,
-																	 float 			camFar,
-																	 float 			fovDegrees,
-																	 float 			aspect);
+																	 std::unique_ptr<Camera> && cam);
 		
 		virtual void							load_point_light	(float 			power,
 																	 math::vec3 	color,

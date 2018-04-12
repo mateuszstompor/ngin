@@ -11,6 +11,7 @@
 
 #include "camera/camera.hpp"
 #include "camera/perspectiveCamera.hpp"
+#include "camera/orthographicCamera.hpp"
 #include "lights/directionalLight.hpp"
 #include "lights/pointLight.hpp"
 #include "lights/spotLight.hpp"
@@ -27,26 +28,64 @@ namespace ms {
 
 	public:
 		
-															Scene (float nearPlan,
-																   float farPlan,
-																   float fovDegress,
-																   float cameraAspect);
+                                                                    Scene ();
+        
+															        Scene (float nearPlan,
+                                                                           float farPlan,
+                                                                           float fovDegress,
+                                                                           float cameraAspect);
+        
+                                                                    Scene (std::unique_ptr<Camera> && cam);
 
-		Camera &											get_camera() const;
-		DirectionalLight *									get_directional_light() const;
-		const std::vector<std::shared_ptr<SpotLight>> &		get_spot_lights() const;
-		const std::vector<std::shared_ptr<PointLight>> &	get_point_lights() const;
-		const std::vector<std::shared_ptr<Drawable>> & 		get_nodes() const;
-		void												set_directional_light(float 		power,
-																				  math::vec3 	color,
-																				  math::vec3 	direction);
+        constexpr Camera const &							        get_camera() const {
+            return *cam;
+        }
+        
+        constexpr Camera &                                          get_camera() {
+            return *cam;
+        }
+        
+        constexpr DirectionalLight const *                          get_directional_light() const {
+            return directionalLight.get();
+        }
+    
+        constexpr std::vector<std::shared_ptr<SpotLight>> &         get_spot_lights() {
+            return spotLights;
+        }
+        
+        constexpr const std::vector<std::shared_ptr<SpotLight>> &   get_spot_lights() const {
+            return spotLights;
+        }
+        
+        constexpr std::vector<std::shared_ptr<PointLight>> &        get_point_lights() {
+            return pointLights;
+        }
+        
+        constexpr const std::vector<std::shared_ptr<PointLight>> &  get_point_lights() const {
+            return pointLights;
+        }
+        
+        constexpr std::vector<std::shared_ptr<Drawable>> &          get_nodes() {
+            return nodes;
+        }
+        
+        constexpr const std::vector<std::shared_ptr<Drawable>> & 	get_nodes() const {
+            return nodes;
+        }
+        
+        void        												set_directional_light(float 		power,
+                                                                                          math::vec3 	color,
+                                                                                          math::vec3 	direction);
 //TODO make it protected
-//		protected:
-		std::vector<std::shared_ptr<Drawable>> 				nodes;
+
 		std::map<std::string, std::shared_ptr<Material>>	materials;
 		std::map<std::string, std::shared_ptr<Texture>>		textures;
-		std::vector<std::shared_ptr<PointLight>>			pointLights;
-		std::vector<std::shared_ptr<SpotLight>>				spotLights;
+		
+    protected:
+        
+        std::vector<std::shared_ptr<Drawable>>                 nodes;
+        std::vector<std::shared_ptr<PointLight>>            pointLights;
+        std::vector<std::shared_ptr<SpotLight>>                spotLights;
 		std::unique_ptr<Camera> 							cam;
 		std::unique_ptr<DirectionalLight>					directionalLight;
 		

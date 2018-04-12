@@ -11,16 +11,29 @@
 using namespace ms;
 using namespace shader;
 
+ms::NGinOGL::NGinOGL     (unsigned int                  screenWidth,
+                          unsigned int                  screenHeight,
+                          unsigned int                  frameBufferWidth,
+                          unsigned int                  frameBufferHeight,
+                          float                         camNear,
+                          float                         camFar,
+                          float                         fovDegrees,
+                          float                         aspect,
+                          std::shared_ptr<Framebuffer>  defaultFramebuffer
+                          ) : NGinOGL(screenWidth,
+                                      screenHeight,
+                                      frameBufferWidth,
+                                      frameBufferHeight,
+                                      std::make_unique<PerspectiveCamera>(camNear, camFar, fovDegrees, aspect),
+                                      defaultFramebuffer){ }
+
 ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                         unsigned int screenHeight,
                         unsigned int frameBufferWidth,
 						unsigned int frameBufferHeight,
-						float camNear,
-						float camFar,
-						float fovDegrees,
-						float aspect,
+                        std::unique_ptr<Camera> && cam,
 						std::shared_ptr<Framebuffer>	defaultFramebuffer
-					  ) : NGin(screenWidth, screenHeight, frameBufferWidth, frameBufferHeight, camNear, camFar, fovDegrees, aspect) {
+                      ) : NGin(screenWidth, screenHeight, frameBufferWidth, frameBufferHeight, std::move(cam)) {
 	
 	if(defaultFramebuffer == nullptr) {
 		windowFramebuffer = FramebufferOGL::window_framebuffer(screenWidth, screenHeight);

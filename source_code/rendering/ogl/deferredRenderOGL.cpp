@@ -110,7 +110,7 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	lightingShader->set_rendering_mode(this->renderMode);
 	
-	lightingShader->set_camera_transformation(scene->cam->get_transformation().c_array());
+	lightingShader->set_camera_transformation(scene->get_camera().get_transformation().c_array());
 	
 	DeferredRender::setup_lightpass_uniforms(scene);
 	

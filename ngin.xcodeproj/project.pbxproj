@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		560313E5207F9EB300C37C68 /* orthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560313E3207F9EB300C37C68 /* orthographicCamera.cpp */; };
+		560313E6207F9EB300C37C68 /* orthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560313E3207F9EB300C37C68 /* orthographicCamera.cpp */; };
+		560313E7207F9EB300C37C68 /* orthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560313E3207F9EB300C37C68 /* orthographicCamera.cpp */; };
+		560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560313E4207F9EB300C37C68 /* orthographicCamera.hpp */; };
 		560627CA20633B5F005085CD /* framebufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627C820633B5F005085CD /* framebufferOGL.cpp */; };
 		560627CB20633B5F005085CD /* framebufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627C820633B5F005085CD /* framebufferOGL.cpp */; };
 		560627CC20633B5F005085CD /* framebufferOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560627C920633B5F005085CD /* framebufferOGL.hpp */; };
@@ -192,6 +196,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		560313E3207F9EB300C37C68 /* orthographicCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = orthographicCamera.cpp; sourceTree = "<group>"; };
+		560313E4207F9EB300C37C68 /* orthographicCamera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = orthographicCamera.hpp; sourceTree = "<group>"; };
 		560627C420632CCB005085CD /* framebuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = framebuffer.hpp; sourceTree = "<group>"; };
 		560627C72063325B005085CD /* renderbuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = renderbuffer.hpp; sourceTree = "<group>"; };
 		560627C820633B5F005085CD /* framebufferOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = framebufferOGL.cpp; sourceTree = "<group>"; };
@@ -594,9 +600,11 @@
 		56716815204ADFAE0028EFAA /* camera */ = {
 			isa = PBXGroup;
 			children = (
+				56716819204ADFAE0028EFAA /* camera.hpp */,
 				56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */,
 				56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */,
-				56716819204ADFAE0028EFAA /* camera.hpp */,
+				560313E3207F9EB300C37C68 /* orthographicCamera.cpp */,
+				560313E4207F9EB300C37C68 /* orthographicCamera.hpp */,
 			);
 			path = camera;
 			sourceTree = "<group>";
@@ -732,6 +740,7 @@
 				5671684A204ADFAE0028EFAA /* light.hpp in Headers */,
 				5629671F204F317900685BAE /* deferredRenderOGL.hpp in Headers */,
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
+				560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */,
 				56716841204ADFAE0028EFAA /* camera.hpp in Headers */,
 				56716854204ADFAE0028EFAA /* ngin.hpp in Headers */,
 				56716838204ADFAE0028EFAA /* render.hpp in Headers */,
@@ -922,6 +931,7 @@
 				56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5673025420504AFC0066993D /* deferredLightingShaderOGL.cpp in Sources */,
+				560313E6207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
 				5633FAB4204C64D7003449EE /* drawableOGL.cpp in Sources */,
 				5640FED6204AE77600512938 /* shaderOGL.cpp in Sources */,
 				566BCF2D204EAF6500E90246 /* scene.cpp in Sources */,
@@ -956,6 +966,7 @@
 				56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */,
 				5640FED5204AE77600512938 /* shaderOGL.cpp in Sources */,
 				5673025320504AFC0066993D /* deferredLightingShaderOGL.cpp in Sources */,
+				560313E5207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
 				5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5633FAB3204C64D7003449EE /* drawableOGL.cpp in Sources */,
 				566BCF2C204EAF6500E90246 /* scene.cpp in Sources */,
@@ -990,6 +1001,7 @@
 				56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */,
 				56D29AB8207B8DED0080CB3B /* ngin.cpp in Sources */,
 				56D29AB9207B8DED0080CB3B /* deferredLightingShaderOGL.cpp in Sources */,
+				560313E7207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
 				56D29ABA207B8DED0080CB3B /* drawableOGL.cpp in Sources */,
 				56D29ABB207B8DED0080CB3B /* shaderOGL.cpp in Sources */,
 				56D29ABC207B8DED0080CB3B /* scene.cpp in Sources */,

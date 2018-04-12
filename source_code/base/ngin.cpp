@@ -12,11 +12,8 @@ ms::NGin::NGin(unsigned int screenWidth,
 			   unsigned int screenHeight,
 			   unsigned int framebufferWidth,
 			   unsigned int framebufferHeight,
-			   float camNear,
-			   float camFar,
-			   float fovDegrees,
-			   float aspect) :
-    scene(std::make_unique<Scene>(camNear, camFar, fovDegrees, aspect)),
+               std::unique_ptr<Camera> && cam) :
+    scene(std::make_unique<Scene>(std::move(cam))),
 	screenWidth(screenWidth),
 	screenHeight(screenHeight),
 	framebufferWidth(framebufferWidth),
@@ -88,7 +85,7 @@ void ms::NGin::load_model (std::string absolutePath) {
 			}
 			
 		}
-		scene->nodes.push_back(node);
+		scene->get_nodes().push_back(node);
 	}
 	
 	for (auto material : mat) {
@@ -119,7 +116,7 @@ void ms::NGin::load_point_light	(float power,
 	for (auto geometry : geo) {
 		std::shared_ptr<ms::PointLight> node = get_point_light(power, color, position);
 		node->geometry=geometry;
-		scene->pointLights.push_back(node);
+		scene->get_point_lights().push_back(node);
 	}
 	
 	for (auto material : mat) {
@@ -151,7 +148,7 @@ void ms::NGin::load_spot_light (float power,
 	for (auto geometry : geo) {
 		std::shared_ptr<ms::SpotLight> node = get_spot_light(power, color, position, lightingAngleDegrees, direction);
 		node->geometry=geometry;
-		scene->spotLights.push_back(node);
+		scene->get_spot_lights().push_back(node);
 	}
 	
 	for (auto material : mat) {
@@ -203,11 +200,11 @@ void ms::NGin::draw_scene() {
             deferredRenderer->use();
             deferredRenderer->setup_g_buffer_uniforms(scene.get());
             deferredRenderer->clear_frame();
-            for(int i = 0; i < scene->nodes.size(); ++i) {
-                auto node = scene->nodes[i];
-                if(scene->cam->is_in_camera_sight(node->modelTransformation.get_transformation(), *node->geometry->get_bounding_box())) {
-                    deferredRenderer->draw(scene->nodes[i].get(), scene.get());
-                    geometryRendered += scene->nodes[i]->geometry->amount_of_indices();
+            for(int i = 0; i < scene->get_nodes().size(); ++i) {
+                auto node = scene->get_nodes()[i];
+                if(scene->get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), *node->geometry->get_bounding_box())) {
+                    deferredRenderer->draw(scene->get_nodes()[i].get(), scene.get());
+                    geometryRendered += scene->get_nodes()[i]->geometry->amount_of_indices();
                 }
             }
             deferredRenderer->perform_light_pass(scene.get());
@@ -215,17 +212,17 @@ void ms::NGin::draw_scene() {
             phongForwardRenderer->use();
             phongForwardRenderer->clear_frame();
             phongForwardRenderer->setup_uniforms(scene.get());
-            for(int i = 0; i < scene->nodes.size(); ++i) {
-                phongForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-                geometryRendered += scene->nodes[i]->geometry->amount_of_indices();
+            for(int i = 0; i < scene->get_nodes().size(); ++i) {
+                phongForwardRenderer->draw(scene->get_nodes()[i].get(), scene.get());
+                geometryRendered += scene->get_nodes()[i]->geometry->amount_of_indices();
             }
         } else {
             gouraudForwardRenderer->use();
             gouraudForwardRenderer->clear_frame();
             gouraudForwardRenderer->setup_uniforms(scene.get());
-            for(int i = 0; i < scene->nodes.size(); ++i) {
-                gouraudForwardRenderer->draw(scene->nodes[i].get(), scene.get());
-                geometryRendered += scene->nodes[i]->geometry->amount_of_indices();
+            for(int i = 0; i < scene->get_nodes().size(); ++i) {
+                gouraudForwardRenderer->draw(scene->get_nodes()[i].get(), scene.get());
+                geometryRendered += scene->get_nodes()[i]->geometry->amount_of_indices();
             }
 
         }
@@ -235,13 +232,13 @@ void ms::NGin::draw_scene() {
 
 	lightSourceDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
 		lightSourceRenderer->use();
-		for(int i = 0; i < scene->pointLights.size(); ++i) {
-			lightSourceRenderer->draw(scene->pointLights[i].get(), scene.get());
-//            geometryRendered += scene->pointLights[i]->geometry->amount_of_indices();
+		for(int i = 0; i < scene->get_point_lights().size(); ++i) {
+			lightSourceRenderer->draw(scene->get_point_lights()[i].get(), scene.get());
+            geometryRendered += scene->get_point_lights()[i]->geometry->amount_of_indices();
 		}
-		for(int i = 0; i < scene->spotLights.size(); ++i) {
-			lightSourceRenderer->draw(scene->spotLights[i].get(), scene.get());
-//            geometryRendered += scene->spotLights[i]->geometry->amount_of_indices();
+		for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
+			lightSourceRenderer->draw(scene->get_spot_lights()[i].get(), scene.get());
+            geometryRendered += scene->get_spot_lights()[i]->geometry->amount_of_indices();
 		}
 	});
 	

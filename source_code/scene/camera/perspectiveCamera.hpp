@@ -22,7 +22,6 @@ namespace ms {
                                                              float fovDegrees,
                                                              float aspectRatio);
         
-        math::Plane<float>              get_camera_plane    (FrustumPlane plane) override;
     protected:
         
         float nearPlane;
