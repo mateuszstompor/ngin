@@ -14,13 +14,6 @@ ms::OrthographicCamera::OrthographicCamera (float far, float near,
     
     projectionMatrix = math::projection::orthogonal(far, near, top, bottom, left, right);
     
-    left = -1.0f;
-    right = 1.0f;
-    bottom = -1.0f;
-    top = 1.0f;
-    near = 1.0f;
-    far = -1.0f;
-
     c = math::vec3(left, bottom, near);
     d = math::vec3(right, bottom, near);
     a = math::vec3(left, top, near);

@@ -68,10 +68,6 @@ enum class ms::Camera::FrustumPlane {
 bool ms::Camera::is_in_camera_sight(math::mat4 const & boundingBoxTransformation, math::BoundingBox<float> const & boundingBox) const {
     
     auto finalTransformation = this->transformation * boundingBoxTransformation;
-// TODO BUG!!
-//    if(back->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-//        return false;
-//    }
 
     if(left->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
         return false;
@@ -89,6 +85,9 @@ bool ms::Camera::is_in_camera_sight(math::mat4 const & boundingBoxTransformation
         return false;
     }
     
+//    if(back->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
+//        return false;
+//    }
     
     if(bottom->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
         return false;
@@ -104,8 +103,7 @@ ms::math::Plane<float> ms::Camera::get_camera_plane (FrustumPlane plane) {
         case Camera::FrustumPlane::front:
             return math::Plane<float>::from_points(c, a, b);
         case Camera::FrustumPlane::back:
-            // TODO BUG!!
-            return math::Plane<float>::from_points(h, g, e); // not ok
+            return math::Plane<float>::from_points(g, e, f);
         case Camera::FrustumPlane::top:
             return math::Plane<float>::from_points(e, f, b);
         case Camera::FrustumPlane::bottom:
