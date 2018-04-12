@@ -44,7 +44,7 @@ int main(int argc, const char * argv[]) { {
 	
 	bool useCommandLineArguments = argc == 5;
 
-	int width = 1000;
+	int width = 1400;
 	int height = 1000;
 	int actualScreenWidth;
 	int actualScreenHeight;

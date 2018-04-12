@@ -19,15 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjs-dl-5f3">
-                                <rect key="frame" x="310" y="172" width="46" height="30"/>
+                                <rect key="frame" x="318" y="172" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Run"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="Xda-Cf-Ws5"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.054901960780000002" green="0.72549019609999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="1z0-lJ-Z1O"/>
                     </view>
                     <navigationItem key="navigationItem" id="VeV-aV-UoR"/>
@@ -45,35 +45,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bDf-dh-wKT" customClass="MSCirclePad" customModule="MSCirclePad">
-                                <rect key="frame" x="467" y="175" width="180" height="180"/>
+                                <rect key="frame" x="482" y="190" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="Ig4-yt-jXg"/>
-                                    <constraint firstAttribute="width" constant="180" id="Pyu-yP-Ghj"/>
+                                    <constraint firstAttribute="height" constant="150" id="Ig4-yt-jXg"/>
+                                    <constraint firstAttribute="width" constant="150" id="Pyu-yP-Ghj"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHY-9o-OiW" customClass="MSCirclePad" customModule="MSCirclePad">
-                                <rect key="frame" x="20" y="175" width="180" height="180"/>
+                                <rect key="frame" x="35" y="190" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="L4l-WX-F6V"/>
-                                    <constraint firstAttribute="width" constant="180" id="jyi-y4-jlG"/>
+                                    <constraint firstAttribute="height" constant="150" id="L4l-WX-F6V"/>
+                                    <constraint firstAttribute="width" constant="150" id="jyi-y4-jlG"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bDf-dh-wKT" secondAttribute="trailing" constant="20" id="LkK-4F-05G"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bDf-dh-wKT" secondAttribute="bottom" constant="20" id="XSl-K8-yQ4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OHY-9o-OiW" secondAttribute="bottom" constant="20" id="iRn-eX-c9R"/>
-                            <constraint firstItem="OHY-9o-OiW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="pN5-LM-aXJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bDf-dh-wKT" secondAttribute="trailing" constant="35" id="LkK-4F-05G"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bDf-dh-wKT" secondAttribute="bottom" constant="35" id="XSl-K8-yQ4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OHY-9o-OiW" secondAttribute="bottom" constant="35" id="iRn-eX-c9R"/>
+                            <constraint firstItem="OHY-9o-OiW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="35" id="pN5-LM-aXJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="eaglView" destination="8bC-Xf-vdC" id="Cdx-iY-ieL"/>
-                        <outlet property="rotationCirclePad" destination="OHY-9o-OiW" id="LZR-dR-Mgn"/>
-                        <outlet property="translationCirclePad" destination="bDf-dh-wKT" id="S0G-NT-jtE"/>
+                        <outlet property="rotationCirclePad" destination="bDf-dh-wKT" id="PNH-vb-KI2"/>
+                        <outlet property="translationCirclePad" destination="OHY-9o-OiW" id="gln-Xh-7f7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

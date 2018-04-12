@@ -123,6 +123,84 @@
 		56F27925207EAB3800E63C0E /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F27923207EAB3800E63C0E /* MenuController.swift */; };
 		56F27928207EACA100E63C0E /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; };
 		56F27929207EACA100E63C0E /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		56F2792C207EBA3A00E63C0E /* Sponza_Fabric_Green_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1235E207B81AF001046CD /* Sponza_Fabric_Green_normal.tga */; };
+		56F2792D207EBA3A00E63C0E /* Sponza_Column_c_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1235F207B81AF001046CD /* Sponza_Column_c_roughness.tga */; };
+		56F2792E207EBA3A00E63C0E /* Sponza_Details_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12360207B81AF001046CD /* Sponza_Details_normal.tga */; };
+		56F2792F207EBA3A00E63C0E /* VasePlant_diffuse_alpha.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12361207B81AF001046CD /* VasePlant_diffuse_alpha.tga */; };
+		56F27930207EBA3A00E63C0E /* Sponza_FlagPole_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12362207B81AF001046CD /* Sponza_FlagPole_diffuse.tga */; };
+		56F27931207EBA3A00E63C0E /* Sponza_Fabric_Red_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12363207B81AF001046CD /* Sponza_Fabric_Red_diffuse.tga */; };
+		56F27932207EBA3A00E63C0E /* Sponza_FlagPole_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12364207B81AF001046CD /* Sponza_FlagPole_normal.tga */; };
+		56F27933207EBA3A00E63C0E /* Sponza_Arch_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12365207B81AF001046CD /* Sponza_Arch_normal.tga */; };
+		56F27934207EBA3A00E63C0E /* Vase_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12366207B81AF001046CD /* Vase_roughness.tga */; };
+		56F27935207EBA3A00E63C0E /* Sponza_Curtain_Red_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12367207B81AF001046CD /* Sponza_Curtain_Red_diffuse.tga */; };
+		56F27936207EBA3A00E63C0E /* Sponza_Column_c_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12368207B81AF001046CD /* Sponza_Column_c_normal.tga */; };
+		56F27937207EBA3A00E63C0E /* Sponza_Curtain_Green_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12369207B81AF001046CD /* Sponza_Curtain_Green_diffuse.tga */; };
+		56F27938207EBA3A00E63C0E /* Sponza_Arch_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236A207B81AF001046CD /* Sponza_Arch_roughness.tga */; };
+		56F27939207EBA3A00E63C0E /* copyright.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236B207B81AF001046CD /* copyright.txt */; };
+		56F2793A207EBA3A00E63C0E /* Sponza_Bricks_a_Albedo.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236C207B81AF001046CD /* Sponza_Bricks_a_Albedo.tga */; };
+		56F2793B207EBA3A00E63C0E /* Lion_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236D207B81AF001046CD /* Lion_Roughness.tga */; };
+		56F2793C207EBA3A00E63C0E /* Sponza_Details_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236E207B81AF001046CD /* Sponza_Details_metallic.tga */; };
+		56F2793D207EBA3A00E63C0E /* Sponza_Column_c_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236F207B81AF001046CD /* Sponza_Column_c_diffuse.tga */; };
+		56F2793E207EBA3A00E63C0E /* Sponza_Details_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12370207B81AF001046CD /* Sponza_Details_roughness.tga */; };
+		56F2793F207EBA3A00E63C0E /* VasePlant_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12371207B81AF001046CD /* VasePlant_normal.tga */; };
+		56F27940207EBA3A00E63C0E /* Sponza_Arch_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12372207B81AF001046CD /* Sponza_Arch_diffuse.tga */; };
+		56F27941207EBA3A00E63C0E /* Sponza_Curtain_Blue_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12373207B81AF001046CD /* Sponza_Curtain_Blue_diffuse.tga */; };
+		56F27942207EBA3A00E63C0E /* Sponza_Curtain_Red_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12374207B81AF001046CD /* Sponza_Curtain_Red_normal.tga */; };
+		56F27943207EBA3A00E63C0E /* Sponza_Curtain_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12375207B81AF001046CD /* Sponza_Curtain_roughness.tga */; };
+		56F27944207EBA3A00E63C0E /* Background_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12376207B81AF001046CD /* Background_Normal.tga */; };
+		56F27945207EBA3A00E63C0E /* Sponza_Ceiling_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12377207B81AF001046CD /* Sponza_Ceiling_roughness.tga */; };
+		56F27946207EBA3A00E63C0E /* Sponza_Column_a_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12378207B81AF001046CD /* Sponza_Column_a_normal.tga */; };
+		56F27947207EBA3A00E63C0E /* Sponza_Floor_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12379207B81AF001046CD /* Sponza_Floor_diffuse.tga */; };
+		56F27948207EBA3A00E63C0E /* sponza.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237A207B81AF001046CD /* sponza.mtl */; };
+		56F27949207EBA3A00E63C0E /* Lion_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237B207B81AF001046CD /* Lion_Normal.tga */; };
+		56F2794A207EBA3A00E63C0E /* ChainTexture_Albedo_alpha.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237C207B81AF001046CD /* ChainTexture_Albedo_alpha.tga */; };
+		56F2794B207EBA3A00E63C0E /* VasePlant_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237D207B81AF001046CD /* VasePlant_roughness.tga */; };
+		56F2794C207EBA3A00E63C0E /* VaseRound_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237E207B81AF001046CD /* VaseRound_roughness.tga */; };
+		56F2794D207EBA3A00E63C0E /* VaseHanging_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237F207B81AF001046CD /* VaseHanging_normal.tga */; };
+		56F2794E207EBA3A00E63C0E /* Sponza_FlagPole_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12380207B81AF001046CD /* Sponza_FlagPole_roughness.tga */; };
+		56F2794F207EBA3A00E63C0E /* Sponza_Column_b_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12381207B81AF001046CD /* Sponza_Column_b_diffuse.tga */; };
+		56F27950207EBA3A00E63C0E /* sponza.obj in Resources */ = {isa = PBXBuildFile; fileRef = 56B12382207B81AF001046CD /* sponza.obj */; };
+		56F27951207EBA3A00E63C0E /* gi_flag.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12383207B81AF001046CD /* gi_flag.tga */; };
+		56F27952207EBA3A00E63C0E /* Sponza_Thorn_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12384207B81AF001046CD /* Sponza_Thorn_roughness.tga */; };
+		56F27953207EBA3A00E63C0E /* VaseHanging_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12385207B81AF001046CD /* VaseHanging_roughness.tga */; };
+		56F27954207EBA3A00E63C0E /* ChainTexture_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12386207B81AF001046CD /* ChainTexture_Roughness.tga */; };
+		56F27955207EBA3A00E63C0E /* ChainTexture_Metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12387207B81AF001046CD /* ChainTexture_Metallic.tga */; };
+		56F27956207EBA3A00E63C0E /* Sponza_Floor_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12388207B81AF001046CD /* Sponza_Floor_normal.tga */; };
+		56F27957207EBA3A00E63C0E /* Sponza_Roof_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12389207B81AF001046CD /* Sponza_Roof_diffuse.tga */; };
+		56F27958207EBA3A00E63C0E /* Sponza_Thorn_diffuse_alpha.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238A207B81AF001046CD /* Sponza_Thorn_diffuse_alpha.tga */; };
+		56F27959207EBA3A00E63C0E /* Sponza_Bricks_a_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238B207B81AF001046CD /* Sponza_Bricks_a_Normal.tga */; };
+		56F2795A207EBA3A00E63C0E /* Sponza_Curtain_Green_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238C207B81AF001046CD /* Sponza_Curtain_Green_normal.tga */; };
+		56F2795B207EBA3A00E63C0E /* VaseRound_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238D207B81AF001046CD /* VaseRound_diffuse.tga */; };
+		56F2795C207EBA3A00E63C0E /* Sponza_Column_b_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238E207B81AF001046CD /* Sponza_Column_b_normal.tga */; };
+		56F2795D207EBA3A00E63C0E /* Sponza_Curtain_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238F207B81AF001046CD /* Sponza_Curtain_metallic.tga */; };
+		56F2795E207EBA3A00E63C0E /* Metallic_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12390207B81AF001046CD /* Metallic_metallic.tga */; };
+		56F2795F207EBA3A00E63C0E /* Sponza_Ceiling_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12391207B81AF001046CD /* Sponza_Ceiling_normal.tga */; };
+		56F27960207EBA3A00E63C0E /* Vase_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12392207B81AF001046CD /* Vase_normal.tga */; };
+		56F27961207EBA3A00E63C0E /* VaseRound_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12393207B81AF001046CD /* VaseRound_normal.tga */; };
+		56F27962207EBA3A00E63C0E /* Sponza_Fabric_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12394207B81AF001046CD /* Sponza_Fabric_metallic.tga */; };
+		56F27963207EBA3A00E63C0E /* Sponza_Roof_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12395207B81AF001046CD /* Sponza_Roof_roughness.tga */; };
+		56F27964207EBA3A00E63C0E /* Background_Albedo.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12396207B81AF001046CD /* Background_Albedo.tga */; };
+		56F27965207EBA3A00E63C0E /* Sponza_Fabric_Red_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12397207B81AF001046CD /* Sponza_Fabric_Red_normal.tga */; };
+		56F27966207EBA3A00E63C0E /* Sponza_Details_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12398207B81AF001046CD /* Sponza_Details_diffuse.tga */; };
+		56F27967207EBA3A00E63C0E /* Sponza_Fabric_Green_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12399207B81AF001046CD /* Sponza_Fabric_Green_diffuse.tga */; };
+		56F27968207EBA3A00E63C0E /* Sponza_Column_a_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239A207B81AF001046CD /* Sponza_Column_a_roughness.tga */; };
+		56F27969207EBA3A00E63C0E /* Sponza_Fabric_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239B207B81AF001046CD /* Sponza_Fabric_roughness.tga */; };
+		56F2796A207EBA3A00E63C0E /* Sponza_Floor_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239C207B81AF001046CD /* Sponza_Floor_roughness.tga */; };
+		56F2796B207EBA3A00E63C0E /* Sponza_Curtain_Blue_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239D207B81AF001046CD /* Sponza_Curtain_Blue_normal.tga */; };
+		56F2796C207EBA3A00E63C0E /* ChainTexture_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239E207B81AF001046CD /* ChainTexture_Normal.tga */; };
+		56F2796D207EBA3A00E63C0E /* Lion_Albedo.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239F207B81AF001046CD /* Lion_Albedo.tga */; };
+		56F2796E207EBA3A00E63C0E /* Sponza_Bricks_a_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A0207B81AF001046CD /* Sponza_Bricks_a_Roughness.tga */; };
+		56F2796F207EBA3A00E63C0E /* Sponza_Fabric_Blue_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A1207B81AF001046CD /* Sponza_Fabric_Blue_normal.tga */; };
+		56F27970207EBA3A00E63C0E /* Background_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A2207B81AF001046CD /* Background_Roughness.tga */; };
+		56F27971207EBA3A00E63C0E /* Sponza_Column_b_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A3207B81AF001046CD /* Sponza_Column_b_roughness.tga */; };
+		56F27972207EBA3A00E63C0E /* Vase_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A4207B81AF001046CD /* Vase_diffuse.tga */; };
+		56F27973207EBA3A00E63C0E /* Sponza_Thorn_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A5207B81AF001046CD /* Sponza_Thorn_normal.tga */; };
+		56F27974207EBA3A00E63C0E /* Sponza_Fabric_Blue_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A6207B81AF001046CD /* Sponza_Fabric_Blue_diffuse.tga */; };
+		56F27975207EBA3A00E63C0E /* Sponza_Roof_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A7207B81AF001046CD /* Sponza_Roof_normal.tga */; };
+		56F27976207EBA3A00E63C0E /* VaseHanging_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A8207B81AF001046CD /* VaseHanging_diffuse.tga */; };
+		56F27977207EBA3A00E63C0E /* Dielectric_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A9207B81AF001046CD /* Dielectric_metallic.tga */; };
+		56F27978207EBA3A00E63C0E /* Sponza_Ceiling_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123AA207B81AF001046CD /* Sponza_Ceiling_diffuse.tga */; };
+		56F27979207EBA3A00E63C0E /* Sponza_Column_a_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123AB207B81AF001046CD /* Sponza_Column_a_diffuse.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -845,6 +923,84 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56F2792C207EBA3A00E63C0E /* Sponza_Fabric_Green_normal.tga in Resources */,
+				56F2792D207EBA3A00E63C0E /* Sponza_Column_c_roughness.tga in Resources */,
+				56F2792E207EBA3A00E63C0E /* Sponza_Details_normal.tga in Resources */,
+				56F2792F207EBA3A00E63C0E /* VasePlant_diffuse_alpha.tga in Resources */,
+				56F27930207EBA3A00E63C0E /* Sponza_FlagPole_diffuse.tga in Resources */,
+				56F27931207EBA3A00E63C0E /* Sponza_Fabric_Red_diffuse.tga in Resources */,
+				56F27932207EBA3A00E63C0E /* Sponza_FlagPole_normal.tga in Resources */,
+				56F27933207EBA3A00E63C0E /* Sponza_Arch_normal.tga in Resources */,
+				56F27934207EBA3A00E63C0E /* Vase_roughness.tga in Resources */,
+				56F27935207EBA3A00E63C0E /* Sponza_Curtain_Red_diffuse.tga in Resources */,
+				56F27936207EBA3A00E63C0E /* Sponza_Column_c_normal.tga in Resources */,
+				56F27937207EBA3A00E63C0E /* Sponza_Curtain_Green_diffuse.tga in Resources */,
+				56F27938207EBA3A00E63C0E /* Sponza_Arch_roughness.tga in Resources */,
+				56F27939207EBA3A00E63C0E /* copyright.txt in Resources */,
+				56F2793A207EBA3A00E63C0E /* Sponza_Bricks_a_Albedo.tga in Resources */,
+				56F2793B207EBA3A00E63C0E /* Lion_Roughness.tga in Resources */,
+				56F2793C207EBA3A00E63C0E /* Sponza_Details_metallic.tga in Resources */,
+				56F2793D207EBA3A00E63C0E /* Sponza_Column_c_diffuse.tga in Resources */,
+				56F2793E207EBA3A00E63C0E /* Sponza_Details_roughness.tga in Resources */,
+				56F2793F207EBA3A00E63C0E /* VasePlant_normal.tga in Resources */,
+				56F27940207EBA3A00E63C0E /* Sponza_Arch_diffuse.tga in Resources */,
+				56F27941207EBA3A00E63C0E /* Sponza_Curtain_Blue_diffuse.tga in Resources */,
+				56F27942207EBA3A00E63C0E /* Sponza_Curtain_Red_normal.tga in Resources */,
+				56F27943207EBA3A00E63C0E /* Sponza_Curtain_roughness.tga in Resources */,
+				56F27944207EBA3A00E63C0E /* Background_Normal.tga in Resources */,
+				56F27945207EBA3A00E63C0E /* Sponza_Ceiling_roughness.tga in Resources */,
+				56F27946207EBA3A00E63C0E /* Sponza_Column_a_normal.tga in Resources */,
+				56F27947207EBA3A00E63C0E /* Sponza_Floor_diffuse.tga in Resources */,
+				56F27948207EBA3A00E63C0E /* sponza.mtl in Resources */,
+				56F27949207EBA3A00E63C0E /* Lion_Normal.tga in Resources */,
+				56F2794A207EBA3A00E63C0E /* ChainTexture_Albedo_alpha.tga in Resources */,
+				56F2794B207EBA3A00E63C0E /* VasePlant_roughness.tga in Resources */,
+				56F2794C207EBA3A00E63C0E /* VaseRound_roughness.tga in Resources */,
+				56F2794D207EBA3A00E63C0E /* VaseHanging_normal.tga in Resources */,
+				56F2794E207EBA3A00E63C0E /* Sponza_FlagPole_roughness.tga in Resources */,
+				56F2794F207EBA3A00E63C0E /* Sponza_Column_b_diffuse.tga in Resources */,
+				56F27950207EBA3A00E63C0E /* sponza.obj in Resources */,
+				56F27951207EBA3A00E63C0E /* gi_flag.tga in Resources */,
+				56F27952207EBA3A00E63C0E /* Sponza_Thorn_roughness.tga in Resources */,
+				56F27953207EBA3A00E63C0E /* VaseHanging_roughness.tga in Resources */,
+				56F27954207EBA3A00E63C0E /* ChainTexture_Roughness.tga in Resources */,
+				56F27955207EBA3A00E63C0E /* ChainTexture_Metallic.tga in Resources */,
+				56F27956207EBA3A00E63C0E /* Sponza_Floor_normal.tga in Resources */,
+				56F27957207EBA3A00E63C0E /* Sponza_Roof_diffuse.tga in Resources */,
+				56F27958207EBA3A00E63C0E /* Sponza_Thorn_diffuse_alpha.tga in Resources */,
+				56F27959207EBA3A00E63C0E /* Sponza_Bricks_a_Normal.tga in Resources */,
+				56F2795A207EBA3A00E63C0E /* Sponza_Curtain_Green_normal.tga in Resources */,
+				56F2795B207EBA3A00E63C0E /* VaseRound_diffuse.tga in Resources */,
+				56F2795C207EBA3A00E63C0E /* Sponza_Column_b_normal.tga in Resources */,
+				56F2795D207EBA3A00E63C0E /* Sponza_Curtain_metallic.tga in Resources */,
+				56F2795E207EBA3A00E63C0E /* Metallic_metallic.tga in Resources */,
+				56F2795F207EBA3A00E63C0E /* Sponza_Ceiling_normal.tga in Resources */,
+				56F27960207EBA3A00E63C0E /* Vase_normal.tga in Resources */,
+				56F27961207EBA3A00E63C0E /* VaseRound_normal.tga in Resources */,
+				56F27962207EBA3A00E63C0E /* Sponza_Fabric_metallic.tga in Resources */,
+				56F27963207EBA3A00E63C0E /* Sponza_Roof_roughness.tga in Resources */,
+				56F27964207EBA3A00E63C0E /* Background_Albedo.tga in Resources */,
+				56F27965207EBA3A00E63C0E /* Sponza_Fabric_Red_normal.tga in Resources */,
+				56F27966207EBA3A00E63C0E /* Sponza_Details_diffuse.tga in Resources */,
+				56F27967207EBA3A00E63C0E /* Sponza_Fabric_Green_diffuse.tga in Resources */,
+				56F27968207EBA3A00E63C0E /* Sponza_Column_a_roughness.tga in Resources */,
+				56F27969207EBA3A00E63C0E /* Sponza_Fabric_roughness.tga in Resources */,
+				56F2796A207EBA3A00E63C0E /* Sponza_Floor_roughness.tga in Resources */,
+				56F2796B207EBA3A00E63C0E /* Sponza_Curtain_Blue_normal.tga in Resources */,
+				56F2796C207EBA3A00E63C0E /* ChainTexture_Normal.tga in Resources */,
+				56F2796D207EBA3A00E63C0E /* Lion_Albedo.tga in Resources */,
+				56F2796E207EBA3A00E63C0E /* Sponza_Bricks_a_Roughness.tga in Resources */,
+				56F2796F207EBA3A00E63C0E /* Sponza_Fabric_Blue_normal.tga in Resources */,
+				56F27970207EBA3A00E63C0E /* Background_Roughness.tga in Resources */,
+				56F27971207EBA3A00E63C0E /* Sponza_Column_b_roughness.tga in Resources */,
+				56F27972207EBA3A00E63C0E /* Vase_diffuse.tga in Resources */,
+				56F27973207EBA3A00E63C0E /* Sponza_Thorn_normal.tga in Resources */,
+				56F27974207EBA3A00E63C0E /* Sponza_Fabric_Blue_diffuse.tga in Resources */,
+				56F27975207EBA3A00E63C0E /* Sponza_Roof_normal.tga in Resources */,
+				56F27976207EBA3A00E63C0E /* VaseHanging_diffuse.tga in Resources */,
+				56F27977207EBA3A00E63C0E /* Dielectric_metallic.tga in Resources */,
+				56F27978207EBA3A00E63C0E /* Sponza_Ceiling_diffuse.tga in Resources */,
+				56F27979207EBA3A00E63C0E /* Sponza_Column_a_diffuse.tga in Resources */,
 				56B123DD207B81DA001046CD /* cork.jpg in Resources */,
 				56B123DE207B81DA001046CD /* base_bareMetal.png in Resources */,
 				56B123DF207B81DA001046CD /* base_paintedPlasterWall.jpg in Resources */,

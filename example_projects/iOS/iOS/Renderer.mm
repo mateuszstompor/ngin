@@ -22,10 +22,8 @@ using namespace math;
 
 @interface Renderer ()
 {
-	
     __weak EAGLContext * _context;
     GLuint _colorRenderbuffer;
-	
 }
 @end
 
@@ -33,15 +31,14 @@ using namespace math;
 
 - (instancetype)initWithContext:(EAGLContext*)context AndDrawable:(id<EAGLDrawable>)drawable {
 
+    _context = context;
+    
     framebuffer = make_shared<FramebufferOGL>(1, 1, 680, 375);
     framebuffer->use();
     
     glGenRenderbuffers(1, &_colorRenderbuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
-	_context = context;
-	
 	[_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:drawable];
-	
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
 
 	GLint backingWidth;
@@ -49,7 +46,7 @@ using namespace math;
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
     
-    depthRenderBuffer = std::make_shared<ms::RenderbufferOGL>(ms::Texture::Format::depth_16,
+    depthRenderBuffer = std::make_shared<ms::RenderbufferOGL>(ms::Texture::Format::depth_24,
                                                               ms::Texture::AssociatedType::UNSIGNED_BYTE,
                                                               0,
                                                               backingWidth,
@@ -57,23 +54,39 @@ using namespace math;
     
     framebuffer->bind_depth_buffer(depthRenderBuffer);
 	
-	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
-		return nil;
-	}
+    framebuffer->configure();
 
     float width = backingWidth;
     float height = backingHeight;
 
-    engine = std::unique_ptr<NGin>(new NGinOGL(width, height, width, height, 0.01, 100, 90, width/height, framebuffer));
+    engine = std::unique_ptr<NGin>(new NGinOGL(width, height, backingWidth, backingHeight, 0.01, 100, 90, width/height, framebuffer));
     std::unique_ptr<Loader> loader = std::unique_ptr<Loader>(new LoaderOGL());
 
-    NSString* model = [[NSBundle mainBundle] pathForResource:@"classroom" ofType:@"obj"];
+    NSString* model = [[NSBundle mainBundle] pathForResource:@"sponza" ofType:@"obj"];
     std::string modelPath = std::string([model cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    NSString* sphereModel = [[NSBundle mainBundle] pathForResource:@"sphere" ofType:@"obj"];
+    std::string sphereModelPath = std::string([sphereModel cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, 1.0f, -1.0f });
+    
+    mat4 scaleMat = transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
+    for (int i = 0; i < 2; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
+        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
+        auto lightPower = 50.0f;
+
+        engine->load_point_light(lightPower, lightColor, get_position(translation), sphereModelPath);
+        engine->scene->pointLights[i]->modelTransformation.pre_transform(translation * scaleMat);
+    }
+    
     engine->load_model(modelPath);
+    
+    for(int i = 0; i < engine->scene->get_nodes().size(); ++i) {
+        engine->scene->get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.015f, 0.015f, 0.015f}));
+    }
 
-    engine->scene->set_directional_light(50, vec3{1.0f, 1.0f, 1.0f}, vec3{0.0f, 1.0f, 0.0f });
     engine->scene->cam->pre_transform(transform::translate<float, 4>(vec3(-0.6f, -0.3f, -1.0f)));
     engine->load();
 	

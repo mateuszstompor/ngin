@@ -17,7 +17,6 @@ CGPoint translation;
 CGPoint rotation;
 
 @interface SceneViewController () <MSCirclePadDelegate>
-
 @end
 
 @implementation SceneViewController
@@ -38,7 +37,7 @@ CGPoint rotation;
     [super didReceiveMemoryWarning];
 }
 
-- (void) joyPositionDidChangedWithSender:(MSCirclePad *)sender {
+- (void) joyPositionDidChangedWithSender:(MSCirclePad * _Nonnull)sender {
     if (sender == _translationCirclePad) {
         translation = sender.currentPosition;
     } else {
@@ -46,11 +45,11 @@ CGPoint rotation;
     }
 }
 
-- (void) joyTouchRecognitionDidEndWithSender:(MSCirclePad *)sender {
+- (void) joyTouchRecognitionDidEndWithSender:(MSCirclePad * _Nonnull)sender {
     translation = CGPoint{0, 0};
     rotation = CGPoint{0, 0};
 }
-//
+
 //- (void) joyTouchRecognitionDidStartWithSender:(MSCirclePad *)sender {
 //
 //}
