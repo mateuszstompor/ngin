@@ -128,10 +128,10 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     shadowFramebuffer->clear_color();
     
     auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
-    shadow->set_uniform("projection", scene->get_directional_light()->get_projection());
-    shadow->set_uniform("cameraTransformation", scene->get_directional_light()->get_transformation());
+    assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
+    assert(shadow->set_uniform("cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
     for(auto n : scene->get_nodes()) {
-        shadow->set_uniform("modelTransformation", n->modelTransformation.get_transformation());
+        assert( shadow->set_uniform("modelTransformation", n->modelTransformation.get_transformation()) >= 0);
         n->draw();
     }
     
@@ -139,16 +139,23 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	framebuffer->use();
 	framebuffer->clear_frame();
 	
+    
+    auto lightingSh = dynamic_cast<ShaderOGL*>(lightingShader.get());
+    
 	lightingShader->use();
 	
 	lightingShader->set_rendering_mode(this->renderMode);
 	
+    assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
+    assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
+    
 	lightingShader->set_camera_transformation(scene->get_camera().get_transformation().c_array());
 	
 	DeferredRender::setup_lightpass_uniforms(scene);
 	
 	lightingShader->bind_g_buf_posiitons(*gPosition);
 	lightingShader->bind_g_buf_albedo(*gAlbedo);
+    lightingShader->bind_shadow_map(*shadowTexture);
 	lightingShader->bind_g_buf_normals(*gNormal);
 	
 	quad->draw();

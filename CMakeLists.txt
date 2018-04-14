@@ -60,7 +60,7 @@ include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS} ${ASSIMP_INCLUDE
 set(PROJECT_SOURCE_FILES
 
         #hpp
-        ${CMAKE_SOURCE_DIR}/libs/source/glMath.h
+        ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.hpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/loader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
@@ -91,6 +91,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.hpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resourceCoordinator.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.hpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/camera/orthographicCamera.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/camera.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/pointLight.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/spotLight.hpp
@@ -136,6 +137,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resourceCoordinator.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/camera/orthographicCamera.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/materialOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/drawableOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/geometryOGL.cpp

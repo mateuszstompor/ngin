@@ -6,6 +6,7 @@ in 		vec3 								cameraPosition;
 uniform sampler2D 							gPosition;
 uniform sampler2D 							gNormal;
 uniform sampler2D 							gAlbedo;
+uniform sampler2D                           shadowMap;
 
 uniform	int									spotLightsAmount;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
@@ -15,6 +16,9 @@ uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
 
 uniform	int 								hasDirLight;
 uniform DirectionalLight 					dirLight;
+
+uniform mat4                                sm_projection;
+uniform mat4                                sm_cameraTransformation;
 
 uniform uint								renderMode;
 
@@ -51,6 +55,8 @@ void main() {
 	
 	vec3 result 			= vec3(0.0f, 0.0f, 0.0f);
 	
+    vec4 fragmentInLightPos = sm_projection * sm_cameraTransformation * vec4(fragmentPosition, 1.0f);
+    
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
@@ -84,7 +90,8 @@ void main() {
                                         mat4(1.0f));
 	}
 
-	FragColor = vec4(result, 1.0f);
+    FragColor = vec4(result, 1.0f);
+//    FragColor = vec4(vec3(texture(shadowMap, texCoords).r), 1.0f);
 
 }
 

@@ -34,6 +34,9 @@ void  ms::DeferredLightingShaderOGL::_load () {
 	
 	GLint gAlbedo = mglGetUniformLocation(program, "gAlbedo");
 	mglUniform1i(gAlbedo, 2);
+    
+    GLint shadowMap = mglGetUniformLocation(program, "shadowMap");
+    mglUniform1i(shadowMap, 3);
 	
 	directionalLightColorLocation = mglGetUniformLocation(program, "dirLight.color");
 	directionalLightDirectionLocation = mglGetUniformLocation(program, "dirLight.direction");
@@ -169,6 +172,19 @@ void ms::DeferredLightingShaderOGL::set_rendering_mode (unsigned int settings) {
 void ms::DeferredLightingShaderOGL::bind_g_buf_albedo (Texture & albedoTexture) {
 	mglActiveTexture(GL_TEXTURE2);
 	albedoTexture.use();
+}
+
+void ms::DeferredLightingShaderOGL::bind_shadow_map (Texture & shadowTexture) {
+    mglActiveTexture(GL_TEXTURE3);
+    shadowTexture.use();
+}
+
+void ms::DeferredLightingShaderOGL::set_directional_sm_transform (const math::mat4 & color) {
+    
+}
+
+void ms::DeferredLightingShaderOGL::set_directional_sm_projection (const math::mat4 & color) {
+
 }
 
 void ms::DeferredLightingShaderOGL::bind_g_buf_normals (Texture & normalsTexture) {
