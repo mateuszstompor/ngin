@@ -25,9 +25,12 @@ namespace ms {
         
     protected:
         
-        float far, near;
-        float top, bottom;
-        float left, right;
+        float _far;
+        float _near;
+        float _top;
+        float _bottom;
+        float _left;
+        float _right;
         
     };
     

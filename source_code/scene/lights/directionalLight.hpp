@@ -31,10 +31,10 @@ namespace ms {
 	
 }
 
-ms::DirectionalLight::DirectionalLight(math::vec3 const & c, math::vec3 const & d) : ms::Light(c, math::projection::orthogonal(HALF_SIDE, HALF_SIDE, HALF_SIDE, HALF_SIDE, HALF_SIDE, HALF_SIDE)), direction(d) { }
+ms::DirectionalLight::DirectionalLight(math::vec3 const & c, math::vec3 const & d) : ms::Light(c, math::projection::orthogonal<float>(HALF_SIDE, -HALF_SIDE, HALF_SIDE, -HALF_SIDE, HALF_SIDE, -HALF_SIDE)), direction(d) { }
 
 ms::DirectionalLight::DirectionalLight(math::vec3 && c, math::vec3 && d) : ms::Light(std::move(c),
-                                                                           math::projection::orthogonal(HALF_SIDE, HALF_SIDE, HALF_SIDE, HALF_SIDE, HALF_SIDE, HALF_SIDE)),
+                                                                           math::projection::orthogonal<float>(HALF_SIDE, -HALF_SIDE, HALF_SIDE, -HALF_SIDE, HALF_SIDE, -HALF_SIDE)),
                                                                            direction(std::move(d)) { }
 
 #endif /* directional_light_hpp */

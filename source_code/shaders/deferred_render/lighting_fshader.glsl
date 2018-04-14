@@ -91,7 +91,6 @@ void main() {
 	}
 
     FragColor = vec4(result, 1.0f);
-//    FragColor = vec4(vec3(texture(shadowMap, texCoords).r), 1.0f);
 
 }
 

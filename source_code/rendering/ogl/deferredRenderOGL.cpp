@@ -125,9 +125,10 @@ void ms::DeferredRenderOGL::_unload () {
 void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     
     shadowFramebuffer->use();
-    shadowFramebuffer->clear_color();
+    shadowFramebuffer->clear_frame();
     
     auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
+    shadowShader->use();
     assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
     assert(shadow->set_uniform("cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
     for(auto n : scene->get_nodes()) {

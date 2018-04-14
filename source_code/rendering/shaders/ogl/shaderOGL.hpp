@@ -65,7 +65,7 @@ namespace ms {
 		virtual 				~ShaderOGL	() = default;
 				GLuint 			get_gl_id	() const;
 				GLint			set_uniform	(std::string name, int value);
-				GLint			set_uniform	(std::string name, math::mat4 m);
+				GLint			set_uniform	(std::string name, const math::mat4 & m);
 		
 		
 	protected:

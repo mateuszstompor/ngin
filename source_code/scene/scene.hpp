@@ -37,19 +37,19 @@ namespace ms {
         
                                                                     Scene (std::unique_ptr<Camera> && cam);
 
-        constexpr Camera const &							        get_camera() const {
+        Camera const &							        get_camera() const {
             return *cam;
         }
         
-        constexpr Camera &                                          get_camera() {
+        Camera &                                          get_camera() {
             return *cam;
         }
         
-        constexpr DirectionalLight *                                get_directional_light() {
+        DirectionalLight *                                get_directional_light() {
             return directionalLight.get();
         }
         
-        constexpr DirectionalLight const *                          get_directional_light() const {
+        DirectionalLight const *                          get_directional_light() const {
             return directionalLight.get();
         }
     
