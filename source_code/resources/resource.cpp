@@ -9,7 +9,7 @@
 #include "resource.hpp"
 #include "resourceCoordinator.hpp"
 
-bool ms::Resource::is_loaded () {
+bool ms::Resource::is_loaded () const {
 	return isLoaded;
 }
 
@@ -44,7 +44,7 @@ ms::Resource::Resource () : isLoaded(false) {
 	ResourceCoordinator::get_instance()->register_allocation(this);
 }
 
-std::string ms::Resource::get_class () {
+std::string ms::Resource::get_class () const {
 	return "ms::Resource";
 }
 

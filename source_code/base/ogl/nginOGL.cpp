@@ -55,6 +55,9 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 	
 	auto lightSourceDrawerVertexShader = get_shader_of_type(Type::forward_render_light_drawer_vshader);
 	auto lightSourceDrawerFragmentShader = get_shader_of_type(Type::forward_render_light_drawer_fshader);
+    
+    auto shadowMappingVertexShader = get_shader_of_type(Type::shadow_mapping_dir_vshader);
+    auto shadowMappingFragmentShader = get_shader_of_type(Type::shadow_mapping_dir_fshader);
 	
 	auto hdrVertexShader = get_shader_of_type(Type::post_process_hdr_vshader);
 	auto hdrFragmentShader = get_shader_of_type(Type::post_process_hdr_fshader);
@@ -209,6 +212,8 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                                                             deferredRenderFragmentShaderSource,
                                                             deferredRenderLightingVertexShaderSource,
                                                             deferredRenderLightingFragmentShaderSource,
+                                                            shadowMappingVertexShader,
+                                                            shadowMappingFragmentShader,
                                                             oneColorDepthFramebuffer);
 	
 	phongForwardRenderer = std::make_unique<ForwardRender>(AOL,

@@ -48,6 +48,7 @@ namespace ms {
 		virtual void 				bind_color_buffer	(int index,
 														 std::shared_ptr<Renderbuffer> renderbuffer) = 0;
 		virtual void 				bind_depth_buffer	(std::shared_ptr<Renderbuffer> renderbuffer) = 0;
+        virtual void                bind_depth_buffer   (std::shared_ptr<Texture> texture) = 0;
 		
 					//														//
 					// 	Checks completeness and merge all things together	//

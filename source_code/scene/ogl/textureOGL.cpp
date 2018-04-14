@@ -181,6 +181,10 @@ GLenum ms::TextureOGL::to_ogl (Format wrapping) {
 			return GL_RGBA;
 		case Format::r_8:
 			return GL_RED;
+        case Format::depth_16:
+        case Format::depth_24:
+        case Format::depth_32:
+            return GL_DEPTH_COMPONENT;
 		default:
 			std::cerr << "format not supported" << std::endl;
 			assert(false);
@@ -202,7 +206,7 @@ GLenum ms::TextureOGL::to_ogl (AssociatedType type) {
 	}
 }
 
-std::string ms::TextureOGL::get_class () {
+std::string ms::TextureOGL::get_class () const {
 	return "ms::TextureOGL";
 }
 
@@ -210,7 +214,13 @@ GLenum ms::TextureOGL::underlying_type () const {
 	if (this->associatedType == AssociatedType::FLOAT) {
 		if (this->format == Texture::Format::rgb_16_16_16) {
 			return GL_RGB16F;
-		}
+        } else if (this->format == Texture::Format::depth_16) {
+            return GL_DEPTH_COMPONENT;
+        } else if (this->format == Texture::Format::depth_24) {
+            return GL_DEPTH_COMPONENT;
+        } else if (this->format == Texture::Format::depth_32) {
+            return GL_DEPTH_COMPONENT;
+        }
 	} else if (this->associatedType == AssociatedType::UNSIGNED_BYTE) {
 		if (this->format == Texture::Format::rgba_8_8_8_8) {
 			return GL_RGBA8;

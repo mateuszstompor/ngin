@@ -55,7 +55,7 @@ namespace ms {
 		inline 			int				channels_amount () const;
 						Texture &		operator = 		(const Texture &) = delete;
 										Texture			(const Texture &) = delete;
-		inline 	virtual std::string		get_class		() = 0;
+		inline 	virtual std::string		get_class		() const override;
 				virtual void 			use				() = 0;
 		inline 	virtual 				~Texture		();
 
@@ -139,7 +139,7 @@ void ms::Texture::copy_data (byte* data, size_t size) {
 	std::memcpy(rawData, data, size);
 }
 
-std::string ms::Texture::get_class () {
+std::string ms::Texture::get_class () const {
 	return "ms::Texture";
 }
 

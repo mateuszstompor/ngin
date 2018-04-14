@@ -15,6 +15,7 @@ namespace ms {
 	#define G_BUF_ALBEDO 			"G_BUF_ALBEDO"
 	#define G_BUF_POSITIONS 		"G_BUF_POSITIONS"
 	#define G_BUF_NORMALS 			"G_BUF_NORMALS"
+    #define SHADOW_MAP              "SHADOW_MAP"
 	
 }
 
@@ -23,12 +24,14 @@ ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int 	                maxAOLig
 										  std::string 	                gFS,
 										  std::string 	                lVS,
 										  std::string 	                lFS,
+                                          std::string                   smVS,
+                                          std::string                   smFS,
 										  std::shared_ptr<Framebuffer>  framebuffer) :
 
-ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS) {
+ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS, smVS, smFS) {
 	gShader = std::make_unique<DeferredShaderOGL>(gVS, gFS);
 	lightingShader = std::make_unique<DeferredLightingShaderOGL>(maxAOLights, lVS, lFS);
-	
+    shadowShader = std::make_unique<ShaderOGL>(smVS, "", "", "", smFS);
 	
 	gPosition = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
                                              G_BUF_POSITIONS,
@@ -71,7 +74,24 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS) {
                                                           framebuffer->get_width(),
                                                           framebuffer->get_height());
 	
-	
+    shadowTexture = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                 SHADOW_MAP,
+                                                 Texture::Format::depth_24,
+                                                 Texture::AssociatedType::FLOAT,
+                                                 Texture::MinFilter::nearest,
+                                                 Texture::MagFilter::nearest,
+                                                 Texture::Wrapping::repeat,
+                                                 Texture::Wrapping::repeat,
+                                                 0, 1024, 1024);
+    
+    shadowFramebuffer = std::make_unique<FramebufferOGL>(1,
+                                                         0,
+                                                         1024,
+                                                         1024);
+    
+    shadowFramebuffer->bind_depth_buffer(shadowTexture);
+    
+    shadowFramebuffer->configure();
 
 	quad = DrawableOGL::get_quad();
 	
@@ -103,6 +123,19 @@ void ms::DeferredRenderOGL::_unload () {
 }
 
 void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
+    
+    shadowFramebuffer->use();
+    shadowFramebuffer->clear_color();
+    
+    auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
+    shadow->set_uniform("projection", scene->get_directional_light()->get_projection());
+    shadow->set_uniform("cameraTransformation", scene->get_directional_light()->get_transformation());
+    for(auto n : scene->get_nodes()) {
+        shadow->set_uniform("modelTransformation", n->modelTransformation.get_transformation());
+        n->draw();
+    }
+    
+    
 	framebuffer->use();
 	framebuffer->clear_frame();
 	

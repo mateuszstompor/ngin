@@ -16,7 +16,7 @@ ms::PostprocessDrawerOGL::PostprocessDrawerOGL(std::vector<std::shared_ptr<Textu
 	quad = DrawableOGL::get_quad();
 }
 
-void ms::PostprocessDrawerOGL::draw_quad() {
+void ms::PostprocessDrawerOGL::draw_quad() const {
 	framebuffer->use();
 	shader->use();
 	
@@ -36,6 +36,6 @@ void ms::PostprocessDrawerOGL::draw (Drawable * node, const Scene * scene) {
 	assert(false);
 }
 
-std::string ms::PostprocessDrawerOGL::get_class () {
+std::string ms::PostprocessDrawerOGL::get_class () const {
 	return "ms::PostprocessDrawerOGL";
 }

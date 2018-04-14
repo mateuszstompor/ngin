@@ -24,7 +24,7 @@ namespace ms {
 		 						ForwardRender					(unsigned int 					maximalAmountOfLights,
 																 std::shared_ptr<Framebuffer> 	framebuffer,
 																 std::unique_ptr<ForwardShader>  shader);
-		virtual std::string 	get_class						() override;
+		virtual std::string 	get_class						() const override;
 		virtual void 			draw  							(Drawable * node, const Scene * scene) override;
 		virtual void 			setup_uniforms					(const Scene * scene);
 		virtual void 			setup_material_uniforms_for		(const Scene * scene, const Drawable * node);

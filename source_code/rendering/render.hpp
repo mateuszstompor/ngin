@@ -21,7 +21,7 @@ namespace ms {
     class Render : public Resource {
 		
     public:
-		Render			(std::shared_ptr<Framebuffer> 	framebuffer) : framebuffer(framebuffer) {}
+								Render			(std::shared_ptr<Framebuffer> 	framebuffer);
 								Render			(std::shared_ptr<Framebuffer> 	framebuffer,
 												 std::unique_ptr<Shader> 		shader);
 		
@@ -29,7 +29,7 @@ namespace ms {
 		virtual	void			_load			() override;
 		virtual	void 			_unload			() override;
 		virtual void 			clear_frame		();
-		virtual std::string 	get_class		() override;
+		virtual std::string 	get_class		() const override;
 		virtual void			draw  			(Drawable * node, const Scene * scene) = 0;
 		virtual					~Render 		() = default;
 		

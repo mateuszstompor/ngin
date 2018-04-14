@@ -32,9 +32,15 @@ void ms::ShaderOGL::use() {
 	mglUseProgram(program);
 }
 
+GLint  ms::ShaderOGL::set_uniform (std::string name, math::mat4 m) {
+	GLint location = mglGetUniformLocation(program, name.c_str());
+	mglUniformMatrix4fv(location, 1, GL_FALSE, m.c_array());
+	return location;
+}
+
 GLint ms::ShaderOGL::set_uniform (std::string name, int value) {
-	GLint location = glGetUniformLocation(program, name.c_str());
-	glUniform1i(location, value);
+	GLint location = mglGetUniformLocation(program, name.c_str());
+	mglUniform1i(location, value);
 	return location;
 }
 
@@ -116,7 +122,7 @@ void ms::ShaderOGL::compile_program() {
 
 void ms::ShaderOGL::bind_texture(unsigned int index, Texture & texture) {
 	this->use();
-	glActiveTexture(GL_TEXTURE0 + index);
+	mglActiveTexture(GL_TEXTURE0 + index);
 	texture.use();
 }
 

@@ -30,9 +30,9 @@ namespace ms {
 		virtual void    		load  			() final;
 		virtual void 			unload 			() final;
 		
-		virtual bool    		is_loaded   	() final;
+		virtual bool    		is_loaded   	() const final;
 		
-		virtual std::string 	get_class		();
+		virtual std::string 	get_class		() const;
 		virtual         		~Resource   	();
 	
 	protected:

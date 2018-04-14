@@ -93,7 +93,7 @@ int main(int argc, const char * argv[]) { {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
     
-    float halfside = 2.0f;
+    float halfside = 44.0f;
 //    auto cam = std::make_unique<ms::OrthographicCamera>(halfside, -halfside, halfside, -halfside, halfside, -halfside);
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
     
@@ -103,8 +103,16 @@ int main(int argc, const char * argv[]) { {
 //    engine->load_model("/Users/mateuszstompor/Documents/ngin/models/teapot/teapot.obj");
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, 1.0f, -1.0f });
+	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(-2.0f, 4.0f, -1.0f).normalized());
 
+    mat4 lookat = transform::look_at(vec3(-2.0f, 4.0f, -1.0f),
+                                     vec3( 0.0f, 0.0f,  0.0f),
+                                     vec3( 0.0f, 1.0f,  0.0f));
+    
+    engine->scene->get_directional_light()->get_transformation() = lookat;
+    
+//    engine->scene->get_camera().set_transformation(lookat);
+    
 	mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
     for (int i = 0; i < 2; ++i) {

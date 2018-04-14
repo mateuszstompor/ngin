@@ -8,9 +8,11 @@
 
 #include "render.hpp"
 
+ms::Render::Render(std::shared_ptr<Framebuffer>     framebuffer) : framebuffer(framebuffer) {}
+
 ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer, std::unique_ptr<Shader> shader) : framebuffer(framebuffer), shader(std::move(shader)) { }
 
-std::string ms::Render::get_class () {
+std::string ms::Render::get_class () const {
 	return "ms::Render";
 }
 

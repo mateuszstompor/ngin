@@ -25,8 +25,8 @@ namespace ms {
 															 std::shared_ptr<Framebuffer> 			framebuffer,
 															 std::unique_ptr<Shader>				shaderProgram);
 
-		virtual void 				draw_quad				() 										override;
-		virtual std::string			get_class				() 										override;
+		virtual void 				draw_quad				() const                                override;
+		virtual std::string			get_class				() const                                override;
 		virtual void				draw  					(Drawable * node, const Scene * scene)	override;
 	
 	};

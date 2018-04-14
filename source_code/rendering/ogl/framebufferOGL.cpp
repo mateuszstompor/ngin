@@ -125,18 +125,23 @@ void ms::FramebufferOGL::bind_depth_buffer	(std::shared_ptr<Renderbuffer> render
 void ms::FramebufferOGL::configure () {
 	
 	this->use();
-	GLuint* attachments = new GLuint[colorAttachmentsAmount];
-	for(int i = 0; i < colorAttachmentsAmount; ++i) {
-		attachments[i] = GL_COLOR_ATTACHMENT0 + i;
-	}
-	mglDrawBuffers(colorAttachmentsAmount, attachments);
-
+    if (colorAttachmentsAmount > 0) {
+        GLuint* attachments = new GLuint[colorAttachmentsAmount];
+        for(int i = 0; i < colorAttachmentsAmount; ++i) {
+            attachments[i] = GL_COLOR_ATTACHMENT0 + i;
+        }
+        mglDrawBuffers(colorAttachmentsAmount, attachments);
+        
+        delete [] attachments;
+    } else {
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
+    }
+    
 	if(!is_complete()) {
 		std::cerr << "FATAL ERROR" << std::endl;
 		assert(false);
 	}
-
-	delete [] attachments;
 
 	Framebuffer::configure();
 }
@@ -155,6 +160,13 @@ void ms::FramebufferOGL::set_underlying_id (GLuint framebufferID) {
 		assert(false);
 	}
 	framebuffer = framebufferID;
+}
+
+void ms::FramebufferOGL::bind_depth_buffer (std::shared_ptr<Texture> texture) {
+    this->use();
+    texture->use();
+    GLuint textureID = (dynamic_cast<TextureOGL*>(texture.get()))->get_underlying_id();
+    mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureID, 0);
 }
 
 std::shared_ptr<ms::FramebufferOGL> ms::FramebufferOGL::window_framebuffer	(int width, int height) {

@@ -24,7 +24,7 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
 	if(auto dirLight = scene->get_directional_light()) {
 		shad->set_has_directional_light(true);
 		shad->set_directional_light_dir(dirLight->direction);
-		shad->set_directional_light_color(dirLight->color);
+		shad->set_directional_light_color(dirLight->get_color());
 	} else {
 		shad->set_has_directional_light(false);
 	}
@@ -34,7 +34,7 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
 		shad->set_amount_of_spot_lights(static_cast<int>(spotLights.size()));
 		for(unsigned int index = 0; index < spotLights.size(); ++index) {
 			shad->set_spot_light_power(index, spotLights[index]->power);
-			shad->set_spot_light_color(index, spotLights[index]->color);
+			shad->set_spot_light_color(index, spotLights[index]->get_color());
 			shad->set_spot_light_position(index, spotLights[index]->position);
 			shad->set_spot_light_angle(index, spotLights[index]->lightingAngleDegrees);
 			shad->set_spot_light_direction(index, spotLights[index]->direction);
@@ -45,7 +45,7 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
 		const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
 		shad->set_amount_of_point_lights(static_cast<int>(pointLights.size()));
 		for(unsigned int index = 0; index < pointLights.size(); ++index) {
-			shad->set_point_light_color(index, pointLights[index]->color);
+			shad->set_point_light_color(index, pointLights[index]->get_color());
 			shad->set_point_light_power(index, pointLights[index]->power);
 			shad->set_point_light_position(index, pointLights[index]->position);
 		}
@@ -97,7 +97,7 @@ void ms::ForwardRender::draw (Drawable * node, const Scene * scene) {
 	
 }
 
-std::string ms::ForwardRender::get_class () {
+std::string ms::ForwardRender::get_class () const {
 	return "ms::ForwardRender";
 }
 

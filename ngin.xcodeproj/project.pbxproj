@@ -237,6 +237,8 @@
 		5633FAB1204C64D7003449EE /* drawableOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawableOGL.cpp; sourceTree = "<group>"; };
 		5633FAB5204C661A003449EE /* umbrellaHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = umbrellaHeader.hpp; sourceTree = "<group>"; };
 		5633FAB8204C6625003449EE /* utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
+		5636DE2520811E3100F4147C /* sm_directional_light_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = sm_directional_light_vshader.glsl; sourceTree = "<group>"; };
+		5636DE2620811E3100F4147C /* sm_directional_light_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = sm_directional_light_fshader.glsl; sourceTree = "<group>"; };
 		563B99632065A7BA00B54626 /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
 		563B99682065B66900B54626 /* forwardRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = forwardRender.cpp; sourceTree = "<group>"; };
 		563B996B2065BF3000B54626 /* lightSourcesRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lightSourcesRender.cpp; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 		5633FABA204C9EB3003449EE /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				5636DE2020811DF000F4147C /* shadow_mapping */,
 				56736CC02064744B00CE636A /* postprocess */,
 				56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */,
 				56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */,
@@ -475,6 +478,15 @@
 				5616642C2061353000915042 /* phong */,
 			);
 			path = forward_render;
+			sourceTree = "<group>";
+		};
+		5636DE2020811DF000F4147C /* shadow_mapping */ = {
+			isa = PBXGroup;
+			children = (
+				5636DE2620811E3100F4147C /* sm_directional_light_fshader.glsl */,
+				5636DE2520811E3100F4147C /* sm_directional_light_vshader.glsl */,
+			);
+			path = shadow_mapping;
 			sourceTree = "<group>";
 		};
 		5640FED1204AE77600512938 /* ogl */ = {

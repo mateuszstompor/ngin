@@ -203,21 +203,21 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 			break;
 		case GLFW_KEY_8:
-			engine->scene->get_point_lights()[usedPointLightIndex]->color[0] += 0.1f;
-			if(engine->scene->get_point_lights()[usedPointLightIndex]->color[0] > 1.0f) {
-				engine->scene->get_point_lights()[usedPointLightIndex]->color[0] = 0.0f;
+			engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[0] += 0.1f;
+			if(engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[0] > 1.0f) {
+				engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[0] = 0.0f;
 			}
 			break;
 		case GLFW_KEY_9:
-			engine->scene->get_point_lights()[usedPointLightIndex]->color[1] += 0.1f;
-			if(engine->scene->get_point_lights()[usedPointLightIndex]->color[1] > 1.0f) {
-				engine->scene->get_point_lights()[usedPointLightIndex]->color[1] = 0.0f;
+			engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[1] += 0.1f;
+			if(engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[1] > 1.0f) {
+				engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[1] = 0.0f;
 			}
 			break;
 		case GLFW_KEY_0:
-			engine->scene->get_point_lights()[usedPointLightIndex]->color[2] += 0.1f;
-			if(engine->scene->get_point_lights()[usedPointLightIndex]->color[2] > 1.0f) {
-				engine->scene->get_point_lights()[usedPointLightIndex]->color[2] = 0.0f;
+			engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[2] += 0.1f;
+			if(engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[2] > 1.0f) {
+				engine->scene->get_point_lights()[usedPointLightIndex]->get_color()[2] = 0.0f;
 			}
 			break;
 		case GLFW_KEY_MINUS:

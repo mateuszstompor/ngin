@@ -45,6 +45,10 @@ namespace ms {
             return *cam;
         }
         
+        constexpr DirectionalLight *                                get_directional_light() {
+            return directionalLight.get();
+        }
+        
         constexpr DirectionalLight const *                          get_directional_light() const {
             return directionalLight.get();
         }

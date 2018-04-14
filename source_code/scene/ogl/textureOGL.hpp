@@ -53,7 +53,7 @@ namespace ms {
 		
 		virtual void    		_load  				() override;
 		virtual void 			_unload 			() override;
-		virtual std::string		get_class			() override;
+		virtual std::string		get_class			() const override;
 
 		virtual void 			use					() override;
 								~TextureOGL			() = default;

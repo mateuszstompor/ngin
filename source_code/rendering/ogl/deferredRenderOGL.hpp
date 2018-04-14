@@ -31,6 +31,8 @@ namespace ms {
 												 		std::string gBufferFragmentShaderSource,
 												 		std::string lightingVertexShaderSource,
 												 		std::string lightingFragmentShaderSource,
+                                                        std::string shadowMappingVertexShader,
+                                                        std::string shadowMappingFragmentShader,
 												 		std::shared_ptr<Framebuffer> framebuffer);
 		
 									DeferredRenderOGL	(const DeferredRenderOGL &) = delete;

@@ -20,7 +20,7 @@ void ms::LightSourcesRender::draw (Drawable * node, const Scene * scene) {
 	auto pointLight = dynamic_cast<PointLight*>(node);
 	
 	if(pointLight) {
-		drawer->set_light_source_color(pointLight->color.c_array());
+		drawer->set_light_source_color(pointLight->get_color().c_array());
 	} else {
 		drawer->set_light_source_color(ms::math::vec3{0.0f, 1.0f, 0.0f}.c_array());
 	}

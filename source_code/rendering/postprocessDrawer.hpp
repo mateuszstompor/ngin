@@ -25,8 +25,8 @@ namespace ms {
 															 std::shared_ptr<Framebuffer> 			framebuffer,
 															 std::unique_ptr<Shader>				shaderProgram);
 		
-				virtual void 			draw_quad			() = 0;
-		inline 	virtual std::string   	get_class			() = 0;
+				virtual void 			draw_quad			() const = 0;
+		inline 	virtual std::string   	get_class			() const override;
 		virtual							~PostprocessDrawer	() = default;
 
 	protected:
@@ -42,7 +42,7 @@ ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::shared_ptr<Texture>> 	
 										 std::unique_ptr<Shader> 				shaderProgram) : 	Render(framebuffer, std::move(shaderProgram)),
 																									inputTextures(input), quad(nullptr) {}
 
-std::string ms::PostprocessDrawer::get_class () {
+std::string ms::PostprocessDrawer::get_class () const {
 	return "ms::PostprocessDrawer";
 }
 
