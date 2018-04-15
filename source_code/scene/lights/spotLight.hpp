@@ -38,7 +38,7 @@ ms::SpotLight::SpotLight (float 		power,
 						  float			lightingAngle,
 						  math::vec3 	direction) :
 
-ms::Light(color),
+ms::Light(color, math::transform::look_at<float>(position, position + position * 2, (math::vec3(position[0], position[1], position[2] + 3)).cross(position)) * math::transform::translate<float, 4>(math::vec3(position.x(), position.y(), position.z())), math::projection::perspective(0.001f, 100.0f, lightingAngle, 1.0f)),
 ms::PointLight(power, color, position),
 ms::DirectionalLight(color, direction),
 lightingAngleDegrees(lightingAngle) {}

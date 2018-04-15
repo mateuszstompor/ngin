@@ -76,6 +76,35 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS, smVS, smFS) {
 	
     unsigned int resoultion = 1024*4;
     
+    
+    for (int i = 0; i < 5; ++i) {
+        
+        auto fb = std::make_unique<FramebufferOGL>(1,
+                                                   0,
+                                                   resoultion,
+                                                   resoultion);
+        
+        auto tex = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
+                                                SHADOW_MAP,
+                                                Texture::Format::depth_32,
+                                                Texture::AssociatedType::FLOAT,
+                                                Texture::MinFilter::nearest,
+                                                Texture::MagFilter::nearest,
+                                                Texture::Wrapping::repeat,
+                                                Texture::Wrapping::repeat,
+                                                0,
+                                                resoultion,
+                                                resoultion);
+        
+        fb->bind_depth_buffer(tex);
+        
+        fb->configure();
+
+        auto tuple = std::make_tuple(std::move(fb), tex);
+        spotLightsShadowComponents.push_back(std::move(tuple));
+        
+    }
+    
     shadowTexture = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
                                                  SHADOW_MAP,
                                                  Texture::Format::depth_32,
@@ -134,10 +163,24 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
     shadowShader->use();
     assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
-    assert(shadow->set_uniform("cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
+    assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
     for(auto n : scene->get_nodes()) {
-        assert( shadow->set_uniform("modelTransformation", n->modelTransformation.get_transformation()) >= 0);
+        assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
         n->draw();
+    }
+    
+    int i = 0;
+    
+    for(auto spotLight : scene->get_spot_lights()) {
+        std::get<0>(spotLightsShadowComponents[i])->use();
+        std::get<0>(spotLightsShadowComponents[i])->clear_frame();
+        assert(shadow->set_uniform("projection", spotLight->get_projection()) >= 0);
+        assert(shadow->set_uniform("toLight", spotLight->get_transformation()) >= 0);
+        for(auto n : scene->get_nodes()) {
+            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+            n->draw();
+        }
+        i+=0;
     }
     
     
@@ -151,6 +194,14 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 	
 	lightingShader->set_rendering_mode(this->renderMode);
 	
+    i = 0;
+    
+    for(auto spotLight : scene->get_spot_lights()) {
+        assert(lightingSh->set_uniform("spot_sm_projection[" + std::to_string(i) + "]", spotLight->get_projection()) >= 0);
+        assert(lightingSh->set_uniform("spot_sm_cameraTransformation[" + std::to_string(i) + "]", spotLight->get_transformation()) >= 0);
+        i+=0;
+    }
+    
     assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
     assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
     

@@ -10,6 +10,8 @@
 #define defered_render_h
 
 #include <cassert>
+#include <vector>
+#include <tuple>
 
 #include "render.hpp"
 #include "shaders/deferredLightingShader.hpp"
@@ -22,6 +24,8 @@
 namespace ms {
 	
 	class DeferredRender : public Render {
+		
+		using sm_spot_lights = std::vector<std::tuple<std::unique_ptr<Framebuffer>, std::shared_ptr<Texture>>>;
 		
 	public:
 		
@@ -67,6 +71,8 @@ namespace ms {
 		std::unique_ptr<Shader>						shadowShader;
 		std::unique_ptr<DeferredShader>				gShader;
 		std::unique_ptr<DeferredLightingShader>		lightingShader;
+		
+		sm_spot_lights								spotLightsShadowComponents;
 		
 		unsigned int 								maximalAmountOfLights;
 		unsigned int								renderMode;

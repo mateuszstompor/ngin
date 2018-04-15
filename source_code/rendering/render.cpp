@@ -8,7 +8,7 @@
 
 #include "render.hpp"
 
-ms::Render::Render(std::shared_ptr<Framebuffer>     framebuffer) : framebuffer(framebuffer) {}
+ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer) : framebuffer(framebuffer) {}
 
 ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer, std::unique_ptr<Shader> shader) : framebuffer(framebuffer), shader(std::move(shader)) { }
 

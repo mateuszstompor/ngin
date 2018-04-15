@@ -37,6 +37,11 @@ void  ms::DeferredLightingShaderOGL::_load () {
     
     GLint shadowMap = mglGetUniformLocation(program, "shadowMap");
     mglUniform1i(shadowMap, 3);
+    
+    for(int i = 0; i < 5; ++i) {
+        GLint spotLightShadowMap = mglGetUniformLocation(program, ("spotLightsShadowMaps[" + std::to_string(i) + "]").c_str());
+        mglUniform1i(spotLightShadowMap, 4 + i);
+    }
 	
 	directionalLightColorLocation = mglGetUniformLocation(program, "dirLight.color");
 	directionalLightDirectionLocation = mglGetUniformLocation(program, "dirLight.direction");

@@ -8,6 +8,8 @@ uniform sampler2D 							gNormal;
 uniform sampler2D 							gAlbedo;
 uniform sampler2D                           shadowMap;
 
+uniform sampler2D                           spotLightsShadowMaps[5];
+
 uniform	int									spotLightsAmount;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 
@@ -19,6 +21,9 @@ uniform DirectionalLight 					dirLight;
 
 uniform mat4                                sm_projection;
 uniform mat4                                sm_cameraTransformation;
+
+uniform mat4                                spot_sm_projection[5];
+uniform mat4                                spot_sm_cameraTransformation[5];
 
 uniform uint								renderMode;
 
@@ -38,12 +43,12 @@ float pcf_depth(sampler2D tex, vec2 position, int rowSamples, int columnSamples,
     return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
 }
 
-float calculate_shadow(vec4 fragPosLightSpace, vec3 lightDir, vec3 normal) {
+float calculate_shadow(sampler2D tex, vec4 fragPosLightSpace, vec3 lightDir, vec3 normal) {
     // it is required to do this division for non-orthographic projections
     vec3 projectedCoordinates = fragPosLightSpace.xyz / fragPosLightSpace.w;
     // we need to map value from range [0, 1] to [-1, 1]
     projectedCoordinates = projectedCoordinates * 0.5f + 0.5f;
-    float closestDepth = texture(shadowMap, projectedCoordinates.xy).r;
+    float closestDepth = texture(tex, projectedCoordinates.xy).r;
     float currentDepth = projectedCoordinates.z;
     float bias = max(0.05f * (1.0f - dot(normal, lightDir)), 0.005f);
     return pcf_depth(shadowMap, projectedCoordinates.xy, 5, 5, currentDepth, bias);
@@ -85,14 +90,19 @@ void main() {
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
-    float shadow = calculate_shadow(fragmentInLightPos, dirLight.direction, normal_N);
+    float shadow = calculate_shadow(shadowMap, fragmentInLightPos, dirLight.direction, normal_N);
     
     if (hasDirLight == 1) {
         result += diffuseColor * 0.1f + (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
     }
     
     for(int j=0; j < spotLightsAmount; ++j) {
-        result += count_light_influence(spotLights[j],
+        vec4 fm = spot_sm_projection[j] * spot_sm_cameraTransformation[j] * vec4(fragmentPosition, 1.0f);
+
+        float sh = calculate_shadow(spotLightsShadowMaps[j], fragmentInLightPos, spotLights[j].direction, normal_N);
+
+        
+        result += (1.0f - sh) * count_light_influence(spotLights[j],
                                         fragmentPosition,
                                         diffuseColor,
                                         diffuseColor,

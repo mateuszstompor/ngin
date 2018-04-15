@@ -17,31 +17,33 @@ namespace ms {
 	
 	public:
 		
-		inline 			                            Light	            (math::vec3 const  & color);
-        inline                                      Light               (math::vec3 const  & color, math::mat4 const & projection);
-        inline                                      Light               (math::vec3 && color);
-        inline                                      Light               (math::vec3 && color, math::mat4 && projection);
+		
+        inline                                      Light               (math::vec3 const & color,
+                                                                         math::mat4 const & projection = math::mat4::identity(),
+                                                                         math::mat4 const & transformation = math::mat4::identity());
+        
+        inline                                      Light               (math::vec3 && color,
+                                                                         math::mat4 && projection = math::mat4::identity(),
+                                                                         math::mat4 && transformation = math::mat4::identity());
 		virtual		 	                            ~Light	            () = default;
         inline constexpr math::vec3 const &         get_color           () const;
         inline constexpr math::vec3 &               get_color           ();
-        inline constexpr ms::math::mat4 const &     get_projection      () const;
-        inline constexpr ms::math::mat4 const &     get_transformation  () const;
-        inline constexpr ms::math::mat4 &           get_transformation  ();
+        inline constexpr math::mat4 const &         get_projection      () const;
+        inline constexpr math::mat4 const &         get_transformation  () const;
+        inline constexpr math::mat4 &               get_transformation  ();
         
     protected:
         
-		math::vec3 		                        color;
-        math::mat4                              projection;
-		math::mat4                              transformation;
+		math::vec3 		                            color;
+        math::mat4                                  projection;
+		math::mat4                                  transformation;
         
 	};
 	
 }
 
-ms::Light::Light (math::vec3 const & c) : color(c) { }
-ms::Light::Light (math::vec3 const  & c, math::mat4 const & p) : color(c), projection(p), transformation(math::mat4::identity()) { }
-ms::Light::Light (math::vec3 && c) : color(std::move(c)) { }
-ms::Light::Light (math::vec3 && c, math::mat4 && p) : color(std::move(c)), projection(std::move(p)), transformation(std::move(math::mat4::identity())) { }
+ms::Light::Light (math::vec3 const & c, math::mat4 const & p, math::mat4 const & t) : color(c), projection(p), transformation(t) { }
+ms::Light::Light (math::vec3 && c, math::mat4 && p, math::mat4 && t) : color(std::move(c)), projection(std::move(p)), transformation(std::move(t)) { }
 
 constexpr ms::math::vec3 const & ms::Light::get_color() const {
     return color;

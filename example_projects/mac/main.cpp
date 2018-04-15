@@ -115,25 +115,25 @@ int main(int argc, const char * argv[]) { {
     
 	mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
-    for (int i = 0; i < 2; ++i) {
-        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
-        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-        auto lightPower = 50.0f;
-        
-        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
-        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
-    }
-
-//    for (int i = 0; i < 5; ++i) {
-//        auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
+//    for (int i = 0; i < 2; ++i) {
+//        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
 //        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-//        auto lightingDir = vec3{0.0f, -1.0f, 0.0f};
 //        auto lightPower = 50.0f;
-//        auto spotLightAngle = 50.0f;
-//
-//        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
-//        engine->scene->get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+//        
+//        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
+//        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
 //    }
+
+    for (int i = 0; i < 5; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
+        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
+        auto lightingDir = vec3{0.0f, -1.0f, 0.0f};
+        auto lightPower = 50.0f;
+        auto spotLightAngle = 50.0f;
+
+        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
+        engine->scene->get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+    }
 
 	for(int i = 0; i < engine->scene->get_nodes().size(); ++i) {
 		engine->scene->get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}));
