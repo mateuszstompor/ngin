@@ -29,6 +29,9 @@ ngin/example_projects/mac/ngin_mac.xcodeproj as well
 ## 29.03.2018 Current pipeline
 <img src="/screenshots/pipeline.png" width="100%" style="float: left; display:inline-block;"/>
 
+## 15.04.2018 Directional lights shadow mapping with PCF
+<img src="/screenshots/shadow_mapping.jpg" width="100%" style="float: left; display:inline-block;"/>
+
 ## 09.04.2018 Orthographic cameara
 <img src="/screenshots/projections.jpg" width="100%" style="float: left; display:inline-block;"/>
 
