@@ -105,8 +105,8 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 	
 	thirdOneColorFramebuffer = std::make_shared<FramebufferOGL>(1,
 																0,
-                                                                frameBufferWidth,
-                                                                frameBufferHeight);
+                                                                frameBufferHeight,
+																frameBufferWidth);
 	
 	fourthOneColorFramebuffer = std::make_shared<FramebufferOGL>(1,
                                                                  0,
@@ -167,8 +167,8 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 	thirdOneColorFramebuffer->bind_color_buffer(0, std::make_shared<TextureOGL>(Texture::Type::tex_2d,
                                                                                 Texture::Format::rgb_16_16_16,
                                                                                 Texture::AssociatedType::FLOAT,
-                                                                                frameBufferWidth,
-                                                                                frameBufferHeight));
+																				frameBufferHeight,
+                                                                                frameBufferWidth));
 	
 	
 	thirdOneColorFramebuffer->configure();
