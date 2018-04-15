@@ -74,20 +74,24 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS, smVS, smFS) {
                                                           framebuffer->get_width(),
                                                           framebuffer->get_height());
 	
+    unsigned int resoultion = 1024*4;
+    
     shadowTexture = std::make_shared<TextureOGL>(Texture::Type::tex_2d,
                                                  SHADOW_MAP,
-                                                 Texture::Format::depth_24,
+                                                 Texture::Format::depth_32,
                                                  Texture::AssociatedType::FLOAT,
                                                  Texture::MinFilter::nearest,
                                                  Texture::MagFilter::nearest,
                                                  Texture::Wrapping::repeat,
                                                  Texture::Wrapping::repeat,
-                                                 0, 1024, 1024);
+                                                 0,
+                                                 resoultion,
+                                                 resoultion);
     
     shadowFramebuffer = std::make_unique<FramebufferOGL>(1,
                                                          0,
-                                                         1024,
-                                                         1024);
+                                                         resoultion,
+                                                         resoultion);
     
     shadowFramebuffer->bind_depth_buffer(shadowTexture);
     

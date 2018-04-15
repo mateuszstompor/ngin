@@ -20,7 +20,7 @@ ms::TextureOGL::TextureOGL 	(Texture::Type 	type,
 																 height) { }
 
 ms::TextureOGL::TextureOGL (Texture::Type 	type,
-							std::string	name,
+							std::string	    name,
 							Format			format,
 							AssociatedType	associatedType,
 							unsigned int 	width,
@@ -36,33 +36,33 @@ ms::TextureOGL::TextureOGL (Texture::Type 	type,
 																 width,
 																 height) { }
 
-ms::TextureOGL::TextureOGL	(Texture::Type 	textype,
+ms::TextureOGL::TextureOGL	(Texture::Type 	textureType,
 							std::string		name,
-							Format			internalF,
-							AssociatedType	typ,
+							Format			internalFormat,
+							AssociatedType	associatedType,
 							MinFilter 		minFilter,
 							MagFilter 		magFilter,
 							Wrapping 		sWrapping,
 							Wrapping 		tWrapping,
 							unsigned int 	mipMapLevel,
-							unsigned int 	wid,
-							unsigned int 	hei) : 	ms::Texture(textype,
-																name,
-																internalF,
-																typ,
-																minFilter,
-																magFilter,
-																sWrapping,
-																tWrapping,
-																mipMapLevel,
-																wid,
-																hei) {
+							unsigned int 	width,
+							unsigned int 	heigth) : 	ms::Texture(textureType,
+                                                                    name,
+                                                                    internalFormat,
+                                                                    associatedType,
+                                                                    minFilter,
+                                                                    magFilter,
+                                                                    sWrapping,
+                                                                    tWrapping,
+                                                                    mipMapLevel,
+                                                                    width,
+                                                                    heigth) {
 	
 	
-	target = to_ogl(textype);
-	type = TextureOGL::to_ogl(typ);
-	colorFormat = TextureOGL::to_ogl(internalF);
-	internalFormat = underlying_type();
+	this->target = to_ogl(textureType);
+	this->type = TextureOGL::to_ogl(associatedType);
+	this->colorFormat = TextureOGL::to_ogl(internalFormat);
+	this->internalFormat = underlying_type();
 	this->texture = 0;
 }
 
@@ -72,8 +72,12 @@ void ms::TextureOGL::_load () {
 		mglBindTexture(this->target, this->texture);
 
 		mglTexImage2D(this->target, this->mipMapLevel, this->internalFormat, width, height, 0, this->colorFormat, this->type, rawData);
-		delete [] this->rawData;
-		rawData = nullptr;
+    
+        if (rawData) {
+            delete [] this->rawData;
+            rawData = nullptr;
+        }
+		
 		mglTexParameteri(this->target, GL_TEXTURE_MIN_FILTER, to_ogl(this->minFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_MAG_FILTER, to_ogl(this->magFilter));
 		mglTexParameteri(this->target, GL_TEXTURE_WRAP_S, to_ogl(this->sWrapping));
@@ -148,7 +152,6 @@ GLenum ms::TextureOGL::to_ogl (Wrapping wrapping) {
 			//critical error
 			std::cerr << "Wrapping type not supported" << std::endl;
 			assert(false);
-			break;
 	}
 }
 
@@ -171,8 +174,8 @@ const GLuint ms::TextureOGL::get_underlying_id () const {
 	return this->texture;
 }
 
-GLenum ms::TextureOGL::to_ogl (Format wrapping) {
-	switch (wrapping) {
+GLenum ms::TextureOGL::to_ogl (Format format) {
+	switch (format) {
 		case Format::rgb_8_8_8:
 			return GL_RGB;
 		case Format::rgb_16_16_16:
@@ -188,21 +191,23 @@ GLenum ms::TextureOGL::to_ogl (Format wrapping) {
 		default:
 			std::cerr << "format not supported" << std::endl;
 			assert(false);
-			break;
 	}
 }
 
 GLenum ms::TextureOGL::to_ogl (AssociatedType type) {
 	switch (type) {
+        
 		case Texture::AssociatedType::FLOAT:
 			return GL_FLOAT;
-			break;
 		case Texture::AssociatedType::UNSIGNED_BYTE:
 			return GL_UNSIGNED_BYTE;
+        case Texture::AssociatedType::UNSIGNED_INT:
+            return GL_UNSIGNED_INT;
+        case Texture::AssociatedType::UNSIGNED_SHORT:
+            return GL_UNSIGNED_SHORT;
 		default:
-			std::cerr << "format not supported" << std::endl;
+			std::cerr << "type not supported" << std::endl;
 			assert(false);
-			break;
 	}
 }
 
@@ -211,25 +216,31 @@ std::string ms::TextureOGL::get_class () const {
 }
 
 GLenum ms::TextureOGL::underlying_type () const {
-	if (this->associatedType == AssociatedType::FLOAT) {
-		if (this->format == Texture::Format::rgb_16_16_16) {
+	if (associatedType == AssociatedType::FLOAT) {
+		if (format == Texture::Format::rgb_16_16_16) {
 			return GL_RGB16F;
-        } else if (this->format == Texture::Format::depth_16) {
-            return GL_DEPTH_COMPONENT;
-        } else if (this->format == Texture::Format::depth_24) {
-            return GL_DEPTH_COMPONENT;
-        } else if (this->format == Texture::Format::depth_32) {
-            return GL_DEPTH_COMPONENT;
+        } else if (format == Texture::Format::depth_32) {
+            return GL_DEPTH_COMPONENT32F;
         }
-	} else if (this->associatedType == AssociatedType::UNSIGNED_BYTE) {
-		if (this->format == Texture::Format::rgba_8_8_8_8) {
+	} else if (associatedType == AssociatedType::UNSIGNED_BYTE) {
+		if (format == Texture::Format::rgba_8_8_8_8) {
 			return GL_RGBA8;
-		} else if (this->format == Texture::Format::rgb_8_8_8) {
+		} else if (format == Texture::Format::rgb_8_8_8) {
 			return GL_RGB8;
-		} else if (this->format == Texture::Format::r_8) {
+		} else if (format == Texture::Format::r_8) {
 			return GL_R8;
-		}
-	}
+        }
+    } else if (associatedType == AssociatedType::UNSIGNED_INT) {
+        if (format == Texture::Format::depth_16) {
+            return GL_DEPTH_COMPONENT16;
+        } else if (format == Texture::Format::depth_24) {
+            return GL_DEPTH_COMPONENT24;
+        }
+    } else if (associatedType == AssociatedType::UNSIGNED_SHORT) {
+        if (format == Texture::Format::depth_16) {
+            return GL_DEPTH_COMPONENT16;
+        }
+    }
 		
 	std::cerr << "Format not supported" << std::endl;
 	assert(false);

@@ -64,8 +64,9 @@ namespace ms {
 		virtual std::string		get_class	() override;
 		virtual 				~ShaderOGL	() = default;
 				GLuint 			get_gl_id	() const;
-				GLint			set_uniform	(std::string name, int value);
-				GLint			set_uniform	(std::string name, const math::mat4 & m);
+				GLint			set_uniform	(std::string const & name, int value);
+				GLint			set_uniform	(std::string const & name, math::mat4 const & m);
+				GLint			set_uniform	(std::string const & name, math::mat3 const & m);
 		
 		
 	protected:

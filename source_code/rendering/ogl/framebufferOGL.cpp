@@ -134,8 +134,9 @@ void ms::FramebufferOGL::configure () {
         
         delete [] attachments;
     } else {
-        glDrawBuffer(GL_NONE);
-        glReadBuffer(GL_NONE);
+        GLenum drawBuffers[] = { GL_NONE };
+        mglDrawBuffers(1, drawBuffers);
+        mglReadBuffer(GL_NONE);
     }
     
 	if(!is_complete()) {

@@ -116,25 +116,38 @@ enum class ms::Texture::Format {
 
 enum class ms::Texture::AssociatedType {
 	FLOAT,
-	UNSIGNED_BYTE
+	UNSIGNED_BYTE,
+    UNSIGNED_INT,
+    UNSIGNED_SHORT
 };
 
-ms::Texture::Texture (Type t, std::string nam, Format f, AssociatedType aT,MinFilter minF, MagFilter magF,
-					  Wrapping sWrap, Wrapping tWrap, unsigned int mipMapL, unsigned int wid, unsigned int hei) :							type(t),
-																																			minFilter(minF),
-																																			magFilter(magF),
-																																			sWrapping(sWrap),
-																																			tWrapping(tWrap),
-																																			mipMapLevel(mipMapL),
-																																			width(wid),
-																																			height(hei),
-																																			name(nam),
-																																			format(f),
-																																			associatedType(aT),
-																																			rawData(nullptr){ }
+ms::Texture::Texture (Type type,
+                      std::string name,
+                      Format format,
+                      AssociatedType associatedType,
+                      MinFilter minFilter,
+                      MagFilter magFilter,
+					  Wrapping sWrap,
+                      Wrapping tWrap,
+                      unsigned int mipMapLevel,
+                      unsigned int width,
+                      unsigned int height) :    type{type},
+											    minFilter{minFilter},
+												magFilter{magFilter},
+												sWrapping(sWrap),
+												tWrapping(tWrap),
+												mipMapLevel{mipMapLevel},
+                                                width{width},
+												height{height},
+												name{name},
+                                                format{format},
+                                                associatedType{associatedType},
+												rawData{nullptr} { }
 
 void ms::Texture::copy_data (byte* data, size_t size) {
-	delete [] rawData;
+    if (rawData) {
+        delete [] rawData;
+    }
 	rawData = new byte [size];
 	std::memcpy(rawData, data, size);
 }
@@ -145,6 +158,9 @@ std::string ms::Texture::get_class () const {
 
 int ms::Texture::channels_amount () const {
 	switch (this->format) {
+        case Format::depth_16:
+        case Format::depth_24:
+        case Format::depth_32:
 		case Format::r_8:
 			return 1;
 		case Format::rgba_8_8_8_8:
@@ -159,7 +175,9 @@ int ms::Texture::channels_amount () const {
 }
 
 ms::Texture::~Texture() {
-	delete [] rawData;
+    if (rawData) {
+        delete [] rawData;
+    }
 }
 
 #endif /* texture_hpp */

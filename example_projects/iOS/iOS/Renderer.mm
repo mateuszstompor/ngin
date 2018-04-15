@@ -68,7 +68,15 @@ using namespace math;
     NSString* sphereModel = [[NSBundle mainBundle] pathForResource:@"sphere" ofType:@"obj"];
     std::string sphereModelPath = std::string([sphereModel cStringUsingEncoding:NSUTF8StringEncoding]);
     
-    engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, 1.0f, -1.0f });
+//    engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, 1.0f, -1.0f });
+    
+    engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(-2.0f, 4.0f, -1.0f).normalized());
+    
+    mat4 lookat = transform::look_at(vec3(-2.0f, 4.0f, -1.0f),
+                                     vec3( 0.0f, 0.0f,  0.0f),
+                                     vec3( 0.0f, 1.0f,  0.0f));
+    
+    engine->scene->get_directional_light()->get_transformation() = lookat;
     
     mat4 scaleMat = transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
@@ -78,7 +86,7 @@ using namespace math;
         auto lightPower = 50.0f;
 
         engine->load_point_light(lightPower, lightColor, get_position(translation), sphereModelPath);
-        engine->scene->pointLights[i]->modelTransformation.pre_transform(translation * scaleMat);
+        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
     }
     
     engine->load_model(modelPath);
@@ -87,7 +95,7 @@ using namespace math;
         engine->scene->get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.015f, 0.015f, 0.015f}));
     }
 
-    engine->scene->cam->pre_transform(transform::translate<float, 4>(vec3(-0.6f, -0.3f, -1.0f)));
+    engine->scene->get_camera().pre_transform(transform::translate<float, 4>(vec3(-0.6f, -0.3f, -1.0f)));
     engine->load();
 	
 	if (nil == self) {
@@ -100,14 +108,14 @@ using namespace math;
 - (void)render {
 
     
-    vec3 camDir = back(engine->scene->cam->get_transformation());
-    vec3 camRight = -1.0f * right(engine->scene->cam->get_transformation());
+    vec3 camDir = back(engine->scene->get_camera().get_transformation());
+    vec3 camRight = -1.0f * right(engine->scene->get_camera().get_transformation());
     
-    engine->scene->cam->pre_transform(transform::rotate_about_y_radians<float, 4>(0.01f * rotation.x));
-    engine->scene->cam->pre_transform(transform::rotate_about_x_radians<float, 4>(-0.01f * rotation.y));
+    engine->scene->get_camera().pre_transform(transform::rotate_about_y_radians<float, 4>(0.03f * rotation.x));
+    engine->scene->get_camera().pre_transform(transform::rotate_about_x_radians<float, 4>(-0.03f * rotation.y));
     
-    engine->scene->cam->post_transform(transform::translate<float, 4>(0.01f * camDir * translation.y));
-    engine->scene->cam->post_transform(transform::translate<float, 4>(0.01f * camRight * translation.x));
+    engine->scene->get_camera().post_transform(transform::translate<float, 4>(0.07f * camDir * translation.y));
+    engine->scene->get_camera().post_transform(transform::translate<float, 4>(0.07f * camRight * translation.x));
     
     engine->draw_scene();
 	

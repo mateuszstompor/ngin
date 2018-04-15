@@ -28,6 +28,12 @@ namespace ms {
 
 	public:
 		
+        using materials_type    = std::map<std::string, std::shared_ptr<Material>>;
+        using textures_type     = std::map<std::string, std::shared_ptr<Texture>>;
+        using spot_lights_type  = std::vector<std::shared_ptr<SpotLight>>;
+        using point_lights_type = std::vector<std::shared_ptr<PointLight>>;
+        using drawable_type     = std::vector<std::shared_ptr<Drawable>>;
+        
                                                                     Scene ();
         
 															        Scene (float nearPlan,
@@ -37,59 +43,31 @@ namespace ms {
         
                                                                     Scene (std::unique_ptr<Camera> && cam);
 
-        Camera const &							        get_camera() const {
-            return *cam;
-        }
+        Camera const &							                    get_camera() const;
+        Camera &                                                    get_camera();
+        DirectionalLight *                                          get_directional_light();
+        DirectionalLight const *                                    get_directional_light() const;
+        constexpr materials_type &                                  get_materials() { return materials; }
+        constexpr textures_type &                                   get_textures() { return textures; }
         
-        Camera &                                          get_camera() {
-            return *cam;
-        }
-        
-        DirectionalLight *                                get_directional_light() {
-            return directionalLight.get();
-        }
-        
-        DirectionalLight const *                          get_directional_light() const {
-            return directionalLight.get();
-        }
-    
-        constexpr std::vector<std::shared_ptr<SpotLight>> &         get_spot_lights() {
-            return spotLights;
-        }
-        
-        constexpr const std::vector<std::shared_ptr<SpotLight>> &   get_spot_lights() const {
-            return spotLights;
-        }
-        
-        constexpr std::vector<std::shared_ptr<PointLight>> &        get_point_lights() {
-            return pointLights;
-        }
-        
-        constexpr const std::vector<std::shared_ptr<PointLight>> &  get_point_lights() const {
-            return pointLights;
-        }
-        
-        constexpr std::vector<std::shared_ptr<Drawable>> &          get_nodes() {
-            return nodes;
-        }
-        
-        constexpr const std::vector<std::shared_ptr<Drawable>> & 	get_nodes() const {
-            return nodes;
-        }
+        constexpr spot_lights_type &                                get_spot_lights() { return spotLights; }
+        constexpr const spot_lights_type &                          get_spot_lights() const { return spotLights; }
+        constexpr point_lights_type &                               get_point_lights() { return pointLights; }
+        constexpr const point_lights_type &                         get_point_lights() const { return pointLights; }
+        constexpr drawable_type &                                   get_nodes() { return nodes; }
+        constexpr const drawable_type & 	                        get_nodes() const { return nodes; }
         
         void        												set_directional_light(float 		power,
                                                                                           math::vec3 	color,
                                                                                           math::vec3 	direction);
-//TODO make it protected
-
-		std::map<std::string, std::shared_ptr<Material>>	materials;
-		std::map<std::string, std::shared_ptr<Texture>>		textures;
 		
     protected:
         
-        std::vector<std::shared_ptr<Drawable>>                 nodes;
+        std::map<std::string, std::shared_ptr<Material>>    materials;
+        std::map<std::string, std::shared_ptr<Texture>>     textures;
+        std::vector<std::shared_ptr<Drawable>>              nodes;
         std::vector<std::shared_ptr<PointLight>>            pointLights;
-        std::vector<std::shared_ptr<SpotLight>>                spotLights;
+        std::vector<std::shared_ptr<SpotLight>>             spotLights;
 		std::unique_ptr<Camera> 							cam;
 		std::unique_ptr<DirectionalLight>					directionalLight;
 		

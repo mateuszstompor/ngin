@@ -25,3 +25,19 @@ ms::Scene::Scene (std::unique_ptr<Camera> && c) : Scene() {
 void ms::Scene::set_directional_light(float power, math::vec3 color, math::vec3 direction) {
 	directionalLight = std::make_unique<DirectionalLight>(color, direction);
 }
+
+ms::Camera const & ms::Scene::get_camera() const {
+    return *cam;
+}
+
+ms::Camera & ms::Scene::get_camera() {
+    return *cam;
+}
+
+ms::DirectionalLight * ms::Scene::get_directional_light() {
+    return directionalLight.get();
+}
+
+ms::DirectionalLight const * ms::Scene::get_directional_light() const {
+    return directionalLight.get();
+}

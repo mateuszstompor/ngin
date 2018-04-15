@@ -89,11 +89,11 @@ void ms::NGin::load_model (std::string absolutePath) {
 	}
 	
 	for (auto material : mat) {
-		scene->materials.insert(material);
+		scene->get_materials().insert(material);
 	}
 	
 	for (auto texture : tex) {
-		scene->textures.insert(texture);
+		scene->get_textures().insert(texture);
 	}
 	
 }
@@ -120,11 +120,11 @@ void ms::NGin::load_point_light	(float power,
 	}
 	
 	for (auto material : mat) {
-		scene->materials.insert(material);
+		scene->get_materials().insert(material);
 	}
 	
 	for (auto texture : tex) {
-		scene->textures.insert(texture);
+		scene->get_textures().insert(texture);
 	}
 	
 }
@@ -152,11 +152,11 @@ void ms::NGin::load_spot_light (float power,
 	}
 	
 	for (auto material : mat) {
-		scene->materials.insert(material);
+		scene->get_materials().insert(material);
 	}
 	
 	for (auto texture : tex) {
-		scene->textures.insert(texture);
+		scene->get_textures().insert(texture);
 	}
 	
 }

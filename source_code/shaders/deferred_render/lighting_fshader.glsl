@@ -24,6 +24,31 @@ uniform uint								renderMode;
 
 out 	vec4 								FragColor;
 
+float pcf_depth(sampler2D tex, vec2 position, int rowSamples, int columnSamples, float countedDepth, float bias) {
+    vec2 texelSize = vec2(1.0f) / vec2(textureSize(shadowMap, 0));
+    float result = 0.0f;
+    
+    for (int i = -rowSamples; i <= rowSamples; ++i) {
+        for (int j = -columnSamples; j <= columnSamples; ++j) {
+            float depth = texture(tex, position + vec2(i, j) * texelSize).r;
+            result += countedDepth - bias > depth ? 1.0 : 0.0f;
+        }
+    }
+    
+    return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
+}
+
+float calculate_shadow(vec4 fragPosLightSpace, vec3 lightDir, vec3 normal) {
+    // it is required to do this division for non-orthographic projections
+    vec3 projectedCoordinates = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // we need to map value from range [0, 1] to [-1, 1]
+    projectedCoordinates = projectedCoordinates * 0.5f + 0.5f;
+    float closestDepth = texture(shadowMap, projectedCoordinates.xy).r;
+    float currentDepth = projectedCoordinates.z;
+    float bias = max(0.05f * (1.0f - dot(normal, lightDir)), 0.005f);
+    return pcf_depth(shadowMap, projectedCoordinates.xy, 5, 5, currentDepth, bias);
+}
+
 void main() {
 
 #ifdef DEBUG
@@ -60,8 +85,10 @@ void main() {
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
+    float shadow = calculate_shadow(fragmentInLightPos, dirLight.direction, normal_N);
+    
     if (hasDirLight == 1) {
-        result += count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
+        result += diffuseColor * 0.1f + (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
     }
     
     for(int j=0; j < spotLightsAmount; ++j) {
@@ -77,18 +104,18 @@ void main() {
                                         mat4(1.0f));
     }
 
-	for (int i = 0; i < pointLightsAmount; ++i) {
-		result += count_light_influence(pointLights[i],
-										fragmentPosition,
-										diffuseColor,
-										diffuseColor,
-										specularColor,
-										shininess,
-										normal_N,
-										cameraPosition,
-										surfaceZCamera_N,
+    for (int i = 0; i < pointLightsAmount; ++i) {
+        result += count_light_influence(pointLights[i],
+                                        fragmentPosition,
+                                        diffuseColor,
+                                        diffuseColor,
+                                        specularColor,
+                                        shininess,
+                                        normal_N,
+                                        cameraPosition,
+                                        surfaceZCamera_N,
                                         mat4(1.0f));
-	}
+    }
 
     FragColor = vec4(result, 1.0f);
 

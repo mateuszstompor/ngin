@@ -263,6 +263,11 @@ void _mglDeleteRenderbuffers (GLsizei n, const GLuint* renderbuffers) {
 	ms::utils::check_gl_error();
 }
 
+void  _mglReadBuffer (GLenum mode) {
+    glReadBuffer(mode);
+    ms::utils::check_gl_error();
+}
+
 void _mglDeleteShader (GLuint shader) {
 	glDeleteShader(shader);
 	glDeleteShaderCallsAmount += 1;
@@ -343,6 +348,11 @@ GLenum _mglCheckFramebufferStatus (GLenum target) {
 	GLenum status = glCheckFramebufferStatus(target);
 	ms::utils::check_gl_error();
 	return status;
+}
+
+void _mglUniformMatrix3fv (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value) {
+    glUniformMatrix3fv(location, count, transpose, value);
+    ms::utils::check_gl_error();
 }
 
 void _mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding) {

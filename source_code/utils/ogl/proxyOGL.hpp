@@ -42,6 +42,7 @@
 void 		_mglDrawBuffers (GLsizei n, const GLenum* bufs);
 GLint 		_mglGetUniformLocation (GLuint program, const GLchar* name);
 void 		_mglUniformMatrix4fv (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+void        _mglUniformMatrix3fv (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 void 		_mglUniform4fv (GLint location, GLsizei count, const GLfloat* v);
 void 		_mglUniform3fv (GLint location, GLsizei count, const GLfloat* v);
 void 		_mglUniform1i (GLint location, GLint x);
@@ -100,6 +101,7 @@ GLenum 		_mglCheckFramebufferStatus (GLenum target);
 GLuint 		_mglGetUniformBlockIndex (GLuint program, const GLchar *uniformBlockName);
 void		_mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
 void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
+void        _mglReadBuffer (GLenum mode);
 
 #define mglDrawElements				_mglDrawElements
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
@@ -110,6 +112,7 @@ void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 #define mglDrawBuffers 				_mglDrawBuffers
 #define mglGetUniformLocation 		_mglGetUniformLocation
 #define mglUniformMatrix4fv			_mglUniformMatrix4fv
+#define mglUniformMatrix3fv         _mglUniformMatrix3fv
 #define mglUniform4fv				_mglUniform4fv
 #define mglUniform3fv				_mglUniform3fv
 #define mglUniform1i				_mglUniform1i
@@ -162,6 +165,7 @@ void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 #define mglGetUniformBlockIndex		_mglGetUniformBlockIndex
 #define mglBindBufferBase			_mglBindBufferBase
 #define mglUniformBlockBinding		_mglUniformBlockBinding
+#define mglReadBuffer               _mglReadBuffer
 
 #else
 
@@ -174,6 +178,7 @@ void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 #define mglDrawBuffers 				glDrawBuffers
 #define mglGetUniformLocation 		glGetUniformLocation
 #define mglUniformMatrix4fv			glUniformMatrix4fv
+#define mglUniformMatrix3fv         glUniformMatrix3fv
 #define mglUniform4fv				glUniform4fv
 #define mglUniform3fv				glUniform3fv
 #define mglUniform1i				glUniform1i
@@ -226,6 +231,7 @@ void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 #define mglGetUniformBlockIndex		glGetUniformBlockIndex
 #define mglBindBufferBase			glBindBufferBase
 #define mglUniformBlockBinding		glUniformBlockBinding
+#define mglReadBuffer               glReadBuffer
 
 #endif
 

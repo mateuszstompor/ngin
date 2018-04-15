@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		565402F8207E711E00AF5066 /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; };
-		565402F9207E711E00AF5066 /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56B12306207B79A0001046CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56B12304207B79A0001046CD /* Main.storyboard */; };
 		56B12308207B79A0001046CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56B12307207B79A0001046CD /* Assets.xcassets */; };
 		56B1230B207B79A0001046CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56B12309207B79A0001046CD /* LaunchScreen.storyboard */; };
@@ -62,6 +60,10 @@
 		56B12406207B81DA001046CD /* base_paper_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 56B123D9207B81AF001046CD /* base_paper_01.png */; };
 		56B12407207B81DA001046CD /* sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 56B123DB207B81AF001046CD /* sphere.obj */; };
 		56B12408207B81DA001046CD /* sphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 56B123DC207B81AF001046CD /* sphere.mtl */; };
+		56C1A06A2082D039001A8C35 /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C1A0652082D01A001A8C35 /* MSCirclePad.framework */; };
+		56C1A06B2082D039001A8C35 /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56C1A0652082D01A001A8C35 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		56C1A06E2082D03D001A8C35 /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C1A0652082D01A001A8C35 /* MSCirclePad.framework */; };
+		56C1A06F2082D03D001A8C35 /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56C1A0652082D01A001A8C35 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56D29ADD207B8E430080CB3B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1232E207B7A76001046CD /* AppDelegate.m */; };
 		56D29ADE207B8E430080CB3B /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B1232B207B7A76001046CD /* EAGLView.m */; };
 		56D29ADF207B8E430080CB3B /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56B1232A207B7A76001046CD /* Renderer.mm */; };
@@ -121,8 +123,6 @@
 		56E62A62207CCFBD00F2FC05 /* SceneViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */; };
 		56F27924207EAB3800E63C0E /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F27923207EAB3800E63C0E /* MenuController.swift */; };
 		56F27925207EAB3800E63C0E /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F27923207EAB3800E63C0E /* MenuController.swift */; };
-		56F27928207EACA100E63C0E /* MSCirclePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; };
-		56F27929207EACA100E63C0E /* MSCirclePad.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56F2792C207EBA3A00E63C0E /* Sponza_Fabric_Green_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1235E207B81AF001046CD /* Sponza_Fabric_Green_normal.tga */; };
 		56F2792D207EBA3A00E63C0E /* Sponza_Column_c_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1235F207B81AF001046CD /* Sponza_Column_c_roughness.tga */; };
 		56F2792E207EBA3A00E63C0E /* Sponza_Details_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12360207B81AF001046CD /* Sponza_Details_normal.tga */; };
@@ -204,13 +204,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		565402FA207E711E00AF5066 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
-			remoteInfo = MSCirclePad;
-		};
 		56B1231A207B79B4001046CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56B12314207B79B3001046CD /* ngin.xcodeproj */;
@@ -231,6 +224,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = 568A18A12049846C0017B5CF;
 			remoteInfo = ngin_ios;
+		};
+		56C1A0642082D01A001A8C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56F3EA6D207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
+		56C1A0662082D02F001A8C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
+		56C1A0682082D034001A8C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
+		56C1A06C2082D039001A8C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
+			remoteInfo = MSCirclePad;
+		};
+		56C1A0702082D03D001A8C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
+			remoteInfo = MSCirclePad;
 		};
 		56D29AD7207B8E410080CB3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -253,20 +281,6 @@
 			remoteGlobalIDString = 56F3EA6D207B948800025B7A;
 			remoteInfo = MSCirclePad;
 		};
-		56E62A39207CC76500F2FC05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56F3EA6D207B948800025B7A;
-			remoteInfo = MSCirclePad;
-		};
-		56F2792A207EACA100E63C0E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 56F3EA6C207B948800025B7A;
-			remoteInfo = MSCirclePad;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -276,7 +290,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				56F27929207EACA100E63C0E /* MSCirclePad.framework in Embed Frameworks */,
+				56C1A06F2082D03D001A8C35 /* MSCirclePad.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,7 +301,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				565402F9207E711E00AF5066 /* MSCirclePad.framework in Embed Frameworks */,
+				56C1A06B2082D039001A8C35 /* MSCirclePad.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,11 +479,11 @@
 		56B123D9207B81AF001046CD /* base_paper_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = base_paper_01.png; sourceTree = "<group>"; };
 		56B123DB207B81AF001046CD /* sphere.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = sphere.obj; sourceTree = "<group>"; };
 		56B123DC207B81AF001046CD /* sphere.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = sphere.mtl; sourceTree = "<group>"; };
+		56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MSCirclePad.xcodeproj; path = MSCirclePad/MSCirclePad.xcodeproj; sourceTree = "<group>"; };
 		56D29B17207B8E430080CB3B /* iOS_x86_64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_x86_64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56E62A19207CC5E400F2FC05 /* iOS_arm64-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS_arm64-Info.plist"; sourceTree = "<group>"; };
 		56E62A1A207CC5E400F2FC05 /* iOS_x86_64-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS_x86_64-Info.plist"; sourceTree = "<group>"; };
 		56E62A2F207CC75300F2FC05 /* MSCirclePad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MSCirclePad.xcodeproj; path = MSCirclePad/circlepad/MSCirclePad.xcodeproj; sourceTree = "<group>"; };
-		56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MSCirclePad.xcodeproj; path = MSCirclePad/circlepad/MSCirclePad.xcodeproj; sourceTree = "<group>"; };
 		56E62A5B207CCAF600F2FC05 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		56E62A5F207CCFBD00F2FC05 /* SceneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneViewController.h; sourceTree = "<group>"; };
 		56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SceneViewController.mm; sourceTree = "<group>"; };
@@ -482,7 +496,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56B12339207B80E8001046CD /* OpenGLES.framework in Frameworks */,
-				56F27928207EACA100E63C0E /* MSCirclePad.framework in Frameworks */,
+				56C1A06E2082D03D001A8C35 /* MSCirclePad.framework in Frameworks */,
 				56B1231F207B79BC001046CD /* libngin_ios_arm64.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,7 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56D29B1B207B8E5B0080CB3B /* libngin_ios_x86_64.a in Frameworks */,
-				565402F8207E711E00AF5066 /* MSCirclePad.framework in Frameworks */,
+				56C1A06A2082D039001A8C35 /* MSCirclePad.framework in Frameworks */,
 				56D29AE2207B8E430080CB3B /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,7 +517,7 @@
 		56B122F2207B79A0001046CD = {
 			isa = PBXGroup;
 			children = (
-				56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */,
+				56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */,
 				56B1233A207B81AF001046CD /* models */,
 				56B12314207B79B3001046CD /* ngin.xcodeproj */,
 				56B122FD207B79A0001046CD /* iOS */,
@@ -768,18 +782,18 @@
 			path = sphere;
 			sourceTree = "<group>";
 		};
-		56E62A30207CC75300F2FC05 /* Products */ = {
+		56C1A0612082D01A001A8C35 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				56E62A34207CC75300F2FC05 /* MSCirclePad.framework */,
+				56C1A0652082D01A001A8C35 /* MSCirclePad.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		56E62A36207CC76500F2FC05 /* Products */ = {
+		56E62A30207CC75300F2FC05 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */,
+				56E62A34207CC75300F2FC05 /* MSCirclePad.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -799,8 +813,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				56C1A0672082D02F001A8C35 /* PBXTargetDependency */,
 				56B12329207B79E0001046CD /* PBXTargetDependency */,
-				56F2792B207EACA100E63C0E /* PBXTargetDependency */,
+				56C1A0712082D03D001A8C35 /* PBXTargetDependency */,
 			);
 			name = iOS_arm64;
 			productName = iOS;
@@ -819,8 +834,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				56C1A0692082D034001A8C35 /* PBXTargetDependency */,
 				56D29B1A207B8E560080CB3B /* PBXTargetDependency */,
-				565402FB207E711E00AF5066 /* PBXTargetDependency */,
+				56C1A06D2082D039001A8C35 /* PBXTargetDependency */,
 			);
 			name = iOS_x86_64;
 			productName = iOS;
@@ -860,8 +876,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 56E62A36207CC76500F2FC05 /* Products */;
-					ProjectRef = 56E62A35207CC76500F2FC05 /* MSCirclePad.xcodeproj */;
+					ProductGroup = 56C1A0612082D01A001A8C35 /* Products */;
+					ProjectRef = 56C1A0602082D01A001A8C35 /* MSCirclePad.xcodeproj */;
 				},
 				{
 					ProductGroup = 56E62A30207CC75300F2FC05 /* Products */;
@@ -895,6 +911,13 @@
 			remoteRef = 56B1231C207B79B4001046CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		56C1A0652082D01A001A8C35 /* MSCirclePad.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MSCirclePad.framework;
+			remoteRef = 56C1A0642082D01A001A8C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		56D29AD8207B8E410080CB3B /* libngin_ios_x86_64.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -907,13 +930,6 @@
 			fileType = wrapper.framework;
 			path = MSCirclePad.framework;
 			remoteRef = 56E62A33207CC75300F2FC05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56E62A3A207CC76500F2FC05 /* MSCirclePad.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MSCirclePad.framework;
-			remoteRef = 56E62A39207CC76500F2FC05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1139,25 +1155,35 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		565402FB207E711E00AF5066 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MSCirclePad;
-			targetProxy = 565402FA207E711E00AF5066 /* PBXContainerItemProxy */;
-		};
 		56B12329207B79E0001046CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ngin_ios;
 			targetProxy = 56B12328207B79E0001046CD /* PBXContainerItemProxy */;
 		};
+		56C1A0672082D02F001A8C35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MSCirclePad;
+			targetProxy = 56C1A0662082D02F001A8C35 /* PBXContainerItemProxy */;
+		};
+		56C1A0692082D034001A8C35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MSCirclePad;
+			targetProxy = 56C1A0682082D034001A8C35 /* PBXContainerItemProxy */;
+		};
+		56C1A06D2082D039001A8C35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MSCirclePad;
+			targetProxy = 56C1A06C2082D039001A8C35 /* PBXContainerItemProxy */;
+		};
+		56C1A0712082D03D001A8C35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MSCirclePad;
+			targetProxy = 56C1A0702082D03D001A8C35 /* PBXContainerItemProxy */;
+		};
 		56D29B1A207B8E560080CB3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ngin_ios_x86_64;
 			targetProxy = 56D29B19207B8E560080CB3B /* PBXContainerItemProxy */;
-		};
-		56F2792B207EACA100E63C0E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MSCirclePad;
-			targetProxy = 56F2792A207EACA100E63C0E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
