@@ -7,9 +7,10 @@ uniform sampler2D 							gPosition;
 uniform sampler2D 							gNormal;
 uniform sampler2D 							gAlbedo;
 
-uniform sampler2D                           spotLightsShadowMaps[5];
-
 uniform	int									spotLightsAmount;
+uniform sampler2D [MAX_SPOT_LIGHT_AMOUNT]   spotLightsShadowMaps;
+uniform mat4 [MAX_SPOT_LIGHT_AMOUNT]        spotLightsProjections;
+uniform mat4 [MAX_SPOT_LIGHT_AMOUNT]        spotLightsToLightTransformations;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 
 uniform	int									pointLightsAmount;
@@ -18,45 +19,9 @@ uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
 uniform	int 								hasDirLight;
 uniform DirectionalLight 					dirLight;
 
-
-uniform mat4                                spot_sm_projection[5];
-uniform mat4                                spot_sm_cameraTransformation[5];
-
 uniform uint								renderMode;
 
 out 	vec4 								FragColor;
-
-float pcf_depth(sampler2D tex, vec2 position, int rowSamples, int columnSamples, float countedDepth, float bias) {
-    vec2 texelSize = vec2(1.0f) / vec2(textureSize(tex, 0));
-    float result = 0.0f;
-    
-    for (int i = -rowSamples; i <= rowSamples; ++i) {
-        for (int j = -columnSamples; j <= columnSamples; ++j) {
-            float depth = texture(tex, position + vec2(i, j) * texelSize).r;
-            result += countedDepth - bias > depth ? 1.0 : 0.0f;
-        }
-    }
-    
-    return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
-}
-
-float calculate_shadow(sampler2D tex, vec4 fragPosLightSpace, vec3 lightDir, vec3 normal) {
-    // it is required to do this division for non-orthographic projections
-    vec3 projectedCoordinates = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    // we need to map value from range [0, 1] to [-1, 1]
-    projectedCoordinates = projectedCoordinates * 0.5f + 0.5f;
-//    if(projectedCoordinates.z > 1.0f) {
-//        return 0.0f;
-//    }
-    float closestDepth = texture(tex, projectedCoordinates.xy).r;
-    float currentDepth = projectedCoordinates.z;
-//    float bias = max(0.01f * (1.0f - dot(normal, lightDir)), 0.001f);
-    float bias = 0.00001f;
-
-//    return currentDepth - bias > closestDepth ? 1.0 : 0.0f;
-
-    return pcf_depth(tex, projectedCoordinates.xy, 5, 5, currentDepth, bias);
-}
 
 uniform sampler2D                           shadowMap;
 
@@ -99,7 +64,7 @@ void main() {
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
-    float shadow = calculate_shadow(shadowMap, fragmentInLightPos, dirLight.direction, normal_N);
+    float shadow = calculate_pcf_shadow(shadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
     
     if (hasDirLight == 1) {
         result += (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
@@ -108,21 +73,20 @@ void main() {
     result += diffuseColor * 0.1f;
 
     for(int j=0; j < spotLightsAmount; ++j) {
-        vec4 fm = spot_sm_projection[j] * spot_sm_cameraTransformation[j] * vec4(fragmentPosition, 1.0f);
+        vec4 fm = spotLightsProjections[j] * spotLightsToLightTransformations[j] * vec4(fragmentPosition, 1.0f);
 
-        float sh = calculate_shadow(spotLightsShadowMaps[j], fm, spotLights[j].direction, normal_N);
+        float sh = calculate_pcf_shadow(spotLightsShadowMaps[0], fm, spotLights[j].direction, normal_N, 0.00000001f, 0.000001f);
 
-        
         result += (1.0f - sh) * count_light_influence(spotLights[j],
-                                        fragmentPosition,
-                                        diffuseColor,
-                                        diffuseColor,
-                                        specularColor,
-                                        shininess,
-                                        normal_N,
-                                        cameraPosition,
-                                        surfaceZCamera_N,
-                                        mat4(1.0f));
+                                                      fragmentPosition,
+                                                      diffuseColor,
+                                                      diffuseColor,
+                                                      specularColor,
+                                                      shininess,
+                                                      normal_N,
+                                                      cameraPosition,
+                                                      surfaceZCamera_N,
+                                                      mat4(1.0f));
     }
 
 //    for (int i = 0; i < pointLightsAmount; ++i) {

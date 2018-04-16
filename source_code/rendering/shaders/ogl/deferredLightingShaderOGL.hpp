@@ -20,7 +20,8 @@ namespace ms {
 	
 	public:
 		
-						DeferredLightingShaderOGL			(unsigned int maximalAmountOfLights,
+                        DeferredLightingShaderOGL			(unsigned int maxAmountOfPointLights,
+                                                             unsigned int maxAmountOfSpotLights,
 															 std::string vertexShaderSource,
 															 std::string fragmentShaderSource);
 		

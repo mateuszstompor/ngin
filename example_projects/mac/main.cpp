@@ -92,15 +92,10 @@ int main(int argc, const char * argv[]) { {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-    
-    float halfside = 44.0f;
-//    auto cam = std::make_unique<ms::OrthographicCamera>(halfside, -halfside, halfside, -halfside, halfside, -halfside);
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
     
     engine = std::make_unique<NGinOGL>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, std::move(cam), nullptr);
 		
-    
-//    engine->load_model("/Users/mateuszstompor/Documents/ngin/models/teapot/teapot.obj");
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
 	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(0.0f, 1.0f, 0.0f).normalized());
@@ -110,8 +105,6 @@ int main(int argc, const char * argv[]) { {
                                      vec3( 0.0f, 0.0f,  1.0f));
     
     engine->scene->get_directional_light()->get_transformation() = lookat;
-    
-//    engine->scene->get_camera().set_transformation(lookat);
     
 	mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
@@ -124,7 +117,7 @@ int main(int argc, const char * argv[]) { {
 //        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
 //    }
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 1; ++i) {
         auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});
         auto lightColor = vec3{1.0f, 1.0f, 1.0f};
         auto lightingDir = vec3{1.0f, 0.0f, 0.0f};

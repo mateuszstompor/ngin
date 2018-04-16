@@ -26,7 +26,8 @@ namespace ms {
 	
 }
 
-ms::DeferredRender::DeferredRender(unsigned int maxAOL,
+ms::DeferredRender::DeferredRender(unsigned int maxPointLightsAmount,
+                                   unsigned int maxSpotLightsAmount,
 								   std::shared_ptr<Framebuffer> framebuffer,
 								   std::string gVS,
 								   std::string gFS,
@@ -41,7 +42,8 @@ lightingVertexShaderSource(lVS),
 lightingFragmentShaderSource(lFS),
 shadowMappingVertexShaderSource(smVS),
 shadowMappingFragmentShaderSource(smFS),
-maximalAmountOfLights(maxAOL),
+maxPointLightsAmount(maxPointLightsAmount),
+maxSpotLightsAmount(maxSpotLightsAmount),
 gShader(nullptr),
 lightingShader(nullptr),
 shadowShader(nullptr),

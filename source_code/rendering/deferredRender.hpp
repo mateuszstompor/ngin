@@ -31,14 +31,15 @@ namespace ms {
 		
 		enum class DebugType;
 		
-													DeferredRender					(unsigned int maximalAmountOfLights,
-																					std::shared_ptr<Framebuffer> framebuffer,
-																					std::string gBufferVertexShaderSource,
-																					std::string gBufferFragmentShaderSource,
-																					std::string lightingVertexShaderSource,
-																					std::string lightingFragmentShaderSource,
-																					std::string	shadowMappingVertexShader,
-																					std::string shadowMappingFragmentShader);
+													DeferredRender					(unsigned int maxPointLightsAmount,
+																					 unsigned int maxSpotLightsAmount,
+																					 std::shared_ptr<Framebuffer> framebuffer,
+																					 std::string gBufferVertexShaderSource,
+																					 std::string gBufferFragmentShaderSource,
+																					 std::string lightingVertexShaderSource,
+																					 std::string lightingFragmentShaderSource,
+																					 std::string	shadowMappingVertexShader,
+																					 std::string shadowMappingFragmentShader);
 		
 				void 								clear_frame						() override;
 				void								use				     			() override;
@@ -74,7 +75,9 @@ namespace ms {
 		
 		sm_spot_lights								spotLightsShadowComponents;
 		
-		unsigned int 								maximalAmountOfLights;
+		unsigned int 								maxPointLightsAmount;
+		unsigned int 								maxSpotLightsAmount;
+		
 		unsigned int								renderMode;
 		bool										debugMode;
 		DebugType									debugType;

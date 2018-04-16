@@ -8,15 +8,16 @@
 
 #include "deferredLightingShaderOGL.hpp"
 
-ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(unsigned int maximalAmountOfLights,
+ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(unsigned int maxAmountOfPointLights,
+                                                         unsigned int maxAmountOfSpotLights,
 														 std::string vertexShaderSource, 
 														 std::string fragmentShaderSource) :
-														 DeferredLightingShader(maximalAmountOfLights),
+														 DeferredLightingShader(maxAmountOfPointLights, maxAmountOfSpotLights),
 														 ms::ShaderOGL(vertexShaderSource, "", "", "", fragmentShaderSource),
 														 pointLightsLocations(nullptr), spotLightsLocations(nullptr) {
 															 
-	 spotLightsLocations 	= new GLint[AMOUNT_SPOT_LIGHT_PROPERTIES * maximalAmountOfLights];
-	 pointLightsLocations 	= new GLint[AMOUNT_POINT_LIGHT_PROPERTIES * maximalAmountOfLights];
+     spotLightsLocations    = new GLint[AMOUNT_SPOT_LIGHT_PROPERTIES * maxAmountOfSpotLights];
+     pointLightsLocations   = new GLint[AMOUNT_POINT_LIGHT_PROPERTIES * maxAmountOfPointLights];
 
 }
 
@@ -38,11 +39,6 @@ void  ms::DeferredLightingShaderOGL::_load () {
     GLint shadowMap = mglGetUniformLocation(program, "shadowMap");
     mglUniform1i(shadowMap, 3);
     
-    for(int i = 0; i < 5; ++i) {
-        GLint spotLightShadowMap = mglGetUniformLocation(program, ("spotLightsShadowMaps[" + std::to_string(i) + "]").c_str());
-        mglUniform1i(spotLightShadowMap, 4 + i);
-    }
-	
 	directionalLightColorLocation = mglGetUniformLocation(program, "dirLight.color");
 	directionalLightDirectionLocation = mglGetUniformLocation(program, "dirLight.direction");
 	hasDirectionalLightLocation = mglGetUniformLocation(program, "hasDirLight");
@@ -52,7 +48,7 @@ void  ms::DeferredLightingShaderOGL::_load () {
 	
 	spotLightsAmount = mglGetUniformLocation(program, "spotLightsAmount");
 	
-	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
+	for(unsigned int i = 0; i < maxAmountOfSpotLights; ++i) {
 		
 		{
 			GLint colorLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].color").c_str());
@@ -78,12 +74,14 @@ void  ms::DeferredLightingShaderOGL::_load () {
 			GLint directionLocation = mglGetUniformLocation(program, ("spotLights[" + std::to_string(i) + "].direction").c_str());
 			spotLightsLocations[(i * AMOUNT_SPOT_LIGHT_PROPERTIES) + (SL_DIRECTION) ] = directionLocation;
 		}
-		
+        
+        GLint spotLightShadowMap = mglGetUniformLocation(program, ("spotLightsShadowMaps[" + std::to_string(i) + "]").c_str());
+        mglUniform1i(spotLightShadowMap, 4 + i);
 	}
 	
 	pointLightsAmount = mglGetUniformLocation(program, "pointLightsAmount");
 	
-	for(unsigned int i = 0; i < maximalAmountOfLights; ++i) {
+	for(unsigned int i = 0; i < maxAmountOfPointLights; ++i) {
 		
 		{
 			GLint colorLocation = mglGetUniformLocation(program, ("pointLights[" + std::to_string(i) + "].color").c_str());

@@ -208,6 +208,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     
 	
 	deferredRenderer = std::make_unique<DeferredRenderOGL> (AOL,
+                                                            AOL,
                                                             deferredRenderVertexShaderSource,
                                                             deferredRenderFragmentShaderSource,
                                                             deferredRenderLightingVertexShaderSource,

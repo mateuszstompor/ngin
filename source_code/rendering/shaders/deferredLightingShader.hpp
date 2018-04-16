@@ -18,7 +18,8 @@ namespace ms {
 	
 	public:
 		
-		inline			DeferredLightingShader				(unsigned int maximalAmountOfLights);
+        inline			DeferredLightingShader				(unsigned int maxAmountOfPointLights,
+                                                             unsigned int maxAmountOfSpotLights);
 		
 		virtual void	set_camera_transformation			(const math::mat4 & transformation)				 			= 0;
 		
@@ -51,12 +52,14 @@ namespace ms {
 		
 	protected:
 		
-		unsigned int maximalAmountOfLights;
+        unsigned int maxAmountOfPointLights;
+		unsigned int maxAmountOfSpotLights;
 		
 	};
 	
 }
 
-ms::DeferredLightingShader::DeferredLightingShader (unsigned int maximalAmountOfLights) : maximalAmountOfLights(maximalAmountOfLights) { }
+ms::DeferredLightingShader::DeferredLightingShader (unsigned int maxAmountOfPointLights,
+                                                    unsigned int maxAmountOfSpotLights) : maxAmountOfPointLights(maxAmountOfPointLights), maxAmountOfSpotLights(maxAmountOfSpotLights) { }
 
 #endif /* deferred_lighting_shader_h */
