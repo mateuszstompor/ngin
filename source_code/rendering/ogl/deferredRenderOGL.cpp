@@ -162,11 +162,13 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     
     auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
     shadowShader->use();
-    assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
-    assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
-    for(auto n : scene->get_nodes()) {
-        assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
-        n->draw();
+    if(scene->get_directional_light()) {
+        assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
+        assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
+        for(auto n : scene->get_nodes()) {
+            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+            n->draw();
+        }
     }
     
     int i = 0;
@@ -203,9 +205,10 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
         lightingSh->bind_texture(4 + i, *std::get<1>(spotLightsShadowComponents[i]));
         i+=1;
     }
-    
-    assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
-    assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
+    if(scene->get_directional_light()) {
+        assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
+        assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
+    }
     
 	lightingShader->set_camera_transformation(scene->get_camera().get_transformation().c_array());
 	

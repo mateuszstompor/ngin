@@ -43,9 +43,8 @@ ms::PointLight(power, color, position),
 ms::DirectionalLight(color, direction),
 lightingAngleDegrees(lightingAngle) {
 	Light::projection =	math::projection::perspective(0.01f, 100.0f, lightingAngle, 1.0f);
-
-	auto look = math::transform::look_at(position, position + direction, math::vec3{direction[0], direction[1], direction[2] + 1}.cross(direction));
-
+    auto look = math::transform::look_at(math::vec3{0.0f, 12.0f, 0.0f}, math::vec3{0.0f, 0.0f, 0.0f}, math::vec3{0.0f, 0.0f, 1.0f});
+    std::cout << look.to_string() << std::endl;
 	Light::transformation = look;
 
 }

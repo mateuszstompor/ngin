@@ -45,6 +45,9 @@ float calculate_shadow(sampler2D tex, vec4 fragPosLightSpace, vec3 lightDir, vec
     vec3 projectedCoordinates = fragPosLightSpace.xyz / fragPosLightSpace.w;
     // we need to map value from range [0, 1] to [-1, 1]
     projectedCoordinates = projectedCoordinates * 0.5f + 0.5f;
+    if(projectedCoordinates.z > 1.0f) {
+        return 0.0f;
+    }
     float closestDepth = texture(tex, projectedCoordinates.xy).r;
     float currentDepth = projectedCoordinates.z;
     float bias = max(0.05f * (1.0f - dot(normal, lightDir)), 0.005f);
