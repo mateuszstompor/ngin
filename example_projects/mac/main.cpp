@@ -127,7 +127,7 @@ int main(int argc, const char * argv[]) { {
     for (int i = 0; i < 5; ++i) {
         auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});
         auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-        auto lightingDir = vec3{0.0f, -1.0f, 0.0f};
+        auto lightingDir = vec3{1.0f, 0.0f, 0.0f};
         auto lightPower = 50.0f;
         auto spotLightAngle = 120.0f;
 
