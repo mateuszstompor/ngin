@@ -38,9 +38,16 @@ ms::SpotLight::SpotLight (float 		power,
 						  float			lightingAngle,
 						  math::vec3 	direction) :
 
-ms::Light(color, math::transform::look_at<float>(position, position + position * 2, (math::vec3(position[0], position[1], position[2] + 3)).cross(position)) * math::transform::translate<float, 4>(math::vec3(position.x(), position.y(), position.z())), math::projection::perspective(0.001f, 100.0f, lightingAngle, 1.0f)),
+ms::Light(color),
 ms::PointLight(power, color, position),
 ms::DirectionalLight(color, direction),
-lightingAngleDegrees(lightingAngle) {}
+lightingAngleDegrees(lightingAngle) {
+	Light::projection =	math::projection::perspective(0.01f, 100.0f, lightingAngle, 1.0f);
+
+	auto look = math::transform::look_at(position, position + direction, math::vec3{direction[0], direction[1], direction[2] + 1}.cross(direction));
+
+	Light::transformation = look;
+
+}
 
 #endif /* spot_light_hpp */

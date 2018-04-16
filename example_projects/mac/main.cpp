@@ -103,11 +103,11 @@ int main(int argc, const char * argv[]) { {
 //    engine->load_model("/Users/mateuszstompor/Documents/ngin/models/teapot/teapot.obj");
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(-2.0f, 4.0f, -1.0f).normalized());
+	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(0.0f, 1.0f, 0.0f).normalized());
 
-    mat4 lookat = transform::look_at(vec3(-2.0f, 4.0f, -1.0f),
+    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
-                                     vec3( 0.0f, 1.0f,  0.0f));
+                                     vec3( 0.0f, 0.0f,  1.0f));
     
     engine->scene->get_directional_light()->get_transformation() = lookat;
     
@@ -125,11 +125,11 @@ int main(int argc, const char * argv[]) { {
 //    }
 
     for (int i = 0; i < 5; ++i) {
-        auto translation = ms::math::transform::translate<float, 4>({-4.0f + (i * 2.0f), 3.0f, 0.0f});
+        auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});
         auto lightColor = vec3{1.0f, 1.0f, 1.0f};
         auto lightingDir = vec3{0.0f, -1.0f, 0.0f};
         auto lightPower = 50.0f;
-        auto spotLightAngle = 50.0f;
+        auto spotLightAngle = 120.0f;
 
         engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
         engine->scene->get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);

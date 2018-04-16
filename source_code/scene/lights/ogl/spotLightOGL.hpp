@@ -31,7 +31,7 @@ namespace ms {
 ms::SpotLightOGL::SpotLightOGL (float 		power,
 								math::vec3 	color,
 								math::vec3 	position,
-								float			lightingAngle,
+								float		lightingAngle,
 								math::vec3 	direction) : Light(color), ms::SpotLight(power, color, position, lightingAngle, direction) { }
 
 #endif /* spotLightOGL_hpp */

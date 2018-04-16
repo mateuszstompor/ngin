@@ -74,7 +74,7 @@ ms::DeferredRender(maxAOLights, framebuffer, gVS, gFS, lVS, lFS, smVS, smFS) {
                                                           framebuffer->get_width(),
                                                           framebuffer->get_height());
 	
-    unsigned int resoultion = 1024*4;
+    unsigned int resoultion = 1024*2;
     
     
     for (int i = 0; i < 5; ++i) {
@@ -174,13 +174,14 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     for(auto spotLight : scene->get_spot_lights()) {
         std::get<0>(spotLightsShadowComponents[i])->use();
         std::get<0>(spotLightsShadowComponents[i])->clear_frame();
-        assert(shadow->set_uniform("projection", spotLight->get_projection()) >= 0);
-        assert(shadow->set_uniform("toLight", spotLight->get_transformation()) >= 0);
+        shadowShader->use();
+        assert(shadow->set_uniform("projection", spotLight->Light::get_projection()) >= 0);
+        assert(shadow->set_uniform("toLight", spotLight->Light::get_transformation()) >= 0);
         for(auto n : scene->get_nodes()) {
             assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
             n->draw();
         }
-        i+=0;
+        i+=1;
     }
     
     
@@ -197,9 +198,10 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     i = 0;
     
     for(auto spotLight : scene->get_spot_lights()) {
-        assert(lightingSh->set_uniform("spot_sm_projection[" + std::to_string(i) + "]", spotLight->get_projection()) >= 0);
-        assert(lightingSh->set_uniform("spot_sm_cameraTransformation[" + std::to_string(i) + "]", spotLight->get_transformation()) >= 0);
-        i+=0;
+        assert(lightingSh->set_uniform("spot_sm_projection[" + std::to_string(i) + "]", spotLight->Light::get_projection()) >= 0);
+        assert(lightingSh->set_uniform("spot_sm_cameraTransformation[" + std::to_string(i) + "]", spotLight->Light::get_transformation()) >= 0);
+        lightingSh->bind_texture(4 + i, *std::get<1>(spotLightsShadowComponents[i]));
+        i+=1;
     }
     
     assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
