@@ -19,18 +19,17 @@ namespace ms {
         
                                         OrthographicCamera      (float far, float near,
                                                                  float top, float bottom,
-                                                                 float left, float right);
+                                                                 float right, float left);
         
-        virtual                         ~OrthographicCamera     () = default;
+                                        ~OrthographicCamera     () = default;
+        bool                            is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
+                                                                 math::BoundingBox<float> const & boundingBox) const;
         
-    protected:
+        math::mat4 const &              get_projection_matrix   () const;
         
-        float _far;
-        float _near;
-        float _top;
-        float _bottom;
-        float _left;
-        float _right;
+    private:
+        
+        math::OrthographicViewport<float>   viewport;
         
     };
     

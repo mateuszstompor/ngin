@@ -8,5 +8,7 @@ void main() {
 //    gl_FragDepth = a / far;
 }
 
+// TODO linearize depth
+// pass far and near as params
 
 )";

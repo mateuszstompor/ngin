@@ -68,7 +68,7 @@ namespace ms {
 				GLint			set_uniform	(std::string const & name, math::mat4 const & m);
 				GLint			set_uniform	(std::string const & name, math::mat3 const & m);
 		
-		
+		// TODO create static? method which initialize shader using reduced amount of parameters
 	protected:
 		
 		void 			compile_program();

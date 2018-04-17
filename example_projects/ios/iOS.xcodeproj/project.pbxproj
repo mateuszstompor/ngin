@@ -201,6 +201,8 @@
 		56F27977207EBA3A00E63C0E /* Dielectric_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A9207B81AF001046CD /* Dielectric_metallic.tga */; };
 		56F27978207EBA3A00E63C0E /* Sponza_Ceiling_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123AA207B81AF001046CD /* Sponza_Ceiling_diffuse.tga */; };
 		56F27979207EBA3A00E63C0E /* Sponza_Column_a_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123AB207B81AF001046CD /* Sponza_Column_a_diffuse.tga */; };
+		56F423C220856840003D6998 /* cone.obj in Resources */ = {isa = PBXBuildFile; fileRef = 56B123AD207B81AF001046CD /* cone.obj */; };
+		56F423C320856840003D6998 /* cone.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 56B123AE207B81AF001046CD /* cone.mtl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -939,6 +941,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56F423C220856840003D6998 /* cone.obj in Resources */,
+				56F423C320856840003D6998 /* cone.mtl in Resources */,
 				56F2792C207EBA3A00E63C0E /* Sponza_Fabric_Green_normal.tga in Resources */,
 				56F2792D207EBA3A00E63C0E /* Sponza_Column_c_roughness.tga in Resources */,
 				56F2792E207EBA3A00E63C0E /* Sponza_Details_normal.tga in Resources */,

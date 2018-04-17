@@ -68,25 +68,38 @@ using namespace math;
     NSString* sphereModel = [[NSBundle mainBundle] pathForResource:@"sphere" ofType:@"obj"];
     std::string sphereModelPath = std::string([sphereModel cStringUsingEncoding:NSUTF8StringEncoding]);
     
-//    engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, ms::math::vec3{ 1.0f, 1.0f, -1.0f });
+    NSString* coneModel = [[NSBundle mainBundle] pathForResource:@"cone" ofType:@"obj"];
+    std::string coneModelPath = std::string([coneModel cStringUsingEncoding:NSUTF8StringEncoding]);
     
-    engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(-2.0f, 4.0f, -1.0f).normalized());
+     engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(0.0f, 1.0f, 0.0f).normalized());
     
-    mat4 lookat = transform::look_at(vec3(-2.0f, 4.0f, -1.0f),
+    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
-                                     vec3( 0.0f, 1.0f,  0.0f));
+                                     vec3( 0.0f, 0.0f,  1.0f));
     
     engine->scene->get_directional_light()->get_transformation() = lookat;
     
     mat4 scaleMat = transform::scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
-    for (int i = 0; i < 2; ++i) {
-        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
+//    for (int i = 0; i < 2; ++i) {
+//        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
+//        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
+//        auto lightPower = 50.0f;
+//
+//        engine->load_point_light(lightPower, lightColor, get_position(translation), sphereModelPath);
+//        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+//    }
+    
+    
+    for (int i = 0; i < 1; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});
         auto lightColor = vec3{1.0f, 1.0f, 1.0f};
+        auto lightingDir = vec3{1.0f, 0.0f, 0.0f};
         auto lightPower = 50.0f;
-
-        engine->load_point_light(lightPower, lightColor, get_position(translation), sphereModelPath);
-        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+        auto spotLightAngle = 120.0f;
+        
+        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, coneModelPath.c_str());
+        engine->scene->get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
     }
     
     engine->load_model(modelPath);

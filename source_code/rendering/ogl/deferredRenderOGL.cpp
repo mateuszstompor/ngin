@@ -177,8 +177,10 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
         assert(shadow->set_uniform("projection", spotLight->Light::get_projection()) >= 0);
         assert(shadow->set_uniform("toLight", spotLight->Light::get_transformation()) >= 0);
         for(auto n : scene->get_nodes()) {
-            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
-            n->draw();
+            if(spotLight->frustum.is_in_camera_sight(spotLight->get_transformation(), *n->geometry->get_bounding_box())) {
+                assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+                n->draw();
+            }
         }
     }
     

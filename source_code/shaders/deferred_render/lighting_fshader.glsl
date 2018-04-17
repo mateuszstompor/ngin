@@ -24,7 +24,7 @@ uniform uint								renderMode;
 out 	vec4 								FragColor;
 
 uniform sampler2D                           shadowMap;
-
+// TODO refactor name
 uniform mat4                                sm_projection;
 uniform mat4                                sm_cameraTransformation;
 

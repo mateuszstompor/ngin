@@ -20,123 +20,16 @@ namespace ms {
 	
 	public:
 		
-        enum class FrustumPlane;
-        
 		inline 						            Camera                  ();
 		virtual 					            ~Camera                 () = default;
-        inline virtual bool                     is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
-                                                                         math::BoundingBox<float> const & boundingBox) const final;
-        inline math::Plane<float>               get_camera_plane        (FrustumPlane plane);
-		inline constexpr math::mat4 const & 	get_projection_matrix   () const;
-	
-	protected:
-        
-        math::mat4 					            projectionMatrix {};
-        std::unique_ptr<math::Plane<float>>     front {};
-        std::unique_ptr<math::Plane<float>>     back {};
-        
-        std::unique_ptr<math::Plane<float>>     top {};
-        std::unique_ptr<math::Plane<float>>     bottom {};
-        
-        std::unique_ptr<math::Plane<float>>     left {};
-        std::unique_ptr<math::Plane<float>>     right {};
-        
-        math::vec3 a, b, c, d, e, f, g, h;
-        math::vec3 nearPlaneOrigin;
-        math::vec3 farPlaneOrigin;
-        math::vec3 leftPlaneOrigin;
-        math::vec3 rightPlaneOrigin;
-        math::vec3 topPlaneOrigin;
-        math::vec3 bottomPlaneOrigin;
-        
+        virtual math::mat4 const &              get_projection_matrix   () const = 0;
+        virtual bool                            is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
+                                                                         math::BoundingBox<float> const & boundingBox) const = 0;
+    
 	};
 	
 }
 
 ms::Camera::Camera() : PositionedObject() {}
-
-constexpr ms::math::mat4 const & ms::Camera::get_projection_matrix() const {
-	return projectionMatrix;
-}
-
-enum class ms::Camera::FrustumPlane {
-    front, back,
-    left, right,
-    top, bottom
-};
-
-bool ms::Camera::is_in_camera_sight(math::mat4 const & boundingBoxTransformation, math::BoundingBox<float> const & boundingBox) const {
-    
-    auto finalTransformation = this->transformation * boundingBoxTransformation;
-
-    if(left->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-
-    if(right->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-
-    if(front->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-
-    if(top->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-//    if(back->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-//        return false;
-//    }
-    
-    if(bottom->get_position(finalTransformation, boundingBox) == math::Plane<float>::RelativePosition::in_front) {
-        return false;
-    }
-    
-    return true;
-    
-}
-
-ms::math::Plane<float> ms::Camera::get_camera_plane (FrustumPlane plane) {
-    
-    switch (plane) {
-        case Camera::FrustumPlane::front:
-            return math::Plane<float>::from_points(c, a, b);
-        case Camera::FrustumPlane::back:
-            return math::Plane<float>::from_points(g, e, f);
-        case Camera::FrustumPlane::top:
-            return math::Plane<float>::from_points(e, f, b);
-        case Camera::FrustumPlane::bottom:
-            return math::Plane<float>::from_points(d, h, g);
-        case Camera::FrustumPlane::left:
-            return math::Plane<float>::from_points(e, a, c);
-        case Camera::FrustumPlane::right:
-            return math::Plane<float>::from_points(f, h, d);
-        default:
-            assert(false);
-            break;
-    }
-}
-
-//
-//               e-------f
-//              /|      /|
-//             / |     / |
-//            a--|----b  |
-//            |  g----|--h
-//            | /     | /
-//            c-------d
-//
-//                 ^
-//                 |       direction of sight
-//               camera
-//
-//
-// points {c, d, g, h} - plane bottom
-// points {a, b, e, f} - plane top
-// points {c, g, a, e} - plane left
-// points {d, b, h, f} - plane right
-// points {a, b, c, d} - plane front
-// points {g, e, f, h} - plane back
 
 #endif /* camera_hpp */

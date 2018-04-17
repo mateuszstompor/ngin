@@ -17,17 +17,19 @@ namespace ms {
 
 	public:
 		
-                                        PerspectiveCamera   (float nearPlane,
-                                                             float farPlane,
-                                                             float fovDegrees,
-                                                             float aspectRatio);
+                                        PerspectiveCamera       (float nearPlane,
+                                                                 float farPlane,
+                                                                 float fovDegrees,
+                                                                 float aspectRatio);
         
-    protected:
+        bool                            is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
+                                                                 math::BoundingBox<float> const & boundingBox) const override;
         
-        float nearPlane;
-        float farPlane;
-        float fovDegrees;
-        float aspectRatio;
+        math::mat4 const &              get_projection_matrix   () const override;
+        
+    private:
+        
+        math::FrustumViewport<float>    frustum;
                 
 	};
 	
