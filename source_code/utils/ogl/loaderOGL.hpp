@@ -11,7 +11,7 @@
 
 #include "../loader.hpp"
 #include "../../scene/ogl/geometryOGL.hpp"
-#include "../../scene/ogl/textureOGL.hpp"
+#include "../../scene/texture.hpp"
 #include "../../scene/ogl/materialOGL.hpp"
 
 namespace ms {
@@ -59,17 +59,11 @@ std::shared_ptr<ms::Texture> ms::LoaderOGL::get_texture (std::string				name,
 														 unsigned int 				width,
 														 unsigned int 				height) {
 	
-	return std::make_shared<ms::TextureOGL>(Texture::Type::tex_2d,
-                                            name,
-                                            format,
-                                            associatedType,
-                                            minFilter,
-                                            magFilter,
-                                            sWrapping,
-                                            tWrapping,
-                                            mipMapLevel,
-                                            width,
-                                            height);
+    return std::make_shared<ms::Texture>(Texture::Type::tex_2d,
+                                        format,
+                                        associatedType,
+                                        width,
+                                        height);
 	
 }
 

@@ -15,7 +15,7 @@
 #include "../shaders/ogl/deferredLightingShaderOGL.hpp"
 #include "../reusableGeometry.hpp"
 #include "../../utils/ogl/utilsOGL.hpp"
-#include "../../scene/ogl/textureOGL.hpp"
+#include "../../scene/texture.hpp"
 #include "framebufferOGL.hpp"
 #include "../renderbuffer.hpp"
 #include "../../scene/ogl/drawableOGL.hpp"

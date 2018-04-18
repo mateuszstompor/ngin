@@ -18,7 +18,7 @@ ms::Renderbuffer::Renderbuffer (Texture::Format             format,
                                                                         mipMapLevel{mipMapLevel},
                                                                         width{width},
                                                                         height{height},
-                                                                        internalFormat{TextureOGL::underlying_type(associatedType,format)},
+                                                                        internalFormat(Texture::underlying_type(associatedType,format)),
                                                                         renderBuffer{0} {
 	
 }

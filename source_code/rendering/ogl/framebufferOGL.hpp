@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "../framebuffer.hpp"
-#include "../../scene/ogl/textureOGL.hpp"
+#include "../../scene/texture.hpp"
 #include "../renderbuffer.hpp"
 #include "../../utils/ogl/proxyOGL.hpp"
 

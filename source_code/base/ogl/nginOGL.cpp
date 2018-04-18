@@ -125,7 +125,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                                                                                frameBufferWidth,
                                                                                frameBufferHeight));
 
-    mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                              Texture::Format::rgb_16_16_16,
                                                                              Texture::AssociatedType::FLOAT,
                                                                              frameBufferWidth,
@@ -139,8 +139,8 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                                                                                       0,
                                                                                       frameBufferWidth,
                                                                                       frameBufferHeight));
-    
-    lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+
+    lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                                     Texture::Format::rgb_16_16_16,
                                                                                     Texture::AssociatedType::FLOAT,
                                                                                     frameBufferWidth,
@@ -149,7 +149,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     lightSourceDrawerFramebuffer->configure();
     
 
-    vignetteFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                            Texture::Format::rgb_16_16_16,
                                                                            Texture::AssociatedType::FLOAT,
                                                                            frameBufferWidth,
@@ -158,7 +158,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     vignetteFramebuffer->configure();
     
     
-    gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                            Texture::Format::rgb_16_16_16,
                                                                            Texture::AssociatedType::FLOAT,
                                                                            frameBufferWidth,
@@ -166,7 +166,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     
     gaussianBlurFirstStepFramebuffer->configure();
     
-    gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                                         Texture::Format::rgb_16_16_16,
                                                                                         Texture::AssociatedType::FLOAT,
                                                                                         frameBufferWidth,
@@ -175,7 +175,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     gaussianBlurSecondStepFramebuffer->configure();
     
     
-    hdrFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                            Texture::Format::rgb_16_16_16,
                                                                            Texture::AssociatedType::FLOAT,
                                                                            frameBufferWidth,
@@ -184,20 +184,20 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     hdrFramebuffer->configure();
     
     
-    bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                               Texture::Format::rgb_16_16_16,
                                                                               Texture::AssociatedType::FLOAT,
                                                                               frameBufferWidth,
                                                                               frameBufferHeight));
 
-    bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                             Texture::Format::rgb_16_16_16,
                                                                             Texture::AssociatedType::FLOAT,
                                                                             frameBufferWidth,
                                                                             frameBufferHeight));
     bloomTwoTexSplitFramebuffer->configure();
     
-    bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<TextureOGL>(Texture::Type::tex_2d,
+    bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                                    Texture::Format::rgb_16_16_16,
                                                                                    Texture::AssociatedType::FLOAT,
                                                                                    frameBufferWidth,

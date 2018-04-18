@@ -13,7 +13,7 @@
 #include <cassert>
 
 #include "../utils/ogl/proxyOGL.hpp"
-#include "../scene/ogl/textureOGL.hpp"
+#include "../scene/texture.hpp"
 
 namespace ms {
 	

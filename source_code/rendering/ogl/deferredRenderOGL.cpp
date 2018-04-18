@@ -8,17 +8,6 @@
 
 #include "deferredRenderOGL.hpp"
 
-namespace ms {
-	
-	typedef unsigned int ui;
-	
-	#define G_BUF_ALBEDO 			"G_BUF_ALBEDO"
-	#define G_BUF_POSITIONS 		"G_BUF_POSITIONS"
-	#define G_BUF_NORMALS 			"G_BUF_NORMALS"
-    #define SHADOW_MAP              "SHADOW_MAP"
-	
-}
-
 ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int                      maxPointLightsAmount,
                                           unsigned int                      maxSpotLightsAmount,
 										  std::unique_ptr<Framebuffer> &&   framebuffer,
@@ -27,35 +16,22 @@ ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int                      maxP
 //TODO add this to deferred lighting hsader
 ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuffer), std::move(gShader), std::move(lightingShader)) {
 	
-    auto gPosition = std::make_unique<TextureOGL>(Texture::Type::tex_2d,
-                                                  G_BUF_POSITIONS,
-                                                  Texture::Format::rgb_16_16_16,
-                                                  Texture::AssociatedType::FLOAT,
-                                                  Texture::MinFilter::linear,
-                                                  Texture::MagFilter::linear,
-                                                  Texture::Wrapping::clamp_to_edge,
-                                                  Texture::Wrapping::clamp_to_edge,
-                                                  0, this->framebuffer->get_width(), this->framebuffer->get_height());
+    auto gPosition = std::make_unique<Texture>(Texture::Type::tex_2d,
+                                               Texture::Format::rgb_16_16_16,
+                                               Texture::AssociatedType::FLOAT,
+                                               this->framebuffer->get_width(),
+                                               this->framebuffer->get_height());
 
-    auto gNormal = std::make_unique<TextureOGL>(Texture::Type::tex_2d,
-                                                G_BUF_NORMALS,
+    auto gNormal = std::make_unique<Texture>(Texture::Type::tex_2d,
                                                 Texture::Format::rgb_16_16_16,
                                                 Texture::AssociatedType::FLOAT,
-                                                Texture::MinFilter::linear,
-                                                Texture::MagFilter::linear,
-                                                Texture::Wrapping::clamp_to_edge,
-                                                Texture::Wrapping::clamp_to_edge,
-                                                0, this->framebuffer->get_width(), this->framebuffer->get_height());
-    
-    auto gAlbedo = std::make_unique<TextureOGL>(Texture::Type::tex_2d,
-                                                G_BUF_ALBEDO,
-                                                Texture::Format::rgba_8_8_8_8,
-                                                Texture::AssociatedType::UNSIGNED_BYTE,
-                                                Texture::MinFilter::linear,
-                                                Texture::MagFilter::linear,
-                                                Texture::Wrapping::clamp_to_edge,
-                                                Texture::Wrapping::clamp_to_edge,
-                                                0, this->framebuffer->get_width(), this->framebuffer->get_height());
+                                                this->framebuffer->get_width(), this->framebuffer->get_height());
+
+    auto gAlbedo = std::make_unique<Texture>(Texture::Type::tex_2d,
+                                             Texture::Format::rgba_8_8_8_8,
+                                             Texture::AssociatedType::UNSIGNED_BYTE,
+                                             this->framebuffer->get_width(),
+                                             this->framebuffer->get_height());
 
     gFramebuffer = std::make_unique<FramebufferOGL>(3,
                                                     1,

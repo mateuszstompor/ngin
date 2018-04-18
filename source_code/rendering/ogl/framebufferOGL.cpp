@@ -43,13 +43,13 @@ void ms::FramebufferOGL::clear_frame () {
 void ms::FramebufferOGL::copy_depth_from (Framebuffer & frame, Texture::MagFilter filter) {
 	frame.use_for_read();
 	(*this).use_for_write();
-	mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, TextureOGL::to_ogl(filter));
+	mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture::to_ogl(filter));
 }
 
 void ms::FramebufferOGL::copy_color_from (Framebuffer & frame, Texture::MagFilter filter) {
     frame.use_for_read();
     (*this).use_for_write();
-    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, TextureOGL::to_ogl(filter));
+    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture::to_ogl(filter));
 }
 
 void ms::FramebufferOGL::clear_color () {
@@ -106,16 +106,14 @@ void ms::FramebufferOGL::_unload () {
 void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Texture> && texture) {
 	this->use();
 	texture->use();
-	GLuint textureID = (dynamic_cast<TextureOGL*>(texture.get()))->get_underlying_id();
-	mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, textureID, 0);
+	mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, texture->get_underlying_id(), 0);
     colorTextureAttachments[index] = std::move(texture);
 }
 
 void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
-	GLuint renderbufferID = (dynamic_cast<Renderbuffer*>(renderbuffer.get()))->get_underlying_id();
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_RENDERBUFFER, renderbufferID);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_RENDERBUFFER, renderbuffer->get_underlying_id());
     colorRenderbufferAttachments[index] = std::move(renderbuffer);
     // should work, but check it
 	assert(false);
@@ -124,15 +122,14 @@ void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Renderbuf
 void ms::FramebufferOGL::copy_framebuffer (Framebuffer & frame, Texture::MagFilter filter) {
     frame.use_for_read();
     (*this).use_for_write();
-    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, TextureOGL::to_ogl(filter));
-    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, TextureOGL::to_ogl(filter));
+    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture::to_ogl(filter));
+    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture::to_ogl(filter));
 }
 
 void ms::FramebufferOGL::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
-	GLuint renderBufferId = dynamic_cast<Renderbuffer*>(renderbuffer.get())->get_underlying_id();
-	mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBufferId);
+	mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderbuffer->get_underlying_id());
     depthRenderbuffer = std::move(renderbuffer);
 }
 
@@ -179,8 +176,7 @@ void ms::FramebufferOGL::set_underlying_id (GLuint framebufferID) {
 void ms::FramebufferOGL::bind_depth_buffer (std::unique_ptr<Texture> && texture) {
     this->use();
     texture->use();
-    GLuint textureID = (dynamic_cast<TextureOGL*>(texture.get()))->get_underlying_id();
-    mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureID, 0);
+    mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture->get_underlying_id(), 0);
     depthTexture = std::move(texture);
 }
 
