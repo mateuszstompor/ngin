@@ -62,7 +62,7 @@ ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuf
                                                     this->framebuffer->get_width(),
                                                     this->framebuffer->get_height());
 
-    auto depthRenderbuffer = std::make_unique<RenderbufferOGL>(Texture::Format::depth_32,
+    auto depthRenderbuffer = std::make_unique<Renderbuffer>(Texture::Format::depth_32,
                                                           Texture::AssociatedType::FLOAT,
                                                           0,
                                                           this->framebuffer->get_width(),

@@ -119,7 +119,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 
 
 
-    mainRenderFramebuffer->bind_depth_buffer(std::make_unique<RenderbufferOGL>(Texture::Format::depth_32,
+    mainRenderFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture::Format::depth_32,
                                                                                Texture::AssociatedType::FLOAT,
                                                                                0,
                                                                                frameBufferWidth,
@@ -134,7 +134,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     mainRenderFramebuffer->configure();
     
     
-    lightSourceDrawerFramebuffer->bind_depth_buffer(std::make_unique<RenderbufferOGL>(Texture::Format::depth_32,
+    lightSourceDrawerFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture::Format::depth_32,
                                                                                       Texture::AssociatedType::FLOAT,
                                                                                       0,
                                                                                       frameBufferWidth,

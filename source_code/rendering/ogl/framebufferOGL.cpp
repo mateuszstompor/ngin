@@ -114,7 +114,7 @@ void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Texture> 
 void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
-	GLuint renderbufferID = (dynamic_cast<RenderbufferOGL*>(renderbuffer.get()))->get_underlying_id();
+	GLuint renderbufferID = (dynamic_cast<Renderbuffer*>(renderbuffer.get()))->get_underlying_id();
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_RENDERBUFFER, renderbufferID);
     colorRenderbufferAttachments[index] = std::move(renderbuffer);
     // should work, but check it
@@ -131,7 +131,7 @@ void ms::FramebufferOGL::copy_framebuffer (Framebuffer & frame, Texture::MagFilt
 void ms::FramebufferOGL::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
-	GLuint renderBufferId = dynamic_cast<RenderbufferOGL*>(renderbuffer.get())->get_underlying_id();
+	GLuint renderBufferId = dynamic_cast<Renderbuffer*>(renderbuffer.get())->get_underlying_id();
 	mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBufferId);
     depthRenderbuffer = std::move(renderbuffer);
 }

@@ -15,7 +15,7 @@
 
 #include "../framebuffer.hpp"
 #include "../../scene/ogl/textureOGL.hpp"
-#include "renderbufferOGL.hpp"
+#include "../renderbuffer.hpp"
 #include "../../utils/ogl/proxyOGL.hpp"
 
 namespace ms {

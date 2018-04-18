@@ -9,62 +9,50 @@
 #ifndef renderbuffer_hpp
 #define renderbuffer_hpp
 
-#include "../scene/texture.hpp"
+#include <iostream>
+#include <cassert>
+
+#include "../utils/ogl/proxyOGL.hpp"
+#include "../scene/ogl/textureOGL.hpp"
 
 namespace ms {
 	
 	class Renderbuffer : public Resource {
 		
 	public:
+                                Renderbuffer        (const Renderbuffer &) = delete;
+        
+                                Renderbuffer		(Texture::Format			format,
+                                                     Texture::AssociatedType	associatedType,
+                                                     unsigned int 				mipMapLevel,
+                                                     unsigned int 				width,
+                                                     unsigned int 				height);
 		
-    inline 					        Renderbuffer		(Texture::Format			format,
-                                                         Texture::AssociatedType	associatedType,
-                                                         unsigned int 				mipMapLevel,
-                                                         unsigned int 				width,
-                                                         unsigned int 				height);
+                                Renderbuffer		(Texture::Format			format,
+                                                     Texture::AssociatedType	associatedType,
+                                                     unsigned int 				width,
+                                                     unsigned int 				height);
 		
-    inline 					        Renderbuffer		(Texture::Format			format,
-                                                         Texture::AssociatedType	associatedType,
-                                                         unsigned int 				width,
-                                                         unsigned int 				height);
-		
-                                    Renderbuffer		(const Texture &) = delete;
-                    Renderbuffer &  operator = 			(const Renderbuffer &) = delete;
-			virtual void 		    use					() = 0;
-	inline	virtual std::string	    get_class			();
-			virtual 			    ~Renderbuffer		() = default;
+        Renderbuffer &          operator =          (const Texture &) = delete;
+		virtual std::string	    get_class			() ;
+		virtual void 		    use					() ;
+		virtual void    	    _load  				() override;
+		virtual void 		    _unload 			() override;
+				GLuint		    get_underlying_id	();
 		
 	protected:
-		
-        Texture::AssociatedType				associatedType;
-		Texture::Format						format;
-		unsigned int 						mipMapLevel;
-		unsigned int 						width;
-		unsigned int 						height;
+        
+        Texture::AssociatedType associatedType;
+        Texture::Format         format;
+        unsigned int            mipMapLevel;
+        unsigned int            width;
+        unsigned int            height;
+
+		GLenum				    internalFormat;
+		GLuint				    renderBuffer;
 		
 	};
 	
-}
-
-ms::Renderbuffer::Renderbuffer(Texture::Format 			format,
-							   Texture::AssociatedType 	associatedType,
-							   unsigned int 			mipMapLevel,
-							   unsigned int 			width,
-							   unsigned int 			height) :
-																	format(format),
-																	associatedType(associatedType),
-																	mipMapLevel(mipMapLevel),
-																	width(width),
-																	height(height) { }
-
-ms::Renderbuffer::Renderbuffer(Texture::Format 			format,
-							   Texture::AssociatedType 	associatedType,
-							   unsigned int 			width,
-							   unsigned int 			height) : Renderbuffer(format, associatedType, 0, width, height) { }
-
-
-std::string ms::Renderbuffer::get_class () {
-	return "ms::Renderbuffer";
 }
 
 #endif /* renderbuffer_hpp */
