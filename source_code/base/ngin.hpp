@@ -63,7 +63,7 @@ namespace ms {
 	protected:
 		
 		void									count_fps			();		
-		std::unique_ptr<Loader>					loader;
+		Loader					                loader;
         
 		std::unique_ptr<DeferredRender>         deferredRenderer;
         std::unique_ptr<Render>                 shadowRenderer;

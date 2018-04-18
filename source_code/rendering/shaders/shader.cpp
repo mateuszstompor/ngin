@@ -1,19 +1,19 @@
 //
-//  shaderOGL.cpp
+//  Shader.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 03/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "shaderOGL.hpp"
+#include "shader.hpp"
 
 namespace ms {
 	#define SHADER_ERROR 			"Shader error"
 	#define INFO_LOG_SIZE 			512
 }
 
-ms::ShaderOGL::ShaderOGL(std::string vS,
+ms::Shader::Shader(std::string vS,
 						 std::string tcS,
 						 std::string teS,
 						 std::string gS,
@@ -28,39 +28,39 @@ ms::ShaderOGL::ShaderOGL(std::string vS,
 			
 }
 
-void ms::ShaderOGL::use() {
+void ms::Shader::use() {
 	mglUseProgram(program);
 }
 
-GLint  ms::ShaderOGL::set_uniform (std::string const & name, math::mat4 const & m) {
+GLint  ms::Shader::set_uniform (std::string const & name, math::mat4 const & m) {
 	GLint location = mglGetUniformLocation(program, name.c_str());
 	mglUniformMatrix4fv(location, 1, GL_FALSE, m.c_array());
 	return location;
 }
 
-GLint  ms::ShaderOGL::set_uniform (std::string const & name, math::mat3 const & m) {
+GLint  ms::Shader::set_uniform (std::string const & name, math::mat3 const & m) {
 	GLint location = mglGetUniformLocation(program, name.c_str());
 	mglUniformMatrix3fv(location, 1, GL_FALSE, m.c_array());
 	return location;
 }
 
-GLint ms::ShaderOGL::set_uniform (std::string const & name, int value) {
+GLint ms::Shader::set_uniform (std::string const & name, int value) {
 	GLint location = mglGetUniformLocation(program, name.c_str());
 	mglUniform1i(location, value);
 	return location;
 }
 
-void ms::ShaderOGL::_load() {
+void ms::Shader::_load() {
 	program = mglCreateProgram();
 	compile_program();
 }
 
-void ms::ShaderOGL::_unload() {
+void ms::Shader::_unload() {
 	mglDeleteProgram(program);
 	program = 0;
 }
 
-void ms::ShaderOGL::compile_program() {
+void ms::Shader::compile_program() {
 	
 	GLuint vshader 		= 0;
 	
@@ -126,21 +126,21 @@ void ms::ShaderOGL::compile_program() {
 
 }
 
-void ms::ShaderOGL::bind_texture(unsigned int index, Texture & texture) {
+void ms::Shader::bind_texture(unsigned int index, Texture & texture) {
 	this->use();
 	mglActiveTexture(GL_TEXTURE0 + index);
 	texture.use();
 }
 
-ms::ShaderOGL::program_ptr ms::ShaderOGL::vf_program 	(std::string const & vertexSource, std::string const & fragmentSource) {
-	return std::make_unique<ShaderOGL>(vertexSource, "", "", "", fragmentSource);
+ms::Shader::program_ptr ms::Shader::vf_program 	(std::string const & vertexSource, std::string const & fragmentSource) {
+	return std::make_unique<Shader>(vertexSource, "", "", "", fragmentSource);
 }
 
-std::string ms::ShaderOGL::get_class () {
-	return "ms::ShaderOGL";
+std::string ms::Shader::get_class () const {
+	return "ms::Shader";
 }
 
-void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {
+void ms::Shader::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {
 	const char * sourcePtr = source.c_str();
 	mglShaderSource(shader, 1, &sourcePtr, nullptr);
 	mglCompileShader(shader);
@@ -148,7 +148,7 @@ void ms::ShaderOGL::compile_shader(GLuint program, GLuint shader, GLenum shaderT
 	mglAttachShader(program, shader);
 }
 
-int ms::ShaderOGL::get_shader_status(GLuint shader, GLenum statusType) {
+int ms::Shader::get_shader_status(GLuint shader, GLenum statusType) {
 	int code; char infoLog[INFO_LOG_SIZE];
 	mglGetShaderiv(shader, statusType, &code);
 	if (!code) {
@@ -159,6 +159,6 @@ int ms::ShaderOGL::get_shader_status(GLuint shader, GLenum statusType) {
 	return code;
 }
 
-GLuint ms::ShaderOGL::get_gl_id () const {
+GLuint ms::Shader::get_gl_id () const {
 	return program;
 }

@@ -30,8 +30,7 @@ ms::DeferredRender::DeferredRender(unsigned int                     maxPointLigh
                                    unsigned int                     maxSpotLightsAmount,
 								   std::unique_ptr<Framebuffer> &&  framebuffer,
                                    g_pass_shader &&                 gShader,
-                                   lighting_shader &&               lightingShader
-                                   ) : 	Render(std::move(framebuffer), std::move(gShader)),
+                                   lighting_shader &&               lightingShader) : 	Render(std::move(framebuffer), std::move(gShader)),
 maxPointLightsAmount(maxPointLightsAmount),
 maxSpotLightsAmount(maxSpotLightsAmount),
 lightingShader(std::move(lightingShader)),
@@ -117,11 +116,6 @@ void ms::DeferredRender::use () {
 	
 	shader->use();
 	gFramebuffer->use();
-}
-
-void ms::DeferredRender::clear_frame () {
-	gFramebuffer->use();
-	gFramebuffer->clear_frame();
 }
 
 void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Drawable * node) {

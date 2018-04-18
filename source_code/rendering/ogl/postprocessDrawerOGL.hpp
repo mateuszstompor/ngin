@@ -13,7 +13,7 @@
 #include "../postprocessDrawer.hpp"
 #include "../reusableGeometry.hpp"
 #include "../../scene/drawable.hpp"
-#include "../shaders/ogl/shaderOGL.hpp"
+#include "../shaders/shader.hpp"
 
 namespace ms {
 	

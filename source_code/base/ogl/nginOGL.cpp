@@ -206,31 +206,28 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     
     unsigned int AOL = 100;
 
-    auto shadowShader = ShaderOGL::vf_program(shadowMappingVertexShader, shadowMappingFragmentShader);
-    auto phongforwardShader = std::make_unique<ForwardShaderOGL>(AOL,
-                                                                 forwardRenderVertexShaderSource,
-                                                                 forwardRenderFragmentShaderSource);
+    auto shadowShader = Shader::vf_program(shadowMappingVertexShader, shadowMappingFragmentShader);
+    auto phongforwardShader = std::make_unique<ForwardShader>(AOL,
+                                                              forwardRenderVertexShaderSource,
+                                                              forwardRenderFragmentShaderSource);
 
-    auto gouraudforwardShader = std::make_unique<ForwardShaderOGL>(AOL,
-                                                                   gouraudVertexShaderSource,
-                                                                   gouraudRenderFragmentShaderSource);
+    auto gouraudforwardShader = std::make_unique<ForwardShader>(AOL,
+                                                                gouraudVertexShaderSource,
+                                                                gouraudRenderFragmentShaderSource);
 
-    auto lightSourceforwardShader = std::make_unique<LightSourceDrawerShaderOGL>(lightSourceDrawerVertexShader,
-                                                                                 lightSourceDrawerFragmentShader);
+    auto lightSourceforwardShader = std::make_unique<LightSourceDrawerShader>(lightSourceDrawerVertexShader,
+                                                                              lightSourceDrawerFragmentShader);
 
-    auto deferredShader = std::make_unique<DeferredShaderOGL>(deferredRenderVertexShaderSource,
-                                                              deferredRenderFragmentShaderSource);
-
-    auto bloomSplitProgram = ShaderOGL::vf_program(bloomSplitterVertexShader, bloomSplitterFragmentShader);
-    auto bloomMergeProgram = ShaderOGL::vf_program(bloomMergerVertexShader, bloomMergerFragmentShader);
-    auto hdrProgram = ShaderOGL::vf_program(hdrVertexShader, hdrFragmentShader);
-    auto gaussianBlurProgram = ShaderOGL::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
-    auto secondGaussianBlurProgram = ShaderOGL::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
-    auto vignetteProgram = ShaderOGL::vf_program(vignetteVertexShader, vignetteFragmentShader);
-    auto scaleProgram = ShaderOGL::vf_program(scaleVertexShader, scaleFragmentShader);
+    auto bloomSplitProgram = Shader::vf_program(bloomSplitterVertexShader, bloomSplitterFragmentShader);
+    auto bloomMergeProgram = Shader::vf_program(bloomMergerVertexShader, bloomMergerFragmentShader);
+    auto hdrProgram = Shader::vf_program(hdrVertexShader, hdrFragmentShader);
+    auto gaussianBlurProgram = Shader::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
+    auto secondGaussianBlurProgram = Shader::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
+    auto vignetteProgram = Shader::vf_program(vignetteVertexShader, vignetteFragmentShader);
+    auto scaleProgram = Shader::vf_program(scaleVertexShader, scaleFragmentShader);
     
-    auto defGshader = std::make_unique<DeferredShaderOGL>(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
-    auto defLightingShader = std::make_unique<DeferredLightingShaderOGL>(AOL, AOL, deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
+    auto defGshader = std::make_unique<DeferredShader>(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
+    auto defLightingShader = std::make_unique<DeferredLightingShader>(AOL, AOL, deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
 
     deferredRenderer = std::make_unique<DeferredRenderOGL> (AOL,
                                                             AOL,
@@ -238,15 +235,15 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
                                                             std::move(defGshader),
                                                             std::move(defLightingShader));
     
-    shadowRenderer = std::make_unique<Render>(nullptr, std::move(shadowShader));
+//    shadowRenderer = std::make_unique<Render>(nullptr, std::move(shadowShader));
 
-//    phongForwardRenderer = std::make_unique<ForwardRender>(AOL,
-//                                                           std::move(mainRenderFramebuffer),
-//                                                           std::move(phongforwardShader));
-//
-//    gouraudForwardRenderer = std::make_unique<ForwardRender>(AOL,
-//                                                             std::move(mainRenderFramebuffer),
-//                                                             std::move(gouraudforwardShader));
+    phongForwardRenderer = std::make_unique<ForwardRender>(AOL,
+                                                           nullptr,
+                                                           std::move(phongforwardShader));
+
+    gouraudForwardRenderer = std::make_unique<ForwardRender>(AOL,
+                                                             nullptr,
+                                                             std::move(gouraudforwardShader));
 
     lightSourceRenderer = std::make_unique<LightSourcesRender>(std::move(lightSourceDrawerFramebuffer),
                                                                std::move(lightSourceforwardShader));
@@ -305,9 +302,9 @@ ms::NGinOGL::NGinOGL (	unsigned int screenWidth,
 }
 
 void ms::NGinOGL::load () {
-//    phongForwardRenderer->load();
+    phongForwardRenderer->load();
     deferredRenderer->load();
-//    gouraudForwardRenderer->load();
+    gouraudForwardRenderer->load();
     lightSourceRenderer->load();
     hdrRenderer->load();
     bloomSplitRenderer->load();
@@ -319,9 +316,9 @@ void ms::NGinOGL::load () {
 }
 
 void ms::NGinOGL::unload () {
-//    phongForwardRenderer->unload();
+    phongForwardRenderer->unload();
     deferredRenderer->unload();
-//    gouraudForwardRenderer->unload();
+    gouraudForwardRenderer->unload();
     lightSourceRenderer->unload();
     hdrRenderer->unload();
     bloomSplitRenderer->unload();

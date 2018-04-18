@@ -1,19 +1,19 @@
 //
-//  deferredLightingShaderOGL.cpp
+//  deferredLightingShader.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 07/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "deferredLightingShaderOGL.hpp"
+#include "deferredLightingShader.hpp"
 
-ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(unsigned int maxAmountOfPointLights,
+ms::DeferredLightingShader::DeferredLightingShader(unsigned int maxAmountOfPointLights,
                                                          unsigned int maxAmountOfSpotLights,
 														 std::string vertexShaderSource, 
 														 std::string fragmentShaderSource) :
-														 DeferredLightingShader(maxAmountOfPointLights, maxAmountOfSpotLights),
-														 ms::ShaderOGL(vertexShaderSource, "", "", "", fragmentShaderSource),
+														 maxAmountOfPointLights(maxAmountOfPointLights), maxAmountOfSpotLights(maxAmountOfSpotLights),
+														 ms::Shader(vertexShaderSource, "", "", "", fragmentShaderSource),
 														 pointLightsLocations(nullptr), spotLightsLocations(nullptr) {
 															 
      spotLightsLocations    = new GLint[AMOUNT_SPOT_LIGHT_PROPERTIES * maxAmountOfSpotLights];
@@ -21,9 +21,9 @@ ms::DeferredLightingShaderOGL::DeferredLightingShaderOGL(unsigned int maxAmountO
 
 }
 
-void  ms::DeferredLightingShaderOGL::_load () {
+void  ms::DeferredLightingShader::_load () {
 	
-	ShaderOGL::_load();
+	Shader::_load();
 	
 	mglUseProgram(program);
 	
@@ -104,103 +104,103 @@ void  ms::DeferredLightingShaderOGL::_load () {
 
 }
 
-void ms::DeferredLightingShaderOGL::set_amount_of_point_lights (int amount) {
+void ms::DeferredLightingShader::set_amount_of_point_lights (int amount) {
 	mglUniform1i(pointLightsAmount, amount);
 }
 
-void ms::DeferredLightingShaderOGL::set_point_light_power (unsigned int index, float power) {
+void ms::DeferredLightingShader::set_point_light_power (unsigned int index, float power) {
 	GLint powerLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_POWER];
 	mglUniform1f(powerLocation, power);
 }
 
-void ms::DeferredLightingShaderOGL::set_point_light_color (unsigned int index, const math::vec3 & color) {
+void ms::DeferredLightingShader::set_point_light_color (unsigned int index, const math::vec3 & color) {
 	GLint colorLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_COLOR];
 	mglUniform3fv(colorLocation, 1, color.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_point_light_position (unsigned int index, const math::vec3 & position) {
+void ms::DeferredLightingShader::set_point_light_position (unsigned int index, const math::vec3 & position) {
 	GLint positionLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_POSITION];
 	mglUniform3fv(positionLocation, 1, position.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_amount_of_spot_lights (int amount) {
+void ms::DeferredLightingShader::set_amount_of_spot_lights (int amount) {
 	mglUniform1i(spotLightsAmount, amount);
 }
 
-void ms::DeferredLightingShaderOGL::set_has_directional_light (bool doesItHave) {
+void ms::DeferredLightingShader::set_has_directional_light (bool doesItHave) {
 	mglUniform1i(hasDirectionalLightLocation, doesItHave == true ? 1 : 0);
 }
 
-void ms::DeferredLightingShaderOGL::set_directional_light_dir (const math::vec3 & dir) {
+void ms::DeferredLightingShader::set_directional_light_dir (const math::vec3 & dir) {
 	mglUniform3fv(directionalLightDirectionLocation, 1, dir.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_directional_light_color (const math::vec3 & color) {
+void ms::DeferredLightingShader::set_directional_light_color (const math::vec3 & color) {
 	mglUniform3fv(directionalLightColorLocation, 1, color.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_camera_transformation (const math::mat4 & transf) {
+void ms::DeferredLightingShader::set_camera_transformation (const math::mat4 & transf) {
 	mglUniformMatrix4fv(cameraTransformationLocation, 1, GL_FALSE, transf.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_spot_light_power (unsigned int index, float power) {
+void ms::DeferredLightingShader::set_spot_light_power (unsigned int index, float power) {
 	GLint powerLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_POWER];
 	mglUniform1f(powerLocation, power);
 }
 
-void ms::DeferredLightingShaderOGL::set_spot_light_color (unsigned int index, const math::vec3 & color) {
+void ms::DeferredLightingShader::set_spot_light_color (unsigned int index, const math::vec3 & color) {
 	GLint colorLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_COLOR];
 	mglUniform3fv(colorLocation, 1, color.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_spot_light_position (unsigned int index, const math::vec3 & position) {
+void ms::DeferredLightingShader::set_spot_light_position (unsigned int index, const math::vec3 & position) {
 	GLint positionLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_POSITION];
 	glUniform3fv(positionLocation, 1, position.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_spot_light_angle (unsigned int index, float angle) {
+void ms::DeferredLightingShader::set_spot_light_angle (unsigned int index, float angle) {
 	GLint angleLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_ANGLE_DEGREES];
 	mglUniform1f(angleLocation, angle);
 }
 
-void ms::DeferredLightingShaderOGL::set_spot_light_direction (unsigned int index, const math::vec3 direction) {
+void ms::DeferredLightingShader::set_spot_light_direction (unsigned int index, const math::vec3 direction) {
 	GLint directionLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_DIRECTION];
 	mglUniform3fv(directionLocation, 1, direction.c_array());
 }
 
-void ms::DeferredLightingShaderOGL::set_rendering_mode (unsigned int settings) {
+void ms::DeferredLightingShader::set_rendering_mode (unsigned int settings) {
 	mglUniform1ui(renderModeLocation, settings);
 }
 
-void ms::DeferredLightingShaderOGL::bind_g_buf_albedo (Texture & albedoTexture) {
+void ms::DeferredLightingShader::bind_g_buf_albedo (Texture & albedoTexture) {
 	mglActiveTexture(GL_TEXTURE2);
 	albedoTexture.use();
 }
 
-void ms::DeferredLightingShaderOGL::bind_shadow_map (Texture & shadowTexture) {
+void ms::DeferredLightingShader::bind_shadow_map (Texture & shadowTexture) {
     mglActiveTexture(GL_TEXTURE3);
     shadowTexture.use();
 }
 
-void ms::DeferredLightingShaderOGL::set_directional_sm_transform (const math::mat4 & color) {
+void ms::DeferredLightingShader::set_directional_sm_transform (const math::mat4 & color) {
     
 }
 
-void ms::DeferredLightingShaderOGL::set_directional_sm_projection (const math::mat4 & color) {
+void ms::DeferredLightingShader::set_directional_sm_projection (const math::mat4 & color) {
 
 }
 
-void ms::DeferredLightingShaderOGL::bind_g_buf_normals (Texture & normalsTexture) {
+void ms::DeferredLightingShader::bind_g_buf_normals (Texture & normalsTexture) {
 	mglActiveTexture(GL_TEXTURE1);
 	normalsTexture.use();
 }
 
-void ms::DeferredLightingShaderOGL::bind_g_buf_posiitons (Texture & positionsTexture) {
+void ms::DeferredLightingShader::bind_g_buf_posiitons (Texture & positionsTexture) {
 	mglActiveTexture(GL_TEXTURE0);
 	positionsTexture.use();
 }
 
-ms::DeferredLightingShaderOGL::~DeferredLightingShaderOGL () {
+ms::DeferredLightingShader::~DeferredLightingShader () {
 	delete [] spotLightsLocations;
 	delete [] pointLightsLocations;
 }

@@ -110,8 +110,6 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     framebuffer->use();
     framebuffer->clear_frame();
 
-    auto lightingSh = dynamic_cast<ShaderOGL*>(lightingShader.get());
-
     lightingShader->use();
 
     lightingShader->set_rendering_mode(this->renderMode);

@@ -1,24 +1,24 @@
 //
-//  forwardShaderOGL.cpp
+//  forwardShader.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 06/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "forwardShaderOGL.hpp"
+#include "forwardShader.hpp"
 
-ms::ForwardShaderOGL::ForwardShaderOGL(unsigned int maximalAmountOfLights,
-									   std::string vSS,
-									   std::string fSS) : ms::ForwardShader(maximalAmountOfLights), ms::ShaderOGL(vSS, "", "", "", fSS) {
+ms::ForwardShader::ForwardShader(unsigned int maximalAmountOfLights,
+							   	std::string vSS,
+							   	std::string fSS) : maximalAmountOfLights(maximalAmountOfLights), ms::Shader(vSS, "", "", "", fSS) {
 	
 	spotLightsLocations 	= new GLint[AMOUNT_SPOT_LIGHT_PROPERTIES * maximalAmountOfLights];
 	pointLightsLocations 	= new GLint[AMOUNT_POINT_LIGHT_PROPERTIES * maximalAmountOfLights];
 	
 }
 
-void  ms::ForwardShaderOGL::_load () {
-	ShaderOGL::_load();
+void  ms::ForwardShader::_load () {
+	Shader::_load();
 	
 	mglUseProgram(program);
 	
@@ -100,95 +100,95 @@ void  ms::ForwardShaderOGL::_load () {
 	
 }
 
-void ms::ForwardShaderOGL::set_projection_matrix (const math::mat4 & proj) {
+void ms::ForwardShader::set_projection_matrix (const math::mat4 & proj) {
 	mglUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, proj.c_array());
 }
 
-void ms::ForwardShaderOGL::set_camera_transformation (const math::mat4 & transf) {
+void ms::ForwardShader::set_camera_transformation (const math::mat4 & transf) {
 	mglUniformMatrix4fv(cameraTransformationLocation, 1, GL_FALSE, transf.c_array());
 }
 
-void ms::ForwardShaderOGL::set_model_transformation (const math::mat4 & modelTransf) {
+void ms::ForwardShader::set_model_transformation (const math::mat4 & modelTransf) {
 	mglUniformMatrix4fv(modelTransformationLocation, 1, GL_FALSE, modelTransf.c_array());
 }
 
-void ms::ForwardShaderOGL::set_has_directional_light (bool doesItHave) {
+void ms::ForwardShader::set_has_directional_light (bool doesItHave) {
 	mglUniform1i(hasDirectionalLightLocation, doesItHave == true ? 1 : 0);
 }
 
-void ms::ForwardShaderOGL::set_amount_of_point_lights (int amount) {
+void ms::ForwardShader::set_amount_of_point_lights (int amount) {
 	mglUniform1i(pointLightsAmount, amount);
 }
 
-void ms::ForwardShaderOGL::set_point_light_power (unsigned int index, float power) {
+void ms::ForwardShader::set_point_light_power (unsigned int index, float power) {
 	GLint powerLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_POWER];
 	mglUniform1f(powerLocation, power);
 }
 
-void ms::ForwardShaderOGL::set_point_light_color (unsigned int index, const math::vec3 & color) {
+void ms::ForwardShader::set_point_light_color (unsigned int index, const math::vec3 & color) {
 	GLint colorLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_COLOR];
 	mglUniform3fv(colorLocation, 1, color.c_array());
 }
 
-void ms::ForwardShaderOGL::set_point_light_position (unsigned int index, const math::vec3 & position) {
+void ms::ForwardShader::set_point_light_position (unsigned int index, const math::vec3 & position) {
 	GLint positionLocation = pointLightsLocations[(index * AMOUNT_POINT_LIGHT_PROPERTIES) + PL_POSITION];
 	mglUniform3fv(positionLocation, 1, position.c_array());
 }
 
-void ms::ForwardShaderOGL::set_has_normal_texture(bool doesItHave) {
+void ms::ForwardShader::set_has_normal_texture(bool doesItHave) {
 	mglUniform1i(hasNormalTextureLocation, doesItHave == true ? 1 : 0);
 }
 
-void ms::ForwardShaderOGL::set_amount_of_spot_lights (int amount) {
+void ms::ForwardShader::set_amount_of_spot_lights (int amount) {
 	mglUniform1i(spotLightsAmount, amount);
 }
 
-void ms::ForwardShaderOGL::set_spot_light_power (unsigned int index, float power) {
+void ms::ForwardShader::set_spot_light_power (unsigned int index, float power) {
 	GLint powerLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_POWER];
 	mglUniform1f(powerLocation, power);
 }
 
-void ms::ForwardShaderOGL::set_spot_light_color (unsigned int index, const math::vec3 & color) {
+void ms::ForwardShader::set_spot_light_color (unsigned int index, const math::vec3 & color) {
 	GLint colorLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_COLOR];
 	mglUniform3fv(colorLocation, 1, color.c_array());
 }
 
-void ms::ForwardShaderOGL::set_spot_light_position (unsigned int index, const math::vec3 & position) {
+void ms::ForwardShader::set_spot_light_position (unsigned int index, const math::vec3 & position) {
 	GLint positionLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_POSITION];
 	glUniform3fv(positionLocation, 1, position.c_array());
 }
 
-void ms::ForwardShaderOGL::set_spot_light_angle (unsigned int index, float angle) {
+void ms::ForwardShader::set_spot_light_angle (unsigned int index, float angle) {
 	GLint angleLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_ANGLE_DEGREES];
 	mglUniform1f(angleLocation, angle);
 }
 
-void ms::ForwardShaderOGL::set_spot_light_direction (unsigned int index, const math::vec3 direction) {
+void ms::ForwardShader::set_spot_light_direction (unsigned int index, const math::vec3 direction) {
 	GLint directionLocation = spotLightsLocations[(index * AMOUNT_SPOT_LIGHT_PROPERTIES) + SL_DIRECTION];
 	mglUniform3fv(directionLocation, 1, direction.c_array());
 }
 
-void ms::ForwardShaderOGL::set_directional_light_dir (const math::vec3 & dir) {
+void ms::ForwardShader::set_directional_light_dir (const math::vec3 & dir) {
 	mglUniform3fv(directionalLightDirectionLocation, 1, dir.c_array());
 }
 
-void ms::ForwardShaderOGL::set_directional_light_color (const math::vec3 & color) {
+void ms::ForwardShader::set_directional_light_color (const math::vec3 & color) {
 	mglUniform3fv(directionalLightColorLocation, 1, color.c_array());
 }
 
-void ms::ForwardShaderOGL::set_has_material (bool doesItHave) {
+void ms::ForwardShader::set_has_material (bool doesItHave) {
 	mglUniform1i(hasMaterialLocation, doesItHave == true ? 1 : 0);
 }
 
-void ms::ForwardShaderOGL::set_has_diffuse_texture (bool doesItHave) {
+void ms::ForwardShader::set_has_diffuse_texture (bool doesItHave) {
 	mglUniform1i(hasDiffuseTextureLocation, doesItHave == true ? 1 : 0);
 }
 
-void ms::ForwardShaderOGL::set_has_specular_texture (bool doesItHave) {
+void ms::ForwardShader::set_has_specular_texture (bool doesItHave) {
 	mglUniform1i(hasSpecularTextureLocation, doesItHave == true ? 1 : 0);
 }
 
-ms::ForwardShaderOGL::~ForwardShaderOGL() {
+ms::ForwardShader::~ForwardShader() {
 	delete [] spotLightsLocations;
 	delete [] pointLightsLocations;
 }

@@ -31,9 +31,8 @@ void ms::PostprocessDrawerOGL::draw_quad() const {
 	shader->use();
 	
 	{
-		ShaderOGL* shad = dynamic_cast<ShaderOGL*>(shader.get());
 		for(int i = 0; i < inputTextures.size(); ++i) {
-			shad->set_uniform("in" + std::to_string(i), i);
+			shader->set_uniform("in" + std::to_string(i), i);
             shader->bind_texture(i, *(inputTextures[i].lock()));
 		}
 	}

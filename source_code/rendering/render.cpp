@@ -14,14 +14,9 @@ std::string ms::Render::get_class () const {
 	return "ms::Render";
 }
 
-void ms::Render::clear_frame () {
-	framebuffer->use();
-	framebuffer->clear_frame();
-}
-
 void ms::Render::_load () {
     shader->load();
-    framebuffer->load();
+    if (framebuffer) { framebuffer->load(); }
 }
 
 void ms::Render::use () {
@@ -33,16 +28,16 @@ void ms::Render::use () {
 	framebuffer->use();
 }
 
-void ms::Render::use (std::unique_ptr<Framebuffer> & fb) {
+void ms::Render::use (Framebuffer & fb) {
     if(!shader->is_loaded()) {
         shader->load();
     }
     
     shader->use();
-    fb->use();
+    fb.use();
 }
 
 void ms::Render::_unload ()  {
 	shader->unload();
-    framebuffer->unload();
+    if ( framebuffer ) { framebuffer->unload(); }
 }

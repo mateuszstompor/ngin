@@ -12,9 +12,9 @@
 #include "../ngin.hpp"
 #include "../../rendering/ogl/deferredRenderOGL.hpp"
 #include "../../rendering/ogl/postprocessDrawerOGL.hpp"
-#include "../../rendering/shaders/ogl/forwardShaderOGL.hpp"
-#include "../../rendering/shaders/ogl/deferredShaderOGL.hpp"
-#include "../../rendering/shaders/ogl/lightSourceDrawerShaderOGL.hpp"
+#include "../../rendering/shaders/forwardShader.hpp"
+#include "../../rendering/shaders/deferredShader.hpp"
+#include "../../rendering/shaders/lightSourceDrawerShader.hpp"
 
 #include "../../utils/loader.hpp"
 #include "../../scene/drawable.hpp"

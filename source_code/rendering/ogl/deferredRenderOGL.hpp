@@ -11,8 +11,8 @@
 
 #include "../../utils/ogl/proxyOGL.hpp"
 #include "../deferredRender.hpp"
-#include "../shaders/ogl/deferredShaderOGL.hpp"
-#include "../shaders/ogl/deferredLightingShaderOGL.hpp"
+#include "../shaders/deferredShader.hpp"
+#include "../shaders/deferredLightingShader.hpp"
 #include "../reusableGeometry.hpp"
 #include "../../utils/ogl/utilsOGL.hpp"
 #include "../../scene/texture.hpp"

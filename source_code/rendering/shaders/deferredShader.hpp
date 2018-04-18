@@ -1,36 +1,50 @@
 //
-//  deferredShader.h
+//  deferredShader.hpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 06/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef deferred_shader_h
-#define deferred_shader_h
+#ifndef deferredShader_hpp
+#define deferredShader_hpp
 
-#include "shader.hpp"
-#include "../../scene/texture.hpp"
+#include "./shader.hpp"
+#include "../../utils/ogl/proxyOGL.hpp"
 
 namespace ms {
 	
-	class DeferredShader : public virtual Shader {
-		
+	class DeferredShader : public Shader {
+	
 	public:
 		
-		virtual void	set_projection_matrix		(const math::mat4 & proj) 		= 0;
-		virtual void	set_camera_transformation	(const math::mat4 & transf) 	= 0;
-		virtual void	set_model_transformation	(const math::mat4 & transf) 	= 0;
+				DeferredShader				(std::string vertexShaderSource,
+											 std::string fragmentShaderSource);
 		
-		virtual void	set_has_material			(bool doesItHave)	 			= 0;
-		virtual void	set_has_diffuse_texture		(bool doesItHave)	 			= 0;
-		virtual void	set_has_specular_texture	(bool doesItHave)	 			= 0;
-		virtual void	set_has_normal_texture		(bool doesItHave)	 			= 0;
-
-		virtual			~DeferredShader()											= default;
+		void 	_load						();
+		void 	set_projection_matrix		(const math::mat4 & proj);
+		void 	set_camera_transformation	(const math::mat4 & transf);
+		void	set_model_transformation	(const math::mat4 & modelTransf);
+		void	set_has_material			(bool doesItHave);
+		void	set_has_diffuse_texture		(bool doesItHave);
+		void	set_has_specular_texture	(bool doesItHave);
+		void	set_has_normal_texture		(bool doesItHave);
+		
+	private:
+		
+		GLint			projectionMatrixLocation;
+		GLint			cameraTransformationLocation;
+		GLint			modelTransformationLocation;
+		
+		GLint			hasMaterialLocation;
+		GLint			hasDiffuseTextureLocation;
+		GLint			hasSpecularTextureLocation;
+		GLint			hasNormalTextureLocation;
+		
+		GLint			materialBlockLocation;
 		
 	};
 	
 }
 
-#endif /* deferred_shader_h */
+#endif /* deferredShader_hpp */

@@ -42,7 +42,6 @@ namespace ms {
 																	 g_pass_shader && 					gShader,
 																	 lighting_shader &&					lightingShader);
 		
-				void 					clear_frame					() override;
 				void					use			     			() override;
 				void 					draw						(Drawable & node, const Scene & scene) override;
 		virtual void 					perform_light_pass			(const Scene * scene) = 0;
@@ -52,7 +51,7 @@ namespace ms {
 		virtual void 					set_render_type				(DebugType type);
 		virtual 						~DeferredRender				() = default;
 		
-	protected:
+//	protected:
 		
 		lighting_shader					lightingShader;
 		

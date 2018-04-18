@@ -25,7 +25,7 @@ ms::NGin::NGin(unsigned int screenWidth,
 	hdrRenderer(nullptr),
 	bloomSplitRenderer(nullptr),
 	bloomMergeRenderer(nullptr),
-    loader{std::make_unique<Loader>(Loader())} {
+    loader{} {
 		
 }
 
@@ -36,7 +36,7 @@ ms::DeferredRender & ms::NGin::get_deferred_render () const {
 //TODO this function is implemented three times
 void ms::NGin::load_model (std::string absolutePath) {
 	
-    Loader::model_data loadedData = loader->load_model(absolutePath);
+    Loader::model_data loadedData = loader.load_model(absolutePath);
     Loader::geometries_vec & geo = std::get<0>(loadedData);
     
     {
@@ -100,7 +100,7 @@ void ms::NGin::load_point_light	(float power,
 								 math::vec3 position,
 								 std::string absolutePath) {
     
-    Loader::model_data loadedData = loader->load_model(absolutePath);
+    Loader::model_data loadedData = loader.load_model(absolutePath);
     Loader::geometries_vec & geo = std::get<0>(loadedData);
     Loader::materials_map & mat = std::get<1>(loadedData);
     Loader::textures_map & tex = std::get<2>(loadedData);
@@ -128,7 +128,7 @@ void ms::NGin::load_spot_light (float power,
 								math::vec3 direction,
 								std::string absolutePath) {
 
-    Loader::model_data loadedData = loader->load_model(absolutePath);
+    Loader::model_data loadedData = loader.load_model(absolutePath);
     Loader::geometries_vec & geo = std::get<0>(loadedData);
     Loader::materials_map & mat = std::get<1>(loadedData);
     Loader::textures_map & tex = std::get<2>(loadedData);
@@ -176,7 +176,10 @@ void ms::NGin::draw_scene() {
     if(chosenRenderer == Renderer::deferred) {
         deferredRenderer->use();
         deferredRenderer->setup_g_buffer_uniforms(scene.get());
-        deferredRenderer->clear_frame();
+        deferredRenderer->gFramebuffer->use();
+        deferredRenderer->gFramebuffer->clear_frame();
+//        deferredRenderer->get_framebuffer().use();
+//        deferredRenderer->get_framebuffer().clear_frame();
         for(int i = 0; i < scene->get_nodes().size(); ++i) {
             auto node = scene->get_nodes()[i];
             if(scene->get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), node->geometry->get_bounding_box())) {
@@ -184,32 +187,33 @@ void ms::NGin::draw_scene() {
             }
         }
         deferredRenderer->perform_light_pass(scene.get());
-        lightSourceRenderer->clear_frame();
+        lightSourceRenderer->get_framebuffer().use();
+        lightSourceRenderer->get_framebuffer().clear_frame();
         lightSourceRenderer->get_framebuffer().copy_depth_from(deferredRenderer->get_framebuffer());
         lightSourceRenderer->get_framebuffer().copy_color_from(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {
         phongForwardRenderer->use();
-        phongForwardRenderer->clear_frame();
+        phongForwardRenderer->get_framebuffer().clear_frame();
         phongForwardRenderer->setup_uniforms(scene.get());
         for(int i = 0; i < scene->get_nodes().size(); ++i) {
             phongForwardRenderer->draw(*scene->get_nodes()[i], *scene);
         }
-        lightSourceRenderer->clear_frame();
+        lightSourceRenderer->get_framebuffer().clear_frame();
         lightSourceRenderer->get_framebuffer().copy_depth_from(phongForwardRenderer->get_framebuffer());
         lightSourceRenderer->get_framebuffer().copy_color_from(phongForwardRenderer->get_framebuffer());
     } else {
         gouraudForwardRenderer->use();
-        gouraudForwardRenderer->clear_frame();
+        gouraudForwardRenderer->get_framebuffer().clear_frame();
         gouraudForwardRenderer->setup_uniforms(scene.get());
         for(int i = 0; i < scene->get_nodes().size(); ++i) {
             gouraudForwardRenderer->draw(*scene->get_nodes()[i], *scene);
         }
-        lightSourceRenderer->clear_frame();
+        lightSourceRenderer->get_framebuffer().clear_frame();
         lightSourceRenderer->get_framebuffer().copy_depth_from(gouraudForwardRenderer->get_framebuffer());
         lightSourceRenderer->get_framebuffer().copy_color_from(gouraudForwardRenderer->get_framebuffer());
     }
-    
-    
+
+
     lightSourceRenderer->use();
     for(int i = 0; i < scene->get_point_lights().size(); ++i) {
         lightSourceRenderer->draw(*scene->get_point_lights()[i], *scene);
@@ -217,32 +221,35 @@ void ms::NGin::draw_scene() {
     for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
         lightSourceRenderer->draw(*scene->get_spot_lights()[i], *scene);
     }
-    
+
     bloomSplitRenderer->use();
-    bloomSplitRenderer->clear_frame();
+    bloomSplitRenderer->get_framebuffer().clear_frame();
     bloomSplitRenderer->draw_quad();
 
     gaussianBlurFirstStepRenderer->use();
-    gaussianBlurFirstStepRenderer->clear_frame();
+    gaussianBlurFirstStepRenderer->get_framebuffer().clear_frame();
     gaussianBlurFirstStepRenderer->draw_quad();
 
     gaussianBlurSecondStepRenderer->use();
-    gaussianBlurSecondStepRenderer->clear_frame();
+    gaussianBlurSecondStepRenderer->get_framebuffer().clear_frame();
     gaussianBlurSecondStepRenderer->draw_quad();
 
     bloomMergeRenderer->use();
-    bloomMergeRenderer->clear_frame();
+    bloomMergeRenderer->get_framebuffer().clear_frame();
     bloomMergeRenderer->draw_quad();
 
-    hdrRenderer->clear_frame();
+    hdrRenderer->get_framebuffer().use();
+    hdrRenderer->get_framebuffer().clear_frame();
     hdrRenderer->draw_quad();
 
-    vignetteRenderer->clear_frame();
+    vignetteRenderer->get_framebuffer().use();
+    vignetteRenderer->get_framebuffer().clear_frame();
     vignetteRenderer->draw_quad();
 
-    scaleRenderer->clear_frame();
+    scaleRenderer->get_framebuffer().use();
+    scaleRenderer->get_framebuffer().clear_frame();
     scaleRenderer->draw_quad();
-
+    
 }
 
 void ms::NGin::set_renderer (Renderer r) {

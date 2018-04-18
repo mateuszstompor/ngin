@@ -25,14 +25,14 @@ namespace ms {
 												 std::unique_ptr<Shader> && 		shader);
 		
 		virtual void			use		     	();
-		virtual void			use		     	(std::unique_ptr<Framebuffer> & 	framebuffer);
+		virtual void			use		     	(Framebuffer & framebuffer);
 		virtual	void			_load			() override;
 		virtual	void 			_unload			() override;
-		virtual void 			clear_frame		();
 		virtual std::string 	get_class		() const override;
-		virtual void			draw  			(Drawable & node, const Scene & scene) { };
-		virtual					~Render 		() = default;
+		virtual void			draw  			(Drawable & node, const Scene & scene) = 0;
 		Framebuffer &			get_framebuffer () { return *framebuffer; }
+		Shader &				get_shader		() { return *shader; }
+		virtual					~Render 		() = default;
 		
 	protected:
 		
