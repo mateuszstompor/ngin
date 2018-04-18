@@ -15,8 +15,8 @@ ms::RenderbufferOGL::RenderbufferOGL (Texture::Format			format,
 									  unsigned int 				height
 									  ) : Renderbuffer(format, associatedType, mipMapLevel, width, height), renderBuffer(0) {
 	
-	internalFormat = RenderbufferOGL::get_internal_format(format, associatedType);
-	
+	internalFormat = TextureOGL::underlying_type(associatedType,format);
+
 }
 
 ms::RenderbufferOGL::RenderbufferOGL (Texture::Format			format,
@@ -32,7 +32,7 @@ std::string ms::RenderbufferOGL::get_class () {
 void ms::RenderbufferOGL::_load () {
 	mglGenRenderbuffers(1, &this->renderBuffer);
 	mglBindRenderbuffer(GL_RENDERBUFFER, this->renderBuffer);
-	mglRenderbufferStorage(GL_RENDERBUFFER, RenderbufferOGL::get_internal_format(format, associatedType), width, height);
+	mglRenderbufferStorage(GL_RENDERBUFFER, internalFormat, width, height);
 }
 
 void ms::RenderbufferOGL::_unload () {
@@ -46,27 +46,6 @@ void ms::RenderbufferOGL::use () {
 	}
 	
 	mglBindRenderbuffer(GL_RENDERBUFFER, this->renderBuffer);
-}
-
-GLenum ms::RenderbufferOGL::get_internal_format (Texture::Format format, Texture::AssociatedType associatedType) {
-	
-	if(associatedType == Texture::AssociatedType::UNSIGNED_BYTE) {
-		switch (format) {
-		#ifndef ios_build
-			case Texture::Format::depth_32:
-			return GL_DEPTH_COMPONENT32;
-		#endif
-			case Texture::Format::depth_16:
-			return GL_DEPTH_COMPONENT16;
-			case Texture::Format::depth_24:
-			return GL_DEPTH_COMPONENT24;
-			default:
-			break;
-		}
-	}
-	
-	std::cerr << "CRITICAL ERROR, FORMAT NOT SUPPORTED" << std::endl;
-	assert(false);
 }
 
 GLuint ms::RenderbufferOGL::get_underlying_id () {

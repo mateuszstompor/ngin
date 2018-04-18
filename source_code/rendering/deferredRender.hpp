@@ -25,67 +25,62 @@ namespace ms {
 	
 	class DeferredRender : public Render {
 		
-		using sm_spot_lights = std::vector<std::tuple<std::unique_ptr<Framebuffer>, std::shared_ptr<Texture>>>;
+		using sm_spot_lights = std::vector<std::unique_ptr<Framebuffer>>;
+		using lighting_shader 	= std::unique_ptr<DeferredLightingShader>;
+		using g_pass_shader 	= std::unique_ptr<DeferredShader>;
+		using shadow_shader 	= std::unique_ptr<Shader>;
 		
 	public:
 		
 		enum class DebugType;
 		
-													DeferredRender					(unsigned int maxPointLightsAmount,
-																					 unsigned int maxSpotLightsAmount,
-																					 std::shared_ptr<Framebuffer> framebuffer,
-																					 std::string gBufferVertexShaderSource,
-																					 std::string gBufferFragmentShaderSource,
-																					 std::string lightingVertexShaderSource,
-																					 std::string lightingFragmentShaderSource,
-																					 std::string	shadowMappingVertexShader,
-																					 std::string shadowMappingFragmentShader);
+										DeferredRender				(unsigned int 						maxPointLightsAmount,
+																	 unsigned int 						maxSpotLightsAmount,
+																	 std::unique_ptr<Framebuffer> && 	framebuffer,
+																	 std::string 						gBufferVertexShaderSource,
+																	 std::string 						gBufferFragmentShaderSource,
+																	 std::string 						lightingVertexShaderSource,
+																	 std::string 						lightingFragmentShaderSource,
+																	 std::string						shadowMappingVertexShader,
+																	 std::string 						shadowMappingFragmentShader);
 		
-				void 								clear_frame						() override;
-				void								use				     			() override;
-				void 								draw							(Drawable * node, const Scene * scene) override;
-		virtual void 								perform_light_pass				(const Scene * scene) = 0;
-		virtual void 								setup_material_uniforms			(const Scene * scene, const Drawable * node);
-		virtual void 								setup_lightpass_uniforms		(const Scene * scene);
-		virtual void 								setup_g_buffer_uniforms			(const Scene * scene);
-		virtual void 								set_render_type					(DebugType type);
-		virtual 									~DeferredRender					() = default;
+				void 					clear_frame					() override;
+				void					use			     			() override;
+				void 					draw						(Drawable * node, const Scene * scene) override;
+		virtual void 					perform_light_pass			(const Scene * scene) = 0;
+		virtual void 					setup_material_uniforms		(const Scene * scene, const Drawable * node);
+		virtual void 					setup_lightpass_uniforms	(const Scene * scene);
+		virtual void 					setup_g_buffer_uniforms		(const Scene * scene);
+		virtual void 					set_render_type				(DebugType type);
+		virtual 						~DeferredRender				() = default;
 		
 	protected:
 		
-		std::string 								gBufferVertexShaderSource;
-		std::string 								gBufferFragmentShaderSource;
+		std::string 					gBufferVertexShaderSource;
+		std::string 					gBufferFragmentShaderSource;
 		
-		std::string 								lightingVertexShaderSource;
-		std::string 								lightingFragmentShaderSource;
+		std::string 					lightingVertexShaderSource;
+		std::string 					lightingFragmentShaderSource;
 		
-		std::string 								shadowMappingVertexShaderSource;
-		std::string 								shadowMappingFragmentShaderSource;
+		std::string 					shadowMappingVertexShaderSource;
+		std::string 					shadowMappingFragmentShaderSource;
 		
-		std::shared_ptr<Texture>					gPosition;
-		std::shared_ptr<Texture>					gAlbedo;
-		std::shared_ptr<Texture>					gNormal;
-		std::shared_ptr<Renderbuffer>				depthRenderbuffer;
+		std::unique_ptr<Shader>			shadowShader;
+		g_pass_shader					gShader;
+		lighting_shader					lightingShader;
 		
-		std::shared_ptr<Texture>					shadowTexture;
+		sm_spot_lights					spotLightsShadowComponents;
 		
-		std::unique_ptr<Shader>						shadowShader;
-		std::unique_ptr<DeferredShader>				gShader;
-		std::unique_ptr<DeferredLightingShader>		lightingShader;
+		unsigned int 					maxPointLightsAmount;
+		unsigned int 					maxSpotLightsAmount;
 		
-		sm_spot_lights								spotLightsShadowComponents;
+		unsigned int					renderMode;
+		bool							debugMode;
+		DebugType						debugType;
 		
-		unsigned int 								maxPointLightsAmount;
-		unsigned int 								maxSpotLightsAmount;
-		
-		unsigned int								renderMode;
-		bool										debugMode;
-		DebugType									debugType;
-		
-		std::unique_ptr<Framebuffer>				shadowFramebuffer;
-		
-		std::unique_ptr<Framebuffer>				gFramebuffer;
-		std::shared_ptr<Drawable> 					quad;
+		std::unique_ptr<Framebuffer>	shadowFramebuffer;
+		std::unique_ptr<Framebuffer>	gFramebuffer;
+		std::shared_ptr<Drawable> 		quad;
 		
 	};
 	
@@ -98,7 +93,5 @@ enum class ms::DeferredRender::DebugType {
 	albedo,
 	specular
 };
-
-
 
 #endif /* defered_render_h */

@@ -17,26 +17,26 @@ namespace ms {
 		
 	public:
 		
-		inline 					Renderbuffer		(Texture::Format			format,
-													 Texture::AssociatedType	associatedType,
-													 unsigned int 				mipMapLevel,
-													 unsigned int 				width,
-													 unsigned int 				height);
+    inline 					        Renderbuffer		(Texture::Format			format,
+                                                         Texture::AssociatedType	associatedType,
+                                                         unsigned int 				mipMapLevel,
+                                                         unsigned int 				width,
+                                                         unsigned int 				height);
 		
-		inline 					Renderbuffer		(Texture::Format			format,
-													 Texture::AssociatedType	associatedType,
-													 unsigned int 				width,
-													 unsigned int 				height);
+    inline 					        Renderbuffer		(Texture::Format			format,
+                                                         Texture::AssociatedType	associatedType,
+                                                         unsigned int 				width,
+                                                         unsigned int 				height);
 		
-								Renderbuffer		(const Texture &) = delete;
-			Renderbuffer &		operator = 			(const Renderbuffer &) = delete;
-			virtual void 		use					() = 0;
-	inline	virtual std::string	get_class			();
-			virtual 			~Renderbuffer		() = default;
+                                    Renderbuffer		(const Texture &) = delete;
+                    Renderbuffer &  operator = 			(const Renderbuffer &) = delete;
+			virtual void 		    use					() = 0;
+	inline	virtual std::string	    get_class			();
+			virtual 			    ~Renderbuffer		() = default;
 		
 	protected:
 		
-		Texture::AssociatedType				associatedType;
+        Texture::AssociatedType				associatedType;
 		Texture::Format						format;
 		unsigned int 						mipMapLevel;
 		unsigned int 						width;
@@ -66,6 +66,5 @@ ms::Renderbuffer::Renderbuffer(Texture::Format 			format,
 std::string ms::Renderbuffer::get_class () {
 	return "ms::Renderbuffer";
 }
-
 
 #endif /* renderbuffer_hpp */

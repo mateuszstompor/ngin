@@ -8,9 +8,9 @@
 
 #include "render.hpp"
 
-ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer) : framebuffer(framebuffer) {}
+ms::Render::Render(std::unique_ptr<Framebuffer> && framebuffer) : framebuffer(std::move(framebuffer)) {}
 
-ms::Render::Render(std::shared_ptr<Framebuffer> framebuffer, std::unique_ptr<Shader> shader) : framebuffer(framebuffer), shader(std::move(shader)) { }
+ms::Render::Render(std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader) : framebuffer(std::move(framebuffer)), shader(std::move(shader)) { }
 
 std::string ms::Render::get_class () const {
 	return "ms::Render";
@@ -22,7 +22,8 @@ void ms::Render::clear_frame () {
 }
 
 void ms::Render::_load () {
-	this->shader->load();
+    shader->load();
+    framebuffer->load();
 }
 
 void ms::Render::use () {
@@ -35,5 +36,6 @@ void ms::Render::use () {
 }
 
 void ms::Render::_unload ()  {
-	this->shader->unload();
+	shader->unload();
+    framebuffer->unload();
 }

@@ -21,9 +21,10 @@ namespace ms {
 	
 	public:
 		
-		 						ForwardRender					(unsigned int 					maximalAmountOfLights,
-																 std::shared_ptr<Framebuffer> 	framebuffer,
-																 std::unique_ptr<ForwardShader>  shader);
+		 						ForwardRender					(unsigned int 						maximalAmountOfLights,
+																 std::unique_ptr<Framebuffer> && 	framebuffer,
+																 std::unique_ptr<ForwardShader> && 	shader);
+		
 		virtual std::string 	get_class						() const override;
 		virtual void 			draw  							(Drawable * node, const Scene * scene) override;
 		virtual void 			setup_uniforms					(const Scene * scene);
@@ -33,9 +34,9 @@ namespace ms {
 	
 	protected:
 		
-		std::string 						vertexShaderSource;
-		std::string 						fragmentShaderSource;
-		unsigned int 						maximalAmountOfLights;
+		std::string 			vertexShaderSource;
+		std::string 			fragmentShaderSource;
+		unsigned int 			maximalAmountOfLights;
 				
 	};
 	

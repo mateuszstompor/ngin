@@ -50,9 +50,10 @@ namespace ms {
 																	 float			lightingAngleDegrees,
 																	 math::vec3 	direction,
 																	 std::string 	absolutePath);
+        
         virtual void                            set_renderer        (Renderer r);
 		virtual void 							load 				() = 0;
-		virtual void 							unload 				();
+		virtual void 							unload 				() = 0;
         virtual void							draw_scene  		();
 		DeferredRender & 						get_deferred_render	() const;
 		virtual void							load_model			(std::string 	absolutePath);
@@ -75,9 +76,6 @@ namespace ms {
 																	 float 			lightingAngleDegrees,
 																	 math::vec3 	direction) = 0;
 		
-		
-		
-		
 		std::unique_ptr<Loader>					loader;
 		std::unique_ptr<DeferredRender>         deferredRenderer;
 		std::unique_ptr<ForwardRender>          gouraudForwardRenderer;
@@ -91,18 +89,6 @@ namespace ms {
         std::unique_ptr<PostprocessDrawer>      vignetteRenderer;
 		std::unique_ptr<PostprocessDrawer>     	scaleRenderer;
 		
-		std::shared_ptr<Framebuffer> 			oneColorDepthFramebuffer;
-		std::shared_ptr<Framebuffer> 			secondOneColorFramebuffer;
-		std::shared_ptr<Framebuffer> 			thirdOneColorFramebuffer;
-		std::shared_ptr<Framebuffer> 			fourthOneColorFramebuffer;
-		std::shared_ptr<Framebuffer> 			fifthOneColorFramebuffer;
-
-		std::shared_ptr<Framebuffer> 			twoColorsFramebuffer;
-        
-        
-        std::shared_ptr<Framebuffer>            vignetteFramebuffer;
-		std::shared_ptr<Framebuffer> 			windowFramebuffer;
-
 		unsigned int							screenWidth;
 		unsigned int							screenHeight;
 

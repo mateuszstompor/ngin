@@ -21,59 +21,55 @@ namespace ms {
 		
 	public:
 		
-								TextureOGL			(Texture::Type 	type,
-													 std::string		name,
-												 	 Format			format,
-													 AssociatedType	associatedType,
-												 	 MinFilter 		minFilter,
-												 	 MagFilter 		magFilter,
-												 	 Wrapping 		sWrapping,
-												 	 Wrapping 		tWrapping,
-												 	 unsigned int 	mipMapLevel,
-												 	 unsigned int 	width,
-												 	 unsigned int 	height);
+                                    TextureOGL			(Texture::Type      type,
+                                                         std::string        name,
+                                                         Format             format,
+                                                         AssociatedType     associatedType,
+                                                         MinFilter          minFilter,
+                                                         MagFilter          magFilter,
+                                                         Wrapping           sWrapping,
+                                                         Wrapping           tWrapping,
+                                                         unsigned int       mipMapLevel,
+                                                         unsigned int       width,
+                                                         unsigned int       height);
 		
-								TextureOGL			(Texture::Type 	type,
-													 std::string	name,
-													 Format			format,
-													 AssociatedType	associatedType,
-													 unsigned int 	width,
-													 unsigned int 	height);
-		
-								TextureOGL			(Texture::Type 	type,
-													 Format			format,
-													 AssociatedType	associatedType,
-													 unsigned int 	width,
-													 unsigned int 	height);
-		
-								TextureOGL			(const TextureOGL & texture) = delete;
-				TextureOGL &	operator =			(const TextureOGL & texture) = delete;
-		
-		const 	GLuint			get_underlying_id	() const;
-		
-		virtual void    		_load  				() override;
-		virtual void 			_unload 			() override;
-		virtual std::string		get_class			() const override;
+                                    TextureOGL			(Texture::Type      type,
+                                                         std::string        name,
+                                                         Format             format,
+                                                         AssociatedType     associatedType,
+                                                         unsigned int       width,
+                                                         unsigned int       height);
+        
+                                    TextureOGL			(Texture::Type      type,
+                                                         Format             format,
+                                                         AssociatedType     associatedType,
+                                                         unsigned int       width,
+                                                         unsigned int       height);
 
-		virtual void 			use					() override;
-								~TextureOGL			() = default;
+                                    TextureOGL			(const TextureOGL & texture) = delete;
+                    TextureOGL &	operator =			(const TextureOGL & texture) = delete;
+		const       GLuint          get_underlying_id	() const;
+                    void            _load  				() override;
+		            void            _unload 			() override;
+                    std::string		get_class			() const override;
+                    void 			use					() override;
+                                    ~TextureOGL			() = default;
+        
+        static      GLenum          to_ogl              (MinFilter          minFilter);
+        static      GLenum          to_ogl              (MagFilter          magFilter);
+        static      GLenum          to_ogl              (Wrapping           wrapping);
+        static      GLenum          to_ogl              (Format             format);
+        static      GLenum          to_ogl              (AssociatedType     type);
+        static      GLenum          to_ogl              (Texture::Type      type);
+        static      GLenum          underlying_type     (AssociatedType associatedType, Format format);
+		
 	protected:
 		
-		static 	GLenum			to_ogl				(MinFilter 			minFilter);
-		static 	GLenum			to_ogl				(MagFilter 			magFilter);
-		static 	GLenum			to_ogl				(Wrapping 			wrapping);
-		static	GLenum			to_ogl				(Format 			format);
-		static 	GLenum			to_ogl				(AssociatedType 	type);
-		static 	GLenum			to_ogl				(Texture::Type 		type);
-				GLenum			underlying_type		() const;
-		
-	protected:
-		
-		GLint					internalFormat;
-		GLenum					colorFormat;
-		GLenum					type;
-		GLenum					target;
-		GLuint					texture;
+                    GLint           internalFormat;
+                    GLenum          colorFormat;
+                    GLenum          type;
+                    GLenum          target;
+                    GLuint          texture;
 		
 	};
 	

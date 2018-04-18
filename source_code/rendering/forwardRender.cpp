@@ -9,8 +9,8 @@
 #include "forwardRender.hpp"
 
 ms::ForwardRender::ForwardRender(unsigned int maxAOL,
-								 std::shared_ptr<Framebuffer> framebuffer,
-								 std::unique_ptr<ForwardShader>  shader) : 	Render(framebuffer, std::move(shader)) {}
+								 std::unique_ptr<Framebuffer> && framebuffer,
+                                 std::unique_ptr<ForwardShader> && shader) : Render(std::move(framebuffer), std::move(shader)) {}
 
 
 

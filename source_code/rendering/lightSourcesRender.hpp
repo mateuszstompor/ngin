@@ -18,8 +18,8 @@ namespace ms {
 		
 	public:
 		
-		 		LightSourcesRender		(std::shared_ptr<Framebuffer> 				framebuffer,
-										 std::unique_ptr<LightSourceDrawerShader>  	shader);
+		 		LightSourcesRender		(std::unique_ptr<Framebuffer> &&                framebuffer,
+										 std::unique_ptr<LightSourceDrawerShader> &&    shader);
 		
 		virtual ~LightSourcesRender		() = default;
 		void	draw  					(Drawable * node, const Scene * scene)			override;

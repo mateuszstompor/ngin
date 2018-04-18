@@ -9,8 +9,8 @@
 #include "lightSourcesRender.hpp"
 
 ms::LightSourcesRender::LightSourcesRender(
-										   std::shared_ptr<Framebuffer> 				framebuffer,
-										   std::unique_ptr<LightSourceDrawerShader>  	shader) : 	Render(framebuffer, std::move(shader)) { }
+										   std::unique_ptr<Framebuffer> && framebuffer,
+                                           std::unique_ptr<LightSourceDrawerShader> && shader) : Render(std::move(framebuffer), std::move(shader)) { }
 
 void ms::LightSourcesRender::draw (Drawable * node, const Scene * scene) {
 	LightSourceDrawerShader * drawer = dynamic_cast<LightSourceDrawerShader*>(shader.get());

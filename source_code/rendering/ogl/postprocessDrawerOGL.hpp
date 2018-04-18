@@ -21,13 +21,13 @@ namespace ms {
 	
 	public:
 		
-									PostprocessDrawerOGL	(std::vector<std::shared_ptr<Texture>> 	input,
-															 std::shared_ptr<Framebuffer> 			framebuffer,
-															 std::unique_ptr<Shader>				shaderProgram);
-
+									PostprocessDrawerOGL	(std::vector<std::weak_ptr<Texture>> 	input,
+															 std::unique_ptr<Framebuffer> &&        framebuffer,
+															 std::unique_ptr<Shader> &&             shaderProgram);
+        virtual void                _load                   ()                                      override;
+        virtual void                _unload                 ()                                      override;
 		virtual void 				draw_quad				() const                                override;
 		virtual std::string			get_class				() const                                override;
-		virtual void				draw  					(Drawable * node, const Scene * scene)	override;
 	
 	};
 	

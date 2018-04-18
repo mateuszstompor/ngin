@@ -29,9 +29,9 @@ void ms::DrawableOGL::draw () {
 	mglDrawElements(GL_TRIANGLES, geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 }
 
-std::shared_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
+std::unique_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
 	
-    auto drawable = std::make_shared<DrawableOGL>();
+    auto drawable = std::make_unique<DrawableOGL>();
     auto quad = std::make_shared<GeometryOGL>();
 	
 	for(int i = 0; i < 4; ++i) {

@@ -27,31 +27,31 @@ namespace ms {
     class NGinOGL : public NGin {
         
     public:
-				NGinOGL     (unsigned int 	screenWidth,
-							 unsigned int 	screenHeight,
-							 unsigned int   frameBufferWidth,
-							 unsigned int   frameBufferHeight,
-							 float          camNear,
-							 float          camFar,
-							 float          fovDegrees,
-							 float          aspect);
+                                        NGinOGL             (unsigned int 	screenWidth,
+                                                             unsigned int 	screenHeight,
+                                                             unsigned int   frameBufferWidth,
+                                                             unsigned int   frameBufferHeight,
+                                                             float          camNear,
+                                                             float          camFar,
+                                                             float          fovDegrees,
+                                                             float          aspect);
         
-                NGinOGL     (unsigned int                   screenWidth,
-                             unsigned int                   screenHeight,
-                             unsigned int                   frameBufferWidth,
-                             unsigned int                   frameBufferHeight,
-                             std::unique_ptr<Camera> &&     cam,
-                             std::shared_ptr<Framebuffer>   defaultFramebuffer);
-		
-				NGinOGL     (unsigned int 	screenWidth,
-							 unsigned int 	screenHeight,
-							 unsigned int frameBufferWidth,
-							 unsigned int frameBufferHeight,
-							 float camNear,
-							 float camFar,
-							 float fovDegrees,
-							 float aspect,
-							 std::shared_ptr<Framebuffer>	defaultFramebuffer);
+                                        NGinOGL             (unsigned int                   screenWidth,
+                                                             unsigned int                   screenHeight,
+                                                             unsigned int                   frameBufferWidth,
+                                                             unsigned int                   frameBufferHeight,
+                                                             std::unique_ptr<Camera> &&     cam,
+                                                             std::unique_ptr<Framebuffer> && defaultFramebuffer);
+        
+                                        NGinOGL             (unsigned int 	screenWidth,
+                                                             unsigned int 	screenHeight,
+                                                             unsigned int frameBufferWidth,
+                                                             unsigned int frameBufferHeight,
+                                                             float camNear,
+                                                             float camFar,
+                                                             float fovDegrees,
+                                                             float aspect,
+                                                             std::unique_ptr<Framebuffer> && defaultFramebuffer);
 		
 		void 							unload				() 							override;
 		void 							load				() 							override;

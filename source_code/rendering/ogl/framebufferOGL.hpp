@@ -24,7 +24,7 @@ namespace ms {
 	
 	protected:
 		
-		typedef std::shared_ptr<FramebufferOGL> fb_ptr;
+		typedef std::unique_ptr<FramebufferOGL> fb_ptr;
 		
 	public:
 		
@@ -40,12 +40,14 @@ namespace ms {
 		virtual void		use_for_write					() override;
 		virtual void		configure						() override;
 		virtual void 		bind_color_buffer				(int index,
-															 std::shared_ptr<Texture> texture) override;
+															 std::unique_ptr<Texture> && texture) override;
 		virtual void 		bind_color_buffer				(int index,
-															 std::shared_ptr<Renderbuffer> renderbuffer) override;
-		virtual void 		bind_depth_buffer				(std::shared_ptr<Renderbuffer> renderbuffer) override;
-        virtual void        bind_depth_buffer               (std::shared_ptr<Texture> texture) override;
-		virtual void 		copy_depth_from					(Framebuffer & frame) override;
+															 std::unique_ptr<Renderbuffer> && renderbuffer) override;
+		virtual void 		bind_depth_buffer				(std::unique_ptr<Renderbuffer> && renderbuffer) override;
+        virtual void        bind_depth_buffer               (std::unique_ptr<Texture> && texture) override;
+		virtual void 		copy_depth_from					(Framebuffer & frame, Texture::MagFilter filter) override;
+        virtual void        copy_color_from                 (Framebuffer & frame, Texture::MagFilter filter) override;
+        virtual void        copy_framebuffer                (Framebuffer & frame, Texture::MagFilter filter) override;
 		virtual bool		is_complete						() const override;
 		virtual void    	_load  							() override;
 		virtual void 		_unload 						() override;

@@ -26,22 +26,21 @@ namespace ms {
 		
 		public:
 		
-                                    DeferredRenderOGL   (unsigned int                   maxPointLightsAmount,
-                                                         unsigned int                   maxSpotLightsAmount,
-												 		 std::string                    gBufferVertexShaderSource,
-												 		 std::string                    gBufferFragmentShaderSource,
-												 		 std::string                    lightingVertexShaderSource,
-												 		 std::string                    lightingFragmentShaderSource,
-                                                         std::string                    shadowMappingVertexShader,
-                                                         std::string                    shadowMappingFragmentShader,
-												 		 std::shared_ptr<Framebuffer>   framebuffer);
+                                    DeferredRenderOGL   (unsigned int                       maxPointLightsAmount,
+                                                         unsigned int                       maxSpotLightsAmount,
+												 		 std::string                        gBufferVertexShaderSource,
+												 		 std::string                        gBufferFragmentShaderSource,
+												 		 std::string                        lightingVertexShaderSource,
+												 		 std::string                        lightingFragmentShaderSource,
+                                                         std::string                        shadowMappingVertexShader,
+                                                         std::string                        shadowMappingFragmentShader,
+												 		 std::unique_ptr<Framebuffer> &&    framebuffer);
 		
 									DeferredRenderOGL	(const DeferredRenderOGL &) = delete;
 			DeferredRenderOGL & 	operator = 			(const DeferredRenderOGL &) = delete;
 			void					_load				() 												override;
 			void 					_unload				() 												override;
 			void 					perform_light_pass	(const Scene * scene) 							override;
-			virtual					~DeferredRenderOGL 	() = default;
 		
 	};
 	

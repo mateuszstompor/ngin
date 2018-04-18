@@ -62,7 +62,7 @@ ms::TextureOGL::TextureOGL	(Texture::Type 	textureType,
 	this->target = to_ogl(textureType);
 	this->type = TextureOGL::to_ogl(associatedType);
 	this->colorFormat = TextureOGL::to_ogl(internalFormat);
-	this->internalFormat = underlying_type();
+    this->internalFormat = TextureOGL::underlying_type(this->associatedType, this->format);
 	this->texture = 0;
 }
 
@@ -114,8 +114,8 @@ GLenum ms::TextureOGL::to_ogl (MinFilter minFilter) {
 			return GL_LINEAR_MIPMAP_LINEAR;
 		default:
 			//critical error
+            std::cerr << "Filter type not supported" << std::endl;
 			assert(false);
-			break;
 	}
 }
 
@@ -126,10 +126,8 @@ GLenum ms::TextureOGL::to_ogl (MagFilter magFilter) {
 		case Texture::MagFilter::nearest:
 			return GL_NEAREST;
 		default:
-			//critical error
 			std::cerr << "Filter type not supported" << std::endl;
 			assert(false);
-			break;
 	}
 }
 
@@ -141,33 +139,28 @@ GLenum ms::TextureOGL::to_ogl (Wrapping wrapping) {
 			return GL_REPEAT;
 		case Texture::Wrapping::clamp_to_edge:
 			return GL_CLAMP_TO_EDGE;
-			
 	//DOESNT RUN ON IOS
 	#ifndef ios_build
 		case Texture::Wrapping::clamp_to_border:
 			return GL_CLAMP_TO_BORDER;
 	#endif
-			
 		default:
-			//critical error
 			std::cerr << "Wrapping type not supported" << std::endl;
 			assert(false);
 	}
+    
 }
 
 GLenum	ms::TextureOGL::to_ogl (Texture::Type type) {
-	
 	switch (type) {
 		case ms::Texture::Type::tex_2d:
 			return GL_TEXTURE_2D;
 		case ms::Texture::Type::tex_cube_map:
 			return GL_TEXTURE_CUBE_MAP;
 		default:
-			break;
+            std::cerr << "Texture type not supported" << std::endl;
+            assert(false);
 	}
-	
-	std::cerr << "Texture type not supported" << std::endl;
-	assert(false);
 }
 
 const GLuint ms::TextureOGL::get_underlying_id () const {
@@ -215,7 +208,7 @@ std::string ms::TextureOGL::get_class () const {
 	return "ms::TextureOGL";
 }
 
-GLenum ms::TextureOGL::underlying_type () const {
+GLenum ms::TextureOGL::underlying_type (AssociatedType associatedType, Format format) {
 	if (associatedType == AssociatedType::FLOAT) {
 		if (format == Texture::Format::rgb_16_16_16) {
 			return GL_RGB16F;
