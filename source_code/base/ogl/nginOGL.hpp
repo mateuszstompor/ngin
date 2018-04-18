@@ -16,7 +16,7 @@
 #include "../../rendering/shaders/ogl/deferredShaderOGL.hpp"
 #include "../../rendering/shaders/ogl/lightSourceDrawerShaderOGL.hpp"
 
-#include "../../utils/ogl/loaderOGL.hpp"
+#include "../../utils/loader.hpp"
 #include "../../scene/ogl/drawableOGL.hpp"
 #include "../../scene/lights/ogl/pointLightOGL.hpp"
 #include "../../scene/lights/ogl/spotLightOGL.hpp"
@@ -55,7 +55,6 @@ namespace ms {
 		
 		void 							unload				() 							override;
 		void 							load				() 							override;
-		std::unique_ptr<Loader>			get_loader			() 							override;
 		std::shared_ptr<Drawable>		get_drawable		() 							override;
 		std::shared_ptr<PointLight>		get_point_light		(float 			power,
 															 math::vec3 	color,

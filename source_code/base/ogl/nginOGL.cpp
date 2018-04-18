@@ -344,10 +344,6 @@ std::shared_ptr<ms::Drawable> ms::NGinOGL::get_drawable() {
 	return std::make_shared<DrawableOGL>();
 }
 
-std::unique_ptr<ms::Loader> ms::NGinOGL::get_loader () {
-	return std::make_unique<LoaderOGL>();
-}
-
 std::shared_ptr<ms::SpotLight> ms::NGinOGL::get_spot_light (float 		power,
 															math::vec3 	color,
 															math::vec3 	position,

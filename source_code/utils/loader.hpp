@@ -24,6 +24,7 @@
 #include "../scene/ogl/materialOGL.hpp"
 #include "../scene/texture.hpp"
 #include "../scene/drawable.hpp"
+#include "../scene/ogl/geometryOGL.hpp"
 
 namespace ms {
 	
@@ -41,35 +42,14 @@ namespace ms {
 		
 	protected:
 		
-		model_data 							process_node			(aiNode *		node,
-																	 const aiScene *	scene);
-		
-		std::shared_ptr<Geometry> 			process_geometry		(aiMesh * mesh, const aiScene * scene);
-		textures_and_materials 				load_materials			(const aiScene * scene, std::string directoryPath);
-		std::shared_ptr<Texture>			load_embeded_texture	(aiTexture * texture, std::string withName);
-		std::shared_ptr<Texture>			load_texture_from_file	(std::string absolutePath);
-		std::vector<std::string>			get_texture_paths		(aiTextureType type, aiMaterial * mat, std::string directoryPath);
-		ms::math::vec3						to_vec3					(aiColor3D color);
-		virtual std::shared_ptr<Geometry> 	get_geometry			() = 0;
-		
-		virtual std::shared_ptr<Material> 	get_material			(math::vec3 ambient,
-																	 math::vec3 diffuse,
-																	 math::vec3 specular,
-																	 float shininess,
-																	 float opacity,
-																	 std::string name) = 0;
-		
-		virtual std::shared_ptr<Texture> 	get_texture				(std::string				name,
-																	 Texture::Format			format,
-																	 Texture::AssociatedType	associatedType,
-																	 Texture::MinFilter			minFilter,
-																	 Texture::MagFilter			magFilter,
-																	 Texture::Wrapping			sWrapping,
-																	 Texture::Wrapping			tWrapping,
-																	 unsigned int 				mipMapLevel,
-																	 unsigned int 				width,
-																	 unsigned int 				height) = 0;
-		
+		model_data                  process_node			(aiNode const &	node, aiScene const & scene);
+		std::shared_ptr<Geometry>   process_geometry		(aiMesh const & mesh, aiScene const & scene);
+		textures_and_materials      load_materials			(aiScene const & scene, std::string const & directoryPath);
+		std::shared_ptr<Texture>    load_embeded_texture	(aiTexture const & texture, std::string const & withName);
+		std::shared_ptr<Texture>    load_texture_from_file	(std::string const & absolutePath);
+		std::vector<std::string>    get_texture_paths		(aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath);
+		ms::math::vec3              to_vec3					(aiColor3D const & color);
+        
 	};
 	
 }

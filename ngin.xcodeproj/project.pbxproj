@@ -140,7 +140,6 @@
 		56DF0F3B20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56DF0F3C20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56DF0F3D20571B6D00713420 /* loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F3A20571B6D00713420 /* loader.hpp */; };
-		56DF0F452057233900713420 /* loaderOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F422057233900713420 /* loaderOGL.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -320,7 +319,6 @@
 		56D29AD1207B8E2B0080CB3B /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/arm64/libzlibstatic.a"; sourceTree = "<group>"; };
 		56DF0F3920571B6D00713420 /* loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loader.cpp; sourceTree = "<group>"; };
 		56DF0F3A20571B6D00713420 /* loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
-		56DF0F422057233900713420 /* loaderOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = loaderOGL.hpp; sourceTree = "<group>"; };
 		56E611B720574FFF0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56E611BC2057520E0036FA07 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = ../assimp/lib/iOS/x86_64/libassimp.a; sourceTree = "<group>"; };
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
@@ -691,7 +689,6 @@
 				5676F296205222CB002EAB31 /* utilsOGL.hpp */,
 				5676F29A20522919002EAB31 /* proxyOGL.hpp */,
 				5676F29B20522AD1002EAB31 /* proxyOGL.cpp */,
-				56DF0F422057233900713420 /* loaderOGL.hpp */,
 			);
 			path = ogl;
 			sourceTree = "<group>";
@@ -774,7 +771,6 @@
 				560627CC20633B5F005085CD /* framebufferOGL.hpp in Headers */,
 				5676D56E204E1869005E4AFA /* forwardShaderOGL.hpp in Headers */,
 				56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */,
-				56DF0F452057233900713420 /* loaderOGL.hpp in Headers */,
 				56DF0F3D20571B6D00713420 /* loader.hpp in Headers */,
 				5633FAB2204C64D7003449EE /* drawableOGL.hpp in Headers */,
 				5633FAB9204C6625003449EE /* utils.hpp in Headers */,

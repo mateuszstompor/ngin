@@ -24,7 +24,8 @@ ms::NGin::NGin(unsigned int screenWidth,
 	lightSourceRenderer(nullptr),
 	hdrRenderer(nullptr),
 	bloomSplitRenderer(nullptr),
-	bloomMergeRenderer(nullptr) {
+	bloomMergeRenderer(nullptr),
+    loader{std::make_unique<Loader>(Loader())} {
 		
 }
 
@@ -34,10 +35,6 @@ ms::DeferredRender & ms::NGin::get_deferred_render () const {
 
 //TODO this function is implemented three times
 void ms::NGin::load_model (std::string absolutePath) {
-	
-	if(loader == nullptr) {
-		this->loader = get_loader();
-	}
 	
 	Loader::model_data loadedData = loader->load_model(absolutePath);
 	Loader::geometries_vec & geo = std::get<0>(loadedData);
@@ -99,11 +96,7 @@ void ms::NGin::load_point_light	(float power,
 								 math::vec3 color,
 								 math::vec3 position,
 								 std::string absolutePath) {
-	
-	if(loader == nullptr) {
-		this->loader = get_loader();
-	}
-	
+    
 	Loader::model_data loadedData = loader->load_model(absolutePath);
 	Loader::geometries_vec & geo = std::get<0>(loadedData);
 	Loader::materials_map & mat = std::get<1>(loadedData);
@@ -131,11 +124,7 @@ void ms::NGin::load_spot_light (float power,
 								float lightingAngleDegrees,
 								math::vec3 direction,
 								std::string absolutePath) {
-	
-	if(loader == nullptr) {
-		this->loader = get_loader();
-	}
-	
+
 	Loader::model_data loadedData = loader->load_model(absolutePath);
 	Loader::geometries_vec & geo = std::get<0>(loadedData);
 	Loader::materials_map & mat = std::get<1>(loadedData);

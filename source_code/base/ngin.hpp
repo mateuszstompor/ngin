@@ -63,7 +63,6 @@ namespace ms {
 	protected:
 		
 		void									count_fps			();
-		virtual std::unique_ptr<Loader>			get_loader			() = 0;
 		virtual std::shared_ptr<Drawable>		get_drawable		() = 0;
 		
 		virtual std::shared_ptr<PointLight>		get_point_light		(float 			power,
