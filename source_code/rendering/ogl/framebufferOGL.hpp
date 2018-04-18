@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cassert>
 #include <memory>
+#include <algorithm>
 
 #include "../framebuffer.hpp"
 #include "../../scene/texture.hpp"

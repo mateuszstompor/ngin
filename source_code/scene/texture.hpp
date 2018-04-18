@@ -15,6 +15,7 @@
 #include <cassert>
 #include <string>
 #include <iostream>
+#include <cstdint>
 
 #include "../resources/resource.hpp"
 #include "../utils/ogl/proxyOGL.hpp"
@@ -23,7 +24,7 @@ namespace ms {
 	
 	class Texture : public Resource {
 		
-        using byte = u_int8_t;
+        using byte = std::uint8_t;
         
 	public:
         

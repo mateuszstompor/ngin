@@ -123,10 +123,10 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 //        lightingSh->bind_texture(4 + i, *spotLightsShadowComponents[i]->get_depth_texture().lock());
 //    }
 
-    if(scene->get_directional_light()) {
-        assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
-        assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
-    }
+//    if(scene->get_directional_light()) {
+//        assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
+//        assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
+//    }
 
     lightingShader->set_camera_transformation(scene->get_camera().get_transformation().c_array());
 

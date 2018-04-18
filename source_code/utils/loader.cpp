@@ -279,6 +279,7 @@ std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & ty
 std::unique_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) {
 	//TODO implement embeded textures
 	assert(false);
+	return nullptr;
 }
 
 ms::math::vec3 ms::Loader::to_vec3 (aiColor3D const & color) {
