@@ -13,11 +13,8 @@
 #include "base/ogl/nginOGL.hpp"
 #include "utils/utils.hpp"
 #include "../glMath/source/glMath.h"
-#include "scene/ogl/geometryOGL.hpp"
-#include "scene/ogl/drawableOGL.hpp"
-#include "scene/lights/ogl/pointLightOGL.hpp"
-#include "scene/ogl/drawableOGL.hpp"
-#include "scene/ogl/geometryOGL.hpp"
+#include "scene/geometry.hpp"
+#include "scene/drawable.hpp"
 #include "rendering/ogl/framebufferOGL.hpp"
 #include "utils/ogl/proxyOGL.hpp"
 

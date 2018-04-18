@@ -15,6 +15,8 @@
 #include "geometry.hpp"
 #include "material.hpp"
 #include "positionedObject.hpp"
+#include "../utils/ogl/proxyOGL.hpp"
+#include "../rendering/reusableGeometry.hpp"
 
 namespace ms {
 	
@@ -24,28 +26,27 @@ namespace ms {
 		
 		friend class Loader;
 		
-	inline								Drawable	();
-	inline	virtual 	std::string 	get_class	() = 0;
-			virtual		void			draw		() = 0;
-			virtual 					~Drawable	() = default;
-		
-		PositionedObject				modelTransformation;
-		std::shared_ptr<Geometry> 		geometry;
-		//avoid reference cycles with weak pointers!!
-		std::weak_ptr<Material>			boundedMaterial;
-
+                                                Drawable            	();
+		virtual std::string 	                get_class	            () const override;
+        virtual void			                draw            		();
+        virtual 				                ~Drawable	            () = default;
+        static  std::unique_ptr<Drawable>       get_quad                ();
+        
+                PositionedObject                modelTransformation;
+                std::weak_ptr<Material>		    boundedMaterial;
+                std::shared_ptr<Geometry>       geometry;
+        
 	protected:
-		
-			virtual 	void 			use			() = 0;
+        
+                void                            _load                   () override;
+                void                            _unload                 () override;
+        virtual void                            use                     ();
+		GLuint                                  vertexArray;
 		
 	};
 	
 }
 
-ms::Drawable::Drawable() : modelTransformation(PositionedObject()) { }
 
-std::string ms::Drawable::get_class () {
-	return "ms::Drawable";
-}
 
 #endif /* scene_node_hpp */

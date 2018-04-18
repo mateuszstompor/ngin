@@ -62,19 +62,7 @@ namespace ms {
 		
 	protected:
 		
-		void									count_fps			();
-		virtual std::shared_ptr<Drawable>		get_drawable		() = 0;
-		
-		virtual std::shared_ptr<PointLight>		get_point_light		(float 			power,
-																	 math::vec3 	color,
-																	 math::vec3 	position) = 0;
-		
-		virtual std::shared_ptr<SpotLight>		get_spot_light		(float 			power,
-																	 math::vec3 	color,
-																	 math::vec3 	position,
-																	 float 			lightingAngleDegrees,
-																	 math::vec3 	direction) = 0;
-		
+		void									count_fps			();		
 		std::unique_ptr<Loader>					loader;
         
 		std::unique_ptr<DeferredRender>         deferredRenderer;

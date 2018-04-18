@@ -17,9 +17,7 @@
 #include "../../rendering/shaders/ogl/lightSourceDrawerShaderOGL.hpp"
 
 #include "../../utils/loader.hpp"
-#include "../../scene/ogl/drawableOGL.hpp"
-#include "../../scene/lights/ogl/pointLightOGL.hpp"
-#include "../../scene/lights/ogl/spotLightOGL.hpp"
+#include "../../scene/drawable.hpp"
 #include "../../shaders/shaderHeaders.hpp"
 
 namespace ms {
@@ -55,17 +53,7 @@ namespace ms {
 		
 		void 							unload				() 							override;
 		void 							load				() 							override;
-		std::shared_ptr<Drawable>		get_drawable		() 							override;
-		std::shared_ptr<PointLight>		get_point_light		(float 			power,
-															 math::vec3 	color,
-															 math::vec3 	position) 	override;
-		
-		std::shared_ptr<SpotLight>		get_spot_light		(float 			power,
-															 math::vec3 	color,
-															 math::vec3 	position,
-															 float 			lightingAngleDegrees,
-															 math::vec3 	direction) 	override;
-		
+        
     };
     
 }

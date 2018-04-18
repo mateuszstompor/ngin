@@ -13,7 +13,7 @@ ms::PostprocessDrawerOGL::PostprocessDrawerOGL(std::vector<std::weak_ptr<Texture
 											   std::unique_ptr<Shader> && shaderProgram) : PostprocessDrawer(input,
                                                                                                              std::move(framebuffer),
                                                                                                              std::move(shaderProgram)) {
-	quad = DrawableOGL::get_quad();
+	quad = Drawable::get_quad();
 }
 
 void ms::PostprocessDrawerOGL::_load () {

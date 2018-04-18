@@ -55,7 +55,7 @@ ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuf
     
 //    shadowFramebuffer->configure();
 
-    quad = DrawableOGL::get_quad();
+    quad = Drawable::get_quad();
 	
 }
 

@@ -13,6 +13,8 @@
 #include <string>
 
 #include "vertex.hpp"
+#include "geometry.hpp"
+#include "../utils/ogl/proxyOGL.hpp"
 #include "../resources/resource.hpp"
 
 namespace ms {
@@ -20,45 +22,52 @@ namespace ms {
 	class Geometry : public Resource {
 	
 		friend class Drawable;
-		friend class DrawableOGL;
-		
+		friend class Loader;
+        using bounding_box_f = math::BoundingBox<float>;
+        
 	public:
 		
-		friend class Loader;
 		
-				virtual void 			            use_normals 		() = 0;
-                virtual void                        use_tangents        () = 0;
-                virtual void                        use_bitangents      () = 0;
-				virtual void 			            use_vertices 		() = 0;
-				virtual void 			            use_texture_coord 	() = 0;
-		
-						void			            set_material		(std::string name);
-						std::string		            get_material_name	() const;
-		inline	virtual	std::string		            get_class			() = 0;
-                        math::BoundingBox<float>*   get_bounding_box    () const;
-						bool			            has_material		() const;
-		
-						int				            amount_of_vertices	() const;
-						int				            amount_of_indices	() const;
-		
-										            Geometry			();
-				virtual					            ~Geometry			() = default;
-		
-	protected:
-
-				virtual void 			            use_indicies 		() = 0;
+                                            Geometry                    (std::vector <Vertex>  &&       vertices,
+                                                                         std::vector <unsigned int> &&  indices,
+                                                                         std::string &&                 associatedMaterial,
+                                                                         math::BoundingBox<float> &&    boundingBox);
+        
+                                            ~Geometry                   () = default;
+        void 			                    use_normals          		();
+        void                                use_tangents                ();
+        void                                use_bitangents              ();
+        void 			                    use_vertices         		();
+        void 			                    use_texture_coord        	();
+        void			                    set_material		        (std::string const & name);
+        std::string const &                 get_material_name	        () const;
+        std::string		                    get_class			        () const override;
+        bool			                    has_material        		() const;
+        int				                    amount_of_vertices	        () const;
+        int				                    amount_of_indices	        () const;
+		void                                load_vertices_to_buffer     ();
+        constexpr bounding_box_f const &    get_bounding_box            () const { return boundingBox; }
+        
+	private:
+        
+        void                                _load                       () override;
+        void                                _unload                     () override;
+        void 			                    use_indicies 		        () ;
 				
-		std::vector <Vertex> 			            vertices;
-		std::vector <unsigned int> 		            indices;
-		std::string						            associatedMaterial;
-        std::unique_ptr<math::BoundingBox<float>>   boundingBox;
+		std::vector <Vertex> 			    vertices;
+		std::vector <unsigned int>          indices;
+		std::string		    	            associatedMaterial;
+        math::BoundingBox<float>            boundingBox;
+        
+        GLuint                              normalsBuffer;
+        GLuint                              tangents;
+        GLuint                              bitangents;
+        GLuint                              positionsBuffer;
+        GLuint                              texturesCooridnatesBuffer;
+        GLuint                              indiciesBuffer;
 
 	};
 	
-}
-
-std::string ms::Geometry::get_class () {
-	return "ms::Geometry";
 }
 
 #endif /* geometry_hpp */

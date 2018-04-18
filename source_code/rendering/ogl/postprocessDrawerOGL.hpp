@@ -12,7 +12,7 @@
 #include "../../utils/ogl/proxyOGL.hpp"
 #include "../postprocessDrawer.hpp"
 #include "../reusableGeometry.hpp"
-#include "../../scene/ogl/drawableOGL.hpp"
+#include "../../scene/drawable.hpp"
 #include "../shaders/ogl/shaderOGL.hpp"
 
 namespace ms {

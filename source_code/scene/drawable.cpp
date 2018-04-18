@@ -1,39 +1,41 @@
 //
-//  drawableOGL.cpp
+//  drawable.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 04/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "drawableOGL.hpp"
+#include "drawable.hpp"
 
-ms::DrawableOGL::DrawableOGL () : ms::Drawable() {
-	modelTransformation = PositionedObject();
-}
+ms::Drawable::Drawable() : modelTransformation{ } { }
 
-void ms::DrawableOGL::use () {
+void ms::Drawable::use () {
 	if(!is_loaded())
 		load();
 	
 	mglBindVertexArray(vertexArray);
 }
 
-std::string ms::DrawableOGL::get_class () {
-	return "ms::DrawableOGL";
+std::string ms::Drawable::get_class () const {
+	return "ms::Drawable";
 }
 
-void ms::DrawableOGL::draw () {
+void ms::Drawable::draw () {
 	use();
 	geometry->use_indicies();
 	mglDrawElements(GL_TRIANGLES, geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 }
 
-std::unique_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
+std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
 	
-    auto drawable = std::make_unique<DrawableOGL>();
-    auto quad = std::make_shared<GeometryOGL>();
+    auto drawable = std::make_unique<Drawable>();
 	
+    std::vector <Vertex>                vertices;
+    std::vector <unsigned int>          indices;
+    std::string                         associatedMaterial;
+    math::BoundingBox<float>            boundingBox{0,0,0,0,0,0};
+    
 	for(int i = 0; i < 4; ++i) {
 		int positionOffset = 3 * i;
 		int textureOffset = 2 * i;
@@ -49,20 +51,20 @@ std::unique_ptr<ms::DrawableOGL> ms::DrawableOGL::get_quad () {
         math::vec3 tangent;
         math::vec3 bitangent;
         
-        quad->vertices.push_back(Vertex{std::move(position), std::move(normal), std::move(tangent), std::move(bitangent), std::move(textureCoordinate)});
+        vertices.push_back(Vertex{std::move(position), std::move(normal), std::move(tangent), std::move(bitangent), std::move(textureCoordinate)});
 	}
 	
 	for(int i = 0; i < 6; ++i) {
-		quad->indices.push_back(quad_indicies::indicies[i]);
+		indices.push_back(quad_indicies::indicies[i]);
 	}
-	
-	drawable->geometry = std::move(quad);
+    
+	drawable->geometry = std::make_shared<Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox));
 	
 	return drawable;
 	
 }
 
-void ms::DrawableOGL::_load	() {
+void ms::Drawable::_load	() {
 
 	mglGenVertexArrays(1, &vertexArray);
 	
@@ -91,9 +93,11 @@ void ms::DrawableOGL::_load	() {
         mglEnableVertexAttribArray(4);
         
 	}
+    
+    mglBindVertexArray(0);
 
 }
 
-void ms::DrawableOGL::_unload () {
+void ms::Drawable::_unload () {
 	mglDeleteVertexArrays(1, &vertexArray);
 }

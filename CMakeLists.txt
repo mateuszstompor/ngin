@@ -82,7 +82,6 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/framebufferOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/renderbufferOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/render.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.hpp
@@ -96,14 +95,8 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/pointLight.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/spotLight.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/directionalLight.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/lights/ogl/pointLightOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/lights/ogl/spotLightOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/general/light.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/drawableOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/geometryOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/textureOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/materialOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/material.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.hpp
@@ -130,7 +123,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/ogl/lightSourceDrawerShaderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/framebufferOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/renderbufferOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.cpp
@@ -138,11 +131,10 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/resources/resourceCoordinator.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/perspectiveCamera.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/camera/orthographicCamera.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/materialOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/drawableOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/geometryOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/material.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/ogl/textureOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/texture.cpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/main.cpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/controlls.cpp

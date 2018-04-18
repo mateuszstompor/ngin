@@ -21,10 +21,10 @@ ms::Loader::model_data ms::Loader::load_model(std::string path) {
 	
 	model_data data = process_node(*scene->mRootNode, *scene);
 	textures_and_materials texmat = load_materials(*scene, path.substr(0, path.find_last_of('/')));
-	std::get<2>(data) = std::get<1>(texmat);
-	
+    std::get<2>(data) = std::get<1>(std::move(texmat));
+
 	if(scene->HasMaterials()) {
-		std::get<1>(data) = std::get<0>(texmat);
+        std::get<1>(data) = std::get<0>(std::move(texmat));
 	}
 	
 	return data;
@@ -32,10 +32,10 @@ ms::Loader::model_data ms::Loader::load_model(std::string path) {
 
 ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & scene, std::string const & directoryPath) {
 	
-	textures_and_materials texmat;
+	textures_and_materials  texmat;
 	
-	materials_map & 	materials 	= std::get<0>(texmat);
-	textures_map & 		textures 	= std::get<1>(texmat);
+	materials_map & 	    materials 	= std::get<0>(texmat);
+	textures_map & 		    textures 	= std::get<1>(texmat);
 	
 	for(unsigned int i = 0; i < scene.mNumMaterials; ++i) {
 		aiMaterial const & mat = *scene.mMaterials[i];
@@ -54,12 +54,12 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 		
 		std::string name (aiName.C_Str());
 		
-        std::shared_ptr<Material> msMaterial = std::make_shared<MaterialOGL>(to_vec3(ambient),
-                                                              to_vec3(diffuse),
-                                                              to_vec3(specular),
-                                                              shininess,
-                                                              opacity,
-                                                              name);
+        auto msMaterial = std::make_unique<Material>(to_vec3(ambient),
+                                                    to_vec3(diffuse),
+                                                    to_vec3(specular),
+                                                    shininess,
+                                                    opacity,
+                                                    name);
 		
 		msMaterial->diffuseTexturesNames 	= get_texture_paths(aiTextureType_DIFFUSE, mat, directoryPath);
 		msMaterial->specularTexturesNames 	= get_texture_paths(aiTextureType_SPECULAR, mat, directoryPath);
@@ -73,31 +73,31 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 			std::cout << aiName.C_Str() <<  " HEIGHT: " 	<< msMaterial->heightTexturesNames.size() 	<< std:: endl;
 		#endif
 		
-		for (auto absolutePath : msMaterial->diffuseTexturesNames) {
-			if(auto texture = load_texture_from_file(absolutePath)) {
-				textures.insert(std::make_pair(absolutePath, texture));
-			}
-		}
-	
-		for (auto absolutePath : msMaterial->specularTexturesNames) {
-			if(auto texture = load_texture_from_file(absolutePath)) {
-				textures.insert(std::make_pair(absolutePath, texture));
-			}
-		}
+        for (auto absolutePath : msMaterial->diffuseTexturesNames) {
+            if(auto texture = load_texture_from_file(absolutePath)) {
+                textures.insert(std::make_pair(absolutePath, std::move(texture)));
+            }
+        }
+    
+        for (auto absolutePath : msMaterial->specularTexturesNames) {
+            if(auto texture = load_texture_from_file(absolutePath)) {
+                textures.insert(std::make_pair(absolutePath, std::move(texture)));
+            }
+        }
+        
+        for (auto absolutePath : msMaterial->normalTexturesNames) {
+            if(auto texture = load_texture_from_file(absolutePath)) {
+                textures.insert(std::make_pair(absolutePath, std::move(texture)));
+            }
+        }
+        
+        for (auto absolutePath : msMaterial->heightTexturesNames) {
+            if(auto texture = load_texture_from_file(absolutePath)) {
+                textures.insert(std::make_pair(absolutePath, std::move(texture)));
+            }
+        }
 		
-		for (auto absolutePath : msMaterial->normalTexturesNames) {
-			if(auto texture = load_texture_from_file(absolutePath)) {
-				textures.insert(std::make_pair(absolutePath, texture));
-			}
-		}
-		
-		for (auto absolutePath : msMaterial->heightTexturesNames) {
-			if(auto texture = load_texture_from_file(absolutePath)) {
-				textures.insert(std::make_pair(absolutePath, texture));
-			}
-		}
-		
-		materials.insert(std::make_pair(name, msMaterial));
+        materials.insert(std::make_pair(name, std::move(msMaterial)));
 		
 	}
 	
@@ -112,13 +112,11 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 	
 }
 
-std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string const & absolutePath) {
+std::unique_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string const & absolutePath) {
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
 	if (data) {
 		Texture::Format format;
-		std::shared_ptr<Texture> texture;
-		
 		switch (bpp) {
 			case 3:
 				format = Texture::Format::rgb_8_8_8;
@@ -134,17 +132,17 @@ std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string con
 				assert(false);
 		}
 
-        texture = std::make_shared<ms::Texture>(Texture::Type::tex_2d,
-                                                format,
-                                                Texture::AssociatedType::UNSIGNED_BYTE,
-                                                static_cast<unsigned int>(width),
-                                                static_cast<unsigned int>(height),
-                                                absolutePath,
-                                                Texture::MinFilter::linear,
-                                                Texture::MagFilter::linear,
-                                                Texture::Wrapping::repeat,
-                                                Texture::Wrapping::repeat,
-                                                0);
+        auto texture = std::make_unique<ms::Texture>(Texture::Type::tex_2d,
+                                                     format,
+                                                     Texture::AssociatedType::UNSIGNED_BYTE,
+                                                     static_cast<unsigned int>(width),
+                                                     static_cast<unsigned int>(height),
+                                                     absolutePath,
+                                                     Texture::MinFilter::linear,
+                                                     Texture::MagFilter::linear,
+                                                     Texture::Wrapping::repeat,
+                                                     Texture::Wrapping::repeat,
+                                                     0);
 		
 		texture->copy_data(data, width * height * bpp);
 		stbi_image_free(data);
@@ -154,18 +152,16 @@ std::shared_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string con
 	}
 }
 
-ms::Loader::model_data ms::Loader::process_node (aiNode const & node, aiScene const &	scene) {
+ms::Loader::model_data ms::Loader::process_node (aiNode const & node, aiScene const & scene) {
 	
 	model_data data;
 	
 	geometries_vec & geometries = std::get<0>(data);
 	
 		for(unsigned int i = 0; i < node.mNumMeshes; ++i) {
-			aiMesh *mesh = scene.mMeshes[node.mMeshes[i]];
-			if(mesh->HasNormals() && mesh->HasFaces() && mesh->HasPositions()) {
-				std::shared_ptr<Geometry> geometry = std::make_shared<ms::GeometryOGL>();
-				geometry = process_geometry(*mesh, scene);
-				geometries.push_back(geometry);
+			aiMesh const & mesh = *scene.mMeshes[node.mMeshes[i]];
+			if(mesh.HasNormals() && mesh.HasFaces() && mesh.HasPositions()) {
+                geometries.push_back(process_geometry(mesh, scene));
 			}
 		}
 	
@@ -180,9 +176,11 @@ ms::Loader::model_data ms::Loader::process_node (aiNode const & node, aiScene co
 	return data;
 }
 
-std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, aiScene const & scene) {
+std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, aiScene const & scene) {
 
-    std::shared_ptr<ms::Geometry> geometry = std::make_shared<ms::GeometryOGL>();
+    std::vector <Vertex> vertices;
+    std::vector <unsigned int> indices;
+    std::string associatedMaterial;
 
     float minX = 0, maxX = 0;
     float minY = 0, maxY = 0;
@@ -193,93 +191,78 @@ std::shared_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
         maxY = minY = mesh.mVertices[0].y;
         maxZ = minZ = mesh.mVertices[0].z;
     }
+
+    for(unsigned int i = 0; i < mesh.mNumVertices; ++i) {
+
+        Vertex vertex;
+
+        maxX = std::max(maxX, mesh.mVertices[i].x);
+        minX = std::min(minX, mesh.mVertices[i].x);
+
+        maxY = std::max(maxY, mesh.mVertices[i].y);
+        minY = std::min(minY, mesh.mVertices[i].y);
+
+        maxZ = std::max(maxZ, mesh.mVertices[i].z);
+        minZ = std::min(minZ, mesh.mVertices[i].z);
+
+        vertex.position.x() = mesh.mVertices[i].x;
+        vertex.position.y() = mesh.mVertices[i].y;
+        vertex.position.z() = mesh.mVertices[i].z;
+
+        if(mesh.HasNormals()) {
+            vertex.normal.x() = mesh.mNormals[i].x;
+            vertex.normal.y() = mesh.mNormals[i].y;
+            vertex.normal.z() = mesh.mNormals[i].z;
+        }
+
+        if(mesh.HasTangentsAndBitangents()) {
+            vertex.bitangent.x() = mesh.mBitangents[i].x;
+            vertex.bitangent.y() = mesh.mBitangents[i].y;
+            vertex.bitangent.z() = mesh.mBitangents[i].z;
+
+            vertex.tangent.x() = mesh.mTangents[i].x;
+            vertex.tangent.y() = mesh.mTangents[i].y;
+            vertex.tangent.z() = mesh.mTangents[i].z;
+        }
+
+        if(mesh.mTextureCoords[0]) {
+            vertex.textureCoordinates.x() = mesh.mTextureCoords[0][i].x;
+            vertex.textureCoordinates.y() = mesh.mTextureCoords[0][i].y;
+        } else {
+            vertex.textureCoordinates = math::vec2{0.0f, 0.0f};
+        }
+
+        vertices.push_back(vertex);
+
+    }
     
-	for(unsigned int i = 0; i < mesh.mNumVertices; ++i) {
+    math::BoundingBox<float> boundingBox {minX, maxX, minY, maxY, minZ, maxZ};
 
-			Vertex vertex;
+    if(mesh.mMaterialIndex > 0) {
 
-            if(mesh.mVertices[i].x > maxX) {
-                maxX = mesh.mVertices[i].x;
-            }
-        
-            if(mesh.mVertices[i].x < minX) {
-                minX = mesh.mVertices[i].x;
-            }
-        
-            if(mesh.mVertices[i].y > maxY) {
-                maxY = mesh.mVertices[i].y;
-            }
-        
-            if(mesh.mVertices[i].y < minY) {
-                minY = mesh.mVertices[i].y;
-            }
-        
-            if(mesh.mVertices[i].z > maxZ) {
-                maxZ = mesh.mVertices[i].z;
-            }
-        
-            if(mesh.mVertices[i].z < minZ) {
-                minZ = mesh.mVertices[i].z;
-            }
-        
-        
-			vertex.position.x() = mesh.mVertices[i].x;
-			vertex.position.y() = mesh.mVertices[i].y;
-			vertex.position.z() = mesh.mVertices[i].z;
+        aiMaterial const & material = *scene.mMaterials[mesh.mMaterialIndex];
 
-            if(mesh.HasNormals()) {
-                vertex.normal.x() = mesh.mNormals[i].x;
-                vertex.normal.y() = mesh.mNormals[i].y;
-                vertex.normal.z() = mesh.mNormals[i].z;
-            }
-        
-            if(mesh.HasTangentsAndBitangents()) {
-                vertex.bitangent.x() = mesh.mBitangents[i].x;
-                vertex.bitangent.y() = mesh.mBitangents[i].y;
-                vertex.bitangent.z() = mesh.mBitangents[i].z;
-                
-                vertex.tangent.x() = mesh.mTangents[i].x;
-                vertex.tangent.y() = mesh.mTangents[i].y;
-                vertex.tangent.z() = mesh.mTangents[i].z;
-            }
-        
-			if(mesh.mTextureCoords[0]) {
-				vertex.textureCoordinates.x() = mesh.mTextureCoords[0][i].x;
-				vertex.textureCoordinates.y() = mesh.mTextureCoords[0][i].y;
-			} else {
-				vertex.textureCoordinates = math::vec2{0.0f, 0.0f};
-			}
-		
-			geometry->vertices.push_back(vertex);
+        aiString aiName;
 
-	}
-    
-    geometry->boundingBox = std::make_unique<math::BoundingBox<float>>(minX, maxX, minY, maxY, minZ, maxZ);
+        material.Get(AI_MATKEY_NAME, aiName);
 
-	if(mesh.mMaterialIndex > 0) {
-		
-		aiMaterial * material = scene.mMaterials[mesh.mMaterialIndex];
-		
-		aiString aiName;
-		
-		material->Get(AI_MATKEY_NAME, aiName);
-		
-		#ifdef DEBUG
-		assert(strcmp(aiName.C_Str(), "") != 0);
-		#endif
-		
-		geometry->set_material(std::string(aiName.C_Str()));
-		
-	}
-	
-	for(unsigned int i = 0; i < mesh.mNumFaces; ++i) {
-		aiFace face = mesh.mFaces[i];
-		for(unsigned int j = 0; j < face.mNumIndices; ++j) {
-			geometry->indices.push_back(face.mIndices[j]);
-		}
-	}
+        #ifdef DEBUG
+        assert(strcmp(aiName.C_Str(), "") != 0);
+        #endif
 
-	return geometry;
+        associatedMaterial = aiName.C_Str();
+
+    }
+
+    for(unsigned int i = 0; i < mesh.mNumFaces; ++i) {
+        aiFace face = mesh.mFaces[i];
+        for(unsigned int j = 0; j < face.mNumIndices; ++j) {
+            indices.push_back(face.mIndices[j]);
+        }
+    }
+
+    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox));
+
 }
 
 std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath) {
@@ -293,7 +276,7 @@ std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & ty
 	return paths;
 }
 
-std::shared_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) {
+std::unique_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) {
 	//TODO implement embeded textures
 	assert(false);
 }

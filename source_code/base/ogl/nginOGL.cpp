@@ -331,26 +331,3 @@ void ms::NGinOGL::unload () {
     scaleRenderer->unload();
     vignetteRenderer->unload();
 }
-
-std::shared_ptr<ms::PointLight> ms::NGinOGL::get_point_light(float 		power,
-														   math::vec3 	color,
-														   math::vec3 	position) {
-	
-	return std::make_shared<PointLightOGL>(power, color, position);
-	
-}
-
-std::shared_ptr<ms::Drawable> ms::NGinOGL::get_drawable() {
-	return std::make_shared<DrawableOGL>();
-}
-
-std::shared_ptr<ms::SpotLight> ms::NGinOGL::get_spot_light (float 		power,
-															math::vec3 	color,
-															math::vec3 	position,
-															float 		lightingAngleDegrees,
-															math::vec3 	direction) {
-	
-	return std::make_shared<SpotLightOGL>(power, color, position, lightingAngleDegrees, direction);
-	
-}
-

@@ -1,13 +1,12 @@
 //
-//  materialOGL.cpp
+//  material.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 27/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "materialOGL.hpp"
-
+#include "material.hpp"
 
 //layout (std140) uniform  MaterialBlock {
 //	vec3 	ambientColor; 	// 0  bytes padding, stride 4 (dispite fact it has 3 components)
@@ -18,15 +17,16 @@
 //} materialBlock;
 // size in total 56 bytes
 
+ms::Material::Material(math::vec3 const & ambient, math::vec3 const & diffuse, math::vec3 const & specular, float shin, float opac, std::string const & nam) :
+ambientColor{ambient},
+diffuseColor{diffuse},
+specularColor{specular},
+shininess{shin},
+opacity{opac},
+name{nam},
+bufferId{0} { }
 
-ms::MaterialOGL::MaterialOGL (math::vec3 ambient,
-							  math::vec3 diffuse,
-							  math::vec3 specular,
-							  float shininess,
-							  float opacity,
-							  std::string name) : ms::Material(ambient, diffuse, specular, shininess, opacity, name) { }
-
-void ms::MaterialOGL::_load () {
+void ms::Material::_load () {
 	mglGenBuffers(1, &bufferId);
 	mglBindBuffer(GL_UNIFORM_BUFFER, bufferId);
 	mglBufferData(GL_UNIFORM_BUFFER, 56 * sizeof(GLbyte), nullptr, GL_STATIC_DRAW);
@@ -40,11 +40,11 @@ void ms::MaterialOGL::_load () {
 	mglBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void ms::MaterialOGL::_unload () {
+void ms::Material::_unload () {
 	mglDeleteBuffers(1, &bufferId);
 }
 
-void ms::MaterialOGL::use () {
+void ms::Material::use () {
 	if(!is_loaded())
 		load();
 	
