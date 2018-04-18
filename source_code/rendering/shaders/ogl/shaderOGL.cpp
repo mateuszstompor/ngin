@@ -132,6 +132,10 @@ void ms::ShaderOGL::bind_texture(unsigned int index, Texture & texture) {
 	texture.use();
 }
 
+ms::ShaderOGL::program_ptr ms::ShaderOGL::vf_program 	(std::string const & vertexSource, std::string const & fragmentSource) {
+	return std::make_unique<ShaderOGL>(vertexSource, "", "", "", fragmentSource);
+}
+
 std::string ms::ShaderOGL::get_class () {
 	return "ms::ShaderOGL";
 }

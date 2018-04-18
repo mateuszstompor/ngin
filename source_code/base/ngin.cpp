@@ -176,132 +176,81 @@ void ms::NGin::count_fps () {
 }
 
 void ms::NGin::draw_scene() {
-
-    static size_t geometryRendered = 0;
-    
-    #ifdef CALLS_TIME_CONSUMPTION
-        static int framesGenerated = 0;
-        static int framesSpan = 150;
-	#endif
-    
-        static long modelsDrawingTime,	        lightSourceDrawingTime, 	bloomSplitDrawingTime;
-        static long firstStepBlurDrawingTime, 	secondStepBlurDrawingTime, 	bloomMergerDrawingTime;
-        static long hdrDrawingTime,             vignetteDrawingTime,        upScallingTime;
 	
     #ifdef NGIN_COUNT_FPS
         count_fps();
     #endif
     
-    modelsDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        if(chosenRenderer == Renderer::deferred) {
-            deferredRenderer->use();
-            deferredRenderer->setup_g_buffer_uniforms(scene.get());
-            deferredRenderer->clear_frame();
-            for(int i = 0; i < scene->get_nodes().size(); ++i) {
-                auto node = scene->get_nodes()[i];
-                if(scene->get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), *node->geometry->get_bounding_box())) {
-                    deferredRenderer->draw(scene->get_nodes()[i].get(), scene.get());
-                    geometryRendered += scene->get_nodes()[i]->geometry->amount_of_indices();
-                }
+    if(chosenRenderer == Renderer::deferred) {
+        deferredRenderer->use();
+        deferredRenderer->setup_g_buffer_uniforms(scene.get());
+        deferredRenderer->clear_frame();
+        for(int i = 0; i < scene->get_nodes().size(); ++i) {
+            auto node = scene->get_nodes()[i];
+            if(scene->get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), *node->geometry->get_bounding_box())) {
+                deferredRenderer->draw(*scene->get_nodes()[i], *scene);
             }
-            deferredRenderer->perform_light_pass(scene.get());
-            lightSourceRenderer->clear_frame();
-            lightSourceRenderer->get_framebuffer()->copy_depth_from(*deferredRenderer->get_framebuffer());
-            lightSourceRenderer->get_framebuffer()->copy_color_from(*deferredRenderer->get_framebuffer());
-        } else if(chosenRenderer == Renderer::forward_fragment) {
-            phongForwardRenderer->use();
-            phongForwardRenderer->clear_frame();
-            phongForwardRenderer->setup_uniforms(scene.get());
-            for(int i = 0; i < scene->get_nodes().size(); ++i) {
-                phongForwardRenderer->draw(scene->get_nodes()[i].get(), scene.get());
-                geometryRendered += scene->get_nodes()[i]->geometry->amount_of_indices();
-            }
-            lightSourceRenderer->clear_frame();
-            lightSourceRenderer->get_framebuffer()->copy_depth_from(*phongForwardRenderer->get_framebuffer());
-            lightSourceRenderer->get_framebuffer()->copy_color_from(*phongForwardRenderer->get_framebuffer());
-        } else {
-            gouraudForwardRenderer->use();
-            gouraudForwardRenderer->clear_frame();
-            gouraudForwardRenderer->setup_uniforms(scene.get());
-            for(int i = 0; i < scene->get_nodes().size(); ++i) {
-                gouraudForwardRenderer->draw(scene->get_nodes()[i].get(), scene.get());
-                geometryRendered += scene->get_nodes()[i]->geometry->amount_of_indices();
-            }
-            lightSourceRenderer->clear_frame();
-            lightSourceRenderer->get_framebuffer()->copy_depth_from(*gouraudForwardRenderer->get_framebuffer());
-            lightSourceRenderer->get_framebuffer()->copy_color_from(*gouraudForwardRenderer->get_framebuffer());
         }
-    });
-    
-    
-    lightSourceDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        lightSourceRenderer->use();
-        for(int i = 0; i < scene->get_point_lights().size(); ++i) {
-            lightSourceRenderer->draw(scene->get_point_lights()[i].get(), scene.get());
-            geometryRendered += scene->get_point_lights()[i]->geometry->amount_of_indices();
+        deferredRenderer->perform_light_pass(scene.get());
+        lightSourceRenderer->clear_frame();
+        lightSourceRenderer->get_framebuffer().copy_depth_from(deferredRenderer->get_framebuffer());
+        lightSourceRenderer->get_framebuffer().copy_color_from(deferredRenderer->get_framebuffer());
+    } else if(chosenRenderer == Renderer::forward_fragment) {
+        phongForwardRenderer->use();
+        phongForwardRenderer->clear_frame();
+        phongForwardRenderer->setup_uniforms(scene.get());
+        for(int i = 0; i < scene->get_nodes().size(); ++i) {
+            phongForwardRenderer->draw(*scene->get_nodes()[i], *scene);
         }
-        for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
-            lightSourceRenderer->draw(scene->get_spot_lights()[i].get(), scene.get());
-            geometryRendered += scene->get_spot_lights()[i]->geometry->amount_of_indices();
+        lightSourceRenderer->clear_frame();
+        lightSourceRenderer->get_framebuffer().copy_depth_from(phongForwardRenderer->get_framebuffer());
+        lightSourceRenderer->get_framebuffer().copy_color_from(phongForwardRenderer->get_framebuffer());
+    } else {
+        gouraudForwardRenderer->use();
+        gouraudForwardRenderer->clear_frame();
+        gouraudForwardRenderer->setup_uniforms(scene.get());
+        for(int i = 0; i < scene->get_nodes().size(); ++i) {
+            gouraudForwardRenderer->draw(*scene->get_nodes()[i], *scene);
         }
-    });
-    
-    bloomSplitDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        bloomSplitRenderer->use();
-        bloomSplitRenderer->clear_frame();
-        bloomSplitRenderer->draw_quad();
-    });
-
-    firstStepBlurDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        gaussianBlurFirstStepRenderer->use();
-        gaussianBlurFirstStepRenderer->clear_frame();
-        gaussianBlurFirstStepRenderer->draw_quad();
-    });
-
-    secondStepBlurDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        gaussianBlurSecondStepRenderer->use();
-        gaussianBlurSecondStepRenderer->clear_frame();
-        gaussianBlurSecondStepRenderer->draw_quad();
-    });
-
-    bloomMergerDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        bloomMergeRenderer->use();
-        bloomMergeRenderer->clear_frame();
-        bloomMergeRenderer->draw_quad();
-    });
-
-    hdrDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        hdrRenderer->clear_frame();
-        hdrRenderer->draw_quad();
-    });
-
-    vignetteDrawingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        vignetteRenderer->clear_frame();
-        vignetteRenderer->draw_quad();
-    });
-
-    upScallingTime = utils::measure_time<std::chrono::microseconds>([&](){
-        scaleRenderer->clear_frame();
-        scaleRenderer->draw_quad();
-    });
-
-    #ifdef CALLS_TIME_CONSUMPTION
-    framesGenerated += 1;
-    if(framesGenerated > framesSpan) {
-        std::cout << "Models Pass: "            << modelsDrawingTime             << std::endl;
-        std::cout << "Light Sources Render: "   << lightSourceDrawingTime         << std::endl;
-        std::cout << "Bloom Split: "            << bloomSplitDrawingTime         << std::endl;
-        std::cout << "Blur first step: "        << firstStepBlurDrawingTime     << std::endl;
-        std::cout << "Blur second step: "       << secondStepBlurDrawingTime     << std::endl;
-        std::cout << "Bloom Merge: "            << bloomMergerDrawingTime         << std::endl;
-        std::cout << "Hdr draw: "               << hdrDrawingTime                 << std::endl;
-        std::cout << "Vignette draw: "          << vignetteDrawingTime          << std::endl;
-        std::cout << "Upscalling draw: "        << upScallingTime               << std::endl;
-        std::cout << "Vertices drawn: "         << geometryRendered             << std::endl;
-        framesGenerated = 0;
-        geometryRendered = 0;
+        lightSourceRenderer->clear_frame();
+        lightSourceRenderer->get_framebuffer().copy_depth_from(gouraudForwardRenderer->get_framebuffer());
+        lightSourceRenderer->get_framebuffer().copy_color_from(gouraudForwardRenderer->get_framebuffer());
     }
-    #endif
+    
+    
+    lightSourceRenderer->use();
+    for(int i = 0; i < scene->get_point_lights().size(); ++i) {
+        lightSourceRenderer->draw(*scene->get_point_lights()[i], *scene);
+    }
+    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
+        lightSourceRenderer->draw(*scene->get_spot_lights()[i], *scene);
+    }
+    
+    bloomSplitRenderer->use();
+    bloomSplitRenderer->clear_frame();
+    bloomSplitRenderer->draw_quad();
+
+    gaussianBlurFirstStepRenderer->use();
+    gaussianBlurFirstStepRenderer->clear_frame();
+    gaussianBlurFirstStepRenderer->draw_quad();
+
+    gaussianBlurSecondStepRenderer->use();
+    gaussianBlurSecondStepRenderer->clear_frame();
+    gaussianBlurSecondStepRenderer->draw_quad();
+
+    bloomMergeRenderer->use();
+    bloomMergeRenderer->clear_frame();
+    bloomMergeRenderer->draw_quad();
+
+    hdrRenderer->clear_frame();
+    hdrRenderer->draw_quad();
+
+    vignetteRenderer->clear_frame();
+    vignetteRenderer->draw_quad();
+
+    scaleRenderer->clear_frame();
+    scaleRenderer->draw_quad();
+
 }
 
 void ms::NGin::set_renderer (Renderer r) {

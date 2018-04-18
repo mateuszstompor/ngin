@@ -19,20 +19,13 @@ namespace ms {
 	
 }
 
-ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int                  maxPointLightsAmount,
-                                          unsigned int                  maxSpotLightsAmount,
-										  std::string 	                gVS,
-										  std::string 	                gFS,
-										  std::string 	                lVS,
-										  std::string 	                lFS,
-                                          std::string                   smVS,
-                                          std::string                   smFS,
-										  std::unique_ptr<Framebuffer> &&  framebuffer) :
+ms::DeferredRenderOGL::DeferredRenderOGL (unsigned int                      maxPointLightsAmount,
+                                          unsigned int                      maxSpotLightsAmount,
+										  std::unique_ptr<Framebuffer> &&   framebuffer,
+                                          g_pass_shader &&                  gShader,
+                                          lighting_shader &&                lightingShader) :
 //TODO add this to deferred lighting hsader
-ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuffer), gVS, gFS, lVS, lFS, smVS, smFS) {
-	gShader = std::make_unique<DeferredShaderOGL>(gVS, gFS);
-    lightingShader = std::make_unique<DeferredLightingShaderOGL>(maxPointLightsAmount, maxSpotLightsAmount, lVS, lFS);
-    shadowShader = std::make_unique<ShaderOGL>(smVS, "", "", "", smFS);
+ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuffer), std::move(gShader), std::move(lightingShader)) {
 	
     auto gPosition = std::make_unique<TextureOGL>(Texture::Type::tex_2d,
                                                   G_BUF_POSITIONS,
@@ -75,50 +68,6 @@ ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuf
                                                           this->framebuffer->get_width(),
                                                           this->framebuffer->get_height());
     
-    unsigned int resoultion = 1024;
-
-
-    for (int i = 0; i < maxSpotLightsAmount; ++i) {
-
-        auto fb = std::make_unique<FramebufferOGL>(1,
-                                                   0,
-                                                   resoultion,
-                                                   resoultion);
-
-        fb->bind_depth_buffer(std::make_unique<TextureOGL>(Texture::Type::tex_2d,
-                                                           SHADOW_MAP,
-                                                           Texture::Format::depth_32,
-                                                           Texture::AssociatedType::FLOAT,
-                                                           Texture::MinFilter::nearest,
-                                                           Texture::MagFilter::nearest,
-                                                           Texture::Wrapping::repeat,
-                                                           Texture::Wrapping::repeat,
-                                                           0,
-                                                           resoultion,
-                                                           resoultion));
-        fb->configure();
-        spotLightsShadowComponents.push_back(std::move(fb));
-        
-    }
-    
-    auto shadowTexture = std::make_unique<TextureOGL>(Texture::Type::tex_2d,
-                                                 SHADOW_MAP,
-                                                 Texture::Format::depth_32,
-                                                 Texture::AssociatedType::FLOAT,
-                                                 Texture::MinFilter::nearest,
-                                                 Texture::MagFilter::nearest,
-                                                 Texture::Wrapping::repeat,
-                                                 Texture::Wrapping::repeat,
-                                                 0,
-                                                 resoultion,
-                                                 resoultion);
-
-    shadowFramebuffer = std::make_unique<FramebufferOGL>(1,
-                                                         0,
-                                                         resoultion,
-                                                         resoultion);
-    
-    
     gFramebuffer->bind_color_buffer(0, std::move(gPosition));
     gFramebuffer->bind_color_buffer(1, std::move(gNormal));
     gFramebuffer->bind_color_buffer(2, std::move(gAlbedo));
@@ -126,9 +75,9 @@ ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuf
     
     gFramebuffer->configure();
     
-    shadowFramebuffer->bind_depth_buffer(std::move(shadowTexture));
+//    shadowFramebuffer->bind_depth_buffer(std::move(shadowTexture));
     
-    shadowFramebuffer->configure();
+//    shadowFramebuffer->configure();
 
     quad = DrawableOGL::get_quad();
 	
@@ -136,54 +85,51 @@ ms::DeferredRender(maxPointLightsAmount, maxSpotLightsAmount, std::move(framebuf
 
 void ms::DeferredRenderOGL::_load () {
     gFramebuffer->load();
-    gShader->load();
+    shader->load();
     lightingShader->load();
-    shadowShader->load();
     framebuffer->use();
     quad->load();
 }
 
 void ms::DeferredRenderOGL::_unload () {
     gFramebuffer->unload();
-    gShader->unload();
+    shader->unload();
     lightingShader->unload();
-    shadowShader->unload();
     framebuffer->unload();
     quad->unload();
-    shadowFramebuffer->unload();
-    std::for_each(spotLightsShadowComponents.begin(), spotLightsShadowComponents.end(), [](auto & fb) { fb->unload(); });
+//    shadowFramebuffer->unload();
 }
 
 void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
     
-    shadowFramebuffer->use();
-    shadowFramebuffer->clear_frame();
+//    shadowFramebuffer->use();
+//    shadowFramebuffer->clear_frame();
 
-    auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
-    shadowShader->use();
-    if(scene->get_directional_light()) {
-        assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
-        assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
-        for(auto n : scene->get_nodes()) {
-            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
-            n->draw();
-        }
-    }
+//    auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
+//    shadowShader->use();
+//    if(scene->get_directional_light()) {
+//        assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
+//        assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
+//        for(auto n : scene->get_nodes()) {
+//            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+//            n->draw();
+//        }
+//    }
 
-    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
-        const auto & spotLight = scene->get_spot_lights()[i];
-        spotLightsShadowComponents[i]->use();
-        spotLightsShadowComponents[i]->clear_frame();
-
-        assert(shadow->set_uniform("projection", spotLight->Light::get_projection()) >= 0);
-        assert(shadow->set_uniform("toLight", spotLight->Light::get_transformation()) >= 0);
-        for(auto n : scene->get_nodes()) {
-            if(spotLight->frustum.is_in_camera_sight(spotLight->get_transformation(), *n->geometry->get_bounding_box())) {
-                assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
-                n->draw();
-            }
-        }
-    }
+//    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
+//        const auto & spotLight = scene->get_spot_lights()[i];
+//        spotLightsShadowComponents[i]->use();
+//        spotLightsShadowComponents[i]->clear_frame();
+//
+//        assert(shadow->set_uniform("projection", spotLight->Light::get_projection()) >= 0);
+//        assert(shadow->set_uniform("toLight", spotLight->Light::get_transformation()) >= 0);
+//        for(auto n : scene->get_nodes()) {
+//            if(spotLight->frustum.is_in_camera_sight(spotLight->get_transformation(), *n->geometry->get_bounding_box())) {
+//                assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+//                n->draw();
+//            }
+//        }
+//    }
 
     framebuffer->use();
     framebuffer->clear_frame();
@@ -194,12 +140,12 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 
     lightingShader->set_rendering_mode(this->renderMode);
 
-    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
-        const auto & spotLight = scene->get_spot_lights()[i];
-        assert(lightingSh->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLight->Light::get_projection()) >= 0);
-        assert(lightingSh->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLight->Light::get_transformation()) >= 0);
-        lightingSh->bind_texture(4 + i, *spotLightsShadowComponents[i]->get_depth_texture().lock());
-    }
+//    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
+//        const auto & spotLight = scene->get_spot_lights()[i];
+//        assert(lightingSh->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLight->Light::get_projection()) >= 0);
+//        assert(lightingSh->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLight->Light::get_transformation()) >= 0);
+//        lightingSh->bind_texture(4 + i, *spotLightsShadowComponents[i]->get_depth_texture().lock());
+//    }
 
     if(scene->get_directional_light()) {
         assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
@@ -212,7 +158,7 @@ void ms::DeferredRenderOGL::perform_light_pass (const Scene * scene) {
 
     lightingShader->bind_g_buf_posiitons(*gFramebuffer->get_colors()[0].lock());
     lightingShader->bind_g_buf_albedo(*gFramebuffer->get_colors()[2].lock());
-    lightingShader->bind_shadow_map(*shadowFramebuffer->get_depth_texture().lock());
+//    lightingShader->bind_shadow_map(*shadowFramebuffer->get_depth_texture().lock());
     lightingShader->bind_g_buf_normals(*gFramebuffer->get_colors()[1].lock());
 
     quad->draw();

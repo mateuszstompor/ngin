@@ -28,13 +28,9 @@ namespace ms {
 		
                                     DeferredRenderOGL   (unsigned int                       maxPointLightsAmount,
                                                          unsigned int                       maxSpotLightsAmount,
-												 		 std::string                        gBufferVertexShaderSource,
-												 		 std::string                        gBufferFragmentShaderSource,
-												 		 std::string                        lightingVertexShaderSource,
-												 		 std::string                        lightingFragmentShaderSource,
-                                                         std::string                        shadowMappingVertexShader,
-                                                         std::string                        shadowMappingFragmentShader,
-												 		 std::unique_ptr<Framebuffer> &&    framebuffer);
+												 		 std::unique_ptr<Framebuffer> &&    framebuffer,
+                                                         g_pass_shader &&                   gShader,
+                                                         lighting_shader &&                 lightingShader);
 		
 									DeferredRenderOGL	(const DeferredRenderOGL &) = delete;
 			DeferredRenderOGL & 	operator = 			(const DeferredRenderOGL &) = delete;

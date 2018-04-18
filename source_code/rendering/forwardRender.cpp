@@ -89,12 +89,11 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
 
 }
 
-void ms::ForwardRender::draw (Drawable * node, const Scene * scene) {
+void ms::ForwardRender::draw (Drawable & node, const Scene & scene) {
 	ForwardShader* shad = dynamic_cast<ForwardShader*>(shader.get());
-	shad->set_model_transformation(node->modelTransformation.get_transformation());
-	ForwardRender::setup_material_uniforms_for(scene, node);
-	node->draw();
-	
+	shad->set_model_transformation(node.modelTransformation.get_transformation());
+	ForwardRender::setup_material_uniforms_for(&scene, &node);
+	node.draw();
 }
 
 std::string ms::ForwardRender::get_class () const {

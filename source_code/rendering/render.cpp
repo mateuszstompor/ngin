@@ -8,8 +8,6 @@
 
 #include "render.hpp"
 
-ms::Render::Render(std::unique_ptr<Framebuffer> && framebuffer) : framebuffer(std::move(framebuffer)) {}
-
 ms::Render::Render(std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader) : framebuffer(std::move(framebuffer)), shader(std::move(shader)) { }
 
 std::string ms::Render::get_class () const {
@@ -33,6 +31,15 @@ void ms::Render::use () {
 	
 	shader->use();
 	framebuffer->use();
+}
+
+void ms::Render::use (std::unique_ptr<Framebuffer> & fb) {
+    if(!shader->is_loaded()) {
+        shader->load();
+    }
+    
+    shader->use();
+    fb->use();
 }
 
 void ms::Render::_unload ()  {

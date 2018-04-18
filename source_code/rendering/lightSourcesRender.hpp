@@ -22,7 +22,7 @@ namespace ms {
 										 std::unique_ptr<LightSourceDrawerShader> &&    shader);
 		
 		virtual ~LightSourcesRender		() = default;
-		void	draw  					(Drawable * node, const Scene * scene)			override;
+		void	draw  					(Drawable & node, const Scene & scene)			override;
 		
 	protected:
 		

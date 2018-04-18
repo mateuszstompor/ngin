@@ -36,7 +36,7 @@ namespace ms {
 
     private:
         
-        void                                    draw                (Drawable * node, const Scene * scene) override { }
+        void                                    draw                (Drawable & node, const Scene & scene) override { }
 
 	};
 	

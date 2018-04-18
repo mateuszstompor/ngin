@@ -25,6 +25,8 @@ namespace ms {
 	
 	class DeferredRender : public Render {
 		
+	protected:
+		
 		using sm_spot_lights = std::vector<std::unique_ptr<Framebuffer>>;
 		using lighting_shader 	= std::unique_ptr<DeferredLightingShader>;
 		using g_pass_shader 	= std::unique_ptr<DeferredShader>;
@@ -37,16 +39,12 @@ namespace ms {
 										DeferredRender				(unsigned int 						maxPointLightsAmount,
 																	 unsigned int 						maxSpotLightsAmount,
 																	 std::unique_ptr<Framebuffer> && 	framebuffer,
-																	 std::string 						gBufferVertexShaderSource,
-																	 std::string 						gBufferFragmentShaderSource,
-																	 std::string 						lightingVertexShaderSource,
-																	 std::string 						lightingFragmentShaderSource,
-																	 std::string						shadowMappingVertexShader,
-																	 std::string 						shadowMappingFragmentShader);
+																	 g_pass_shader && 					gShader,
+																	 lighting_shader &&					lightingShader);
 		
 				void 					clear_frame					() override;
 				void					use			     			() override;
-				void 					draw						(Drawable * node, const Scene * scene) override;
+				void 					draw						(Drawable & node, const Scene & scene) override;
 		virtual void 					perform_light_pass			(const Scene * scene) = 0;
 		virtual void 					setup_material_uniforms		(const Scene * scene, const Drawable * node);
 		virtual void 					setup_lightpass_uniforms	(const Scene * scene);
@@ -56,20 +54,7 @@ namespace ms {
 		
 	protected:
 		
-		std::string 					gBufferVertexShaderSource;
-		std::string 					gBufferFragmentShaderSource;
-		
-		std::string 					lightingVertexShaderSource;
-		std::string 					lightingFragmentShaderSource;
-		
-		std::string 					shadowMappingVertexShaderSource;
-		std::string 					shadowMappingFragmentShaderSource;
-		
-		std::unique_ptr<Shader>			shadowShader;
-		g_pass_shader					gShader;
 		lighting_shader					lightingShader;
-		
-		sm_spot_lights					spotLightsShadowComponents;
 		
 		unsigned int 					maxPointLightsAmount;
 		unsigned int 					maxSpotLightsAmount;
@@ -78,7 +63,6 @@ namespace ms {
 		bool							debugMode;
 		DebugType						debugType;
 		
-		std::unique_ptr<Framebuffer>	shadowFramebuffer;
 		std::unique_ptr<Framebuffer>	gFramebuffer;
 		std::shared_ptr<Drawable> 		quad;
 		

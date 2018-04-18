@@ -46,7 +46,10 @@ namespace ms {
     
 	class ShaderOGL : public virtual Shader {
 		
+		using program_ptr = std::unique_ptr<ShaderOGL>;
+		
 	public:
+		
 		
 								ShaderOGL	(std::string vertexShader,
 											 std::string tessellationControlShader,
@@ -67,8 +70,8 @@ namespace ms {
 				GLint			set_uniform	(std::string const & name, int value);
 				GLint			set_uniform	(std::string const & name, math::mat4 const & m);
 				GLint			set_uniform	(std::string const & name, math::mat3 const & m);
-		
-		// TODO create static? method which initialize shader using reduced amount of parameters
+		static program_ptr		vf_program 	(std::string const & vertexSource, std::string const & fragmentSource);
+
 	protected:
 		
 		void 			compile_program();

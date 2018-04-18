@@ -64,7 +64,7 @@ void main() {
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
-    float shadow = calculate_pcf_shadow(shadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
+    float shadow = 0.0f;//calculate_pcf_shadow(shadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
     
     if (hasDirLight == 1) {
         result += (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
@@ -75,7 +75,7 @@ void main() {
     for(int j=0; j < spotLightsAmount; ++j) {
         vec4 fm = spotLightsProjections[j] * spotLightsToLightTransformations[j] * vec4(fragmentPosition, 1.0f);
 
-        float sh = calculate_pcf_shadow(spotLightsShadowMaps[0], fm, spotLights[j].direction, normal_N, 0.00000001f, 0.000001f);
+        float sh = 0.0f;//calculate_pcf_shadow(spotLightsShadowMaps[0], fm, spotLights[j].direction, normal_N, 0.00000001f, 0.000001f);
 
         result += (1.0f - sh) * count_light_influence(spotLights[j],
                                                       fragmentPosition,

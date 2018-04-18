@@ -26,27 +26,15 @@ namespace ms {
 	
 }
 
-ms::DeferredRender::DeferredRender(unsigned int maxPointLightsAmount,
-                                   unsigned int maxSpotLightsAmount,
-								   std::unique_ptr<Framebuffer> && framebuffer,
-								   std::string gVS,
-								   std::string gFS,
-								   std::string lVS,
-								   std::string lFS,
-                                   std::string smVS,
-                                   std::string smFS
-                                   ) : 	Render(std::move(framebuffer)),
-gBufferVertexShaderSource(gVS),
-gBufferFragmentShaderSource(gFS),
-lightingVertexShaderSource(lVS),
-lightingFragmentShaderSource(lFS),
-shadowMappingVertexShaderSource(smVS),
-shadowMappingFragmentShaderSource(smFS),
+ms::DeferredRender::DeferredRender(unsigned int                     maxPointLightsAmount,
+                                   unsigned int                     maxSpotLightsAmount,
+								   std::unique_ptr<Framebuffer> &&  framebuffer,
+                                   g_pass_shader &&                 gShader,
+                                   lighting_shader &&               lightingShader
+                                   ) : 	Render(std::move(framebuffer), std::move(gShader)),
 maxPointLightsAmount(maxPointLightsAmount),
 maxSpotLightsAmount(maxSpotLightsAmount),
-gShader(nullptr),
-lightingShader(nullptr),
-shadowShader(nullptr),
+lightingShader(std::move(lightingShader)),
 quad(nullptr),
 renderMode(0),
 debugMode(false),
@@ -113,20 +101,21 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
 	
 }
 
-void ms::DeferredRender::draw (Drawable * node, const Scene * scene) {
-        gShader->set_model_transformation(node->modelTransformation.get_transformation());
-        DeferredRender::setup_material_uniforms(scene, node);
-        node->draw();
+void ms::DeferredRender::draw (Drawable & node, const Scene & scene) {
+    auto gShader = dynamic_cast<DeferredShader*>(shader.get());
+    gShader->set_model_transformation(node.modelTransformation.get_transformation());
+    DeferredRender::setup_material_uniforms(&scene, &node);
+    node.draw();
 }
 
 void ms::DeferredRender::use () {
-	if(!gShader->is_loaded() || !lightingShader->is_loaded() || !shadowShader->is_loaded()) {
-		gShader->load();
+	if(!shader->is_loaded() || !lightingShader->is_loaded()) {
+		shader->load();
 		lightingShader->load();
-        shadowShader->load();
+        
 	}
 	
-	gShader->use();
+	shader->use();
 	gFramebuffer->use();
 }
 
@@ -137,6 +126,7 @@ void ms::DeferredRender::clear_frame () {
 
 void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Drawable * node) {
 	
+    auto gShader = dynamic_cast<DeferredShader*>(shader.get());
 	if (auto mat = node->boundedMaterial.lock()) {
 		mat->use();
 		gShader->set_has_material(true);
@@ -174,6 +164,7 @@ void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Draw
 }
 
 void ms::DeferredRender::setup_g_buffer_uniforms (const Scene * scene) {
+    auto gShader = dynamic_cast<DeferredShader*>(shader.get());
 	gShader->set_camera_transformation(scene->get_camera().get_transformation());
 	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 }
