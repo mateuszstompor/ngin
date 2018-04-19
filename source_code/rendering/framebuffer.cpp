@@ -1,25 +1,14 @@
 //
-//  framebufferOGL.cpp
+//  framebuffer.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 22/03/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "framebufferOGL.hpp"
+#include "framebuffer.hpp"
 
-
-ms::FramebufferOGL::FramebufferOGL(int colorAttachmentsAmount,
-								   int renderbufferAttachmentsAmount,
-								   int width,
-								   int height) : ms::Framebuffer(colorAttachmentsAmount,
-																 renderbufferAttachmentsAmount,
-																 width,
-																 height), framebuffer(0), is_default_framebuffer(false) {
-	
-}
-
-bool ms::FramebufferOGL::is_complete () const {
+bool ms::Framebuffer::is_complete () const {
 	if (mglCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 		std::cerr << "FRAMEBUFFER IS NOT COMPLETE" << std::endl;
 		return false;
@@ -27,40 +16,40 @@ bool ms::FramebufferOGL::is_complete () const {
 	return true;
 }
 
-void ms::FramebufferOGL::_load () {
+void ms::Framebuffer::_load () {
 	if(!is_default_framebuffer) {
 		mglGenFramebuffers(1, &this->framebuffer);
 	}
 }
 
-void ms::FramebufferOGL::clear_frame () {
+void ms::Framebuffer::clear_frame () {
 	glClearColor(clearingColor.x(), clearingColor.y(), clearingColor.z(), clearingColor.w());
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	
 }
 
-void ms::FramebufferOGL::copy_depth_from (Framebuffer & frame, Texture::MagFilter filter) {
+void ms::Framebuffer::copy_depth_from (Framebuffer & frame, Texture::MagFilter filter) {
 	frame.use_for_read();
 	(*this).use_for_write();
 	mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture::to_ogl(filter));
 }
 
-void ms::FramebufferOGL::copy_color_from (Framebuffer & frame, Texture::MagFilter filter) {
+void ms::Framebuffer::copy_color_from (Framebuffer & frame, Texture::MagFilter filter) {
     frame.use_for_read();
     (*this).use_for_write();
     mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture::to_ogl(filter));
 }
 
-void ms::FramebufferOGL::clear_color () {
+void ms::Framebuffer::clear_color () {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void ms::FramebufferOGL::clear_depth () {
+void ms::Framebuffer::clear_depth () {
 	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void ms::FramebufferOGL::use () {
+void ms::Framebuffer::use () {
 	if(!is_loaded()) {
 		load();
 	}
@@ -76,7 +65,7 @@ void ms::FramebufferOGL::use () {
 	mglBindFramebuffer(GL_FRAMEBUFFER, this->framebuffer);
 }
 
-void ms::FramebufferOGL::use_for_write () {
+void ms::Framebuffer::use_for_write () {
 	if(!is_loaded()) {
 		load();
 	}
@@ -84,7 +73,7 @@ void ms::FramebufferOGL::use_for_write () {
 	mglBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->framebuffer);
 }
 
-void ms::FramebufferOGL::use_for_read () {
+void ms::Framebuffer::use_for_read () {
 	if(!is_loaded()) {
 		load();
 	}
@@ -92,7 +81,7 @@ void ms::FramebufferOGL::use_for_read () {
 	mglBindFramebuffer(GL_READ_FRAMEBUFFER, this->framebuffer);
 }
 
-void ms::FramebufferOGL::_unload () {
+void ms::Framebuffer::_unload () {
 	if(!is_default_framebuffer) {
 		mglDeleteFramebuffers(1, &this->framebuffer);
         std::for_each(colorTextureAttachments.begin(), colorTextureAttachments.end(), [&] (auto & color) { if (color) { color->unload(); } } );
@@ -103,14 +92,14 @@ void ms::FramebufferOGL::_unload () {
 	}
 }
 
-void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Texture> && texture) {
+void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Texture> && texture) {
 	this->use();
 	texture->use();
 	mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, texture->get_underlying_id(), 0);
     colorTextureAttachments[index] = std::move(texture);
 }
 
-void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Renderbuffer> && renderbuffer) {
+void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_RENDERBUFFER, renderbuffer->get_underlying_id());
@@ -119,21 +108,21 @@ void ms::FramebufferOGL::bind_color_buffer (int index, std::unique_ptr<Renderbuf
 	assert(false);
 }
 
-void ms::FramebufferOGL::copy_framebuffer (Framebuffer & frame, Texture::MagFilter filter) {
+void ms::Framebuffer::copy_framebuffer (Framebuffer & frame, Texture::MagFilter filter) {
     frame.use_for_read();
     (*this).use_for_write();
     mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture::to_ogl(filter));
     mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture::to_ogl(filter));
 }
 
-void ms::FramebufferOGL::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer) {
+void ms::Framebuffer::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
 	mglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderbuffer->get_underlying_id());
     depthRenderbuffer = std::move(renderbuffer);
 }
 
-void ms::FramebufferOGL::configure () {
+void ms::Framebuffer::configure () {
 	
 	this->use();
     if (colorTextureAttachmentsAmount > 0) {
@@ -154,18 +143,47 @@ void ms::FramebufferOGL::configure () {
 		assert(false);
 	}
 
-	Framebuffer::configure();
+    isConfigured = true;
 }
 
-std::string ms::FramebufferOGL::get_class () {
-	return "ms::FramebufferOGL";
+ms::Framebuffer::Framebuffer(int colorAttachmentsAmount,
+                             int renderbufferAttachmentsAmount,
+                             int width,
+                             int height) :     width(width),
+height(height),
+colorTextureAttachmentsAmount(colorAttachmentsAmount),
+colorRenderbufferAttachmentsAmount(renderbufferAttachmentsAmount),
+isDepthTestEnabled(true), framebuffer(0), is_default_framebuffer(false) {
+    
+    colorTextureAttachments.resize(colorAttachmentsAmount);
+    colorRenderbufferAttachments.resize(renderbufferAttachmentsAmount);
 }
 
-GLuint ms::FramebufferOGL::get_underlying_id () const {
-	return framebuffer;
+void ms::Framebuffer::set_clear_color (math::vec4 const & color) {
+    this->clearingColor = color;
 }
 
-void ms::FramebufferOGL::set_underlying_id (GLuint framebufferID) {
+ms::Framebuffer::weak_depth_texbuffer ms::Framebuffer::get_depth_texture() {
+    return std::weak_ptr<Texture>(depthTexture);
+}
+
+ms::Framebuffer::weak_color_texbuffers ms::Framebuffer::get_colors() {
+    weak_color_texbuffers weak_colors;
+    for(const auto & tex : this->colorTextureAttachments) {
+        weak_colors.push_back(std::weak_ptr<Texture>(tex));
+    }
+    return weak_colors;
+}
+
+void ms::Framebuffer::set_depth_test (bool enabled) {
+    isDepthTestEnabled = enabled;
+}
+
+std::string ms::Framebuffer::get_class () const {
+	return "ms::Framebuffer";
+}
+
+void ms::Framebuffer::set_underlying_id (GLuint framebufferID) {
 	if(!is_default_framebuffer) {
 		std::cerr << "ONLY DEFAULT FRAMEBUFFER'S ID CAN BE CHANGED" << std::endl;
 		assert(false);
@@ -173,15 +191,15 @@ void ms::FramebufferOGL::set_underlying_id (GLuint framebufferID) {
 	framebuffer = framebufferID;
 }
 
-void ms::FramebufferOGL::bind_depth_buffer (std::unique_ptr<Texture> && texture) {
+void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture> && texture) {
     this->use();
     texture->use();
     mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture->get_underlying_id(), 0);
     depthTexture = std::move(texture);
 }
 
-std::unique_ptr<ms::FramebufferOGL> ms::FramebufferOGL::window_framebuffer	(int width, int height) {
-	auto framebuffer = std::make_unique<ms::FramebufferOGL>(0, 0, width, height);
+std::unique_ptr<ms::Framebuffer> ms::Framebuffer::window_framebuffer	(int width, int height) {
+	auto framebuffer = std::make_unique<ms::Framebuffer>(0, 0, width, height);
 	framebuffer->is_default_framebuffer = true;
 	framebuffer->framebuffer = 0;
 	return framebuffer;

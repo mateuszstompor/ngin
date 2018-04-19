@@ -10,8 +10,7 @@
 #define nginOGL_hpp
 
 #include "../ngin.hpp"
-#include "../../rendering/ogl/deferredRenderOGL.hpp"
-#include "../../rendering/ogl/postprocessDrawerOGL.hpp"
+#include "../../rendering/postprocessDrawer.hpp"
 #include "../../rendering/shaders/forwardShader.hpp"
 #include "../../rendering/shaders/deferredShader.hpp"
 #include "../../rendering/shaders/lightSourceDrawerShader.hpp"

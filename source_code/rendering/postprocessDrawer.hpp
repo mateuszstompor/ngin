@@ -19,38 +19,25 @@
 namespace ms {
 	
 	class PostprocessDrawer : public Render {
-		
+        
 	public:
-		inline							        PostprocessDrawer	(std::vector<std::weak_ptr<Texture>> 	input,
+        
+									            PostprocessDrawer	(std::vector<std::weak_ptr<Texture>> 	input,
                                                                      std::unique_ptr<Framebuffer> &&        framebuffer,
                                                                      std::unique_ptr<Shader> &&             shaderProgram);
+        void                                    draw_quad			() const;
+        std::string                             get_class			() const override;
 		
-				virtual void 			        draw_quad			() const = 0;
-		inline 	virtual std::string   	        get_class			() const override;
-		virtual							        ~PostprocessDrawer	() = default;
-
-	protected:
-	
+	private:
+        
+        void                                    _load               () override;
+        void                                    _unload             () override;
 		std::vector<std::weak_ptr<Texture>> 	inputTextures;
 		std::unique_ptr<Drawable> 				quad;
-
-    private:
-        
         void                                    draw                (Drawable & node, const Scene & scene) override { }
 
 	};
 	
-}
-
-ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::weak_ptr<Texture>> 	input,
-										 std::unique_ptr<Framebuffer> && framebuffer,
-                                         std::unique_ptr<Shader> && shaderProgram) : 	Render(std::move(framebuffer),
-                                                                                               std::move(shaderProgram)),
-                                                                                        inputTextures(input),
-                                                                                        quad(nullptr) {}
-
-std::string ms::PostprocessDrawer::get_class () const {
-	return "ms::PostprocessDrawer";
 }
 
 #endif /* postprocess_drawer_hpp */

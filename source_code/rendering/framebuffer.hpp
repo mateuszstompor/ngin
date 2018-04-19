@@ -27,7 +27,9 @@
 namespace ms {
 	
 	class Framebuffer : public Resource {
-		
+        
+        using fb_ptr = std::unique_ptr<Framebuffer>;
+
 	protected:
 		
 		using strong_color_texbuffers       = std::vector<std::shared_ptr<Texture>>;
@@ -44,7 +46,7 @@ namespace ms {
 		
 	public:
 		
-        inline 						    Framebuffer			(int    colorAttachmentsAmount,
+          						        Framebuffer			(int    colorAttachmentsAmount,
                                                              int    renderbufferAttachmentsAmount,
                                                              int 	width,
                                                              int 	height);
@@ -52,43 +54,46 @@ namespace ms {
 									    Framebuffer			(const Framebuffer &) = delete;
 		Framebuffer & 				    operator = 			(const Framebuffer &) = delete;
 		
-		virtual void 				    bind_color_buffer	(int index,
-                                                            std::unique_ptr<Texture> && texture) = 0;
+        void 				            bind_color_buffer	(int index,
+                                                            std::unique_ptr<Texture> && texture);
         
-		virtual void 				    bind_color_buffer	(int index,
-                                                             std::unique_ptr<Renderbuffer> && renderbuffer) = 0;
+		void 				            bind_color_buffer	(int index,
+                                                             std::unique_ptr<Renderbuffer> && renderbuffer);
         
-		virtual void 					bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer) = 0;
-        virtual void                    bind_depth_buffer   (std::unique_ptr<Texture> && texture) = 0;
+		void 					        bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer);
+        void                            bind_depth_buffer   (std::unique_ptr<Texture> && texture);
 		
 					//														//
 					// 	Checks completeness and merge all things together	//
 					//														//
 		
-inline  virtual void					configure			();
-		virtual void					use					() = 0;
-		virtual void					use_for_read		() = 0;
-inline	virtual std::string			    get_class			() = 0;
-        virtual void 					copy_depth_from		(Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest) = 0;
-        virtual void                    copy_color_from     (Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest) = 0;
-        virtual void                    copy_framebuffer    (Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest) = 0;
-		virtual void				    use_for_write		() = 0;
-		virtual bool				    is_complete			() const = 0;
-inline  virtual bool				    is_configured		() const;
-		virtual void				    clear_color			() = 0;
-		virtual void				    clear_depth			() = 0;
-		virtual void				    clear_frame			() = 0;
-inline	virtual void				    set_depth_test		(bool enabled);
-		inline	void				    set_clear_color		(math::vec4 const & color);
-		inline 	int					    get_height			() const;
-		inline 	int					    get_width			() const;
-        
-		inline weak_color_texbuffers 	get_colors();
-        inline weak_depth_texbuffer     get_depth_texture();
-		
-		virtual						    ~Framebuffer		() = default;
+        void					        configure			();
+		void					        use					();
+		void					        use_for_read		();
+        std::string			            get_class			() const override;
+        void 					        copy_depth_from		(Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest);
+        void                            copy_color_from     (Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest);
+        void                            copy_framebuffer    (Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest);
+		void				            use_for_write		();
+		bool				            is_complete			() const;
+        constexpr bool                  is_configured		() const { return isConfigured; }
+		void				            clear_color			();
+		void				            clear_depth			();
+		void				            clear_frame			();
+        void				            set_depth_test		(bool enabled);
+        void				            set_clear_color		(math::vec4 const & color);
+        constexpr int                   get_height			() const { return height; }
+        constexpr int                   get_width			() const { return width; }
+        void                            _load               () override;
+        void                            _unload             () override;
+        weak_color_texbuffers 	        get_colors          ();
+        weak_depth_texbuffer            get_depth_texture   ();
+        static  fb_ptr                  window_framebuffer  (int width, int height);
+        constexpr GLuint                get_underlying_id   () const { return framebuffer; }
+        void                            set_underlying_id   (GLuint framebufferID);
+		    						    ~Framebuffer		() = default;
 
-	protected:
+	private:
 		
 		int 						    width;
 		int 							height;
@@ -103,66 +108,13 @@ inline	virtual void				    set_depth_test		(bool enabled);
         int                             colorRenderbufferAttachmentsAmount;
         strong_color_renderbuffers      colorRenderbufferAttachments;
         strong_depth_renderbuffer       depthRenderbuffer;
-        
-	private:
-		
 		bool							isConfigured;
-		
+        bool                            is_default_framebuffer;
+        GLuint                          framebuffer;
 	};
 	
 }
 
-ms::Framebuffer::Framebuffer(int colorAttachmentsAmount,
-							 int renderbufferAttachmentsAmount,
-							 int width,
-							 int height) : 	width(width),
-											height(height),
-											colorTextureAttachmentsAmount(colorAttachmentsAmount),
-											colorRenderbufferAttachmentsAmount(renderbufferAttachmentsAmount),
-											isDepthTestEnabled(true) {
-												
-	colorTextureAttachments.resize(colorAttachmentsAmount);
-	colorRenderbufferAttachments.resize(renderbufferAttachmentsAmount);
-}
 
-std::string ms::Framebuffer::get_class () {
-	return "ms::Framebuffer";
-}
-
-void ms::Framebuffer::set_clear_color (math::vec4 const & color) {
-	this->clearingColor = color;
-}
-
-void ms::Framebuffer::configure () {
-	isConfigured = true;
-}
-
-bool ms::Framebuffer::is_configured () const {
-	return isConfigured;
-}
-
-int ms::Framebuffer::get_height () const {
-	return height;
-}
-
-int ms::Framebuffer::get_width () const {
-	return width;
-}
-
-ms::Framebuffer::weak_depth_texbuffer ms::Framebuffer::get_depth_texture() {
-    return std::weak_ptr<Texture>(depthTexture);
-}
-
-ms::Framebuffer::weak_color_texbuffers ms::Framebuffer::get_colors() {
-    weak_color_texbuffers weak_colors;
-    for(const auto & tex : this->colorTextureAttachments) {
-        weak_colors.push_back(std::weak_ptr<Texture>(tex));
-    }
-	return weak_colors;
-}
-
-void ms::Framebuffer::set_depth_test (bool enabled) {
-	isDepthTestEnabled = enabled;
-}
 
 #endif /* framebuffer_hpp */

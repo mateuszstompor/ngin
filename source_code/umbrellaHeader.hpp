@@ -15,7 +15,6 @@
 #include "../glMath/source/glMath.h"
 #include "scene/geometry.hpp"
 #include "scene/drawable.hpp"
-#include "rendering/ogl/framebufferOGL.hpp"
 #include "utils/ogl/proxyOGL.hpp"
 
 #endif /* umbrella_header_hpp */

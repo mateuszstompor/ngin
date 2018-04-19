@@ -20,6 +20,10 @@
 #include "../scene/texture.hpp"
 #include "framebuffer.hpp"
 #include "renderbuffer.hpp"
+#include "../utils/ogl/proxyOGL.hpp"
+#include "reusableGeometry.hpp"
+#include "../utils/ogl/utilsOGL.hpp"
+#include "../scene/drawable.hpp"
 
 namespace ms {
 	
@@ -42,16 +46,17 @@ namespace ms {
 																	 g_pass_shader && 					gShader,
 																	 lighting_shader &&					lightingShader);
 		
-				void					use			     			() override;
-				void 					draw						(Drawable & node, const Scene & scene) override;
-		virtual void 					perform_light_pass			(const Scene * scene) = 0;
-		virtual void 					setup_material_uniforms		(const Scene * scene, const Drawable * node);
-		virtual void 					setup_lightpass_uniforms	(const Scene * scene);
-		virtual void 					setup_g_buffer_uniforms		(const Scene * scene);
-		virtual void 					set_render_type				(DebugType type);
-		virtual 						~DeferredRender				() = default;
-		
-//	protected:
+		void							use			     			() override;
+		void 							draw						(Drawable & node, const Scene & scene) override;
+		void 							perform_light_pass			(const Scene * scene);
+		void 							setup_material_uniforms		(const Scene * scene, const Drawable * node);
+		void 							setup_lightpass_uniforms	(const Scene * scene);
+		void 							setup_g_buffer_uniforms		(const Scene * scene);
+		void 							set_render_type				(DebugType type);
+		void							_load						() override;
+		void 							_unload						() override;
+
+//	private:
 		
 		lighting_shader					lightingShader;
 		

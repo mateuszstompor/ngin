@@ -35,7 +35,7 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
 						std::unique_ptr<Framebuffer> &&	defaultFramebuffer
                       ) : NGin(screenWidth, screenHeight, frameBufferWidth, frameBufferHeight, std::move(cam)) {
 	
-    std::unique_ptr<Framebuffer> windowFramebuffer(defaultFramebuffer == nullptr ? FramebufferOGL::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
+    std::unique_ptr<Framebuffer> windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
     
     auto shadowMapperVertexShaderSource = get_shader_of_type(Type::shadow_mapping_dir_vshader);
     auto shadowMapperFragmentShaderSource = get_shader_of_type(Type::shadow_mapping_dir_fshader);
@@ -76,43 +76,43 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     auto scaleVertexShader = get_shader_of_type(Type::post_process_scale_vshader);
     auto scaleFragmentShader = get_shader_of_type(Type::post_process_scale_fshader);
 
-    auto vignetteFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto vignetteFramebuffer = std::make_unique<Framebuffer>(1,
                                                                 0,
                                                                 frameBufferWidth,
                                                                 frameBufferHeight);
     
-    auto hdrFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto hdrFramebuffer = std::make_unique<Framebuffer>(1,
                                                            0,
                                                            frameBufferWidth,
                                                            frameBufferHeight);
 
-    auto mainRenderFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto mainRenderFramebuffer = std::make_unique<Framebuffer>(1,
                                                                   1,
                                                                   frameBufferWidth,
                                                                   frameBufferHeight);
     
-    auto lightSourceDrawerFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto lightSourceDrawerFramebuffer = std::make_unique<Framebuffer>(1,
                                                                          1,
                                                                          frameBufferWidth,
                                                                          frameBufferHeight);
     
-    auto bloomTwoTexSplitFramebuffer = std::make_unique<FramebufferOGL>(2,
+    auto bloomTwoTexSplitFramebuffer = std::make_unique<Framebuffer>(2,
                                                                         0,
                                                                         frameBufferWidth,
                                                                         frameBufferHeight);
     
-    auto gaussianBlurFirstStepFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto gaussianBlurFirstStepFramebuffer = std::make_unique<Framebuffer>(1,
                                                                   0,
                                                                   frameBufferWidth,
                                                                   frameBufferHeight);
     
-    auto gaussianBlurSecondStepFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto gaussianBlurSecondStepFramebuffer = std::make_unique<Framebuffer>(1,
                                                                   0,
                                                                   frameBufferWidth,
                                                                   frameBufferHeight);
     
     
-    auto bloomMergeFramebuffer = std::make_unique<FramebufferOGL>(1,
+    auto bloomMergeFramebuffer = std::make_unique<Framebuffer>(1,
                                                                   0,
                                                                   frameBufferWidth,
                                                                   frameBufferHeight);
@@ -229,11 +229,11 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     auto defGshader = std::make_unique<DeferredShader>(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
     auto defLightingShader = std::make_unique<DeferredLightingShader>(AOL, AOL, deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
 
-    deferredRenderer = std::make_unique<DeferredRenderOGL> (AOL,
-                                                            AOL,
-                                                            std::move(mainRenderFramebuffer),
-                                                            std::move(defGshader),
-                                                            std::move(defLightingShader));
+    deferredRenderer = std::make_unique<DeferredRender> (AOL,
+                                                         AOL,
+                                                         std::move(mainRenderFramebuffer),
+                                                         std::move(defGshader),
+                                                         std::move(defLightingShader));
     
 //    shadowRenderer = std::make_unique<Render>(nullptr, std::move(shadowShader));
 
@@ -248,18 +248,18 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     lightSourceRenderer = std::make_unique<LightSourcesRender>(std::move(lightSourceDrawerFramebuffer),
                                                                std::move(lightSourceforwardShader));
 
-    bloomSplitRenderer = std::make_unique<PostprocessDrawerOGL>(lightSourceRenderer->get_framebuffer().get_colors(),
+    bloomSplitRenderer = std::make_unique<PostprocessDrawer>(lightSourceRenderer->get_framebuffer().get_colors(),
                                                                 std::move(bloomTwoTexSplitFramebuffer),
                                                                 std::move(bloomSplitProgram));
 
     std::vector<std::weak_ptr<Texture>> textures;
     textures.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[0]);
 
-    gaussianBlurFirstStepRenderer = std::make_unique<PostprocessDrawerOGL>(textures,
+    gaussianBlurFirstStepRenderer = std::make_unique<PostprocessDrawer>(textures,
                                                                            std::move(gaussianBlurFirstStepFramebuffer),
                                                                            std::move(gaussianBlurProgram));
 
-    gaussianBlurSecondStepRenderer = std::make_unique<PostprocessDrawerOGL>(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(),
+    gaussianBlurSecondStepRenderer = std::make_unique<PostprocessDrawer>(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(),
                                                                             std::move(gaussianBlurSecondStepFramebuffer),
                                                                             std::move(secondGaussianBlurProgram));
 
@@ -267,19 +267,19 @@ ms::NGinOGL::NGinOGL (  unsigned int screenWidth,
     textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
     textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
     
-    bloomMergeRenderer = std::make_unique<PostprocessDrawerOGL>(textures2,
+    bloomMergeRenderer = std::make_unique<PostprocessDrawer>(textures2,
                                                                 std::move(bloomMergeFramebuffer),
                                                                 std::move(bloomMergeProgram));
 
-    hdrRenderer = std::make_unique<PostprocessDrawerOGL>(lightSourceRenderer->get_framebuffer().get_colors(),
+    hdrRenderer = std::make_unique<PostprocessDrawer>(lightSourceRenderer->get_framebuffer().get_colors(),
                                                          std::move(hdrFramebuffer),
                                                          std::move(hdrProgram));
 
-    vignetteRenderer = std::make_unique<PostprocessDrawerOGL>(hdrRenderer->get_framebuffer().get_colors(),
+    vignetteRenderer = std::make_unique<PostprocessDrawer>(hdrRenderer->get_framebuffer().get_colors(),
                                                               std::move(vignetteFramebuffer),
                                                               std::move(vignetteProgram));
 
-    scaleRenderer = std::make_unique<PostprocessDrawerOGL>(vignetteRenderer->get_framebuffer().get_colors(),
+    scaleRenderer = std::make_unique<PostprocessDrawer>(vignetteRenderer->get_framebuffer().get_colors(),
                                                            std::move(windowFramebuffer),
                                                            std::move(scaleProgram));
 	

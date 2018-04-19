@@ -37,7 +37,50 @@ lightingShader(std::move(lightingShader)),
 quad(nullptr),
 renderMode(0),
 debugMode(false),
-debugType(DeferredRender::DebugType::position) { }
+debugType(DeferredRender::DebugType::position) {
+    
+    auto gPosition = std::make_unique<Texture>(Texture::Type::tex_2d,
+                                               Texture::Format::rgb_16_16_16,
+                                               Texture::AssociatedType::FLOAT,
+                                               this->framebuffer->get_width(),
+                                               this->framebuffer->get_height());
+
+    auto gNormal = std::make_unique<Texture>(Texture::Type::tex_2d,
+                                             Texture::Format::rgb_16_16_16,
+                                             Texture::AssociatedType::FLOAT,
+                                             this->framebuffer->get_width(), this->framebuffer->get_height());
+
+    auto gAlbedo = std::make_unique<Texture>(Texture::Type::tex_2d,
+                                             Texture::Format::rgba_8_8_8_8,
+                                             Texture::AssociatedType::UNSIGNED_BYTE,
+                                             this->framebuffer->get_width(),
+                                             this->framebuffer->get_height());
+
+    gFramebuffer = std::make_unique<Framebuffer>(3,
+                                                 1,
+                                                 this->framebuffer->get_width(),
+                                                 this->framebuffer->get_height());
+
+    auto depthRenderbuffer = std::make_unique<Renderbuffer>(Texture::Format::depth_32,
+                                                            Texture::AssociatedType::FLOAT,
+                                                            0,
+                                                            this->framebuffer->get_width(),
+                                                            this->framebuffer->get_height());
+
+    gFramebuffer->bind_color_buffer(0, std::move(gPosition));
+    gFramebuffer->bind_color_buffer(1, std::move(gNormal));
+    gFramebuffer->bind_color_buffer(2, std::move(gAlbedo));
+    gFramebuffer->bind_depth_buffer(std::move(depthRenderbuffer));
+
+    gFramebuffer->configure();
+
+    //    shadowFramebuffer->bind_depth_buffer(std::move(shadowTexture));
+
+    //    shadowFramebuffer->configure();
+
+    quad = Drawable::get_quad();
+    
+}
 
 void ms::DeferredRender::set_render_type (DebugType type) {
 	switch (type) {
@@ -162,4 +205,88 @@ void ms::DeferredRender::setup_g_buffer_uniforms (const Scene * scene) {
 	gShader->set_camera_transformation(scene->get_camera().get_transformation());
 	gShader->set_projection_matrix(scene->get_camera().get_projection_matrix());
 }
+
+void ms::DeferredRender::_load () {
+    gFramebuffer->load();
+    shader->load();
+    lightingShader->load();
+    framebuffer->use();
+    quad->load();
+}
+
+void ms::DeferredRender::_unload () {
+    gFramebuffer->unload();
+    shader->unload();
+    lightingShader->unload();
+    framebuffer->unload();
+    quad->unload();
+    //    shadowFramebuffer->unload();
+}
+
+void ms::DeferredRender::perform_light_pass (const Scene * scene) {
+    
+    //    shadowFramebuffer->use();
+    //    shadowFramebuffer->clear_frame();
+    
+    //    auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
+    //    shadowShader->use();
+    //    if(scene->get_directional_light()) {
+    //        assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
+    //        assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
+    //        for(auto n : scene->get_nodes()) {
+    //            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+    //            n->draw();
+    //        }
+    //    }
+    
+    //    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
+    //        const auto & spotLight = scene->get_spot_lights()[i];
+    //        spotLightsShadowComponents[i]->use();
+    //        spotLightsShadowComponents[i]->clear_frame();
+    //
+    //        assert(shadow->set_uniform("projection", spotLight->Light::get_projection()) >= 0);
+    //        assert(shadow->set_uniform("toLight", spotLight->Light::get_transformation()) >= 0);
+    //        for(auto n : scene->get_nodes()) {
+    //            if(spotLight->frustum.is_in_camera_sight(spotLight->get_transformation(), *n->geometry->get_bounding_box())) {
+    //                assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
+    //                n->draw();
+    //            }
+    //        }
+    //    }
+    
+    framebuffer->use();
+    framebuffer->clear_frame();
+    
+    lightingShader->use();
+    
+    lightingShader->set_rendering_mode(this->renderMode);
+    
+    //    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
+    //        const auto & spotLight = scene->get_spot_lights()[i];
+    //        assert(lightingSh->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLight->Light::get_projection()) >= 0);
+    //        assert(lightingSh->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLight->Light::get_transformation()) >= 0);
+    //        lightingSh->bind_texture(4 + i, *spotLightsShadowComponents[i]->get_depth_texture().lock());
+    //    }
+    
+    //    if(scene->get_directional_light()) {
+    //        assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
+    //        assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
+    //    }
+    
+    lightingShader->set_camera_transformation(scene->get_camera().get_transformation().c_array());
+    
+    DeferredRender::setup_lightpass_uniforms(scene);
+    
+    lightingShader->bind_g_buf_posiitons(*gFramebuffer->get_colors()[0].lock());
+    lightingShader->bind_g_buf_albedo(*gFramebuffer->get_colors()[2].lock());
+    //    lightingShader->bind_shadow_map(*shadowFramebuffer->get_depth_texture().lock());
+    lightingShader->bind_g_buf_normals(*gFramebuffer->get_colors()[1].lock());
+    
+    quad->draw();
+    
+    framebuffer->copy_depth_from(*gFramebuffer);
+    
+}
+
+
 
