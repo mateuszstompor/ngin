@@ -15,15 +15,18 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                unsigned int                     screenHeight,
                unsigned int                     frameBufferWidth,
                unsigned int                     frameBufferHeight,
+               unsigned int                     shadowsResolution,
                std::unique_ptr<Camera> &&       cam,
                std::unique_ptr<Framebuffer> &&  defaultFramebuffer) :
-    scene(std::make_unique<Scene>(std::move(cam))),
-    screenWidth{screenWidth},
-    screenHeight{screenHeight},
-    framebufferWidth{frameBufferWidth},
-    framebufferHeight{frameBufferHeight},
-    loader{} {
-        std::unique_ptr<Framebuffer> windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
+                                                                        scene{std::move(cam)},
+                                                                        screenWidth{screenWidth},
+                                                                        screenHeight{screenHeight},
+                                                                        framebufferWidth{frameBufferWidth},
+                                                                        framebufferHeight{frameBufferHeight},
+                                                                        loader{},
+                                                                        shadowResolution{shadowsResolution}{
+                                                                            
+        auto windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
         
         auto shadowMapperVertexShaderSource = get_shader_of_type(Type::shadow_mapping_dir_vshader);
         auto shadowMapperFragmentShaderSource = get_shader_of_type(Type::shadow_mapping_dir_fshader);
@@ -64,54 +67,17 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         auto scaleVertexShader = get_shader_of_type(Type::post_process_scale_vshader);
         auto scaleFragmentShader = get_shader_of_type(Type::post_process_scale_fshader);
     
-        auto vignetteFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                 0,
-                                                                 frameBufferWidth,
-                                                                 frameBufferHeight);
-    
-        auto hdrFramebuffer = std::make_unique<Framebuffer>(1,
-                                                            0,
-                                                            frameBufferWidth,
-                                                            frameBufferHeight);
-    
-        auto mainRenderFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                   1,
-                                                                   frameBufferWidth,
-                                                                   frameBufferHeight);
-    
-        auto lightSourceDrawerFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                          1,
-                                                                          frameBufferWidth,
-                                                                          frameBufferHeight);
-    
-        auto bloomTwoTexSplitFramebuffer = std::make_unique<Framebuffer>(2,
-                                                                            0,
-                                                                            frameBufferWidth,
-                                                                            frameBufferHeight);
-    
-        auto gaussianBlurFirstStepFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                      0,
-                                                                              frameBufferHeight,
-                                                                              frameBufferWidth);
-    
-        auto gaussianBlurSecondStepFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                      0,
-                                                                               frameBufferWidth,
-                                                                               frameBufferHeight);
-    
-    
-        auto bloomMergeFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                      0,
-                                                                      frameBufferWidth,
-                                                                      frameBufferHeight);
-
-        int shadowResolution = 2 * 1024;
+        auto vignetteFramebuffer = std::make_unique<Framebuffer>(1, 0, frameBufferWidth, frameBufferHeight);
+        auto hdrFramebuffer = std::make_unique<Framebuffer>(1, 0, frameBufferWidth, frameBufferHeight);
+        auto mainRenderFramebuffer = std::make_unique<Framebuffer>(1, 1, frameBufferWidth, frameBufferHeight);
+        auto lightSourceDrawerFramebuffer = std::make_unique<Framebuffer>(1, 1, frameBufferWidth, frameBufferHeight);
+        auto bloomTwoTexSplitFramebuffer = std::make_unique<Framebuffer>(2, 0, frameBufferWidth, frameBufferHeight);
+        auto gaussianBlurFirstStepFramebuffer = std::make_unique<Framebuffer>(1, 0, frameBufferHeight, frameBufferWidth);
+        auto gaussianBlurSecondStepFramebuffer = std::make_unique<Framebuffer>(1, 0, frameBufferWidth, frameBufferHeight);
+        auto bloomMergeFramebuffer = std::make_unique<Framebuffer>(1, 0, frameBufferWidth, frameBufferHeight);
     
         for (int i = 0; i < 10; ++i) {
-            shadows.push_back(std::make_unique<Framebuffer>(0,
-                                                            0,
-                                                            shadowResolution,
-                                                            shadowResolution));
+            shadows.push_back(std::make_unique<Framebuffer>(0, 0, shadowResolution, shadowResolution));
             shadows[i]->bind_depth_buffer(std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                     Texture::Format::depth_32,
                                                                     Texture::AssociatedType::FLOAT,
@@ -209,16 +175,9 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         unsigned int AOL = 100;
     
         auto shadowShader = Shader::vf_program(shadowMappingVertexShader, shadowMappingFragmentShader);
-        
-        auto phongforwardShader = Shader::vf_program(forwardRenderVertexShaderSource,
-                                                     forwardRenderFragmentShaderSource);
-    
-        auto gouraudforwardShader = Shader::vf_program(gouraudVertexShaderSource,
-                                                       gouraudRenderFragmentShaderSource);
-    
-        auto lightSourceforwardShader = Shader::vf_program(lightSourceDrawerVertexShader,
-                                                           lightSourceDrawerFragmentShader);
-    
+        auto phongforwardShader = Shader::vf_program(forwardRenderVertexShaderSource, forwardRenderFragmentShaderSource);
+        auto gouraudforwardShader = Shader::vf_program(gouraudVertexShaderSource, gouraudRenderFragmentShaderSource);
+        auto lightSourceforwardShader = Shader::vf_program(lightSourceDrawerVertexShader, lightSourceDrawerFragmentShader);
         auto bloomSplitProgram = Shader::vf_program(bloomSplitterVertexShader, bloomSplitterFragmentShader);
         auto bloomMergeProgram = Shader::vf_program(bloomMergerVertexShader, bloomMergerFragmentShader);
         auto hdrProgram = Shader::vf_program(hdrVertexShader, hdrFragmentShader);
@@ -226,7 +185,6 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         auto secondGaussianBlurProgram = Shader::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
         auto vignetteProgram = Shader::vf_program(vignetteVertexShader, vignetteFragmentShader);
         auto scaleProgram = Shader::vf_program(scaleVertexShader, scaleFragmentShader);
-    
         auto defGshader = Shader::vf_program(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
         auto defLightingShader = Shader::vf_program(deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
     
@@ -287,7 +245,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
 }
 
 //TODO this function is implemented three times
-void ms::NGin::load_model (std::string absolutePath) {
+void ms::NGin::load_model (std::string const & absolutePath) {
 	
     Loader::model_data loadedData = loader.load_model(absolutePath);
     Loader::geometries_vec & geo = std::get<0>(loadedData);
@@ -297,52 +255,52 @@ void ms::NGin::load_model (std::string absolutePath) {
         Loader::textures_map & tex = std::get<2>(loadedData);
 
         for (auto & material : mat) {
-            scene->get_materials().insert(std::move(material));
+            scene.get_materials().insert(std::move(material));
         }
         
         for (auto & texture : tex) {
-            scene->get_textures().insert(std::move(texture));
+            scene.get_textures().insert(std::move(texture));
         }
     }
     
     for (auto & geometry : geo) {
         auto node = std::make_shared<Drawable>();
         node->geometry = std::move(geometry);
-        auto nodeMaterial = scene->get_materials().find(node->geometry->get_material_name());
-        if(nodeMaterial != scene->get_materials().end()) {
+        auto nodeMaterial = scene.get_materials().find(node->geometry->get_material_name());
+        if(nodeMaterial != scene.get_materials().end()) {
 
             node->boundedMaterial = nodeMaterial->second;
 
             if(nodeMaterial->second->diffuseTexturesNames.size() > 0) {
-                auto diffuseTexture = scene->get_textures().find(nodeMaterial->second->diffuseTexturesNames[0]);
-                if(diffuseTexture != scene->get_textures().end()) {
+                auto diffuseTexture = scene.get_textures().find(nodeMaterial->second->diffuseTexturesNames[0]);
+                if(diffuseTexture != scene.get_textures().end()) {
                     nodeMaterial->second->boundedDiffuseTexture = diffuseTexture->second;
                 }
             }
 
             if(nodeMaterial->second->specularTexturesNames.size() > 0) {
-                auto specularTexture = scene->get_textures().find(nodeMaterial->second->specularTexturesNames[0]);
-                if(specularTexture != scene->get_textures().end()) {
+                auto specularTexture = scene.get_textures().find(nodeMaterial->second->specularTexturesNames[0]);
+                if(specularTexture != scene.get_textures().end()) {
                     nodeMaterial->second->boundedSpecularTexture = specularTexture->second;
                 }
             }
 
             if(nodeMaterial->second->heightTexturesNames.size() > 0) {
-                auto heightTexture = scene->get_textures().find(nodeMaterial->second->heightTexturesNames[0]);
-                if(heightTexture != scene->get_textures().end()) {
+                auto heightTexture = scene.get_textures().find(nodeMaterial->second->heightTexturesNames[0]);
+                if(heightTexture != scene.get_textures().end()) {
                     nodeMaterial->second->boundedHeightTexture = heightTexture->second;
                 }
             }
 
             if(nodeMaterial->second->normalTexturesNames.size() > 0) {
-                auto normalTexture = scene->get_textures().find(nodeMaterial->second->normalTexturesNames[0]);
-                if(normalTexture != scene->get_textures().end()) {
+                auto normalTexture = scene.get_textures().find(nodeMaterial->second->normalTexturesNames[0]);
+                if(normalTexture != scene.get_textures().end()) {
                     nodeMaterial->second->boundedNormalTexture = normalTexture->second;
                 }
             }
             
         }
-        scene->get_nodes().push_back(node);
+        scene.get_nodes().push_back(node);
     }
     
 }
@@ -378,10 +336,10 @@ void ms::NGin::unload () {
 }
 
 //TODO
-void ms::NGin::load_point_light	(float power,
-								 math::vec3 color,
-								 math::vec3 position,
-								 std::string absolutePath) {
+void ms::NGin::load_point_light	(float                  power,
+								 math::vec3 const &     color,
+								 math::vec3 const &     position,
+								 std::string const &    absolutePath) {
     
     Loader::model_data loadedData = loader.load_model(absolutePath);
     Loader::geometries_vec & geo = std::get<0>(loadedData);
@@ -389,27 +347,27 @@ void ms::NGin::load_point_light	(float power,
     Loader::textures_map & tex = std::get<2>(loadedData);
 
     for (auto & geometry : geo) {
-        auto node = std::make_shared<PointLight>(power, color, position);
+        auto node = std::make_shared<PointLight>(color, power, position);
         node->geometry=std::move(geometry);
-        scene->get_point_lights().push_back(std::move(node));
+        scene.get_point_lights().push_back(std::move(node));
     }
 
     for (auto & material : mat) {
-        scene->get_materials().insert(std::move(material));
+        scene.get_materials().insert(std::move(material));
     }
 
     for (auto & texture : tex) {
-        scene->get_textures().insert(std::move(texture));
+        scene.get_textures().insert(std::move(texture));
     }
 	
 }
 //TODO
-void ms::NGin::load_spot_light (float power,
-								math::vec3 color,
-								math::vec3 position,
-								float lightingAngleDegrees,
-								math::vec3 direction,
-								std::string absolutePath) {
+void ms::NGin::load_spot_light (float                   power,
+								math::vec3 const &      color,
+								math::vec3 const &      position,
+								float                   lightingAngleDegrees,
+								math::vec3 const &      direction,
+								std::string const &     absolutePath) {
 
     Loader::model_data loadedData = loader.load_model(absolutePath);
     Loader::geometries_vec & geo = std::get<0>(loadedData);
@@ -417,17 +375,17 @@ void ms::NGin::load_spot_light (float power,
     Loader::textures_map & tex = std::get<2>(loadedData);
     
     for (auto & geometry : geo) {
-        auto node = std::make_shared<SpotLight>(power, color, position, lightingAngleDegrees, direction);
+        auto node = std::make_shared<SpotLight>(color, power, position, lightingAngleDegrees, direction);
         node->geometry=std::move(geometry);
-        scene->get_spot_lights().push_back(std::move(node));
+        scene.get_spot_lights().push_back(std::move(node));
     }
     
     for (auto & material : mat) {
-        scene->get_materials().insert(std::move(material));
+        scene.get_materials().insert(std::move(material));
     }
     
     for (auto & texture : tex) {
-        scene->get_textures().insert(std::move(texture));
+        scene.get_textures().insert(std::move(texture));
     }
 	
 }
@@ -456,58 +414,74 @@ void ms::NGin::draw_scene() {
         count_fps();
     #endif
     
-    if (auto dirLight = scene->get_directional_light()) {
+    if (auto dirLight = scene.get_directional_light()) {
         shadows[0]->use();
         shadows[0]->clear_frame();
         shadowRenderer->use(*shadows[0]);
-        shadowRenderer->setup_uniforms(*scene);
-        for(int i = 0; i < scene->get_nodes().size(); ++i) {
-            shadowRenderer->draw(*scene->get_nodes()[i], *scene);
+        shadowRenderer->setup_uniforms(scene);
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node, scene);
+        }
+    }
+    
+    for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        shadows[1 + i]->use();
+        shadows[1 + i]->clear_frame();
+        shadowRenderer->use(*shadows[1 + i]);
+        shadowRenderer->setup_uniforms(scene);
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node, scene);
         }
     }
     
     if(chosenRenderer == Renderer::deferred) {
         deferredRenderer->use();
-        deferredRenderer->setup_g_buffer_uniforms(scene.get());
+        deferredRenderer->setup_g_buffer_uniforms(&scene);
         deferredRenderer->gFramebuffer->use();
         deferredRenderer->gFramebuffer->clear_frame();
-        for(int i = 0; i < scene->get_nodes().size(); ++i) {
-            auto node = scene->get_nodes()[i];
-            if(scene->get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), node->geometry->get_bounding_box())) {
-                deferredRenderer->draw(*scene->get_nodes()[i], *scene);
+        for(int i = 0; i < scene.get_nodes().size(); ++i) {
+            auto node = scene.get_nodes()[i];
+            if(scene.get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), node->geometry->get_bounding_box())) {
+                deferredRenderer->draw(*scene.get_nodes()[i], scene);
             }
         }
         deferredRenderer->get_framebuffer().use();
         deferredRenderer->get_framebuffer().clear_frame();
         deferredRenderer->lightingShader->use();
         deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        deferredRenderer->perform_light_pass(scene.get());
+        deferredRenderer->perform_light_pass(&scene);
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {
         phongForwardRenderer->use(deferredRenderer->get_framebuffer());
         deferredRenderer->get_framebuffer().clear_frame();
-        phongForwardRenderer->setup_uniforms(scene.get());
-        for(int i = 0; i < scene->get_nodes().size(); ++i) {
-            phongForwardRenderer->draw(*scene->get_nodes()[i], *scene);
+        phongForwardRenderer->setup_uniforms(&scene);
+        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        
+        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
+    
+        for(int i = 0; i < scene.get_nodes().size(); ++i) {
+            phongForwardRenderer->draw(*scene.get_nodes()[i], scene);
         }
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else {
         gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
         deferredRenderer->get_framebuffer().clear_frame();
-        gouraudForwardRenderer->setup_uniforms(scene.get());
-        for(int i = 0; i < scene->get_nodes().size(); ++i) {
-            gouraudForwardRenderer->draw(*scene->get_nodes()[i], *scene);
+        gouraudForwardRenderer->setup_uniforms(&scene);
+        for(int i = 0; i < scene.get_nodes().size(); ++i) {
+            gouraudForwardRenderer->draw(*scene.get_nodes()[i], scene);
         }
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     }
 
 
     lightSourceRenderer->use();
-    for(int i = 0; i < scene->get_point_lights().size(); ++i) {
-        lightSourceRenderer->draw(*scene->get_point_lights()[i], *scene);
+    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
+        lightSourceRenderer->draw(*scene.get_point_lights()[i], scene);
     }
-    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
-        lightSourceRenderer->draw(*scene->get_spot_lights()[i], *scene);
+    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        lightSourceRenderer->draw(*scene.get_spot_lights()[i], scene);
     }
 
     bloomSplitRenderer->use();
@@ -526,15 +500,15 @@ void ms::NGin::draw_scene() {
     bloomMergeRenderer->get_framebuffer().clear_frame();
     bloomMergeRenderer->draw_quad();
 
-    hdrRenderer->get_framebuffer().use();
+    hdrRenderer->use();
     hdrRenderer->get_framebuffer().clear_frame();
     hdrRenderer->draw_quad();
 
-    vignetteRenderer->get_framebuffer().use();
+    vignetteRenderer->use();
     vignetteRenderer->get_framebuffer().clear_frame();
     vignetteRenderer->draw_quad();
 
-    scaleRenderer->get_framebuffer().use();
+    scaleRenderer->use();
     scaleRenderer->get_framebuffer().clear_frame();
     scaleRenderer->draw_quad();
     

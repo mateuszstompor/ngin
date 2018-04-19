@@ -15,23 +15,21 @@
 
 namespace ms {
 	
-	class PointLight : public virtual Light, public virtual Drawable {
+	class PointLight : public Light, public Drawable {
 	
 	public:
 		
-		inline 	PointLight (float 		power,
-							math::vec3 	color,
-							math::vec3 	position);
+		inline 	PointLight (math::vec3 const &  color,
+                            float 		        power,
+							math::vec3 const &  position);
 		
-		virtual ~PointLight() = default;
-		
-		float			power;
-		math::vec3 		position;
-		
+        math::vec3                              get_position    () const { return math::get_position(positionedObject.get_transformation()); }
 	};
 	
 }
 
-ms::PointLight::PointLight (float p, math::vec3 c, math::vec3 pos) : Light(c), power(p), position(pos) { }
+ms::PointLight::PointLight (math::vec3 const &  col,
+                            float               pow,
+                            math::vec3 const &  pos) : Light(col, pow, math::projection4f::perspective(0.01f, 100.0f, 90.0f, 1.0f), math::transform4f::translate(pos)) { }
 
 #endif /* point_light_hpp */

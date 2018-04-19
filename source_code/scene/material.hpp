@@ -56,7 +56,7 @@ namespace ms {
         virtual void                _load                   () override;
         virtual void                _unload                 () override;
         
-        GLuint                  bufferId;
+        GLuint                      bufferId;
 		
 	};
 	

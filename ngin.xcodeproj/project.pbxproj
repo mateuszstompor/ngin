@@ -39,6 +39,8 @@
 		565AAAC92069B5F3002B6C6B /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 565AAAC62069B5F3002B6C6B /* material.cpp */; };
 		566BCF2C204EAF6500E90246 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566BCF2B204EAF6500E90246 /* scene.cpp */; };
 		566BCF2D204EAF6500E90246 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566BCF2B204EAF6500E90246 /* scene.cpp */; };
+		566D09DF2088EAA200D1CDF4 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shader.cpp */; };
+		566D09E52088EAA700D1CDF4 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shader.cpp */; };
 		5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
 		5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
 		56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -796,6 +798,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				566D09DF2088EAA200D1CDF4 /* shader.cpp in Sources */,
 				560627D020633B69005085CD /* renderbuffer.cpp in Sources */,
 				563B996A2065B66900B54626 /* forwardRender.cpp in Sources */,
 				5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
@@ -853,6 +856,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				566D09E52088EAA700D1CDF4 /* shader.cpp in Sources */,
 				56D29AA4207B8DED0080CB3B /* renderbuffer.cpp in Sources */,
 				56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */,
 				56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */,

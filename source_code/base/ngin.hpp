@@ -41,34 +41,35 @@ namespace ms {
                                                              unsigned int                       screenHeight,
                                                              unsigned int                       frameBufferWidth,
                                                              unsigned int                       frameBufferHeight,
+                                                             unsigned int                       shadowsResolution,
                                                              std::unique_ptr<Camera> &&         cam,
                                                              std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
 		
-        void							load_point_light	(float 			power,
-                                                             math::vec3 	color,
-                                                             math::vec3 	position,
-                                                             std::string 	absolutePath);
+        void							load_point_light	(float                  power,
+                                                             math::vec3 const &     color,
+                                                             math::vec3 const &     position,
+                                                             std::string const &    absolutePath);
 		
-        void							load_spot_light	    (float 			power,
-                                                             math::vec3 	color,
-                                                             math::vec3 	position,
-                                                             float			lightingAngleDegrees,
-                                                             math::vec3 	direction,
-                                                             std::string 	absolutePath);
+        void							load_spot_light	    (float 			        power,
+                                                             math::vec3 const & 	color,
+                                                             math::vec3 const &	    position,
+                                                             float			        lightingAngleDegrees,
+                                                             math::vec3 const & 	direction,
+                                                             std::string const & 	absolutePath);
         
         void                            set_renderer        (Renderer r);
         void 							load 				();
         void 							unload 				();
         void							draw_scene  		();
         DeferredRender & 		        get_deferred_render	() const;
-        void							load_model			(std::string 	absolutePath);
+        void							load_model			(std::string const & absolutePath);
 		
-		std::unique_ptr<Scene>                  scene;
+		Scene                           scene;
 		
 	private:
 		
-		void									count_fps			();		
-		Loader					                loader;
+		void							count_fps			();
+		Loader					        loader;
         
 		std::unique_ptr<DeferredRender>             deferredRenderer;
         std::unique_ptr<DLShadowRender>             shadowRenderer;
@@ -83,6 +84,9 @@ namespace ms {
         std::unique_ptr<PostprocessDrawer>          vignetteRenderer;
 		std::unique_ptr<PostprocessDrawer>     	    scaleRenderer;
         std::vector<std::unique_ptr<Framebuffer>>   shadows;
+        
+        
+        unsigned int                                shadowResolution;
 		unsigned int							    screenWidth;
 		unsigned int							    screenHeight;
 

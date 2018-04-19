@@ -149,11 +149,14 @@ void ms::Framebuffer::configure () {
 ms::Framebuffer::Framebuffer(int colorAttachmentsAmount,
                              int renderbufferAttachmentsAmount,
                              int width,
-                             int height) :     width(width),
-height(height),
-colorTextureAttachmentsAmount(colorAttachmentsAmount),
-colorRenderbufferAttachmentsAmount(renderbufferAttachmentsAmount),
-isDepthTestEnabled(true), framebuffer(0), is_default_framebuffer(false) {
+                             int height) :
+width{width},
+height{height},
+colorTextureAttachmentsAmount{colorAttachmentsAmount},
+colorRenderbufferAttachmentsAmount{renderbufferAttachmentsAmount},
+isDepthTestEnabled{true},
+framebuffer{0},
+is_default_framebuffer{false} {
     
     colorTextureAttachments.resize(colorAttachmentsAmount);
     colorRenderbufferAttachments.resize(renderbufferAttachmentsAmount);

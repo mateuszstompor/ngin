@@ -18,13 +18,13 @@ namespace ms {
 	public:
 		
 		inline							PositionedObject	();
-		inline							PositionedObject	(math::mat4 transformation);
+		inline							PositionedObject	(math::mat4 const & transformation);
 		virtual 						~PositionedObject	() = default;
 		
 		inline math::mat4 const & 		get_transformation	() const;
-		inline void						set_transformation	(math::mat4 transformation);
-		inline void						post_transform		(math::mat4 transformation);
-		inline void						pre_transform		(math::mat4 transformation);
+		inline void						set_transformation	(math::mat4 const & transformation);
+		inline void						post_transform		(math::mat4 const & transformation);
+		inline void						pre_transform		(math::mat4 const & transformation);
 		
 	protected:
 		
@@ -34,11 +34,11 @@ namespace ms {
 
 }
 
-ms::PositionedObject::PositionedObject (math::mat4 t) : transformation(t) { }
+ms::PositionedObject::PositionedObject (math::mat4 const & t) : transformation(t) { }
 
 ms::PositionedObject::PositionedObject () : PositionedObject(math::mat4::identity()) { }
 
-void ms::PositionedObject::set_transformation (math::mat4 t) {
+void ms::PositionedObject::set_transformation (math::mat4 const & t) {
 	transformation = t;
 }
 
@@ -46,11 +46,11 @@ ms::math::mat4 const & ms::PositionedObject::get_transformation	() const {
 	return transformation;
 }
 
-void ms::PositionedObject::post_transform (math::mat4 t) {
+void ms::PositionedObject::post_transform (math::mat4 const & t) {
 	transformation = transformation * t;
 }
 
-void ms::PositionedObject::pre_transform (math::mat4 t) {
+void ms::PositionedObject::pre_transform (math::mat4 const & t) {
 	transformation = t * transformation;
 }
 

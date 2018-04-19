@@ -14,38 +14,35 @@
 
 namespace ms {
 	// TODO make it able to translate
-	class SpotLight : public PointLight, public DirectionalLight {
+	class SpotLight : public DirectionalLight, public Drawable {
 		
 	public:
 		
-		inline 		                    SpotLight 	(float 			power,
-                                                     math::vec3 	color,
-                                                     math::vec3 	position,
-                                                     float 			lightingAngleDegrees,
-                                                     math::vec3 	direction);
+		inline 		                    SpotLight 	(math::vec3 const & color,
+                                                     float 			    power,
+                                                     math::vec3 const & position,
+                                                     float 			    lightingAngleDegrees,
+                                                     math::vec3 const & direction);
 		
-		virtual		                    ~SpotLight 	() = default;
+        math::vec3                              get_position    () const { return math::get_position(positionedObject.get_transformation()); }
 		
 		float 		                    lightingAngleDegrees;
-        math::FrustumViewport<float>    frustum;
+//        math::FrustumViewport<float>    frustum;
 		
 	};
 	
 }
 
-ms::SpotLight::SpotLight (float 		power,
-						  math::vec3 	color,
-						  math::vec3 	position,
-						  float			lightingAngle,
-						  math::vec3 	direction) :
-frustum(0.001f, 100.0f, lightingAngle, 1.0f),
-ms::Light(color),
-ms::PointLight(power, color, position),
-ms::DirectionalLight(color, direction),
-lightingAngleDegrees(lightingAngle) {
-	Light::projection =	math::projection::perspective(0.001f, 100.0f, lightingAngle, 1.0f);
-    auto look = math::transform::look_at(position, position + direction, math::vec3{0.0f, 1.0f, 0.0f});
-	Light::transformation = look;
+ms::SpotLight::SpotLight (math::vec3 const &    color,
+                          float                 power,
+                          math::vec3 const &    position,
+                          float                 lightingAngleDegrees,
+                          math::vec3 const &    direction) :
+DirectionalLight{color, power, direction, math::projection4f::perspective(0.001f, 100.0f, lightingAngleDegrees, 1.0f)},
+lightingAngleDegrees{lightingAngleDegrees} {
+//    Light::projection =    math::projection::perspective(0.001f, 100.0f, lightingAngle, 1.0f);
+//    auto look = math::transform::look_at(position, position + direction, math::vec3{0.0f, 1.0f, 0.0f});
+//    Light::transformation = look;
 
 }
 

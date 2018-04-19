@@ -22,5 +22,5 @@ void ms::DLShadowRender::draw (Drawable & node, const Scene & scene) {
 
 void ms::DLShadowRender::setup_uniforms (Scene const & scene) {
     shader->set_uniform("projection", scene.get_directional_light()->get_projection());
-    shader->set_uniform("toLight", scene.get_directional_light()->get_transformation());
+    shader->set_uniform("toLight", scene.get_directional_light()->get_positionedObject().get_transformation());
 }

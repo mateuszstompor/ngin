@@ -20,7 +20,7 @@
 
 namespace ms {
 	
-	class Drawable : public virtual Resource {
+	class Drawable : public Resource {
 		
 	public:
 		

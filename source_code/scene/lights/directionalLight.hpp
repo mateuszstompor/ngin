@@ -9,33 +9,43 @@
 #ifndef directional_light_hpp
 #define directional_light_hpp
 
-#define PROJECTION_CUBE_SIDE 38.0f
-
 #include "general/light.hpp"
 
 namespace ms {
 	
-	class DirectionalLight : public virtual Light {
+	class DirectionalLight : public Light {
         
 	public:
         
-		inline 		                            DirectionalLight(math::vec3 const & color,
-                                                                 math::vec3 const & direction,
-                                                                 math::mat4 const & projection = math::projection::orthogonal_cube<float>(PROJECTION_CUBE_SIDE));
+		inline                  DirectionalLight    (math::vec3 const & color,
+                                                     float              power,
+                                                     math::vec3 const & direction,
+                                                     math::mat4 const & projection);
         
-        inline                                  DirectionalLight(math::vec3 && color,
-                                                                 math::vec3 && direction,
-                                                                 math::mat4 && projection = math::projection::orthogonal_cube<float>(PROJECTION_CUBE_SIDE));
-        
-		virtual		                            ~DirectionalLight() = default;
-        
-		math::vec3 	direction;
-		
+        inline                  DirectionalLight    (math::vec3 && color,
+                                                     float         power,
+                                                     math::vec3 && direction,
+                                                     math::mat4 && projection);
+
+        inline      math::vec3  get_direction       () const;
+		virtual                 ~DirectionalLight   () = default;
+            
 	};
 	
 }
 
-ms::DirectionalLight::DirectionalLight(math::vec3 const & c, math::vec3 const & d, math::mat4 const & p) : ms::Light(c, p), direction(d) { }
-ms::DirectionalLight::DirectionalLight(math::vec3 && c, math::vec3 && d, math::mat4 && p) : ms::Light(std::move(c), std::move(p)), direction(std::move(d)) { }
+ms::DirectionalLight::DirectionalLight(math::vec3 const & col,
+                                       float              pow,
+                                       math::vec3 const & dir,
+                                       math::mat4 const & proj) : ms::Light(col, pow, proj, math::mat4::identity()) { }
+
+ms::DirectionalLight::DirectionalLight(math::vec3 && col,
+                                       float         pow,
+                                       math::vec3 && dir,
+                                       math::mat4 && proj) : ms::Light(std::move(col), pow, std::move(proj), math::mat4::identity()) { }
+
+ms::math::vec3 ms::DirectionalLight::get_direction () const {
+    return math::back(positionedObject.get_transformation());
+}
 
 #endif /* directional_light_hpp */

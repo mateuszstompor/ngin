@@ -16,6 +16,8 @@ out vec3 fragmentPosition;
 out vec3 cameraPosition;
 out vec3 surfaceZCamera_N;
 out mat4 lightTransformationMatrix;
+out vec3 fragmentPositionWorld;
+out mat4 TBNMat;
 
 //tangent
 void main(){
@@ -31,9 +33,10 @@ void main(){
     normal_N = N_N;
 
     mat4 TBN = mat4(transpose(mat3(T_N, BT_N, N_N)));
-
+    TBNMat = TBN;
     vec4 pos = modelTransformation * vec4(position, 1.0f);
     fragmentPosition = (TBN * pos).xyz;
+    fragmentPositionWorld = pos.xyz;
     cameraPosition = (TBN * cameraTransformation * vec4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
     surfaceZCamera_N = normalize(cameraPosition - fragmentPosition);
     texCoord = textureCoordinates;

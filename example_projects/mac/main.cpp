@@ -78,10 +78,12 @@ int main(int argc, const char * argv[]) { {
 	actualScreenWidth = framebufferWidth;
 	actualScreenHeight = framebufferHeight;
 	
+    unsigned int shadowResolution = 1024;
+    
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
-		framebufferWidth /= 2;
-		framebufferHeight /= 2;
+        framebufferWidth /= 2;
+        framebufferHeight /= 2;
 	#endif
 	
 	if(window == nullptr){
@@ -102,43 +104,43 @@ int main(int argc, const char * argv[]) { {
 	
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
     
-    engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, std::move(cam), nullptr);
+    engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, shadowResolution, std::move(cam), nullptr);
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-	engine->scene->set_directional_light(50, ms::math::vec3{ 1.0f, 1.0f, 1.0f}, vec3(0.0f, 1.0f, 0.0f).normalized());
+    engine->scene.set_directional_light(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, 1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f));
 
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
                                      vec3( 0.0f, 0.0f,  1.0f));
-    
-    engine->scene->get_directional_light()->get_transformation() = lookat;
-    
-	mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
-//    for (int i = 0; i < 2; ++i) {
-//        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
-//        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-//        auto lightPower = 50.0f;
-//
-//        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
-//        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
-//    }
-//
-//    for (int i = 0; i < 1; ++i) {
-//        auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});
-//        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-//        auto lightingDir = vec3{-1.0f, 0.0f, 0.0f};
-//        auto lightPower = 50.0f;
-//        auto spotLightAngle = 120.0f;
-//
-//        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
-//        engine->scene->get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
-//    }
+    engine->scene.get_directional_light()->get_positionedObject().set_transformation(lookat);
 
-	for(int i = 0; i < engine->scene->get_nodes().size(); ++i) {
-		engine->scene->get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}));
-	}
+    mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
+
+    for (int i = 0; i < 2; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
+        auto lightColor = vec3{0.0f, 1.0f, 1.0f};
+        auto lightPower = 50.0f;
+
+        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
+        engine->scene.get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+    }
+
+    for (int i = 0; i < 1; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});
+        auto lightColor = vec3{1.0f, 0.0f, 1.0f};
+        auto lightingDir = vec3{-1.0f, 0.0f, 0.0f};
+        auto lightPower = 50.0f;
+        auto spotLightAngle = 120.0f;
+
+        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
+        engine->scene.get_spot_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+    }
+
+    for(int i = 0; i < engine->scene.get_nodes().size(); ++i) {
+        engine->scene.get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}));
+    }
 
 //    engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
 	

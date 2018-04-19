@@ -18,6 +18,12 @@ void ms::ForwardRender::_load () {
     shader->set_uniform("diffuseTexture", 0);
     shader->set_uniform("specularTexture", 1);
     shader->set_uniform("normalTexture", 2);
+    shader->set_uniform("dirLightShadowMap", 3);
+    
+    for (int i = 0; i < maximalAmountOfLights; ++i) {
+        shader->set_uniform("spotLightsShadowMaps" + std::to_string(i) + "]", 4 + i);
+    }
+    
 }
 
 void ms::ForwardRender::setup_uniforms (const Scene * scene) {
@@ -28,8 +34,12 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
     if(auto dirLight = scene->get_directional_light()) {
         shader->set_uniform("hasDirLight", 1);
         shader->set_uniform("dirLight.color", dirLight->get_color());
-        shader->set_uniform("dirLight.direction", dirLight->direction);
+        shader->set_uniform("dirLight.direction", dirLight->get_direction());
+        shader->set_uniform("dirLightProjection", scene->get_directional_light()->get_projection());
+        shader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_positionedObject().get_transformation());
+        shader->set_uniform("hasDirLightShadowMap", 1);
     } else {
+        shader->set_uniform("hasDirLightShadowMap", 0);
         shader->set_uniform("hasDirLight", 0);
     }
 
@@ -38,11 +48,13 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
         shader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
         for(unsigned int i = 0; i < spotLights.size(); ++i) {
             
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i]->power);
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i]->get_power());
             shader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i]->get_color());
             shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i]->lightingAngleDegrees);
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].position", spotLights[i]->position);
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->direction);
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].position", spotLights[i]->get_position());
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->get_direction());
+            shader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i]->get_projection());
+            shader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i]->get_positionedObject().get_transformation());
             
         }
     }
@@ -52,8 +64,8 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
         shader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
         for(unsigned int i = 0; i < pointLights.size(); ++i) {
             shader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i]->get_color());
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->position);
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->power);
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->get_position());
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->get_power());
         }
     }
     

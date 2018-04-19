@@ -34,33 +34,31 @@ namespace ms {
         using point_lights_type = std::vector<std::shared_ptr<PointLight>>;
         using drawable_type     = std::vector<std::shared_ptr<Drawable>>;
         
-                                                                    Scene ();
+                                                Scene ();
+                                                Scene (std::unique_ptr<Camera> && cam);
         
-															        Scene (float nearPlan,
-                                                                           float farPlan,
-                                                                           float fovDegress,
-                                                                           float cameraAspect);
-        
-                                                                    Scene (std::unique_ptr<Camera> && cam);
+                                                Scene (float nearPlan,
+                                                       float farPlan,
+                                                       float fovDegress,
+                                                       float cameraAspect);
 
-        Camera const &							                    get_camera() const;
-		Camera &                                                    get_camera();
-		DirectionalLight const *                          			get_directional_light() const;
-		DirectionalLight  *                          			    get_directional_light();
-
-		constexpr materials_type &                                  get_materials() { return materials; }
-        constexpr textures_type &                                   get_textures() { return textures; }
+        Camera const &                          get_camera() const;
+		Camera &                                get_camera();
+		DirectionalLight const *                get_directional_light() const;
+		DirectionalLight  *                     get_directional_light();
+		constexpr materials_type &              get_materials() { return materials; }
+        constexpr textures_type &               get_textures() { return textures; }
+        constexpr spot_lights_type &            get_spot_lights() { return spotLights; }
+        constexpr const spot_lights_type &      get_spot_lights() const { return spotLights; }
+        constexpr point_lights_type &           get_point_lights() { return pointLights; }
+        constexpr const point_lights_type &     get_point_lights() const { return pointLights; }
+        constexpr drawable_type &               get_nodes() { return nodes; }
+        constexpr const drawable_type &         get_nodes() const { return nodes; }
         
-        constexpr spot_lights_type &                                get_spot_lights() { return spotLights; }
-        constexpr const spot_lights_type &                          get_spot_lights() const { return spotLights; }
-        constexpr point_lights_type &                               get_point_lights() { return pointLights; }
-        constexpr const point_lights_type &                         get_point_lights() const { return pointLights; }
-        constexpr drawable_type &                                   get_nodes() { return nodes; }
-        constexpr const drawable_type & 	                        get_nodes() const { return nodes; }
-        
-        void        												set_directional_light(float 		power,
-                                                                                          math::vec3 	color,
-                                                                                          math::vec3 	direction);
+        void        							set_directional_light(math::vec3 const &     color,
+                                                                      float                 power,
+                                                                      math::vec3 const & 	direction,
+                                                                      math::mat4 const &    projection);
 		
     protected:
         
