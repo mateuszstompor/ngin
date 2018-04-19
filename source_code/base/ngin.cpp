@@ -414,6 +414,15 @@ void ms::NGin::draw_scene() {
         count_fps();
     #endif
     
+    
+//    scaleRenderer->get_framebuffer().use();
+//    scaleRenderer->get_framebuffer().clear_frame();
+//    shadowRenderer->use(scaleRenderer->get_framebuffer());
+//    shadowRenderer->setup_uniforms(scene.get_spot_lights()[0]->get_projection(), scene.get_spot_lights()[0]->get_positionedObject().get_transformation());
+//    for(auto & node : scene.get_nodes()) {
+//        shadowRenderer->draw(*node);
+//    }
+
     if (auto dirLight = scene.get_directional_light()) {
         shadows[0]->use();
         shadows[0]->clear_frame();
@@ -453,6 +462,9 @@ void ms::NGin::draw_scene() {
         deferredRenderer->get_framebuffer().clear_frame();
         deferredRenderer->lightingShader->use();
         deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
         deferredRenderer->perform_light_pass(&scene);
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {

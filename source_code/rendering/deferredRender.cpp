@@ -123,17 +123,19 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i]->lightingAngleDegrees);
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].position", spotLights[i]->get_position());
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->get_direction());
+            lightingShader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i]->get_positionedObject().get_transformation());
+            lightingShader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i]->get_projection());
             
         }
     }
     
     {
         const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
-        shader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
+        lightingShader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
         for(unsigned int i = 0; i < pointLights.size(); ++i) {
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i]->get_color());
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->get_position());
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->get_power());
+            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i]->get_color());
+            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->get_position());
+            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->get_power());
         }
     }
 	
@@ -214,6 +216,9 @@ void ms::DeferredRender::_load () {
     lightingShader->set_uniform("gNormal", 1);
     lightingShader->set_uniform("gAlbedo", 2);
     lightingShader->set_uniform("dirLightShadowMap", 3);
+    for(int i=0; i<maxSpotLightsAmount; ++i) {
+        lightingShader->set_uniform("spotLightsShadowMaps[" + std::to_string(i) + "]", 4 + i);
+    }
 }
 
 void ms::DeferredRender::_unload () {
