@@ -26,8 +26,12 @@ namespace ms {
                                                  std::unique_ptr<Shader> &&         shader);
         
         std::string     get_class               () const override;
-        void            draw                    (Drawable & node, Scene const  & scene) override;
-        void            setup_uniforms          (Scene const & scene);
+        void            draw                    (Drawable & node);
+        void            setup_uniforms          (math::mat4 const & projection, math::mat4 const & transformation);
+        
+    private:
+        
+        void            draw                    (Drawable & node, Scene const  & scene) {}
         
     };
     

@@ -418,19 +418,23 @@ void ms::NGin::draw_scene() {
         shadows[0]->use();
         shadows[0]->clear_frame();
         shadowRenderer->use(*shadows[0]);
-        shadowRenderer->setup_uniforms(scene);
+        shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_positionedObject().get_transformation());
         for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node, scene);
+            shadowRenderer->draw(*node);
         }
     }
     
     for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        
+        auto & spotLight = *scene.get_spot_lights()[i];
+        
         shadows[1 + i]->use();
         shadows[1 + i]->clear_frame();
         shadowRenderer->use(*shadows[1 + i]);
-        shadowRenderer->setup_uniforms(scene);
+        shadowRenderer->setup_uniforms(spotLight.get_projection(), spotLight.get_positionedObject().get_transformation());
+
         for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node, scene);
+            shadowRenderer->draw(*node);
         }
     }
     

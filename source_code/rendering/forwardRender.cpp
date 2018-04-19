@@ -10,7 +10,7 @@
 
 ms::ForwardRender::ForwardRender(unsigned int maxAOL,
 								 std::unique_ptr<Framebuffer> && framebuffer,
-                                 std::unique_ptr<Shader> && shader) : Render(std::move(framebuffer), std::move(shader)) {}
+                                 std::unique_ptr<Shader> && shader) : Render(std::move(framebuffer), std::move(shader)), maximalAmountOfLights{maxAOL} {}
 
 void ms::ForwardRender::_load () {
     Render::_load();
@@ -21,7 +21,7 @@ void ms::ForwardRender::_load () {
     shader->set_uniform("dirLightShadowMap", 3);
     
     for (int i = 0; i < maximalAmountOfLights; ++i) {
-        shader->set_uniform("spotLightsShadowMaps" + std::to_string(i) + "]", 4 + i);
+        shader->set_uniform("spotLightsShadowMaps[" + std::to_string(i) + "]", 4 + i);
     }
     
 }
@@ -47,7 +47,6 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
         const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
         shader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
         for(unsigned int i = 0; i < spotLights.size(); ++i) {
-            
             shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i]->get_power());
             shader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i]->get_color());
             shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i]->lightingAngleDegrees);
@@ -55,7 +54,6 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
             shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->get_direction());
             shader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i]->get_projection());
             shader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i]->get_positionedObject().get_transformation());
-            
         }
     }
 

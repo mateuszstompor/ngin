@@ -15,12 +15,13 @@ std::string ms::DLShadowRender::get_class () const {
     return "ms::DLShadowRender";
 }
 
-void ms::DLShadowRender::draw (Drawable & node, const Scene & scene) {
+void ms::DLShadowRender::draw (Drawable & node) {
     shader->set_uniform("toWorld", node.modelTransformation.get_transformation());
     node.draw();
 }
 
-void ms::DLShadowRender::setup_uniforms (Scene const & scene) {
-    shader->set_uniform("projection", scene.get_directional_light()->get_projection());
-    shader->set_uniform("toLight", scene.get_directional_light()->get_positionedObject().get_transformation());
+void ms::DLShadowRender::setup_uniforms (math::mat4 const & projection, math::mat4 const & transformation) {
+    shader->set_uniform("projection", projection);
+    shader->set_uniform("toLight", transformation);
 }
+
