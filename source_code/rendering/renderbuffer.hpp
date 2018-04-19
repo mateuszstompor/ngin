@@ -34,8 +34,8 @@ namespace ms {
                                                      unsigned int 				height);
 		
         Renderbuffer &          operator =          (const Texture &) = delete;
-		virtual std::string	    get_class			() ;
-		virtual void 		    use					() ;
+		virtual std::string	    get_class			() const override;
+		virtual void 		    use					();
 		virtual void    	    _load  				() override;
 		virtual void 		    _unload 			() override;
         constexpr GLuint		get_underlying_id	() { return renderBuffer; }

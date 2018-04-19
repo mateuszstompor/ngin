@@ -27,18 +27,18 @@ namespace ms {
 		
     public:
 														ResourceCoordinator			(ResourceCoordinator const & rc) = delete;
-		ResourceCoordinator& 							operator = 					(ResourceCoordinator const & rc) = delete;
+		ResourceCoordinator & 							operator = 					(ResourceCoordinator const & rc) = delete;
 
 		static 	std::shared_ptr<ResourceCoordinator> 	get_instance				();
 		static 	void 									destroy_shared_instance		();
 		
-		virtual void 									register_load				(Resource* resource);
-		virtual void 									register_unload				(Resource* resource);
-		virtual void 									register_allocation			(Resource* resource);
-		virtual void 									register_deallocation		(Resource* resource);
+		virtual void 									register_load				(Resource * resource);
+		virtual void 									register_unload				(Resource * resource);
+		virtual void 									register_allocation			(Resource * resource);
+		virtual void 									register_deallocation		(Resource * resource);
 		virtual void									unload_all_resources		();
 														~ResourceCoordinator		() = default;
-    protected:
+    private:
 		
 														ResourceCoordinator			();
 		std::set<std::string> 							loadedResources;

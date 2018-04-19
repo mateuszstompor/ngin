@@ -55,7 +55,6 @@ void ms::ResourceCoordinator::register_deallocation (Resource* resource) {
 	#ifdef DEBUG
 	if(std::find(loadedResources.begin(), loadedResources.end(), utils::ptr_to_string(resource)) != loadedResources.end()) {
 		std::cerr << "#ResourceCoordinator::OBJECT DEALLOCATED BUT NOT UNLOADED, LEAK!" << std::endl;
-		std::cout << resource->get_class() << std::endl;
 	}
 	#endif
 	

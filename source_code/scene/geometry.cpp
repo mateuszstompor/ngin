@@ -29,10 +29,6 @@ void ms::Geometry::set_material (std::string const & name) {
     associatedMaterial = name;
 }
 
-std::string const & ms::Geometry::get_material_name () const {
-    return associatedMaterial;
-}
-
 bool ms::Geometry::has_material () const {
     return !associatedMaterial.empty();
 }

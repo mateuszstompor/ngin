@@ -21,6 +21,15 @@
 #include "../utils/loader.hpp"
 #include "../rendering/postprocessDrawer.hpp"
 
+#include "../rendering/postprocessDrawer.hpp"
+#include "../rendering/shaders/forwardShader.hpp"
+#include "../rendering/shaders/deferredShader.hpp"
+#include "../rendering/shaders/lightSourceDrawerShader.hpp"
+
+#include "../utils/loader.hpp"
+#include "../scene/drawable.hpp"
+#include "../shaders/shaderHeaders.hpp"
+
 namespace ms {
     
 	class NGin {
@@ -33,34 +42,35 @@ namespace ms {
             forward_vertex
         };
         
-												NGin        		(unsigned int 	screenWidth,
-																	 unsigned int 	screenHeight,
-																	 unsigned int 	framebuffecrWidth,
-																	 unsigned int 	framebufferHeight,
-																	 std::unique_ptr<Camera> && cam);
+                                        NGin        		(unsigned int                       screenWidth,
+                                                             unsigned int                       screenHeight,
+                                                             unsigned int                       frameBufferWidth,
+                                                             unsigned int                       frameBufferHeight,
+                                                             std::unique_ptr<Camera> &&         cam,
+                                                             std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
 		
-		virtual void							load_point_light	(float 			power,
-																	 math::vec3 	color,
-																	 math::vec3 	position,
-																	 std::string 	absolutePath);
+        void							load_point_light	(float 			power,
+                                                             math::vec3 	color,
+                                                             math::vec3 	position,
+                                                             std::string 	absolutePath);
 		
-		virtual void							load_spot_light		(float 			power,
-																	 math::vec3 	color,
-																	 math::vec3 	position,
-																	 float			lightingAngleDegrees,
-																	 math::vec3 	direction,
-																	 std::string 	absolutePath);
+        void							load_spot_light	    (float 			power,
+                                                             math::vec3 	color,
+                                                             math::vec3 	position,
+                                                             float			lightingAngleDegrees,
+                                                             math::vec3 	direction,
+                                                             std::string 	absolutePath);
         
-        virtual void                            set_renderer        (Renderer r);
-		virtual void 							load 				() = 0;
-		virtual void 							unload 				() = 0;
-        virtual void							draw_scene  		();
-		DeferredRender & 						get_deferred_render	() const;
-		virtual void							load_model			(std::string 	absolutePath);
-		virtual        							~NGin       		() = default;
+        void                            set_renderer        (Renderer r);
+        void 							load 				();
+        void 							unload 				();
+        void							draw_scene  		();
+        constexpr DeferredRender & 		get_deferred_render	() const { return *deferredRenderer; }
+        void							load_model			(std::string 	absolutePath);
+		
 		std::unique_ptr<Scene>                  scene;
 		
-	protected:
+	private:
 		
 		void									count_fps			();		
 		Loader					                loader;

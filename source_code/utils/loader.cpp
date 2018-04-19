@@ -10,7 +10,7 @@
 
 #include "../../third-party-libs/stb_image.h"
 
-ms::Loader::model_data ms::Loader::load_model(std::string path) {
+ms::Loader::model_data ms::Loader::load_model(std::string const & path) {
 	
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);

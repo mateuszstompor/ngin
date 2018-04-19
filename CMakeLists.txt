@@ -65,9 +65,9 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/utils/loader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
         ${CMAKE_SOURCE_DIR}/source_code/umbrellaHeader.hpp
+        ${CMAKE_SOURCE_DIR}/source_code/config.hpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/proxyOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/utilsOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/base/ogl/nginOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/forwardShader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/deferredShader.hpp
@@ -107,7 +107,6 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/proxyOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/utilsOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/base/ogl/nginOGL.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/forwardShader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/deferredShader.cpp
@@ -132,12 +131,11 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/example_projects/mac/utils.cpp)
 
 if (WIN32)
-    set(PROJECT_SOURCE_FILES ${PROJECT_SOURCE_FILES}
-            third-party-libs/renderdoc.h
-            ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
-            ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
-            ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c
-            )
+    set(PROJECT_SOURCE_FILES    ${PROJECT_SOURCE_FILES}
+                                third-party-libs/renderdoc.h
+                                ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
+                                ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
+                                ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c)
 endif (WIN32)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILES})

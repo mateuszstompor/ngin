@@ -44,6 +44,10 @@ void ms::Material::_unload () {
 	mglDeleteBuffers(1, &bufferId);
 }
 
+std::string ms::Material::get_class () const {
+    return "ms::Material";
+}
+
 void ms::Material::use () {
 	if(!is_loaded())
 		load();

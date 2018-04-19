@@ -13,18 +13,16 @@ namespace ms {
 	#define INFO_LOG_SIZE 			512
 }
 
-ms::Shader::Shader(std::string vS,
-						 std::string tcS,
-						 std::string teS,
-						 std::string gS,
-						 std::string fS) :
-
-											vertexSource(vS),
-											tesselationControlSource(tcS),
-											tesselationEvalutationSource(teS),
-											geometrySource(gS),
-											fragmentSource(fS),
-											program(0) {
+ms::Shader::Shader(std::string const & vS,
+				   std::string const & tcS,
+				   std::string const & teS,
+				   std::string const & gS,
+				   std::string const & fS) :	vertexSource(vS),
+												tesselationControlSource(tcS),
+												tesselationEvalutationSource(teS),
+												geometrySource(gS),
+												fragmentSource(fS),
+												program(0) {
 			
 }
 
@@ -140,7 +138,7 @@ std::string ms::Shader::get_class () const {
 	return "ms::Shader";
 }
 
-void ms::Shader::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string source) {
+void ms::Shader::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string const & source) {
 	const char * sourcePtr = source.c_str();
 	mglShaderSource(shader, 1, &sourcePtr, nullptr);
 	mglCompileShader(shader);
@@ -157,8 +155,4 @@ int ms::Shader::get_shader_status(GLuint shader, GLenum statusType) {
 		assert(false);
 	}
 	return code;
-}
-
-GLuint ms::Shader::get_gl_id () const {
-	return program;
 }

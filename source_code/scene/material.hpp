@@ -35,7 +35,7 @@ namespace ms {
 		math::vec3 					diffuseColor;
 		math::vec3 					ambientColor;
 		math::vec3 					specularColor;
-		
+        std::string                 get_class() const override;
 		float 						shininess;
 		float						opacity;
 		

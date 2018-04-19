@@ -62,7 +62,7 @@ int main(int argc, const char * argv[]) { {
 	glfwWindowHint(GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 	
 	GLFWwindow *window = glfwCreateWindow(width, height, ms::windowName.c_str(), nullptr, nullptr);
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
@@ -94,7 +94,7 @@ int main(int argc, const char * argv[]) { {
 	
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
     
-    engine = std::make_unique<NGinOGL>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, std::move(cam), nullptr);
+    engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, std::move(cam), nullptr);
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 

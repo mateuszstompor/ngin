@@ -41,7 +41,7 @@ namespace ms {
         void 			                    use_vertices         		();
         void 			                    use_texture_coord        	();
         void			                    set_material		        (std::string const & name);
-        std::string const &                 get_material_name	        () const;
+        constexpr std::string const &       get_material_name	        () const { return associatedMaterial; }
         std::string		                    get_class			        () const override;
         bool			                    has_material        		() const;
         int				                    amount_of_vertices	        () const;

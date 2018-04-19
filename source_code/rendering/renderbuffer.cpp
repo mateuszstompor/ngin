@@ -28,7 +28,7 @@ ms::Renderbuffer::Renderbuffer (Texture::Format			    format,
                                 unsigned int 				width,
                                 unsigned int 				height ) : Renderbuffer(format, associatedType, 0, width, height) {}
 
-std::string ms::Renderbuffer::get_class () {
+std::string ms::Renderbuffer::get_class () const {
 	return "ms::RenderbufferOGL";
 }
 

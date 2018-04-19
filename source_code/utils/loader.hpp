@@ -39,7 +39,7 @@ namespace ms {
         using textures_and_materials    = std::tuple<materials_map, textures_map>;
 		using model_data                = std::tuple<geometries_vec, materials_map, textures_map>;
 		
-		model_data	                load_model              (std::string path);
+		model_data	                load_model              (std::string const & path);
 		
 	protected:
 		

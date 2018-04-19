@@ -10,7 +10,6 @@
 #define umbrella_header_hpp
 
 #include "base/ngin.hpp"
-#include "base/ogl/nginOGL.hpp"
 #include "utils/utils.hpp"
 #include "../glMath/source/glMath.h"
 #include "scene/geometry.hpp"

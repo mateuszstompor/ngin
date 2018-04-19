@@ -45,47 +45,47 @@ namespace ms {
 
 namespace ms {
     
-	class Shader : public virtual Resource {
+	class Shader : public Resource {
 		
 		using program_ptr = std::unique_ptr<Shader>;
 		
 	public:
 		
 		
-								Shader					(std::string vertexShader,
-														 std::string tessellationControlShader,
-														 std::string tessellationEvaluationShader,
-														 std::string geometryShader,
-														 std::string fragmentShader);
+									Shader					(std::string const & vertexShader,
+															 std::string const & tessellationControlShader,
+															 std::string const & tessellationEvaluationShader,
+															 std::string const & geometryShader,
+															 std::string const & fragmentShader);
 		
-								Shader					(Shader const &) = delete;
-				Shader & 		operator = 				(Shader const &) = delete;
+									Shader					(Shader const &) = delete;
+					Shader & 		operator = 				(Shader const &) = delete;
 		
-		virtual void 			bind_texture			(unsigned int index, Texture & texture) ;
-		virtual void 			use						();
-		virtual void 			_load					() override;
-		virtual void 			_unload					() override;
-		virtual std::string		get_class				() const override;
-		virtual 				~Shader					() = default;
-				GLuint 			get_gl_id				() const;
-				GLint			set_uniform				(std::string const & name, int value);
-				GLint			set_uniform				(std::string const & name,
-														 math::mat4 const & m);
-				GLint			set_uniform				(std::string const & name,
-														 math::mat3 const & m);
-		static program_ptr		vf_program 				(std::string const & vertexSource,
-														 std::string const & fragmentSource);
+		virtual		void 			bind_texture			(unsigned int index, Texture & texture) ;
+		virtual 	void 			use						();
+		virtual 	void 			_load					() override;
+		virtual 	void 			_unload					() override;
+		virtual 	std::string		get_class				() const override;
+		virtual 					~Shader					() = default;
+		constexpr 	GLuint 			get_gl_id				() const { return program; }
+					GLint			set_uniform				(std::string const & name, int value);
+					GLint			set_uniform				(std::string const & name,
+															 math::mat4 const & m);
+					GLint			set_uniform				(std::string const & name,
+															 math::mat3 const & m);
+		static 		program_ptr		vf_program 				(std::string const & vertexSource,
+															 std::string const & fragmentSource);
 
 	protected:
 		
-		void 			compile_program					();
-		void 			compile_shader					(GLuint program,
-														 GLuint shader,
-														 GLenum shaderType,
-														 std::string source);
+		void 						compile_program			();
+		void 						compile_shader			(GLuint program,
+															 GLuint shader,
+															 GLenum shaderType,
+															 std::string const & source);
 		
-		int				get_shader_status				(GLuint shader,
-														 GLenum statusType);
+		int							get_shader_status		(GLuint shader,
+															 GLenum statusType);
 		
 		std::string 	vertexSource;
 		std::string 	tesselationControlSource;

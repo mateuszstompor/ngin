@@ -60,9 +60,6 @@
 		5671684E204ADFAE0028EFAA /* scene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716824204ADFAE0028EFAA /* scene.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
 		56716850204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
-		56716851204ADFAE0028EFAA /* nginOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716828204ADFAE0028EFAA /* nginOGL.cpp */; };
-		56716852204ADFAE0028EFAA /* nginOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716828204ADFAE0028EFAA /* nginOGL.cpp */; };
-		56716853204ADFAE0028EFAA /* nginOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716829204ADFAE0028EFAA /* nginOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56716854204ADFAE0028EFAA /* ngin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671682A204ADFAE0028EFAA /* ngin.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5673025320504AFC0066993D /* deferredLightingShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5673025120504AFC0066993D /* deferredLightingShader.cpp */; };
 		5673025520504AFC0066993D /* deferredLightingShader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5673025220504AFC0066993D /* deferredLightingShader.hpp */; };
@@ -89,7 +86,6 @@
 		56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99682065B66900B54626 /* forwardRender.cpp */; };
 		56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		56D29AA8207B8DED0080CB3B /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* texture.cpp */; };
-		56D29AAA207B8DED0080CB3B /* nginOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716828204ADFAE0028EFAA /* nginOGL.cpp */; };
 		56D29AAC207B8DED0080CB3B /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		56D29AAE207B8DED0080CB3B /* lightSourcesRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B996B2065BF3000B54626 /* lightSourcesRender.cpp */; };
 		56D29AAF207B8DED0080CB3B /* resourceCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */; };
@@ -234,8 +230,6 @@
 		56716823204ADFAE0028EFAA /* spotLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spotLight.hpp; sourceTree = "<group>"; };
 		56716824204ADFAE0028EFAA /* scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scene.hpp; sourceTree = "<group>"; };
 		56716826204ADFAE0028EFAA /* ngin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ngin.cpp; sourceTree = "<group>"; };
-		56716828204ADFAE0028EFAA /* nginOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nginOGL.cpp; sourceTree = "<group>"; };
-		56716829204ADFAE0028EFAA /* nginOGL.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = nginOGL.hpp; sourceTree = "<group>"; };
 		5671682A204ADFAE0028EFAA /* ngin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ngin.hpp; sourceTree = "<group>"; };
 		5673024C20503A7D0066993D /* lighting_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lighting_fshader.glsl; sourceTree = "<group>"; };
 		5673024F20503A7D0066993D /* lighting_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lighting_vshader.glsl; sourceTree = "<group>"; };
@@ -560,18 +554,8 @@
 			children = (
 				5671682A204ADFAE0028EFAA /* ngin.hpp */,
 				56716826204ADFAE0028EFAA /* ngin.cpp */,
-				56716827204ADFAE0028EFAA /* ogl */,
 			);
 			path = base;
-			sourceTree = "<group>";
-		};
-		56716827204ADFAE0028EFAA /* ogl */ = {
-			isa = PBXGroup;
-			children = (
-				56716828204ADFAE0028EFAA /* nginOGL.cpp */,
-				56716829204ADFAE0028EFAA /* nginOGL.hpp */,
-			);
-			path = ogl;
 			sourceTree = "<group>";
 		};
 		56736CC02064744B00CE636A /* postprocess */ = {
@@ -681,7 +665,6 @@
 				5633FAB9204C6625003449EE /* utils.hpp in Headers */,
 				5633FAB6204C661A003449EE /* umbrellaHeader.hpp in Headers */,
 				5633FAAA204C565B003449EE /* drawable.hpp in Headers */,
-				56716853204ADFAE0028EFAA /* nginOGL.hpp in Headers */,
 				5671684D204ADFAE0028EFAA /* spotLight.hpp in Headers */,
 				56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */,
 				569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */,
@@ -836,7 +819,6 @@
 				563B996A2065B66900B54626 /* forwardRender.cpp in Sources */,
 				5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
 				5674534220540C6F000E7EBD /* texture.cpp in Sources */,
-				56716852204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
 				5633FA90204B6988003449EE /* resource.cpp in Sources */,
 				563B996D2065BF3000B54626 /* lightSourcesRender.cpp in Sources */,
 				5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
@@ -864,7 +846,6 @@
 				563B99692065B66900B54626 /* forwardRender.cpp in Sources */,
 				5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
 				5674534120540C6F000E7EBD /* texture.cpp in Sources */,
-				56716851204ADFAE0028EFAA /* nginOGL.cpp in Sources */,
 				5632E392205EF83000A323A4 /* lightSourceDrawerShader.cpp in Sources */,
 				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				56296728204F3CCD00685BAE /* deferredShader.cpp in Sources */,
@@ -897,7 +878,6 @@
 				56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */,
 				56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */,
 				56D29AA8207B8DED0080CB3B /* texture.cpp in Sources */,
-				56D29AAA207B8DED0080CB3B /* nginOGL.cpp in Sources */,
 				56D29AAC207B8DED0080CB3B /* resource.cpp in Sources */,
 				56D29AAE207B8DED0080CB3B /* lightSourcesRender.cpp in Sources */,
 				56D29AAF207B8DED0080CB3B /* resourceCoordinator.cpp in Sources */,

@@ -32,7 +32,7 @@ namespace ms {
 		
 		virtual bool    		is_loaded   	() const final;
 		
-		virtual std::string 	get_class		() const;
+		virtual std::string 	get_class		() const = 0;
 		virtual         		~Resource   	();
 	
 	protected:

@@ -44,10 +44,6 @@ ms::Resource::Resource () : isLoaded(false) {
 	ResourceCoordinator::get_instance()->register_allocation(this);
 }
 
-std::string ms::Resource::get_class () const {
-	return "ms::Resource";
-}
-
 ms::Resource::~Resource () {
 	
 	#ifdef R_DEALLOCATIONS
