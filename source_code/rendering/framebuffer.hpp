@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 #include "../resources/resource.hpp"
 #include "../scene/texture.hpp"
