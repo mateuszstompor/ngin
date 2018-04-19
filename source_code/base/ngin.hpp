@@ -15,14 +15,12 @@
 #include "../rendering/forwardRender.hpp"
 #include "../rendering/deferredRender.hpp"
 #include "../rendering/lightSourcesRender.hpp"
+#include "../rendering/DLShadowRender.hpp"
 #include "../scene/scene.hpp"
 #include "../resources/resource.hpp"
 #include "../resources/resourceCoordinator.hpp"
 #include "../utils/loader.hpp"
 #include "../rendering/postprocessDrawer.hpp"
-
-#include "../rendering/postprocessDrawer.hpp"
-
 #include "../utils/loader.hpp"
 #include "../scene/drawable.hpp"
 #include "../shaders/shaderHeaders.hpp"
@@ -72,26 +70,26 @@ namespace ms {
 		void									count_fps			();		
 		Loader					                loader;
         
-		std::unique_ptr<DeferredRender>         deferredRenderer;
-        std::unique_ptr<Render>                 shadowRenderer;
-		std::unique_ptr<ForwardRender>          gouraudForwardRenderer;
-		std::unique_ptr<ForwardRender>          phongForwardRenderer;
-		std::unique_ptr<LightSourcesRender>     lightSourceRenderer;
-		std::unique_ptr<PostprocessDrawer>     	hdrRenderer;
-		std::unique_ptr<PostprocessDrawer>     	bloomSplitRenderer;
-		std::unique_ptr<PostprocessDrawer>     	bloomMergeRenderer;
-		std::unique_ptr<PostprocessDrawer>     	gaussianBlurFirstStepRenderer;
-		std::unique_ptr<PostprocessDrawer>     	gaussianBlurSecondStepRenderer;
-        std::unique_ptr<PostprocessDrawer>      vignetteRenderer;
-		std::unique_ptr<PostprocessDrawer>     	scaleRenderer;
-		
-		unsigned int							screenWidth;
-		unsigned int							screenHeight;
+		std::unique_ptr<DeferredRender>             deferredRenderer;
+        std::unique_ptr<DLShadowRender>             shadowRenderer;
+		std::unique_ptr<ForwardRender>              gouraudForwardRenderer;
+		std::unique_ptr<ForwardRender>              phongForwardRenderer;
+		std::unique_ptr<LightSourcesRender>         lightSourceRenderer;
+		std::unique_ptr<PostprocessDrawer>     		hdrRenderer;
+		std::unique_ptr<PostprocessDrawer>     	    bloomSplitRenderer;
+		std::unique_ptr<PostprocessDrawer>     	    bloomMergeRenderer;
+		std::unique_ptr<PostprocessDrawer>     	    gaussianBlurFirstStepRenderer;
+		std::unique_ptr<PostprocessDrawer>     	    gaussianBlurSecondStepRenderer;
+        std::unique_ptr<PostprocessDrawer>          vignetteRenderer;
+		std::unique_ptr<PostprocessDrawer>     	    scaleRenderer;
+        std::vector<std::unique_ptr<Framebuffer>>   shadows;
+		unsigned int							    screenWidth;
+		unsigned int							    screenHeight;
 
-		unsigned int 							framebufferWidth;
-		unsigned int 							framebufferHeight;
+		unsigned int 							    framebufferWidth;
+		unsigned int 							    framebufferHeight;
         
-        Renderer                                chosenRenderer {Renderer::deferred};
+        Renderer                                    chosenRenderer {Renderer::deferred};
 		
     };
     

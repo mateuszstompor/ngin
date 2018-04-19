@@ -1,0 +1,36 @@
+//
+//  DLShadowRender.hpp
+//  ngin
+//
+//  Created by Mateusz Stompór on 19/04/2018.
+//  Copyright © 2018 Mateusz Stompór. All rights reserved.
+//
+
+
+
+#ifndef directional_shadow_render_hpp
+#define directional_shadow_render_hpp
+
+#include <memory>
+
+#include "render.hpp"
+
+
+namespace ms {
+    
+    class DLShadowRender : public Render {
+        
+    public:
+        
+                        DLShadowRender          (std::unique_ptr<Framebuffer> &&    framebuffer,
+                                                 std::unique_ptr<Shader> &&         shader);
+        
+        std::string     get_class               () const override;
+        void            draw                    (Drawable & node, Scene const  & scene) override;
+        void            setup_uniforms          (Scene const & scene);
+        
+    };
+    
+}
+
+#endif /* directional_shadow_render_hpp */

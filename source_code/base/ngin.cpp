@@ -106,7 +106,20 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                       frameBufferHeight);
     
     
-    
+        for (int i = 0; i < 50; ++i) {
+            shadows.push_back(std::make_unique<Framebuffer>(0,
+                                                            0,
+                                                            frameBufferWidth,
+                                                            frameBufferHeight));
+            shadows[i]->bind_depth_buffer(std::make_unique<Texture>(Texture::Type::tex_2d,
+                                                                    Texture::Format::depth_32,
+                                                                    Texture::AssociatedType::FLOAT,
+                                                                    frameBufferWidth,
+                                                                    frameBufferHeight));
+            
+            shadows[i]->configure();
+        }
+        
         mainRenderFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture::Format::depth_32,
                                                                                    Texture::AssociatedType::FLOAT,
                                                                                    0,
@@ -222,7 +235,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                              std::move(defGshader),
                                                              std::move(defLightingShader));
     
-    //    shadowRenderer = std::make_unique<Render>(nullptr, std::move(shadowShader));
+        shadowRenderer = std::make_unique<DLShadowRender>(nullptr, std::move(shadowShader));
     
         phongForwardRenderer = std::make_unique<ForwardRender>(AOL,
                                                                nullptr,
@@ -440,19 +453,29 @@ void ms::NGin::draw_scene() {
         count_fps();
     #endif
     
+    if (auto dirLight = scene->get_directional_light()) {
+        shadowRenderer->use(*shadows[0]);
+        shadowRenderer->setup_uniforms(*scene);
+        for(int i = 0; i < scene->get_nodes().size(); ++i) {
+            shadowRenderer->draw(*scene->get_nodes()[i], *scene);
+        }
+    }
+    
     if(chosenRenderer == Renderer::deferred) {
         deferredRenderer->use();
         deferredRenderer->setup_g_buffer_uniforms(scene.get());
         deferredRenderer->gFramebuffer->use();
         deferredRenderer->gFramebuffer->clear_frame();
-//        deferredRenderer->get_framebuffer().use();
-//        deferredRenderer->get_framebuffer().clear_frame();
         for(int i = 0; i < scene->get_nodes().size(); ++i) {
             auto node = scene->get_nodes()[i];
             if(scene->get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), node->geometry->get_bounding_box())) {
                 deferredRenderer->draw(*scene->get_nodes()[i], *scene);
             }
         }
+        deferredRenderer->get_framebuffer().use();
+        deferredRenderer->get_framebuffer().clear_frame();
+        deferredRenderer->lightingShader->use();
+        deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
         deferredRenderer->perform_light_pass(scene.get());
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {

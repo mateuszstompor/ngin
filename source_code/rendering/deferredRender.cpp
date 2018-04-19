@@ -30,14 +30,15 @@ ms::DeferredRender::DeferredRender(unsigned int                     maxPointLigh
                                    unsigned int                     maxSpotLightsAmount,
 								   std::unique_ptr<Framebuffer> &&  framebuffer,
                                    std::unique_ptr<Shader> &&       gShader,
-                                   std::unique_ptr<Shader> &&       lightingShader) : 	Render(std::move(framebuffer), std::move(gShader)),
-maxPointLightsAmount(maxPointLightsAmount),
-maxSpotLightsAmount(maxSpotLightsAmount),
-lightingShader(std::move(lightingShader)),
-quad(nullptr),
-renderMode(0),
-debugMode(false),
-debugType(DeferredRender::DebugType::position) {
+                                   std::unique_ptr<Shader> &&       lightingShader) :
+Render{std::move(framebuffer), std::move(gShader)},
+maxPointLightsAmount{maxPointLightsAmount},
+maxSpotLightsAmount{maxSpotLightsAmount},
+lightingShader{std::move(lightingShader)},
+quad{Drawable::get_quad()},
+renderMode{0},
+debugMode{false},
+debugType{DeferredRender::DebugType::position} {
     
     auto gPosition = std::make_unique<Texture>(Texture::Type::tex_2d,
                                                Texture::Format::rgb_16_16_16,
@@ -74,12 +75,6 @@ debugType(DeferredRender::DebugType::position) {
 
     gFramebuffer->configure();
 
-    //    shadowFramebuffer->bind_depth_buffer(std::move(shadowTexture));
-
-    //    shadowFramebuffer->configure();
-
-    quad = Drawable::get_quad();
-    
 }
 
 void ms::DeferredRender::set_render_type (DebugType type) {
@@ -218,6 +213,7 @@ void ms::DeferredRender::_load () {
     lightingShader->set_uniform("gPosition", 0);
     lightingShader->set_uniform("gNormal", 1);
     lightingShader->set_uniform("gAlbedo", 2);
+    lightingShader->set_uniform("dirLightShadowMap", 3);
 }
 
 void ms::DeferredRender::_unload () {
@@ -226,71 +222,28 @@ void ms::DeferredRender::_unload () {
     lightingShader->unload();
     framebuffer->unload();
     quad->unload();
-    //    shadowFramebuffer->unload();
 }
 
 void ms::DeferredRender::perform_light_pass (const Scene * scene) {
     
-    //    shadowFramebuffer->use();
-    //    shadowFramebuffer->clear_frame();
-    
-    //    auto shadow = dynamic_cast<ShaderOGL*>(shadowShader.get());
-    //    shadowShader->use();
-    //    if(scene->get_directional_light()) {
-    //        assert(shadow->set_uniform("projection", scene->get_directional_light()->get_projection()) >= 0);
-    //        assert(shadow->set_uniform("toLight", scene->get_directional_light()->get_transformation()) >= 0);
-    //        for(auto n : scene->get_nodes()) {
-    //            assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
-    //            n->draw();
-    //        }
-    //    }
-    
-    //    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
-    //        const auto & spotLight = scene->get_spot_lights()[i];
-    //        spotLightsShadowComponents[i]->use();
-    //        spotLightsShadowComponents[i]->clear_frame();
-    //
-    //        assert(shadow->set_uniform("projection", spotLight->Light::get_projection()) >= 0);
-    //        assert(shadow->set_uniform("toLight", spotLight->Light::get_transformation()) >= 0);
-    //        for(auto n : scene->get_nodes()) {
-    //            if(spotLight->frustum.is_in_camera_sight(spotLight->get_transformation(), *n->geometry->get_bounding_box())) {
-    //                assert( shadow->set_uniform("toWorld", n->modelTransformation.get_transformation()) >= 0);
-    //                n->draw();
-    //            }
-    //        }
-    //    }
-    
-    framebuffer->use();
-    framebuffer->clear_frame();
-    
     lightingShader->use();
-    
     lightingShader->set_uniform("renderMode", this->renderMode);
     
-    //    for(int i = 0; i < scene->get_spot_lights().size(); ++i) {
-    //        const auto & spotLight = scene->get_spot_lights()[i];
-    //        assert(lightingSh->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLight->Light::get_projection()) >= 0);
-    //        assert(lightingSh->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLight->Light::get_transformation()) >= 0);
-    //        lightingSh->bind_texture(4 + i, *spotLightsShadowComponents[i]->get_depth_texture().lock());
-    //    }
-    
-    //    if(scene->get_directional_light()) {
-    //        assert(lightingSh->set_uniform("sm_projection", scene->get_directional_light()->get_projection()) >= 0);
-    //        assert(lightingSh->set_uniform("sm_cameraTransformation", scene->get_directional_light()->get_transformation()) >= 0);
-    //    }
+    if(scene->get_directional_light()) {
+        lightingShader->set_uniform("dirLightProjection", scene->get_directional_light()->get_projection());
+        lightingShader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_transformation());
+        lightingShader->set_uniform("hasDirLightShadowMap", 1);
+    } else {
+        lightingShader->set_uniform("hasDirLightShadowMap", 0);
+    }
     
     lightingShader->set_uniform("cameraTransformation", scene->get_camera().get_transformation());
-//    lightingShader->set_camera_transformation(scene->get_camera().get_transformation().c_array());
     
     DeferredRender::setup_lightpass_uniforms(scene);
     
     lightingShader->bind_texture(0, *gFramebuffer->get_colors()[0].lock());
     lightingShader->bind_texture(1, *gFramebuffer->get_colors()[1].lock());
     lightingShader->bind_texture(2, *gFramebuffer->get_colors()[2].lock());
-//    lightingShader->bind_g_buf_posiitons(*gFramebuffer->get_colors()[0].lock());
-//    lightingShader->bind_g_buf_albedo(*gFramebuffer->get_colors()[2].lock());
-    //    lightingShader->bind_shadow_map(*shadowFramebuffer->get_depth_texture().lock());
-//    lightingShader->bind_g_buf_normals(*gFramebuffer->get_colors()[1].lock());
     
     quad->draw();
     

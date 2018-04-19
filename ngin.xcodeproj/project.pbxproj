@@ -74,6 +74,10 @@
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
 		56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
+		56CC7EC52088B20C00C2C8AA /* DLShadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */; };
+		56CC7EC62088B20C00C2C8AA /* DLShadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */; };
+		56CC7EC72088B20C00C2C8AA /* DLShadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */; };
+		56CC7EC82088B20C00C2C8AA /* DLShadowRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56CC7EC42088B20C00C2C8AA /* DLShadowRender.hpp */; };
 		56D29AA4207B8DED0080CB3B /* renderbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627CD20633B69005085CD /* renderbuffer.cpp */; };
 		56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99682065B66900B54626 /* forwardRender.cpp */; };
 		56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
@@ -248,6 +252,8 @@
 		56C3C6A920655EFE0003F630 /* config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
 		56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_fshader.glsl; sourceTree = "<group>"; };
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
+		56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLShadowRender.cpp; path = source_code/rendering/DLShadowRender.cpp; sourceTree = SOURCE_ROOT; };
+		56CC7EC42088B20C00C2C8AA /* DLShadowRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DLShadowRender.hpp; path = source_code/rendering/DLShadowRender.hpp; sourceTree = SOURCE_ROOT; };
 		56D29AC8207B8DED0080CB3B /* libngin_ios_x86_64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios_x86_64.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		56D29AC9207B8E120080CB3B /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/x86_64/libassimp.a"; sourceTree = "<group>"; };
 		56D29ACA207B8E120080CB3B /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/x86_64/libzlibstatic.a"; sourceTree = "<group>"; };
@@ -449,6 +455,8 @@
 				569A899C204FFF6200A9A292 /* reusableGeometry.hpp */,
 				56736CAF206453F500CE636A /* postprocessDrawer.hpp */,
 				56736CBA2064572400CE636A /* postprocessDrawer.cpp */,
+				56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */,
+				56CC7EC42088B20C00C2C8AA /* DLShadowRender.hpp */,
 				5671680E204ADFAE0028EFAA /* shaders */,
 				56716811204ADFAE0028EFAA /* render.hpp */,
 				563B99632065A7BA00B54626 /* render.cpp */,
@@ -630,6 +638,7 @@
 				5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */,
 				560627D120633B69005085CD /* renderbuffer.hpp in Headers */,
 				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
+				56CC7EC82088B20C00C2C8AA /* DLShadowRender.hpp in Headers */,
 				5640FED4204AE77600512938 /* shader.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
 				56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */,
@@ -800,6 +809,7 @@
 				5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				560627CB20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99652065A7BA00B54626 /* render.cpp in Sources */,
+				56CC7EC62088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
 				56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				560313E6207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
@@ -824,6 +834,7 @@
 				56DF0F3B20571B6D00713420 /* loader.cpp in Sources */,
 				567453492054B391000E7EBD /* deferredRender.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
+				56CC7EC52088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
 				5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				560627CA20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99642065A7BA00B54626 /* render.cpp in Sources */,
@@ -855,6 +866,7 @@
 				56D29AB3207B8DED0080CB3B /* utilsOGL.cpp in Sources */,
 				56D29AB5207B8DED0080CB3B /* framebuffer.cpp in Sources */,
 				56D29AB6207B8DED0080CB3B /* render.cpp in Sources */,
+				56CC7EC72088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
 				56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */,
 				56D29AB8207B8DED0080CB3B /* ngin.cpp in Sources */,
 				560313E7207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,

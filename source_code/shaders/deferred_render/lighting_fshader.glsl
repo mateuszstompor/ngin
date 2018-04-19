@@ -23,10 +23,10 @@ uniform uint								renderMode;
 
 out 	vec4 								FragColor;
 
-uniform sampler2D                           shadowMap;
-// TODO refactor name
-uniform mat4                                sm_projection;
-uniform mat4                                sm_cameraTransformation;
+uniform int                                 hasDirLightShadowMap;
+uniform sampler2D                           dirLightShadowMap;
+uniform mat4                                dirLightProjection;
+uniform mat4                                dirLightTransformation;
 
 void main() {
 
@@ -59,14 +59,15 @@ void main() {
 	
 	vec3 result 			= vec3(0.0f, 0.0f, 0.0f);
 	
-    vec4 fragmentInLightPos = sm_projection * sm_cameraTransformation * vec4(fragmentPosition, 1.0f);
-    
 	vec3 surfaceZCamera_N 	= normalize(cameraPosition - fragmentPosition);
 	float shininess 		= 32.0f;
 	
-    float shadow = 0.0f;//calculate_pcf_shadow(shadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
-    
     if (hasDirLight == 1) {
+        float shadow = 0.0f;
+        if (hasDirLightShadowMap == 1) {
+            vec4 fragmentInLightPos = dirLightProjection * dirLightTransformation * vec4(fragmentPosition, 1.0f);
+            shadow = calculate_pcf_shadow(dirLightShadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
+        }
         result += (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normal_N, mat4(1.0f));
     }
 
