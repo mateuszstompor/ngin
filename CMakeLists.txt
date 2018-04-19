@@ -74,8 +74,6 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/deferredLightingShader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/lightSourceDrawerShader.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/framebufferOGL.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/render.hpp
@@ -99,12 +97,11 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/scene/texture.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/vertex.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/postprocessDrawerOGL.hpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/controlls.hpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/utils.hpp
 
         #cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/postprocessDrawerOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.cpp
         ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/render.cpp
         ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
@@ -116,8 +113,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/deferredShader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/deferredLightingShader.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/lightSourceDrawerShader.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/deferredRenderOGL.cpp
-        ${CMAKE_SOURCE_DIR}/source_code/rendering/ogl/framebufferOGL.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
@@ -133,8 +129,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/main.cpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/controlls.cpp
-        ${CMAKE_SOURCE_DIR}/example_projects/mac/utils.cpp
-        )
+        ${CMAKE_SOURCE_DIR}/example_projects/mac/utils.cpp)
 
 if (WIN32)
     set(PROJECT_SOURCE_FILES ${PROJECT_SOURCE_FILES}
