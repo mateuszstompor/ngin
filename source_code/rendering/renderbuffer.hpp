@@ -38,7 +38,7 @@ namespace ms {
 		virtual void 		    use					() ;
 		virtual void    	    _load  				() override;
 		virtual void 		    _unload 			() override;
-				GLuint		    get_underlying_id	();
+        constexpr GLuint		get_underlying_id	() { return renderBuffer; }
 		
 	protected:
         

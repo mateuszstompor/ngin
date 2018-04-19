@@ -50,7 +50,3 @@ void ms::Renderbuffer::use () {
 	
 	mglBindRenderbuffer(GL_RENDERBUFFER, this->renderBuffer);
 }
-
-GLuint ms::Renderbuffer::get_underlying_id () {
-	return renderBuffer;
-}

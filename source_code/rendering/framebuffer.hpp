@@ -52,8 +52,8 @@ namespace ms {
                                                              int 	width,
                                                              int 	height);
 		
-									    Framebuffer			(const Framebuffer &) = delete;
-		Framebuffer & 				    operator = 			(const Framebuffer &) = delete;
+									    Framebuffer			(Framebuffer const &) = delete;
+		Framebuffer & 				    operator = 			(Framebuffer const &) = delete;
 		
         void 				            bind_color_buffer	(int index,
                                                             std::unique_ptr<Texture> && texture);

@@ -136,10 +136,6 @@ GLenum	ms::Texture::to_ogl (Texture::Type type) {
 	}
 }
 
-const GLuint ms::Texture::get_underlying_id () const {
-	return this->glTexture;
-}
-
 GLenum ms::Texture::to_ogl (Format format) {
 	switch (format) {
 		case Format::rgb_8_8_8:

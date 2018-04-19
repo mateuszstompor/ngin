@@ -507,12 +507,12 @@
 			isa = PBXGroup;
 			children = (
 				5633FAA7204C565B003449EE /* drawable.hpp */,
-				5674533F20540C6F000E7EBD /* texture.cpp */,
 				5633FAB1204C64D7003449EE /* drawable.cpp */,
 				5674534020540C6F000E7EBD /* texture.hpp */,
+				5674533F20540C6F000E7EBD /* texture.cpp */,
 				56716814204ADFAE0028EFAA /* positionedObject.hpp */,
-				566BCF2B204EAF6500E90246 /* scene.cpp */,
 				56716824204ADFAE0028EFAA /* scene.hpp */,
+				566BCF2B204EAF6500E90246 /* scene.cpp */,
 				56716815204ADFAE0028EFAA /* camera */,
 				5671681A204ADFAE0028EFAA /* lights */,
 				5633FA94204B6F97003449EE /* geometry.hpp */,

@@ -85,7 +85,7 @@ namespace ms {
 
                                     Texture			    (const Texture & texture) = delete;
                     Texture &	    operator =			(const Texture & texture) = delete;
-		const       GLuint          get_underlying_id	() const;
+        constexpr   GLuint          get_underlying_id	() const { return glTexture; }
                     void            _load  				() override;
 		            void            _unload 			() override;
                     std::string		get_class			() const override;

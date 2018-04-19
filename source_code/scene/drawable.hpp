@@ -27,6 +27,8 @@ namespace ms {
 		friend class Loader;
 		
                                                 Drawable            	();
+                                                Drawable                (Drawable const &) = delete;
+        Drawable &                              operator =              (Drawable const &) = delete;
 		virtual std::string 	                get_class	            () const override;
         virtual void			                draw            		();
         virtual 				                ~Drawable	            () = default;

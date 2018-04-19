@@ -24,7 +24,7 @@ namespace ms {
 	protected:
 		
 		 						Resource		();
-		
+
     public:
 	
 		virtual void    		load  			() final;

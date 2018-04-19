@@ -21,13 +21,15 @@ namespace ms {
         
 	public:
 		
+        
 		 						    Material                (math::vec3 const & ambient,
                                                              math::vec3 const & diffuse,
                                                              math::vec3 const & specular,
                                                              float shininess,
                                                              float opacity,
                                                              std::string const & name);
-		
+                                    Material                (Material const &) = delete;
+        Material &                  operator =              (Material const &) = delete;
         void				        use		                ();
 		
 		math::vec3 					diffuseColor;

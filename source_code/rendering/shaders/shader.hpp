@@ -58,8 +58,8 @@ namespace ms {
 														 std::string geometryShader,
 														 std::string fragmentShader);
 		
-								Shader					(const Shader &) = delete;
-				Shader & 		operator = 				(const Shader &) = delete;
+								Shader					(Shader const &) = delete;
+				Shader & 		operator = 				(Shader const &) = delete;
 		
 		virtual void 			bind_texture			(unsigned int index, Texture & texture) ;
 		virtual void 			use						();

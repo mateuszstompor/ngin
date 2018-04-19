@@ -187,34 +187,27 @@ void ms::NGin::draw_scene() {
             }
         }
         deferredRenderer->perform_light_pass(scene.get());
-        lightSourceRenderer->get_framebuffer().use();
-        lightSourceRenderer->get_framebuffer().clear_frame();
-        lightSourceRenderer->get_framebuffer().copy_depth_from(deferredRenderer->get_framebuffer());
-        lightSourceRenderer->get_framebuffer().copy_color_from(deferredRenderer->get_framebuffer());
+        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {
-        phongForwardRenderer->use();
-        phongForwardRenderer->get_framebuffer().clear_frame();
+        phongForwardRenderer->use(deferredRenderer->get_framebuffer());
+        deferredRenderer->get_framebuffer().clear_frame();
         phongForwardRenderer->setup_uniforms(scene.get());
         for(int i = 0; i < scene->get_nodes().size(); ++i) {
             phongForwardRenderer->draw(*scene->get_nodes()[i], *scene);
         }
-        lightSourceRenderer->get_framebuffer().clear_frame();
-        lightSourceRenderer->get_framebuffer().copy_depth_from(phongForwardRenderer->get_framebuffer());
-        lightSourceRenderer->get_framebuffer().copy_color_from(phongForwardRenderer->get_framebuffer());
+        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else {
-        gouraudForwardRenderer->use();
-        gouraudForwardRenderer->get_framebuffer().clear_frame();
+        gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
+        deferredRenderer->get_framebuffer().clear_frame();
         gouraudForwardRenderer->setup_uniforms(scene.get());
         for(int i = 0; i < scene->get_nodes().size(); ++i) {
             gouraudForwardRenderer->draw(*scene->get_nodes()[i], *scene);
         }
-        lightSourceRenderer->get_framebuffer().clear_frame();
-        lightSourceRenderer->get_framebuffer().copy_depth_from(gouraudForwardRenderer->get_framebuffer());
-        lightSourceRenderer->get_framebuffer().copy_color_from(gouraudForwardRenderer->get_framebuffer());
+        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     }
 
 
-    lightSourceRenderer->use();
+    lightSourceRenderer->use(deferredRenderer->get_framebuffer());
     for(int i = 0; i < scene->get_point_lights().size(); ++i) {
         lightSourceRenderer->draw(*scene->get_point_lights()[i], *scene);
     }
@@ -222,7 +215,7 @@ void ms::NGin::draw_scene() {
         lightSourceRenderer->draw(*scene->get_spot_lights()[i], *scene);
     }
 
-    bloomSplitRenderer->use();
+    bloomSplitRenderer->use(deferredRenderer->get_framebuffer());
     bloomSplitRenderer->get_framebuffer().clear_frame();
     bloomSplitRenderer->draw_quad();
 

@@ -27,8 +27,6 @@ void ms::PostprocessDrawer::_unload () {
 }
 
 void ms::PostprocessDrawer::draw_quad() const {
-	framebuffer->use();
-	shader->use();
 	
 	{
 		for(int i = 0; i < inputTextures.size(); ++i) {
