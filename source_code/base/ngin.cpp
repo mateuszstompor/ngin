@@ -65,24 +65,24 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         auto scaleFragmentShader = get_shader_of_type(Type::post_process_scale_fshader);
     
         auto vignetteFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                    0,
-                                                                    frameBufferWidth,
-                                                                    frameBufferHeight);
+                                                                 0,
+                                                                 frameBufferWidth,
+                                                                 frameBufferHeight);
     
         auto hdrFramebuffer = std::make_unique<Framebuffer>(1,
-                                                               0,
-                                                               frameBufferWidth,
-                                                               frameBufferHeight);
+                                                            0,
+                                                            frameBufferWidth,
+                                                            frameBufferHeight);
     
         auto mainRenderFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                      1,
-                                                                      frameBufferWidth,
-                                                                      frameBufferHeight);
+                                                                   1,
+                                                                   frameBufferWidth,
+                                                                   frameBufferHeight);
     
         auto lightSourceDrawerFramebuffer = std::make_unique<Framebuffer>(1,
-                                                                             1,
-                                                                             frameBufferWidth,
-                                                                             frameBufferHeight);
+                                                                          1,
+                                                                          frameBufferWidth,
+                                                                          frameBufferHeight);
     
         auto bloomTwoTexSplitFramebuffer = std::make_unique<Framebuffer>(2,
                                                                             0,
@@ -91,13 +91,13 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
     
         auto gaussianBlurFirstStepFramebuffer = std::make_unique<Framebuffer>(1,
                                                                       0,
-                                                                      frameBufferWidth,
-                                                                      frameBufferHeight);
+                                                                              frameBufferHeight,
+                                                                              frameBufferWidth);
     
         auto gaussianBlurSecondStepFramebuffer = std::make_unique<Framebuffer>(1,
                                                                       0,
-                                                                      frameBufferWidth,
-                                                                      frameBufferHeight);
+                                                                               frameBufferWidth,
+                                                                               frameBufferHeight);
     
     
         auto bloomMergeFramebuffer = std::make_unique<Framebuffer>(1,
@@ -149,16 +149,16 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                                Texture::Format::rgb_16_16_16,
                                                                                Texture::AssociatedType::FLOAT,
-                                                                               frameBufferWidth,
-                                                                               frameBufferHeight));
+                                                                                         frameBufferHeight,
+                                                                                         frameBufferWidth));
     
         gaussianBlurFirstStepFramebuffer->configure();
     
         gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                                             Texture::Format::rgb_16_16_16,
                                                                                             Texture::AssociatedType::FLOAT,
-                                                                                            frameBufferWidth,
-                                                                                            frameBufferHeight));
+                                                                                          frameBufferWidth,
+                                                                                          frameBufferHeight));
     
         gaussianBlurSecondStepFramebuffer->configure();
     
@@ -237,39 +237,39 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                    std::move(lightSourceforwardShader));
     
         bloomSplitRenderer = std::make_unique<PostprocessDrawer>(lightSourceRenderer->get_framebuffer().get_colors(),
-                                                                    std::move(bloomTwoTexSplitFramebuffer),
-                                                                    std::move(bloomSplitProgram));
+                                                                 std::move(bloomTwoTexSplitFramebuffer),
+                                                                 std::move(bloomSplitProgram));
     
         std::vector<std::weak_ptr<Texture>> textures;
         textures.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[0]);
     
         gaussianBlurFirstStepRenderer = std::make_unique<PostprocessDrawer>(textures,
-                                                                               std::move(gaussianBlurFirstStepFramebuffer),
-                                                                               std::move(gaussianBlurProgram));
+                                                                            std::move(gaussianBlurFirstStepFramebuffer),
+                                                                            std::move(gaussianBlurProgram));
     
         gaussianBlurSecondStepRenderer = std::make_unique<PostprocessDrawer>(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(),
-                                                                                std::move(gaussianBlurSecondStepFramebuffer),
-                                                                                std::move(secondGaussianBlurProgram));
+                                                                             std::move(gaussianBlurSecondStepFramebuffer),
+                                                                             std::move(secondGaussianBlurProgram));
     
         std::vector<std::weak_ptr<Texture>> textures2;
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
         textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
     
         bloomMergeRenderer = std::make_unique<PostprocessDrawer>(textures2,
-                                                                    std::move(bloomMergeFramebuffer),
-                                                                    std::move(bloomMergeProgram));
+                                                                 std::move(bloomMergeFramebuffer),
+                                                                 std::move(bloomMergeProgram));
     
-        hdrRenderer = std::make_unique<PostprocessDrawer>(lightSourceRenderer->get_framebuffer().get_colors(),
-                                                             std::move(hdrFramebuffer),
-                                                             std::move(hdrProgram));
+        hdrRenderer = std::make_unique<PostprocessDrawer>(bloomMergeRenderer->get_framebuffer().get_colors(),
+                                                          std::move(hdrFramebuffer),
+                                                          std::move(hdrProgram));
     
         vignetteRenderer = std::make_unique<PostprocessDrawer>(hdrRenderer->get_framebuffer().get_colors(),
-                                                                  std::move(vignetteFramebuffer),
-                                                                  std::move(vignetteProgram));
+                                                               std::move(vignetteFramebuffer),
+                                                               std::move(vignetteProgram));
     
         scaleRenderer = std::make_unique<PostprocessDrawer>(vignetteRenderer->get_framebuffer().get_colors(),
-                                                               std::move(windowFramebuffer),
-                                                               std::move(scaleProgram));
+                                                            std::move(windowFramebuffer),
+                                                            std::move(scaleProgram));
             
 }
 
@@ -475,7 +475,7 @@ void ms::NGin::draw_scene() {
     }
 
 
-    lightSourceRenderer->use(deferredRenderer->get_framebuffer());
+    lightSourceRenderer->use();
     for(int i = 0; i < scene->get_point_lights().size(); ++i) {
         lightSourceRenderer->draw(*scene->get_point_lights()[i], *scene);
     }
@@ -483,7 +483,7 @@ void ms::NGin::draw_scene() {
         lightSourceRenderer->draw(*scene->get_spot_lights()[i], *scene);
     }
 
-    bloomSplitRenderer->use(deferredRenderer->get_framebuffer());
+    bloomSplitRenderer->use();
     bloomSplitRenderer->get_framebuffer().clear_frame();
     bloomSplitRenderer->draw_quad();
 
@@ -515,5 +515,9 @@ void ms::NGin::draw_scene() {
 
 void ms::NGin::set_renderer (Renderer r) {
     this->chosenRenderer = r;
+}
+
+ms::DeferredRender & ms::NGin::get_deferred_render	() const {
+    return *deferredRenderer;
 }
 

@@ -65,7 +65,7 @@ namespace ms {
         void 							load 				();
         void 							unload 				();
         void							draw_scene  		();
-        constexpr DeferredRender & 		get_deferred_render	() const { return *deferredRenderer; }
+        DeferredRender & 		        get_deferred_render	() const;
         void							load_model			(std::string 	absolutePath);
 		
 		std::unique_ptr<Scene>                  scene;
