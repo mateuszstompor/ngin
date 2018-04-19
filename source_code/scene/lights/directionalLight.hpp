@@ -9,7 +9,7 @@
 #ifndef directional_light_hpp
 #define directional_light_hpp
 
-#define PROJECTION_CUBE_SIDE 44.0f
+#define PROJECTION_CUBE_SIDE 38.0f
 
 #include "general/light.hpp"
 

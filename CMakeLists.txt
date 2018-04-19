@@ -95,6 +95,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.hpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/controlls.hpp
         ${CMAKE_SOURCE_DIR}/example_projects/mac/utils.hpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/DLShadowRender.hpp
 
         #cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.cpp
@@ -107,6 +108,7 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.cpp
+        ${CMAKE_SOURCE_DIR}/source_code/rendering/DLShadowRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.cpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.cpp

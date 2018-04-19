@@ -104,18 +104,19 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                       0,
                                                                       frameBufferWidth,
                                                                       frameBufferHeight);
+
+        int shadowResolution = 2 * 1024;
     
-    
-        for (int i = 0; i < 50; ++i) {
+        for (int i = 0; i < 10; ++i) {
             shadows.push_back(std::make_unique<Framebuffer>(0,
                                                             0,
-                                                            frameBufferWidth,
-                                                            frameBufferHeight));
+                                                            shadowResolution,
+                                                            shadowResolution));
             shadows[i]->bind_depth_buffer(std::make_unique<Texture>(Texture::Type::tex_2d,
                                                                     Texture::Format::depth_32,
                                                                     Texture::AssociatedType::FLOAT,
-                                                                    frameBufferWidth,
-                                                                    frameBufferHeight));
+                                                                    shadowResolution,
+                                                                    shadowResolution));
             
             shadows[i]->configure();
         }
@@ -357,6 +358,7 @@ void ms::NGin::load () {
     gaussianBlurFirstStepRenderer->load();
     gaussianBlurSecondStepRenderer->load();
     scaleRenderer->load();
+    shadowRenderer->load();
     vignetteRenderer->load();
 }
 
@@ -367,6 +369,7 @@ void ms::NGin::unload () {
     lightSourceRenderer->unload();
     hdrRenderer->unload();
     bloomSplitRenderer->unload();
+    shadowRenderer->unload();
     bloomMergeRenderer->unload();
     gaussianBlurFirstStepRenderer->unload();
     gaussianBlurSecondStepRenderer->unload();
@@ -454,6 +457,8 @@ void ms::NGin::draw_scene() {
     #endif
     
     if (auto dirLight = scene->get_directional_light()) {
+        shadows[0]->use();
+        shadows[0]->clear_frame();
         shadowRenderer->use(*shadows[0]);
         shadowRenderer->setup_uniforms(*scene);
         for(int i = 0; i < scene->get_nodes().size(); ++i) {

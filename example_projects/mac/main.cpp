@@ -44,8 +44,15 @@ int main(int argc, const char * argv[]) { {
 	
 	bool useCommandLineArguments = argc == 5;
 
-	int width = 1650;
-	int height = 1000;
+
+	#ifdef __WIN32__
+		int width = 2650;
+		int height = 1400;
+	#else
+		int width = 1650;
+		int height = 1000;
+	#endif
+
 	int actualScreenWidth;
 	int actualScreenHeight;
 	int framebufferWidth;
@@ -72,9 +79,10 @@ int main(int argc, const char * argv[]) { {
 	actualScreenHeight = framebufferHeight;
 	
 	//Configure rendering resoultion here
-    framebufferWidth /= 2;
-    framebufferHeight /= 2;
-    
+	#ifndef __WIN32__
+		framebufferWidth /= 2;
+		framebufferHeight /= 2;
+	#endif
 	
 	if(window == nullptr){
 		std::cerr << ms::windowCreationError << std::endl;
