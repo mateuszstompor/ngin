@@ -69,10 +69,12 @@ namespace ms {
 		virtual 					~Shader					() = default;
 		constexpr 	GLuint 			get_gl_id				() const { return program; }
 					GLint			set_uniform				(std::string const & name, int value);
-					GLint			set_uniform				(std::string const & name,
-															 math::mat4 const & m);
-					GLint			set_uniform				(std::string const & name,
-															 math::mat3 const & m);
+					GLint			set_uniform				(std::string const & name, unsigned int value);
+					GLint			set_uniform				(std::string const & name, float value);
+					GLint			set_uniform				(std::string const & name, math::mat4 const & m);
+					GLint			set_uniform				(std::string const & name, math::mat3 const & m);
+					GLint			set_uniform				(std::string const & name, math::vec4 const & v);
+					GLint			set_uniform				(std::string const & name, math::vec3 const & v);
 		static 		program_ptr		vf_program 				(std::string const & vertexSource,
 															 std::string const & fragmentSource);
 

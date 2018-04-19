@@ -12,8 +12,6 @@
 #include <memory>
 
 #include "render.hpp"
-#include "shaders/forwardShader.hpp"
-#include "shaders/lightSourceDrawerShader.hpp"
 
 namespace ms {
 	
@@ -21,22 +19,19 @@ namespace ms {
 	
 	public:
 		
-		 						ForwardRender					(unsigned int 						maximalAmountOfLights,
-																 std::unique_ptr<Framebuffer> && 	framebuffer,
-																 std::unique_ptr<ForwardShader> && 	shader);
+						ForwardRender					(unsigned int 						maximalAmountOfLights,
+														 std::unique_ptr<Framebuffer> && 	framebuffer,
+														 std::unique_ptr<Shader> && 		shader);
 		
-		virtual std::string 	get_class						() const override;
-		virtual void 			draw  							(Drawable & node, const Scene & scene) override;
-		virtual void 			setup_uniforms					(const Scene * scene);
-		virtual void 			setup_material_uniforms_for		(const Scene * scene, const Drawable * node);
+		std::string 	get_class						() const override;
+		void 			draw  							(Drawable & node, const Scene & scene) override;
+		void 			setup_uniforms					(const Scene * scene);
+		void 			setup_material_uniforms_for		(const Scene * scene, const Drawable * node);
 		
-		virtual 				~ForwardRender() = default;
-	
-	protected:
+	private:
 		
-		std::string 			vertexShaderSource;
-		std::string 			fragmentShaderSource;
-		unsigned int 			maximalAmountOfLights;
+		void			_load							() override;
+		unsigned int 	maximalAmountOfLights;
 				
 	};
 	

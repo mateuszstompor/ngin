@@ -14,9 +14,6 @@
 #include <tuple>
 
 #include "render.hpp"
-#include "shaders/deferredLightingShader.hpp"
-#include "shaders/deferredShader.hpp"
-#include "shaders/deferredLightingShader.hpp"
 #include "../scene/texture.hpp"
 #include "framebuffer.hpp"
 #include "renderbuffer.hpp"
@@ -29,13 +26,6 @@ namespace ms {
 	
 	class DeferredRender : public Render {
 		
-	protected:
-		
-		using sm_spot_lights = std::vector<std::unique_ptr<Framebuffer>>;
-		using lighting_shader 	= std::unique_ptr<DeferredLightingShader>;
-		using g_pass_shader 	= std::unique_ptr<DeferredShader>;
-		using shadow_shader 	= std::unique_ptr<Shader>;
-		
 	public:
 		
 		enum class DebugType;
@@ -43,8 +33,8 @@ namespace ms {
 										DeferredRender				(unsigned int 						maxPointLightsAmount,
 																	 unsigned int 						maxSpotLightsAmount,
 																	 std::unique_ptr<Framebuffer> && 	framebuffer,
-																	 g_pass_shader && 					gShader,
-																	 lighting_shader &&					lightingShader);
+																	 std::unique_ptr<Shader> && 		gShader,
+																	 std::unique_ptr<Shader> &&			lightingShader);
 		
 		void							use			     			() override;
 		void 							draw						(Drawable & node, const Scene & scene) override;
@@ -58,7 +48,7 @@ namespace ms {
 
 //	private:
 		
-		lighting_shader					lightingShader;
+		std::unique_ptr<Shader>			lightingShader;
 		
 		unsigned int 					maxPointLightsAmount;
 		unsigned int 					maxSpotLightsAmount;

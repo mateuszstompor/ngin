@@ -19,10 +19,6 @@
 		561F2EFC204F041D00D7E875 /* material.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 561F2EF9204F041D00D7E875 /* material.hpp */; };
 		56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
 		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
-		56296728204F3CCD00685BAE /* deferredShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56296726204F3CCD00685BAE /* deferredShader.cpp */; };
-		5629672A204F3CCD00685BAE /* deferredShader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56296727204F3CCD00685BAE /* deferredShader.hpp */; };
-		5632E392205EF83000A323A4 /* lightSourceDrawerShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5632E390205EF83000A323A4 /* lightSourceDrawerShader.cpp */; };
-		5632E394205EF83000A323A4 /* lightSourceDrawerShader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5632E391205EF83000A323A4 /* lightSourceDrawerShader.hpp */; };
 		5633FA8F204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA90204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA97204B6F97003449EE /* geometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FA94204B6F97003449EE /* geometry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -61,8 +57,6 @@
 		5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
 		56716850204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
 		56716854204ADFAE0028EFAA /* ngin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671682A204ADFAE0028EFAA /* ngin.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5673025320504AFC0066993D /* deferredLightingShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5673025120504AFC0066993D /* deferredLightingShader.cpp */; };
-		5673025520504AFC0066993D /* deferredLightingShader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5673025220504AFC0066993D /* deferredLightingShader.hpp */; };
 		56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56736CAF206453F500CE636A /* postprocessDrawer.hpp */; };
 		56736CBC2064572400CE636A /* postprocessDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawer.cpp */; };
 		56736CBD2064572400CE636A /* postprocessDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawer.cpp */; };
@@ -72,8 +66,6 @@
 		5674534320540C6F000E7EBD /* texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5674534020540C6F000E7EBD /* texture.hpp */; };
 		567453492054B391000E7EBD /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
 		5674534A2054B391000E7EBD /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
-		5676D56C204E1869005E4AFA /* forwardShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676D56A204E1869005E4AFA /* forwardShader.cpp */; };
-		5676D56E204E1869005E4AFA /* forwardShader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5676D56B204E1869005E4AFA /* forwardShader.hpp */; };
 		5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
 		5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
 		5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5676F296205222CB002EAB31 /* utilsOGL.hpp */; };
@@ -193,11 +185,7 @@
 		56296722204F31E300685BAE /* g_buf_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = g_buf_fshader.glsl; sourceTree = "<group>"; };
 		56296723204F328200685BAE /* forwardRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = forwardRender.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		56296725204F37AD00685BAE /* deferredRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredRender.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		56296726204F3CCD00685BAE /* deferredShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredShader.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		56296727204F3CCD00685BAE /* deferredShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredShader.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5632E38A205EE0DA00A323A4 /* functions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = functions.glsl; sourceTree = "<group>"; };
-		5632E390205EF83000A323A4 /* lightSourceDrawerShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lightSourceDrawerShader.cpp; sourceTree = "<group>"; };
-		5632E391205EF83000A323A4 /* lightSourceDrawerShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lightSourceDrawerShader.hpp; sourceTree = "<group>"; };
 		5633FA8E204B6988003449EE /* resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource.cpp; sourceTree = "<group>"; };
 		5633FA94204B6F97003449EE /* geometry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = geometry.hpp; sourceTree = "<group>"; };
 		5633FAA7204C565B003449EE /* drawable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = drawable.hpp; sourceTree = "<group>"; };
@@ -233,16 +221,12 @@
 		5671682A204ADFAE0028EFAA /* ngin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ngin.hpp; sourceTree = "<group>"; };
 		5673024C20503A7D0066993D /* lighting_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lighting_fshader.glsl; sourceTree = "<group>"; };
 		5673024F20503A7D0066993D /* lighting_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = lighting_vshader.glsl; sourceTree = "<group>"; };
-		5673025120504AFC0066993D /* deferredLightingShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredLightingShader.cpp; sourceTree = "<group>"; };
-		5673025220504AFC0066993D /* deferredLightingShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredLightingShader.hpp; sourceTree = "<group>"; };
 		56736CAF206453F500CE636A /* postprocessDrawer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = postprocessDrawer.hpp; sourceTree = "<group>"; };
 		56736CBA2064572400CE636A /* postprocessDrawer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = postprocessDrawer.cpp; sourceTree = "<group>"; };
 		56736CC32064745D00CE636A /* hdr_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = hdr_fshader.glsl; sourceTree = "<group>"; };
 		5674533F20540C6F000E7EBD /* texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
 		5674534020540C6F000E7EBD /* texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		567453482054B391000E7EBD /* deferredRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredRender.cpp; sourceTree = "<group>"; };
-		5676D56A204E1869005E4AFA /* forwardShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = forwardShader.cpp; sourceTree = "<group>"; usesTabs = 1; };
-		5676D56B204E1869005E4AFA /* forwardShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = forwardShader.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5676F295205222CB002EAB31 /* utilsOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utilsOGL.cpp; sourceTree = "<group>"; };
 		5676F296205222CB002EAB31 /* utilsOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utilsOGL.hpp; sourceTree = "<group>"; };
 		5676F29A20522919002EAB31 /* proxyOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = proxyOGL.hpp; sourceTree = "<group>"; };
@@ -485,14 +469,6 @@
 			children = (
 				5640FED2204AE77600512938 /* shader.hpp */,
 				5640FED3204AE77600512938 /* shader.cpp */,
-				5676D56A204E1869005E4AFA /* forwardShader.cpp */,
-				5676D56B204E1869005E4AFA /* forwardShader.hpp */,
-				56296726204F3CCD00685BAE /* deferredShader.cpp */,
-				56296727204F3CCD00685BAE /* deferredShader.hpp */,
-				5673025120504AFC0066993D /* deferredLightingShader.cpp */,
-				5673025220504AFC0066993D /* deferredLightingShader.hpp */,
-				5632E390205EF83000A323A4 /* lightSourceDrawerShader.cpp */,
-				5632E391205EF83000A323A4 /* lightSourceDrawerShader.hpp */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -638,12 +614,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5629672A204F3CCD00685BAE /* deferredShader.hpp in Headers */,
 				5674534320540C6F000E7EBD /* texture.hpp in Headers */,
 				5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */,
 				5671684E204ADFAE0028EFAA /* scene.hpp in Headers */,
 				5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */,
-				5673025520504AFC0066993D /* deferredLightingShader.hpp in Headers */,
 				56716831204ADFAE0028EFAA /* resource.hpp in Headers */,
 				5671684A204ADFAE0028EFAA /* light.hpp in Headers */,
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
@@ -657,9 +631,7 @@
 				560627D120633B69005085CD /* renderbuffer.hpp in Headers */,
 				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
 				5640FED4204AE77600512938 /* shader.hpp in Headers */,
-				5632E394205EF83000A323A4 /* lightSourceDrawerShader.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
-				5676D56E204E1869005E4AFA /* forwardShader.hpp in Headers */,
 				56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */,
 				56DF0F3D20571B6D00713420 /* loader.hpp in Headers */,
 				5633FAB9204C6625003449EE /* utils.hpp in Headers */,
@@ -846,21 +818,17 @@
 				563B99692065B66900B54626 /* forwardRender.cpp in Sources */,
 				5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
 				5674534120540C6F000E7EBD /* texture.cpp in Sources */,
-				5632E392205EF83000A323A4 /* lightSourceDrawerShader.cpp in Sources */,
 				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
-				56296728204F3CCD00685BAE /* deferredShader.cpp in Sources */,
 				563B996C2065BF3000B54626 /* lightSourcesRender.cpp in Sources */,
 				5633FA8F204B6988003449EE /* resource.cpp in Sources */,
 				56DF0F3B20571B6D00713420 /* loader.cpp in Sources */,
 				567453492054B391000E7EBD /* deferredRender.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */,
-				5676D56C204E1869005E4AFA /* forwardShader.cpp in Sources */,
 				560627CA20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99642065A7BA00B54626 /* render.cpp in Sources */,
 				56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */,
 				5640FED5204AE77600512938 /* shader.cpp in Sources */,
-				5673025320504AFC0066993D /* deferredLightingShader.cpp in Sources */,
 				560313E5207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
 				5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				5633FAB3204C64D7003449EE /* drawable.cpp in Sources */,

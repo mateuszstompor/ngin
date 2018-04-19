@@ -195,16 +195,15 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         unsigned int AOL = 100;
     
         auto shadowShader = Shader::vf_program(shadowMappingVertexShader, shadowMappingFragmentShader);
-        auto phongforwardShader = std::make_unique<ForwardShader>(AOL,
-                                                                  forwardRenderVertexShaderSource,
-                                                                  forwardRenderFragmentShaderSource);
+        
+        auto phongforwardShader = Shader::vf_program(forwardRenderVertexShaderSource,
+                                                     forwardRenderFragmentShaderSource);
     
-        auto gouraudforwardShader = std::make_unique<ForwardShader>(AOL,
-                                                                    gouraudVertexShaderSource,
-                                                                    gouraudRenderFragmentShaderSource);
+        auto gouraudforwardShader = Shader::vf_program(gouraudVertexShaderSource,
+                                                       gouraudRenderFragmentShaderSource);
     
-        auto lightSourceforwardShader = std::make_unique<LightSourceDrawerShader>(lightSourceDrawerVertexShader,
-                                                                                  lightSourceDrawerFragmentShader);
+        auto lightSourceforwardShader = Shader::vf_program(lightSourceDrawerVertexShader,
+                                                           lightSourceDrawerFragmentShader);
     
         auto bloomSplitProgram = Shader::vf_program(bloomSplitterVertexShader, bloomSplitterFragmentShader);
         auto bloomMergeProgram = Shader::vf_program(bloomMergerVertexShader, bloomMergerFragmentShader);
@@ -214,8 +213,8 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         auto vignetteProgram = Shader::vf_program(vignetteVertexShader, vignetteFragmentShader);
         auto scaleProgram = Shader::vf_program(scaleVertexShader, scaleFragmentShader);
     
-        auto defGshader = std::make_unique<DeferredShader>(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
-        auto defLightingShader = std::make_unique<DeferredLightingShader>(AOL, AOL, deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
+        auto defGshader = Shader::vf_program(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
+        auto defLightingShader = Shader::vf_program(deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
     
         deferredRenderer = std::make_unique<DeferredRender> (AOL,
                                                              AOL,

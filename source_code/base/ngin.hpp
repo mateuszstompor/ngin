@@ -22,9 +22,6 @@
 #include "../rendering/postprocessDrawer.hpp"
 
 #include "../rendering/postprocessDrawer.hpp"
-#include "../rendering/shaders/forwardShader.hpp"
-#include "../rendering/shaders/deferredShader.hpp"
-#include "../rendering/shaders/lightSourceDrawerShader.hpp"
 
 #include "../utils/loader.hpp"
 #include "../scene/drawable.hpp"

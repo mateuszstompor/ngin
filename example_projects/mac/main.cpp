@@ -44,7 +44,7 @@ int main(int argc, const char * argv[]) { {
 	
 	bool useCommandLineArguments = argc == 5;
 
-	int width = 1400;
+	int width = 1650;
 	int height = 1000;
 	int actualScreenWidth;
 	int actualScreenHeight;
@@ -72,8 +72,8 @@ int main(int argc, const char * argv[]) { {
 	actualScreenHeight = framebufferHeight;
 	
 	//Configure rendering resoultion here
-    framebufferWidth /= 2;
-    framebufferHeight /= 2;
+//    framebufferWidth /= 2;
+//    framebufferHeight /= 2;
     
 	
 	if(window == nullptr){
@@ -108,14 +108,14 @@ int main(int argc, const char * argv[]) { {
     
 	mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 
-//    for (int i = 0; i < 2; ++i) {
-//        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
-//        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
-//        auto lightPower = 50.0f;
-//        
-//        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
-//        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
-//    }
+    for (int i = 0; i < 2; ++i) {
+        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
+        auto lightColor = vec3{1.0f, 1.0f, 1.0f};
+        auto lightPower = 50.0f;
+        
+        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
+        engine->scene->get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
+    }
 
     for (int i = 0; i < 1; ++i) {
         auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 12.0f, 0.0f});

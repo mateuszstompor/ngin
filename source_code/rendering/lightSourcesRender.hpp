@@ -10,7 +10,6 @@
 #define lightSourcesRender_hpp
 
 #include "render.hpp"
-#include "shaders/lightSourceDrawerShader.hpp"
 
 namespace ms {
 	
@@ -18,17 +17,12 @@ namespace ms {
 		
 	public:
 		
-		 		LightSourcesRender		(std::unique_ptr<Framebuffer> &&                framebuffer,
-										 std::unique_ptr<LightSourceDrawerShader> &&    shader);
+		 		LightSourcesRender		(std::unique_ptr<Framebuffer> &&    framebuffer,
+										 std::unique_ptr<Shader> &&         shader);
 		
 		virtual ~LightSourcesRender		() = default;
 		void	draw  					(Drawable & node, const Scene & scene)			override;
 		
-	protected:
-		
-		std::string 								vertexShaderSource;
-		std::string 								fragmentShaderSource;
-
 	};
 	
 }

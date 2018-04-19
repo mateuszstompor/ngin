@@ -30,9 +30,21 @@ void ms::Shader::use() {
 	mglUseProgram(program);
 }
 
-GLint  ms::Shader::set_uniform (std::string const & name, math::mat4 const & m) {
+GLint ms::Shader::set_uniform (std::string const & name, math::mat4 const & m) {
 	GLint location = mglGetUniformLocation(program, name.c_str());
 	mglUniformMatrix4fv(location, 1, GL_FALSE, m.c_array());
+	return location;
+}
+
+GLint ms::Shader::set_uniform (std::string const & name, math::vec4 const & v) {
+	GLint location = mglGetUniformLocation(program, name.c_str());
+	mglUniform4fv(location, 1, v.c_array());
+	return location;
+}
+
+GLint ms::Shader::set_uniform (std::string const & name, math::vec3 const & v) {
+	GLint location = mglGetUniformLocation(program, name.c_str());
+	mglUniform3fv(location, 1, v.c_array());
 	return location;
 }
 
@@ -45,6 +57,18 @@ GLint  ms::Shader::set_uniform (std::string const & name, math::mat3 const & m) 
 GLint ms::Shader::set_uniform (std::string const & name, int value) {
 	GLint location = mglGetUniformLocation(program, name.c_str());
 	mglUniform1i(location, value);
+	return location;
+}
+
+GLint ms::Shader::set_uniform (std::string const & name, unsigned int value) {
+	GLint location = mglGetUniformLocation(program, name.c_str());
+	mglUniform1ui(location, value);
+	return location;
+}
+
+GLint ms::Shader::set_uniform (std::string const & name, float value) {
+	GLint location = mglGetUniformLocation(program, name.c_str());
+	mglUniform1f(location, value);
 	return location;
 }
 

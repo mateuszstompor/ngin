@@ -10,88 +10,93 @@
 
 ms::ForwardRender::ForwardRender(unsigned int maxAOL,
 								 std::unique_ptr<Framebuffer> && framebuffer,
-                                 std::unique_ptr<ForwardShader> && shader) : Render(std::move(framebuffer), std::move(shader)) {}
+                                 std::unique_ptr<Shader> && shader) : Render(std::move(framebuffer), std::move(shader)) {}
 
-
+void ms::ForwardRender::_load () {
+    Render::_load();
+    shader->use();
+    shader->set_uniform("diffuseTexture", 0);
+    shader->set_uniform("specularTexture", 1);
+    shader->set_uniform("normalTexture", 2);
+}
 
 void ms::ForwardRender::setup_uniforms (const Scene * scene) {
-	
-	ForwardShader* shad = dynamic_cast<ForwardShader*>(shader.get());
-	
-	shad->set_camera_transformation(scene->get_camera().get_transformation());
-	shad->set_projection_matrix(scene->get_camera().get_projection_matrix());
-	
-	if(auto dirLight = scene->get_directional_light()) {
-		shad->set_has_directional_light(true);
-		shad->set_directional_light_dir(dirLight->direction);
-		shad->set_directional_light_color(dirLight->get_color());
-	} else {
-		shad->set_has_directional_light(false);
-	}
-	
-	{
-		const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
-		shad->set_amount_of_spot_lights(static_cast<int>(spotLights.size()));
-		for(unsigned int index = 0; index < spotLights.size(); ++index) {
-			shad->set_spot_light_power(index, spotLights[index]->power);
-			shad->set_spot_light_color(index, spotLights[index]->get_color());
-			shad->set_spot_light_position(index, spotLights[index]->position);
-			shad->set_spot_light_angle(index, spotLights[index]->lightingAngleDegrees);
-			shad->set_spot_light_direction(index, spotLights[index]->direction);
-		}
-	}
-	
-	{
-		const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
-		shad->set_amount_of_point_lights(static_cast<int>(pointLights.size()));
-		for(unsigned int index = 0; index < pointLights.size(); ++index) {
-			shad->set_point_light_color(index, pointLights[index]->get_color());
-			shad->set_point_light_power(index, pointLights[index]->power);
-			shad->set_point_light_position(index, pointLights[index]->position);
-		}
-	}
-	
+    
+    shader->set_uniform("cameraTransformation", scene->get_camera().get_transformation());
+    shader->set_uniform("perspectiveProjection", scene->get_camera().get_projection_matrix());
+
+    if(auto dirLight = scene->get_directional_light()) {
+        shader->set_uniform("hasDirLight", 1);
+        shader->set_uniform("dirLight.color", dirLight->get_color());
+        shader->set_uniform("dirLight.direction", dirLight->direction);
+    } else {
+        shader->set_uniform("hasDirLight", 0);
+    }
+
+    {
+        const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
+        shader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
+        for(unsigned int i = 0; i < spotLights.size(); ++i) {
+            
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i]->power);
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i]->get_color());
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i]->lightingAngleDegrees);
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].position", spotLights[i]->position);
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->direction);
+            
+        }
+    }
+
+    {
+        const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
+        shader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
+        for(unsigned int i = 0; i < pointLights.size(); ++i) {
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i]->get_color());
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->position);
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->power);
+        }
+    }
+    
 }
 
 void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const Drawable * node) {
 
-	ForwardShader* shad = dynamic_cast<ForwardShader*>(shader.get());
-
+    auto & shader = *this->shader;
+    
 	if (auto mat = node->boundedMaterial.lock()) {
-		shad->set_has_material(true);
-		mat->use();
+        shader.set_uniform("hasMaterial", 1);
+        auto & material = *mat;
+		material.use();
 		
-		if(auto diff = mat->boundedDiffuseTexture.lock()) {
-            shad->bind_texture(0, *diff);
-			shad->set_has_diffuse_texture(true);
+		if(auto diff = material.boundedDiffuseTexture.lock()) {
+            shader.bind_texture(0, *diff);
+            shader.set_uniform("hasDiffuseTexture", 1);
 		} else {
-			shad->set_has_diffuse_texture(false);
+            shader.set_uniform("hasDiffuseTexture", 0);
 		}
 		
-		if(auto spec = mat->boundedSpecularTexture.lock()) {
-            shad->bind_texture(1, *spec);
-			shad->set_has_specular_texture(true);
+		if(auto spec = material.boundedSpecularTexture.lock()) {
+            shader.bind_texture(1, *spec);
+            shader.set_uniform("hasSpecularTexture", 1);
 		} else {
-			shad->set_has_specular_texture(false);
+            shader.set_uniform("hasSpecularTexture", 0);
 		}
         
-        if(auto normal = mat->boundedHeightTexture.lock()) {
-            //index of diffuse texture is 1
-            shad->bind_texture(2, *normal);
-            shad->set_has_normal_texture(true);
+        if(auto normal = material.boundedHeightTexture.lock()) {
+            shader.bind_texture(2, *normal);
+            shader.set_uniform("hasNormalTexture", 1);
         } else {
-            shad->set_has_normal_texture(false);
+            shader.set_uniform("hasNormalTexture", 0);
         }
 		
 	} else {
-		shad->set_has_material(false);
+		shader.set_uniform("hasMaterial", 0);
 	}
 
 }
 
 void ms::ForwardRender::draw (Drawable & node, const Scene & scene) {
-	ForwardShader* shad = dynamic_cast<ForwardShader*>(shader.get());
-	shad->set_model_transformation(node.modelTransformation.get_transformation());
+    shader->set_uniform("modelTransformation", node.modelTransformation.get_transformation());
 	ForwardRender::setup_material_uniforms_for(&scene, &node);
 	node.draw();
 }
