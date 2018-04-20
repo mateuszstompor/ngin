@@ -335,61 +335,6 @@ void ms::NGin::unload () {
     vignetteRenderer->unload();
 }
 
-//TODO
-void ms::NGin::load_point_light	(float                  power,
-								 math::vec3 const &     color,
-								 math::vec3 const &     position,
-								 std::string const &    absolutePath) {
-    
-    Loader::model_data loadedData = loader.load_model(absolutePath);
-    Loader::geometries_vec & geo = std::get<0>(loadedData);
-    Loader::materials_map & mat = std::get<1>(loadedData);
-    Loader::textures_map & tex = std::get<2>(loadedData);
-
-    for (auto & geometry : geo) {
-        auto node = std::make_shared<PointLight>(color, power, position);
-        node->geometry=std::move(geometry);
-        scene.get_point_lights().push_back(std::move(node));
-    }
-
-    for (auto & material : mat) {
-        scene.get_materials().insert(std::move(material));
-    }
-
-    for (auto & texture : tex) {
-        scene.get_textures().insert(std::move(texture));
-    }
-	
-}
-//TODO
-void ms::NGin::load_spot_light (float                   power,
-								math::vec3 const &      color,
-								math::vec3 const &      position,
-								float                   lightingAngleDegrees,
-								math::vec3 const &      direction,
-								std::string const &     absolutePath) {
-
-    Loader::model_data loadedData = loader.load_model(absolutePath);
-    Loader::geometries_vec & geo = std::get<0>(loadedData);
-    Loader::materials_map & mat = std::get<1>(loadedData);
-    Loader::textures_map & tex = std::get<2>(loadedData);
-    
-    for (auto & geometry : geo) {
-        auto node = std::make_shared<SpotLight>(color, power, position, lightingAngleDegrees, direction);
-        node->geometry=std::move(geometry);
-        scene.get_spot_lights().push_back(std::move(node));
-    }
-    
-    for (auto & material : mat) {
-        scene.get_materials().insert(std::move(material));
-    }
-    
-    for (auto & texture : tex) {
-        scene.get_textures().insert(std::move(texture));
-    }
-	
-}
-
 void ms::NGin::count_fps () {
 	static int fps = 0;
 	static auto start = std::chrono::high_resolution_clock::now();
@@ -414,20 +359,11 @@ void ms::NGin::draw_scene() {
         count_fps();
     #endif
     
-    
-//    scaleRenderer->get_framebuffer().use();
-//    scaleRenderer->get_framebuffer().clear_frame();
-//    shadowRenderer->use(scaleRenderer->get_framebuffer());
-//    shadowRenderer->setup_uniforms(scene.get_spot_lights()[0]->get_projection(), scene.get_spot_lights()[0]->get_positionedObject().get_transformation());
-//    for(auto & node : scene.get_nodes()) {
-//        shadowRenderer->draw(*node);
-//    }
-
     if (auto dirLight = scene.get_directional_light()) {
         shadows[0]->use();
         shadows[0]->clear_frame();
         shadowRenderer->use(*shadows[0]);
-        shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_positionedObject().get_transformation());
+        shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
         for(auto & node : scene.get_nodes()) {
             shadowRenderer->draw(*node);
         }
@@ -435,12 +371,12 @@ void ms::NGin::draw_scene() {
     
     for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
         
-        auto & spotLight = *scene.get_spot_lights()[i];
+        auto & spotLight = scene.get_spot_lights()[i];
         
         shadows[1 + i]->use();
         shadows[1 + i]->clear_frame();
         shadowRenderer->use(*shadows[1 + i]);
-        shadowRenderer->setup_uniforms(spotLight.get_projection(), spotLight.get_positionedObject().get_transformation());
+        shadowRenderer->setup_uniforms(spotLight.get_projection(), spotLight.get_transformation());
 
         for(auto & node : scene.get_nodes()) {
             shadowRenderer->draw(*node);
@@ -454,7 +390,7 @@ void ms::NGin::draw_scene() {
         deferredRenderer->gFramebuffer->clear_frame();
         for(int i = 0; i < scene.get_nodes().size(); ++i) {
             auto node = scene.get_nodes()[i];
-            if(scene.get_camera().is_in_camera_sight(node->modelTransformation.get_transformation(), node->geometry->get_bounding_box())) {
+            if(scene.get_camera().is_in_camera_sight(node->transformation, node->geometry->get_bounding_box())) {
                 deferredRenderer->draw(*scene.get_nodes()[i], scene);
             }
         }
@@ -492,13 +428,14 @@ void ms::NGin::draw_scene() {
     }
 
 
-    lightSourceRenderer->use();
-    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
-        lightSourceRenderer->draw(*scene.get_point_lights()[i], scene);
-    }
-    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-        lightSourceRenderer->draw(*scene.get_spot_lights()[i], scene);
-    }
+//    lightSourceRenderer->use();
+//    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
+//        lightSourceRenderer->draw(*scene.get_point_lights()[i], scene);
+//    }
+//    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+//        lightSourceRenderer->draw(*scene.get_spot_lights()[i], scene);
+//    }
+    bloomSplitRenderer->get_framebuffer().copy_framebuffer(lightSourceRenderer->get_framebuffer());
 
     bloomSplitRenderer->use();
     bloomSplitRenderer->get_framebuffer().clear_frame();
@@ -527,6 +464,16 @@ void ms::NGin::draw_scene() {
     scaleRenderer->use();
     scaleRenderer->get_framebuffer().clear_frame();
     scaleRenderer->draw_quad();
+    
+    
+    scaleRenderer->get_framebuffer().use();
+    scaleRenderer->get_framebuffer().clear_depth();
+    shadowRenderer->use(scaleRenderer->get_framebuffer());
+    glViewport(0, 0, 1000, 1000);
+    shadowRenderer->setup_uniforms(scene.get_spot_lights()[0].get_projection(), scene.get_spot_lights()[0].get_transformation());
+    for(auto & node : scene.get_nodes()) {
+        shadowRenderer->draw(*node);
+    }
     
 }
 

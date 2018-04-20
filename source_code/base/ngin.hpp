@@ -44,19 +44,7 @@ namespace ms {
                                                              unsigned int                       shadowsResolution,
                                                              std::unique_ptr<Camera> &&         cam,
                                                              std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
-		
-        void							load_point_light	(float                  power,
-                                                             math::vec3 const &     color,
-                                                             math::vec3 const &     position,
-                                                             std::string const &    absolutePath);
-		
-        void							load_spot_light	    (float 			        power,
-                                                             math::vec3 const & 	color,
-                                                             math::vec3 const &	    position,
-                                                             float			        lightingAngleDegrees,
-                                                             math::vec3 const & 	direction,
-                                                             std::string const & 	absolutePath);
-        
+		        
         void                            set_renderer        (Renderer r);
         void 							load 				();
         void 							unload 				();

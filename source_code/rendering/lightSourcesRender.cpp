@@ -16,7 +16,7 @@ void ms::LightSourcesRender::draw (Drawable & node, const Scene & scene) {
     
     shader->set_uniform("cameraTransformation", scene.get_camera().get_transformation());
     shader->set_uniform("perspectiveProjection", scene.get_camera().get_projection_matrix());
-    shader->set_uniform("modelTransformation", node.modelTransformation.get_transformation());
+    shader->set_uniform("modelTransformation", node.transformation);
     
     auto pointLight = dynamic_cast<PointLight*>(&node);
 

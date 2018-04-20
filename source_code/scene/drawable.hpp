@@ -14,7 +14,6 @@
 #include "../resources/resource.hpp"
 #include "geometry.hpp"
 #include "material.hpp"
-#include "positionedObject.hpp"
 #include "../utils/ogl/proxyOGL.hpp"
 #include "../rendering/reusableGeometry.hpp"
 
@@ -34,7 +33,7 @@ namespace ms {
         virtual 				                ~Drawable	            () = default;
         static  std::unique_ptr<Drawable>       get_quad                ();
         
-                PositionedObject                modelTransformation;
+                math::mat4                      transformation;
                 std::weak_ptr<Material>		    boundedMaterial;
                 std::shared_ptr<Geometry>       geometry;
         

@@ -30,17 +30,11 @@ namespace ms {
 		
         using materials_type    = std::map<std::string, std::shared_ptr<Material>>;
         using textures_type     = std::map<std::string, std::shared_ptr<Texture>>;
-        using spot_lights_type  = std::vector<std::shared_ptr<SpotLight>>;
-        using point_lights_type = std::vector<std::shared_ptr<PointLight>>;
+        using spot_lights_type  = std::vector<SpotLight>;
+        using point_lights_type = std::vector<PointLight>;
         using drawable_type     = std::vector<std::shared_ptr<Drawable>>;
         
-                                                Scene ();
                                                 Scene (std::unique_ptr<Camera> && cam);
-        
-                                                Scene (float nearPlan,
-                                                       float farPlan,
-                                                       float fovDegress,
-                                                       float cameraAspect);
 
         Camera const &                          get_camera() const;
 		Camera &                                get_camera();
@@ -55,18 +49,15 @@ namespace ms {
         constexpr drawable_type &               get_nodes() { return nodes; }
         constexpr const drawable_type &         get_nodes() const { return nodes; }
         
-        void        							set_directional_light(math::vec3 const &     color,
-                                                                      float                 power,
-                                                                      math::vec3 const & 	direction,
-                                                                      math::mat4 const &    projection);
+        void        							set_directional_light(std::unique_ptr<DirectionalLight> && dl) { directionalLight = std::move(dl); }
 		
-    protected:
+    private:
         
         std::map<std::string, std::shared_ptr<Material>>    materials;
         std::map<std::string, std::shared_ptr<Texture>>     textures;
         std::vector<std::shared_ptr<Drawable>>              nodes;
-        std::vector<std::shared_ptr<PointLight>>            pointLights;
-        std::vector<std::shared_ptr<SpotLight>>             spotLights;
+        std::vector<PointLight>                             pointLights;
+        std::vector<SpotLight>                              spotLights;
 		std::unique_ptr<Camera> 							cam;
 		std::unique_ptr<DirectionalLight>					directionalLight;
 		

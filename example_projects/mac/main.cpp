@@ -108,16 +108,20 @@ int main(int argc, const char * argv[]) { {
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-    engine->scene.set_directional_light(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, 1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f));
+    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, 1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f)));
 
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
                                      vec3( 0.0f, 0.0f,  1.0f));
 
-    engine->scene.get_directional_light()->get_positionedObject().set_transformation(lookat);
+    engine->scene.get_directional_light()->get_transformation() = lookat;
 
-    mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
-
+    SpotLight l({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 90.0f, {1.0f, 0.0f, 0.0f});
+    
+    engine->scene.get_spot_lights().push_back(l);
+    
+//    mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
+//
 //    for (int i = 0; i < 2; ++i) {
 //        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
 //        auto lightColor = vec3{0.0f, 1.0f, 1.0f};
@@ -127,21 +131,11 @@ int main(int argc, const char * argv[]) { {
 //        engine->scene.get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
 //    }
 
-    for (int i = 0; i < 1; ++i) {
-        auto translation = ms::math::transform::translate<float, 4>(vec3{0.0f, 0.0f, 0.0f});
-        auto lightColor = vec3{1.0f, 0.0f, 1.0f};
-        auto lightingDir = vec3{-1.0f, 0.0f, 0.0f};
-        auto lightPower = 50.0f;
-        auto spotLightAngle = 120.0f;
-        engine->load_spot_light(lightPower, lightColor, get_position(translation), spotLightAngle, lightingDir, useCommandLineArguments ? argv[3] : "./cone/cone.obj");
-        engine->scene.get_spot_lights()[i]->modelTransformation.post_transform(ms::math::transform::rotate_about_y_radians<float, 4>(math::radians(90.0f)));
-    }
-
     for(int i = 0; i < engine->scene.get_nodes().size(); ++i) {
-        engine->scene.get_nodes()[i]->modelTransformation.pre_transform(ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}));
+        engine->scene.get_nodes()[i]->transformation = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene.get_nodes()[i]->transformation;
     }
 
-//    engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
+    engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
 	
 	engine->load();
 	

@@ -10,12 +10,11 @@
 #define point_light_hpp
 
 #include "general/light.hpp"
-#include "../positionedObject.hpp"
 #include "../drawable.hpp"
 
 namespace ms {
 	
-	class PointLight : public Light, public Drawable {
+	class PointLight : public Light {
 	
 	public:
 		
@@ -23,7 +22,6 @@ namespace ms {
                             float 		        power,
 							math::vec3 const &  position);
 		
-        math::vec3                              get_position    () const { return math::get_position(positionedObject.get_transformation()); }
 	};
 	
 }

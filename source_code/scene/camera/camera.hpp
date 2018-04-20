@@ -12,11 +12,10 @@
 #include <memory>
 
 #include "../../../glMath/source/glMath.h"
-#include "../positionedObject.hpp"
 
 namespace ms {
 	
-	class Camera : public PositionedObject {
+	class Camera {
 	
 	public:
 		
@@ -25,11 +24,18 @@ namespace ms {
         virtual math::mat4 const &              get_projection_matrix   () const = 0;
         virtual bool                            is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
                                                                          math::BoundingBox<float> const & boundingBox) const = 0;
+        
+        constexpr math::mat4 const &            get_transformation      () const { return transformation; }
+        constexpr math::mat4 &                  get_transformation      () { return transformation; }
+        
+    protected:
+        
+        math::mat4                              transformation;
     
 	};
 	
 }
 
-ms::Camera::Camera() : PositionedObject() {}
+ms::Camera::Camera() : transformation(math::mat4::identity()) {}
 
 #endif /* camera_hpp */

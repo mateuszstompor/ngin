@@ -8,7 +8,7 @@
 
 #include "drawable.hpp"
 
-ms::Drawable::Drawable() : modelTransformation{ } { }
+ms::Drawable::Drawable() : transformation {math::mat4::identity()} { }
 
 void ms::Drawable::use () {
 	if(!is_loaded())

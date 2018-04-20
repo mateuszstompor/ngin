@@ -34,9 +34,9 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
     if(auto dirLight = scene->get_directional_light()) {
         shader->set_uniform("hasDirLight", 1);
         shader->set_uniform("dirLight.color", dirLight->get_color());
-        shader->set_uniform("dirLight.direction", dirLight->get_direction());
+        shader->set_uniform("dirLight.direction", math::back(dirLight->get_transformation()));
         shader->set_uniform("dirLightProjection", scene->get_directional_light()->get_projection());
-        shader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_positionedObject().get_transformation());
+        shader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_transformation());
         shader->set_uniform("hasDirLightShadowMap", 1);
     } else {
         shader->set_uniform("hasDirLightShadowMap", 0);
@@ -44,26 +44,26 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
     }
 
     {
-        const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
+        const auto & spotLights = scene->get_spot_lights();
         shader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
         for(unsigned int i = 0; i < spotLights.size(); ++i) {
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i]->get_power());
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i]->get_color());
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i]->lightingAngleDegrees);
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].position", spotLights[i]->get_position());
-            shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->get_direction());
-            shader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i]->get_projection());
-            shader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i]->get_positionedObject().get_transformation());
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i].get_power());
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i].get_color());
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].lightingAngleDegrees);
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].position", math::get_position(spotLights[i].get_transformation()));
+            shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", math::back(spotLights[i].get_transformation()));
+            shader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i].get_projection());
+            shader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i].get_transformation());
         }
     }
 
     {
-        const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
+        const auto & pointLights = scene->get_point_lights();
         shader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
         for(unsigned int i = 0; i < pointLights.size(); ++i) {
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i]->get_color());
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->get_position());
-            shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->get_power());
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i].get_color());
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].position", math::get_position(pointLights[i].get_transformation()));
+            shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i].get_power());
         }
     }
     
@@ -106,7 +106,7 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
 }
 
 void ms::ForwardRender::draw (Drawable & node, const Scene & scene) {
-    shader->set_uniform("modelTransformation", node.modelTransformation.get_transformation());
+    shader->set_uniform("modelTransformation", node.transformation);
 	ForwardRender::setup_material_uniforms_for(&scene, &node);
 	node.draw();
 }

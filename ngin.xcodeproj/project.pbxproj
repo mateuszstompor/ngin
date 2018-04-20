@@ -46,7 +46,6 @@
 		56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56716831204ADFAE0028EFAA /* resource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716809204ADFAE0028EFAA /* resource.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56716838204ADFAE0028EFAA /* render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716811204ADFAE0028EFAA /* render.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716814204ADFAE0028EFAA /* positionedObject.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
 		56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
@@ -214,7 +213,6 @@
 		56716808204ADFAE0028EFAA /* resourceCoordinator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resourceCoordinator.hpp; sourceTree = "<group>"; };
 		56716809204ADFAE0028EFAA /* resource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = resource.hpp; sourceTree = "<group>"; };
 		56716811204ADFAE0028EFAA /* render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; usesTabs = 1; };
-		56716814204ADFAE0028EFAA /* positionedObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = positionedObject.hpp; sourceTree = "<group>"; };
 		56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = perspectiveCamera.hpp; sourceTree = "<group>"; };
 		56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = perspectiveCamera.cpp; sourceTree = "<group>"; };
 		56716819204ADFAE0028EFAA /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
@@ -490,7 +488,6 @@
 				5633FAB1204C64D7003449EE /* drawable.cpp */,
 				5674534020540C6F000E7EBD /* texture.hpp */,
 				5674533F20540C6F000E7EBD /* texture.cpp */,
-				56716814204ADFAE0028EFAA /* positionedObject.hpp */,
 				56716824204ADFAE0028EFAA /* scene.hpp */,
 				566BCF2B204EAF6500E90246 /* scene.cpp */,
 				56716815204ADFAE0028EFAA /* camera */,
@@ -627,7 +624,6 @@
 				5674534320540C6F000E7EBD /* texture.hpp in Headers */,
 				5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */,
 				5671684E204ADFAE0028EFAA /* scene.hpp in Headers */,
-				5671683B204ADFAE0028EFAA /* positionedObject.hpp in Headers */,
 				56716831204ADFAE0028EFAA /* resource.hpp in Headers */,
 				5671684A204ADFAE0028EFAA /* light.hpp in Headers */,
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,

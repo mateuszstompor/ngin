@@ -75,10 +75,24 @@ void main() {
 
     for(int j=0; j < spotLightsAmount; ++j) {
         float shadow = 0.0f;
-        vec4 fragmentInLightPos = spotLightsProjections[0] * spotLightsToLightTransformations[0] * vec4(fragmentPosition, 1.0f);
-        shadow = calculate_pcf_shadow(spotLightsShadowMaps[0], fragmentInLightPos, spotLights[j].direction, normal_N, 0.000005f, 0.0000005f);
         
-        result += (1 - shadow) * count_light_influence(spotLights[j],
+        SpotLight sl = spotLights[j];
+        sl.direction = -sl.direction;
+        
+//        vec4 fragmentInLightPos = spotLightsProjections[0] * spotLightsToLightTransformations[0] * vec4(fragmentPosition, 1.0f);
+//        shadow = calculate_pcf_shadow(spotLightsShadowMaps[0], fragmentInLightPos, spotLights[j].direction, normal_N, 0.000005f, 0.0000005f);
+//
+//        struct SpotLight {
+//            float         power;
+//            vec3         color;
+//            vec3        position;
+//            float        angleDegrees;
+//            vec3        direction;
+//        };
+        
+        
+        
+        result += /*(1 - shadow) */ count_light_influence(sl,
                                         fragmentPosition,
                                         diffuseColor,
                                         diffuseColor,

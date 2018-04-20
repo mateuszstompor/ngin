@@ -108,41 +108,41 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
     if(auto dirLight = scene->get_directional_light()) {
         lightingShader->set_uniform("hasDirLight", 1);
         lightingShader->set_uniform("dirLight.color", dirLight->get_color());
-        lightingShader->set_uniform("dirLight.direction", dirLight->get_direction());
+        lightingShader->set_uniform("dirLight.direction", math::back(dirLight->get_transformation()));
     } else {
         lightingShader->set_uniform("hasDirLight", 0);
     }
-    
+
     {
-        const std::vector<std::shared_ptr<SpotLight>> & spotLights = scene->get_spot_lights();
+        const auto & spotLights = scene->get_spot_lights();
         lightingShader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
         for(unsigned int i = 0; i < spotLights.size(); ++i) {
-            
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i]->get_power());
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i]->get_color());
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i]->lightingAngleDegrees);
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].position", spotLights[i]->get_position());
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].direction", spotLights[i]->get_direction());
-            lightingShader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i]->get_positionedObject().get_transformation());
-            lightingShader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i]->get_projection());
-            
+
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i].get_power());
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i].get_color());
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].lightingAngleDegrees);
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].position", math::get_position(spotLights[i].get_transformation()));
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].direction", math::back(spotLights[i].get_transformation()));
+            lightingShader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i].get_transformation());
+            lightingShader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i].get_projection());
+
         }
     }
-    
+
     {
-        const std::vector<std::shared_ptr<PointLight>> & pointLights = scene->get_point_lights();
+        const auto & pointLights = scene->get_point_lights();
         lightingShader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
         for(unsigned int i = 0; i < pointLights.size(); ++i) {
-            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i]->get_color());
-            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].position", pointLights[i]->get_position());
-            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i]->get_power());
+            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i].get_color());
+            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].position", math::get_position(pointLights[i].get_transformation()));
+            lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i].get_power());
         }
     }
-	
+
 }
 
 void ms::DeferredRender::draw (Drawable & node, const Scene & scene) {
-    shader->set_uniform("modelTransformation", node.modelTransformation.get_transformation());
+    shader->set_uniform("modelTransformation", node.transformation);
     DeferredRender::setup_material_uniforms(&scene, &node);
     node.draw();
 }
@@ -236,7 +236,7 @@ void ms::DeferredRender::perform_light_pass (const Scene * scene) {
     
     if(scene->get_directional_light()) {
         lightingShader->set_uniform("dirLightProjection", scene->get_directional_light()->get_projection());
-        lightingShader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_positionedObject().get_transformation());
+        lightingShader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_transformation());
         lightingShader->set_uniform("hasDirLightShadowMap", 1);
     } else {
         lightingShader->set_uniform("hasDirLightShadowMap", 0);
