@@ -25,15 +25,16 @@ namespace ms {
         inline virtual		 	                    ~Light                  () = 0;
         inline constexpr math::vec3 const  &        get_color               () const { return color; }
         inline constexpr math::mat4 const &         get_transformation      () const { return transformation; }
-        inline constexpr math::mat4 const &         get_projection          () const { return transformation; }
+		inline constexpr math::mat4 &               get_transformation      () { return transformation; }
+        inline constexpr math::mat4 const &         get_projection          () const { return projection; }
         inline constexpr float const &              get_power               () const { return power; }
-        inline constexpr math::mat4 &               get_transformation      () { return transformation; }
+
         
     protected:
         
         float                                       power;
 		math::vec3 		                            color;
-        math::mat4                                  projection;
+        math::mat4 const                                  projection;
         math::mat4                                  transformation;
         
 	};

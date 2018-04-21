@@ -12,6 +12,8 @@ using namespace ms;
 using namespace math;
 using namespace transform;
 
+unsigned int usedSpotLight = 0;
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 	
     switch(key) {
@@ -84,51 +86,73 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_T: {
             auto forward = 0.2f * ms::math::back(engine->scene.get_spot_lights()[0].get_transformation());
             auto transform = translate<float, 4>(forward);
-            engine->scene.get_spot_lights()[0].get_transformation() *= transform;
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
             
         case GLFW_KEY_G: {
             auto forward = -0.2f * ms::math::back(engine->scene.get_spot_lights()[0].get_transformation());
             auto transform = translate<float, 4>(forward);
-            engine->scene.get_spot_lights()[0].get_transformation() *= transform;
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
         case GLFW_KEY_R: {
             auto up = 0.2f * ms::math::up(engine->scene.get_spot_lights()[0].get_transformation());
             auto transform = translate<float, 4>(up);
-            engine->scene.get_spot_lights()[0].get_transformation() *= transform;
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
             
         case GLFW_KEY_Y: {
             auto up = -0.2f * ms::math::up(engine->scene.get_spot_lights()[0].get_transformation());
             auto transform = translate<float, 4>(up);
-            engine->scene.get_spot_lights()[0].get_transformation() *= transform;
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
         case GLFW_KEY_F: {
             auto right = 0.2f * ms::math::right(engine->scene.get_spot_lights()[0].get_transformation());
             auto transform = translate<float, 4>(right);
-            engine->scene.get_spot_lights()[0].get_transformation() *= transform;
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
             
         case GLFW_KEY_H: {
             auto right = -0.2f * ms::math::right(engine->scene.get_spot_lights()[0].get_transformation());
             auto transform = translate<float, 4>(right);
-            engine->scene.get_spot_lights()[0].get_transformation() *= transform;
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
         case GLFW_KEY_B: {
             auto rotation = ms::math::transform::rotate_about_y_radians<float, 4>(0.1f);
-            engine->scene.get_spot_lights()[0].get_transformation() = rotation * engine->scene.get_spot_lights()[0].get_transformation();
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() = rotation * engine->scene.get_spot_lights()[usedSpotLight].get_transformation();
         }
             break;
         case GLFW_KEY_N: {
             auto rotation = ms::math::transform::rotate_about_y_radians<float, 4>(-0.1f);
-            engine->scene.get_spot_lights()[0].get_transformation() = rotation * engine->scene.get_spot_lights()[0].get_transformation();
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() = rotation * engine->scene.get_spot_lights()[usedSpotLight].get_transformation();
         }
+            break;
+        case GLFW_KEY_U: {
+            auto rotation = ms::math::transform::rotate_about_x_radians<float, 4>(0.1f);
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() = rotation * engine->scene.get_spot_lights()[usedSpotLight].get_transformation();
+        }
+            break;
+        case GLFW_KEY_J: {
+            auto rotation = ms::math::transform::rotate_about_x_radians<float, 4>(-0.1f);
+            engine->scene.get_spot_lights()[usedSpotLight].get_transformation() = rotation * engine->scene.get_spot_lights()[usedSpotLight].get_transformation();
+        }
+            break;
+        case GLFW_KEY_1:
+            usedSpotLight = 1;
+            break;
+        case GLFW_KEY_2:
+            usedSpotLight = 2;
+            break;
+        case GLFW_KEY_3:
+            usedSpotLight = 3;
+            break;
+        case GLFW_KEY_4:
+            usedSpotLight = 4;
             break;
         case GLFW_KEY_8:
         engine->set_renderer(ms::NGin::Renderer::deferred);

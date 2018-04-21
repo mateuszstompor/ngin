@@ -78,7 +78,7 @@ int main(int argc, const char * argv[]) { {
 	actualScreenWidth = framebufferWidth;
 	actualScreenHeight = framebufferHeight;
 	
-    unsigned int shadowResolution = 1024;
+    unsigned int shadowResolution = 1024 * 3;
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
@@ -103,12 +103,13 @@ int main(int argc, const char * argv[]) { {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
-    
+    auto dirProj = math::projection4f::orthogonal_cube(44.0f);
+
     engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, shadowResolution, std::move(cam), nullptr);
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, 1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f)));
+    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f)));
 
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
@@ -116,10 +117,11 @@ int main(int argc, const char * argv[]) { {
 
     engine->scene.get_directional_light()->get_transformation() = lookat;
 
-    SpotLight l({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 90.0f, {1.0f, 0.0f, 0.0f});
-    
-    engine->scene.get_spot_lights().push_back(l);
-    
+    SpotLight l({1.0f, 0.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
+	SpotLight l2({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f});
+
+		engine->scene.get_spot_lights().push_back(l);
+		engine->scene.get_spot_lights().push_back(l2);
 //    mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
 //
 //    for (int i = 0; i < 2; ++i) {

@@ -37,6 +37,7 @@ ms::SpotLight::SpotLight (math::vec3 const &    color,
                           math::vec3 const &    direction) :
 DirectionalLight{color, power, direction, math::projection4f::perspective(0.001f, 100.0f, lightingAngleDegrees, 1.0f)},
 lightingAngleDegrees{lightingAngleDegrees} {
+	transformation = math::mat4::identity();
 //    position = math::transform::look_at(position, position + direction, math::vec3{0.0f, 1.0f, 0.0f});
 }
 

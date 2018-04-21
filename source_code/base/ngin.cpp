@@ -467,13 +467,16 @@ void ms::NGin::draw_scene() {
     
     
     scaleRenderer->get_framebuffer().use();
-    scaleRenderer->get_framebuffer().clear_depth();
     shadowRenderer->use(scaleRenderer->get_framebuffer());
-    glViewport(0, 0, 1000, 1000);
-    shadowRenderer->setup_uniforms(scene.get_spot_lights()[0].get_projection(), scene.get_spot_lights()[0].get_transformation());
-    for(auto & node : scene.get_nodes()) {
-        shadowRenderer->draw(*node);
+    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        glViewport(500 * i, 0, 500, 500);
+        scaleRenderer->get_framebuffer().clear_depth();
+        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_projection(), scene.get_spot_lights()[i].get_transformation());
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node);
+        }
     }
+
     
 }
 

@@ -102,15 +102,20 @@ void ms::DeferredRender::set_render_type (DebugType type) {
 }
 
 void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
-    lightingShader->set_uniform("cameraTransformation", scene->get_camera().get_transformation());
 
+    lightingShader->set_uniform("renderMode", this->renderMode);
+    lightingShader->set_uniform("cameraTransformation", scene->get_camera().get_transformation());
     
     if(auto dirLight = scene->get_directional_light()) {
         lightingShader->set_uniform("hasDirLight", 1);
         lightingShader->set_uniform("dirLight.color", dirLight->get_color());
         lightingShader->set_uniform("dirLight.direction", math::back(dirLight->get_transformation()));
+        lightingShader->set_uniform("dirLightProjection", scene->get_directional_light()->get_projection());
+        lightingShader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_transformation());
+        lightingShader->set_uniform("hasDirLightShadowMap", 1);
     } else {
         lightingShader->set_uniform("hasDirLight", 0);
+        lightingShader->set_uniform("hasDirLightShadowMap", 0);
     }
 
     {
@@ -232,17 +237,7 @@ void ms::DeferredRender::_unload () {
 void ms::DeferredRender::perform_light_pass (const Scene * scene) {
     
     lightingShader->use();
-    lightingShader->set_uniform("renderMode", this->renderMode);
-    
-    if(scene->get_directional_light()) {
-        lightingShader->set_uniform("dirLightProjection", scene->get_directional_light()->get_projection());
-        lightingShader->set_uniform("dirLightTransformation", scene->get_directional_light()->get_transformation());
-        lightingShader->set_uniform("hasDirLightShadowMap", 1);
-    } else {
-        lightingShader->set_uniform("hasDirLightShadowMap", 0);
-    }
-    
-    lightingShader->set_uniform("cameraTransformation", scene->get_camera().get_transformation());
+
     
     DeferredRender::setup_lightpass_uniforms(scene);
     
