@@ -229,7 +229,7 @@ float calculate_pcf_shadow(sampler2D    textureToSample,
     float currentDepth = projectedCoordinates.z;
     float bias = max(maxBias * (1.0f - dot(surfaceNormal_N, lightDirection_N)), minBias);
 
-    return pcf_depth(textureToSample, projectedCoordinates.xy, 5, 5, currentDepth, bias);
+    return pcf_depth(textureToSample, projectedCoordinates.xy, 1, 1, currentDepth, bias);
 }
 
 float calculate_no_filter_shadow(sampler2D    textureToSample,

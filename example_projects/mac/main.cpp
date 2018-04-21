@@ -103,35 +103,26 @@ int main(int argc, const char * argv[]) { {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
-    auto dirProj = math::projection4f::orthogonal_cube(44.0f);
 
     engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, shadowResolution, std::move(cam), nullptr);
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f)));
-
-    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
-                                     vec3( 0.0f, 0.0f,  0.0f),
-                                     vec3( 0.0f, 0.0f,  1.0f));
-
-    engine->scene.get_directional_light()->get_transformation() = lookat;
-
-    SpotLight l({1.0f, 0.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
-	SpotLight l2({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f});
-
-		engine->scene.get_spot_lights().push_back(l);
-		engine->scene.get_spot_lights().push_back(l2);
-//    mat4 scaleMat = scale<float, 4> ({0.05f, 0.05f, 0.05f});
+//    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
 //
-//    for (int i = 0; i < 2; ++i) {
-//        auto translation = ms::math::transform::translate<float, 4>({-6 + (i * 1.0f), 1.0f, 0.0f});
-//        auto lightColor = vec3{0.0f, 1.0f, 1.0f};
-//        auto lightPower = 50.0f;
+//    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
+//                                     vec3( 0.0f, 0.0f,  0.0f),
+//                                     vec3( 0.0f, 0.0f,  1.0f));
 //
-//        engine->load_point_light(lightPower, lightColor, get_position(translation), useCommandLineArguments ? argv[4] : "./sphere/sphere.obj");
-//        engine->scene.get_point_lights()[i]->modelTransformation.pre_transform(translation * scaleMat);
-//    }
+//    engine->scene.get_directional_light()->get_transformation() = lookat;
+
+    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
+//    SpotLight sl2({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+    engine->scene.get_spot_lights().push_back(sl1);
+//    engine->scene.get_spot_lights().push_back(sl2);
+    
+//    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
+//    engine->scene.get_point_lights().push_back(pl1);
 
     for(int i = 0; i < engine->scene.get_nodes().size(); ++i) {
         engine->scene.get_nodes()[i]->transformation = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene.get_nodes()[i]->transformation;

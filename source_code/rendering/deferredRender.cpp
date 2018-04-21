@@ -125,7 +125,7 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
 
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i].get_power());
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i].get_color());
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].lightingAngleDegrees);
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].get_angle_degrees());
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].position", math::get_position(spotLights[i].get_transformation()));
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].direction", math::back(spotLights[i].get_transformation()));
             lightingShader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i].get_transformation());

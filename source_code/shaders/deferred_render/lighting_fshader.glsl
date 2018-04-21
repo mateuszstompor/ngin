@@ -65,7 +65,7 @@ void main() {
     vec3 surfaceZCamera_N     = normalize(cameraPosition - fragmentPosition);
     float shininess         = 32.0f;
 
-    result += diffuseColor * 0.01f;
+    result += diffuseColor * 0.05f;
 
     if (hasDirLight == 1) {
         float shadow = 0.0f;

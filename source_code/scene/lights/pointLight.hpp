@@ -20,14 +20,22 @@ namespace ms {
 		
 		inline 	PointLight (math::vec3 const &  color,
                             float 		        power,
-							math::vec3 const &  position);
-		
+							math::vec3 const &  position,
+                            bool                castsShadow);
+        
+        math::mat4 const &      get_projection          () const override { return projection; }
+
+    private:
+        
+        math::mat4 projection;
 	};
 	
 }
-
 ms::PointLight::PointLight (math::vec3 const &  col,
                             float               pow,
-                            math::vec3 const &  pos) : Light(col, pow, math::projection4f::perspective(0.01f, 100.0f, 90.0f, 1.0f), math::transform4f::translate(pos)) { }
+                            math::vec3 const &  pos,
+                            bool                castsShadow) :
+Light(col, pow,  math::transform4f::translate(pos), castsShadow),
+projection{math::projection4f::perspective(0.01f, 100.0f, 90.0f, 1.0f)}{ }
 
 #endif /* point_light_hpp */
