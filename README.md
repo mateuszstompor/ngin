@@ -27,6 +27,8 @@ ngin/example_projects/mac/ngin_mac.xcodeproj as well
 ## 16.04.2018 Spot lights shadow mapping with depth linearization
 <img src="/screenshots/spot_lights_shadow_mapping.jpg" width="100%" style="float: left; display:inline-block;"/>
 <img src="/screenshots/ngin.jpg" width="100%" style="float: left; display:inline-block;"/>
+<p>POV in the corner</p>
+<img src="/screenshots/spot_lights_shadow_maps.jpg" width="100%" style="float: left; display:inline-block;"/>
 
 ## 15.04.2018 Directional lights shadow mapping with PCF
 <img src="/screenshots/shadow_mapping.jpg" width="100%" style="float: left; display:inline-block;"/>
