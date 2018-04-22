@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef geometry_hpp
-#define geometry_hpp
+#pragma once
 
 #include <vector>
 #include <string>
@@ -70,5 +69,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* geometry_hpp */

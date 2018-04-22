@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef camera_hpp
-#define camera_hpp
+#pragma once
 
 #include <memory>
 
@@ -37,5 +36,3 @@ namespace ms {
 }
 
 ms::Camera::Camera() : transformation(math::mat4::identity()) {}
-
-#endif /* camera_hpp */

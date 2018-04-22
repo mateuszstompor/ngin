@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef reusable_geometry_h
-#define reusable_geometry_h
+#pragma once
 
 namespace ms {
 	
@@ -60,4 +59,3 @@ namespace ms {
 	
 }
 
-#endif //reusable_geometry_h

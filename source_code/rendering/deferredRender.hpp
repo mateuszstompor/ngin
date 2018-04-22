@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef defered_render_h
-#define defered_render_h
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -71,5 +70,3 @@ enum class ms::DeferredRender::DebugType {
 	albedo,
 	specular
 };
-
-#endif /* defered_render_h */

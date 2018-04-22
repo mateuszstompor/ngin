@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef spot_light_hpp
-#define spot_light_hpp
+#pragma once
 
 #include "pointLight.hpp"
 #include "directionalLight.hpp"
@@ -18,23 +17,23 @@ namespace ms {
 		
 	public:
 		
-		inline 		                    SpotLight 	        (math::vec3 const & color,
-                                                             float 			    power,
-                                                             math::vec3 const & position,
-                                                             float 			    lightingAngleDegrees,
-                                                             math::vec3 const & direction,
-                                                             bool               castsShadow,
-                                                             float              nearPlane = 0.0001f,
-                                                             float              farPlane = 100.0f,
-                                                             float              aspectRatio = 1.0f);
-        
-        math::mat4 const &              get_projection      () const override { return frustum.get_projection_matrix(); }
-        constexpr float                 get_angle_degrees   () const { return lightingAngleDegrees; }
+		inline 		                    		SpotLight 	        (math::vec3 const & color,
+																	 float 			    power,
+																	 math::vec3 const & position,
+																	 float 			    lightingAngleDegrees,
+																	 math::vec3 const & direction,
+																	 bool               castsShadow,
+																	 float              nearPlane = 0.0001f,
+																	 float              farPlane = 100.0f,
+																	 float              aspectRatio = 1.0f);
+
+        constexpr float						get_angle_degrees   () const { return lightingAngleDegrees; }
+		constexpr math::frustum4f const &		get_frustum		   	() const { return frustum; }
         
     private:
         
-        math::FrustumViewport<float>    frustum;
-		float 		                    lightingAngleDegrees;
+        math::frustum4f    						frustum;
+		float 		                    		lightingAngleDegrees;
 		
 	};
 	
@@ -52,5 +51,3 @@ ms::SpotLight::SpotLight (math::vec3 const &    color,
 Light{color, power, math::mat4::identity(), castsShadow},
 lightingAngleDegrees{lAD},
 frustum {nearPlane, farPlane, lAD, aspectRatio} { }
-
-#endif /* spot_light_hpp */

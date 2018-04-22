@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef renderbuffer_hpp
-#define renderbuffer_hpp
+#pragma once
 
 #include <iostream>
 #include <cassert>
@@ -22,18 +21,18 @@ namespace ms {
 	public:
                                 Renderbuffer        (const Renderbuffer &) = delete;
         
-                                Renderbuffer		(Texture::Format			format,
-                                                     Texture::AssociatedType	associatedType,
+                                Renderbuffer		(Texture2D::Format			format,
+                                                     Texture2D::AssociatedType	associatedType,
                                                      unsigned int 				mipMapLevel,
                                                      unsigned int 				width,
                                                      unsigned int 				height);
 		
-                                Renderbuffer		(Texture::Format			format,
-                                                     Texture::AssociatedType	associatedType,
+                                Renderbuffer		(Texture2D::Format			format,
+                                                     Texture2D::AssociatedType	associatedType,
                                                      unsigned int 				width,
                                                      unsigned int 				height);
 		
-        Renderbuffer &          operator =          (const Texture &) = delete;
+        Renderbuffer &          operator =          (const Texture2D &) = delete;
 		virtual std::string	    get_class			() const override;
 		virtual void 		    use					();
 		virtual void    	    _load  				() override;
@@ -42,8 +41,8 @@ namespace ms {
 		
 	protected:
         
-        Texture::AssociatedType associatedType;
-        Texture::Format         format;
+        Texture2D::AssociatedType associatedType;
+        Texture2D::Format         format;
         unsigned int            mipMapLevel;
         unsigned int            width;
         unsigned int            height;
@@ -54,5 +53,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* renderbuffer_hpp */

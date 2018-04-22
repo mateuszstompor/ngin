@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef vertex_h
-#define vertex_h
+#pragma once
 
 #include "../../glMath/source/glMath.h"
 
@@ -22,5 +21,3 @@ namespace ms {
 	};
 
 }
-
-#endif /* vertex_h */

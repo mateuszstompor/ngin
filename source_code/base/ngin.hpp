@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef ngin_hpp
-#define ngin_hpp
+#pragma once
 
 #include <memory>
 #include <chrono>
@@ -42,7 +41,7 @@ namespace ms {
                                                              unsigned int                       frameBufferWidth,
                                                              unsigned int                       frameBufferHeight,
                                                              unsigned int                       shadowsResolution,
-                                                             std::unique_ptr<Camera> &&         cam,
+                                                             std::unique_ptr<Camera> &&			cam,
                                                              std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
 		        
         void                            set_renderer        (Renderer r);
@@ -86,7 +85,3 @@ namespace ms {
     };
     
 }
-
-
-
-#endif /* ngin_hpp */

@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef resource_h
-#define resource_h
+#pragma once
 
 #include <memory>
 #include <iostream>
@@ -47,5 +46,3 @@ namespace ms {
     };
     
 }
-
-#endif /* resource_h */

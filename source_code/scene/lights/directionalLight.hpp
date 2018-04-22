@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef directional_light_hpp
-#define directional_light_hpp
+#pragma once
 
 #include "general/light.hpp"
 
@@ -23,7 +22,7 @@ namespace ms {
                                                              bool               castsShadow,
                                                              math::mat4 const & projection = math::projection4f::orthogonal_cube(44.0f));
         
-        virtual math::mat4 const &      get_projection      () const override { return projection; }
+        constexpr math::mat4 const &      get_projection      () const { return projection; }
 		virtual                         ~DirectionalLight   () = default;
         
     private:
@@ -39,7 +38,5 @@ ms::DirectionalLight::DirectionalLight(math::vec3 const & col,
                                        math::vec3 const & dir,
                                        bool               castsShadow,
                                        math::mat4 const & projection) :
-ms::Light{col, pow, math::mat4::identity(), castsShadow},
+Light{col, pow, math::mat4::identity(), castsShadow},
 projection{projection} { }
-
-#endif /* directional_light_hpp */

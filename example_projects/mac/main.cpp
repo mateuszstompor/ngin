@@ -78,7 +78,7 @@ int main(int argc, const char * argv[]) { {
 	actualScreenWidth = framebufferWidth;
 	actualScreenHeight = framebufferHeight;
 	
-    unsigned int shadowResolution = 1024 * 3;
+    unsigned int shadowResolution = 1024 * 4;
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
@@ -108,19 +108,20 @@ int main(int argc, const char * argv[]) { {
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-//    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
-//
-//    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
-//                                     vec3( 0.0f, 0.0f,  0.0f),
-//                                     vec3( 0.0f, 0.0f,  1.0f));
-//
-//    engine->scene.get_directional_light()->get_transformation() = lookat;
+    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
 
-    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
-//    SpotLight sl2({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
+                                     vec3( 0.0f, 0.0f,  0.0f),
+                                     vec3( 0.0f, 0.0f,  1.0f));
+
+    engine->scene.get_directional_light()->get_transformation() = lookat;
+
+    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
+    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
     engine->scene.get_spot_lights().push_back(sl1);
-//    engine->scene.get_spot_lights().push_back(sl2);
-    
+    engine->scene.get_spot_lights().push_back(sl2);
+        engine->scene.get_spot_lights().push_back(sl3);
 //    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
 //    engine->scene.get_point_lights().push_back(pl1);
 

@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef lightSourcesRender_hpp
-#define lightSourcesRender_hpp
+#pragma once
 
 #include "render.hpp"
 
@@ -26,5 +25,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* lightSourcesRender_hpp */

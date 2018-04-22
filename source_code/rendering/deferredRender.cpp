@@ -40,20 +40,20 @@ renderMode{0},
 debugMode{false},
 debugType{DeferredRender::DebugType::position} {
     
-    auto gPosition = std::make_unique<Texture>(Texture::Type::tex_2d,
-                                               Texture::Format::rgb_16_16_16,
-                                               Texture::AssociatedType::FLOAT,
+    auto gPosition = std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                               Texture2D::Format::rgb_16_16_16,
+                                               Texture2D::AssociatedType::FLOAT,
                                                this->framebuffer->get_width(),
                                                this->framebuffer->get_height());
 
-    auto gNormal = std::make_unique<Texture>(Texture::Type::tex_2d,
-                                             Texture::Format::rgb_16_16_16,
-                                             Texture::AssociatedType::FLOAT,
+    auto gNormal = std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                               Texture2D::Format::rgb_16_16_16,
+                                               Texture2D::AssociatedType::FLOAT,
                                              this->framebuffer->get_width(), this->framebuffer->get_height());
 
-    auto gAlbedo = std::make_unique<Texture>(Texture::Type::tex_2d,
-                                             Texture::Format::rgba_8_8_8_8,
-                                             Texture::AssociatedType::UNSIGNED_BYTE,
+    auto gAlbedo = std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                             Texture2D::Format::rgba_8_8_8_8,
+                                             Texture2D::AssociatedType::UNSIGNED_BYTE,
                                              this->framebuffer->get_width(),
                                              this->framebuffer->get_height());
 
@@ -62,8 +62,8 @@ debugType{DeferredRender::DebugType::position} {
                                                  this->framebuffer->get_width(),
                                                  this->framebuffer->get_height());
 
-    auto depthRenderbuffer = std::make_unique<Renderbuffer>(Texture::Format::depth_32,
-                                                            Texture::AssociatedType::FLOAT,
+    auto depthRenderbuffer = std::make_unique<Renderbuffer>(Texture2D::Format::depth_32,
+                                                            Texture2D::AssociatedType::FLOAT,
                                                             0,
                                                             this->framebuffer->get_width(),
                                                             this->framebuffer->get_height());
@@ -126,11 +126,9 @@ void ms::DeferredRender::setup_lightpass_uniforms (const Scene * scene) {
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i].get_power());
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i].get_color());
             lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].get_angle_degrees());
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].position", math::get_position(spotLights[i].get_transformation()));
-            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].direction", math::back(spotLights[i].get_transformation()));
-            lightingShader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i].get_transformation());
-            lightingShader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i].get_projection());
-
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].transformation", spotLights[i].get_transformation());
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].projection", spotLights[i].get_frustum().get_projection_matrix());
+            lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].castsShadow", spotLights[i].casts_shadow() == true ? int{1} : int{0});
         }
     }
 

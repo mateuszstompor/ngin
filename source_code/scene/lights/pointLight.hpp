@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef point_light_hpp
-#define point_light_hpp
+#pragma once
 
 #include "general/light.hpp"
 #include "../drawable.hpp"
@@ -23,7 +22,7 @@ namespace ms {
 							math::vec3 const &  position,
                             bool                castsShadow);
         
-        math::mat4 const &      get_projection          () const override { return projection; }
+        constexpr math::mat4 const &      get_projection          () const { return projection; }
 
     private:
         
@@ -37,5 +36,3 @@ ms::PointLight::PointLight (math::vec3 const &  col,
                             bool                castsShadow) :
 Light(col, pow,  math::transform4f::translate(pos), castsShadow),
 projection{math::projection4f::perspective(0.01f, 100.0f, 90.0f, 1.0f)}{ }
-
-#endif /* point_light_hpp */

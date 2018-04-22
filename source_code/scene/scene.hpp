@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef scene_hpp
-#define scene_hpp
+#pragma once
 
 #include "camera/camera.hpp"
 #include "camera/perspectiveCamera.hpp"
@@ -29,7 +28,7 @@ namespace ms {
 	public:
 		
         using materials_type    = std::map<std::string, std::shared_ptr<Material>>;
-        using textures_type     = std::map<std::string, std::shared_ptr<Texture>>;
+        using textures_type     = std::map<std::string, std::shared_ptr<Texture2D>>;
         using spot_lights_type  = std::vector<SpotLight>;
         using point_lights_type = std::vector<PointLight>;
         using drawable_type     = std::vector<std::shared_ptr<Drawable>>;
@@ -54,7 +53,7 @@ namespace ms {
     private:
         
         std::map<std::string, std::shared_ptr<Material>>    materials;
-        std::map<std::string, std::shared_ptr<Texture>>     textures;
+        std::map<std::string, std::shared_ptr<Texture2D>>     textures;
         std::vector<std::shared_ptr<Drawable>>              nodes;
         std::vector<PointLight>                             pointLights;
         std::vector<SpotLight>                              spotLights;
@@ -65,6 +64,3 @@ namespace ms {
     
 }
 
-
-
-#endif /* scene_hpp */

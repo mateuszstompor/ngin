@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef orthographic_camera_hpp
-#define orthographic_camera_hpp
+#pragma once
 
 #include "camera.hpp"
 
@@ -34,5 +33,3 @@ namespace ms {
     };
     
 }
-
-#endif /* orthographic_camera_hpp */

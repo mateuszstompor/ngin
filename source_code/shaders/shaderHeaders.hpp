@@ -168,8 +168,6 @@ std::string ms::shader::get_shader_of_type(Type type) {
 			shaderContent += deferredrenderer::lightingPassVertexShader;
 			break;
 		case ms::shader::Type::deferred_render_light_pass_fshader:
-			shaderContent += constantsDefinitions;
-			shaderContent += functionsDefinitions;
 			shaderContent += deferredrenderer::lightingPassFragmentShader;
 			break;
 		case ms::shader::Type::forward_render_phong_vshader:

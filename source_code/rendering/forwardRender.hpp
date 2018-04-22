@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef forward_render_hpp
-#define forward_render_hpp
+#pragma once
 
 #include <memory>
 
@@ -36,5 +35,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* forward_render_hpp */

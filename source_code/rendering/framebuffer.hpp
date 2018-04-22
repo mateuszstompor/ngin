@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef framebuffer_hpp
-#define framebuffer_hpp
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -33,14 +32,14 @@ namespace ms {
 
 	protected:
 		
-		using strong_color_texbuffers       = std::vector<std::shared_ptr<Texture>>;
-        using strong_depth_texbuffer        = std::shared_ptr<Texture>;
+		using strong_color_texbuffers       = std::vector<std::shared_ptr<Texture2D>>;
+        using strong_depth_texbuffer        = std::shared_ptr<Texture2D>;
         
 		using strong_color_renderbuffers    = std::vector<std::shared_ptr<Renderbuffer>>;
         using strong_depth_renderbuffer     = std::shared_ptr<Renderbuffer>;
         
-        using weak_color_texbuffers         = std::vector<std::weak_ptr<Texture>>;
-        using weak_depth_texbuffer          = std::weak_ptr<Texture>;
+        using weak_color_texbuffers         = std::vector<std::weak_ptr<Texture2D>>;
+        using weak_depth_texbuffer          = std::weak_ptr<Texture2D>;
     
         using weak_color_renderbuffers      = std::vector<std::weak_ptr<Renderbuffer>>;
         using weak_depth_renderbuffer       = std::weak_ptr<Renderbuffer>;
@@ -56,13 +55,13 @@ namespace ms {
 		Framebuffer & 				    operator = 			(Framebuffer const &) = delete;
 		
         void 				            bind_color_buffer	(int index,
-                                                            std::unique_ptr<Texture> && texture);
+                                                            std::unique_ptr<Texture2D> && Texture2D);
         
 		void 				            bind_color_buffer	(int index,
                                                              std::unique_ptr<Renderbuffer> && renderbuffer);
         
 		void 					        bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer);
-        void                            bind_depth_buffer   (std::unique_ptr<Texture> && texture);
+        void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
 		
 					//														//
 					// 	Checks completeness and merge all things together	//
@@ -72,9 +71,9 @@ namespace ms {
 		void					        use					();
 		void					        use_for_read		();
         std::string			            get_class			() const override;
-        void 					        copy_depth_from		(Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest);
-        void                            copy_color_from     (Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest);
-        void                            copy_framebuffer    (Framebuffer & frame, Texture::MagFilter filter = Texture::MagFilter::nearest);
+        void 					        copy_depth_from		(Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
+        void                            copy_color_from     (Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
+        void                            copy_framebuffer    (Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
 		void				            use_for_write		();
 		bool				            is_complete			() const;
         constexpr bool                  is_configured		() const { return isConfigured; }
@@ -116,6 +115,3 @@ namespace ms {
 	
 }
 
-
-
-#endif /* framebuffer_hpp */

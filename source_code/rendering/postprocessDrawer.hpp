@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef postprocess_drawer_hpp
-#define postprocess_drawer_hpp
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -22,7 +21,7 @@ namespace ms {
         
 	public:
         
-									            PostprocessDrawer	(std::vector<std::weak_ptr<Texture>> 	input,
+									            PostprocessDrawer	(std::vector<std::weak_ptr<Texture2D>> 	input,
                                                                      std::unique_ptr<Framebuffer> &&        framebuffer,
                                                                      std::unique_ptr<Shader> &&             shaderProgram);
         void                                    draw_quad			() const;
@@ -32,12 +31,10 @@ namespace ms {
         
         void                                    _load               () override;
         void                                    _unload             () override;
-		std::vector<std::weak_ptr<Texture>> 	inputTextures;
+		std::vector<std::weak_ptr<Texture2D>> 	inputTextures;
 		std::unique_ptr<Drawable> 				quad;
         void                                    draw                (Drawable & node, const Scene & scene) override { }
 
 	};
 	
 }
-
-#endif /* postprocess_drawer_hpp */

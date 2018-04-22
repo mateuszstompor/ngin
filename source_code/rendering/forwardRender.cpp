@@ -52,7 +52,7 @@ void ms::ForwardRender::setup_uniforms (const Scene * scene) {
             shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].get_angle_degrees());
             shader->set_uniform("spotLights[" + std::to_string(i) + "].position", math::get_position(spotLights[i].get_transformation()));
             shader->set_uniform("spotLights[" + std::to_string(i) + "].direction", math::back(spotLights[i].get_transformation()));
-            shader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i].get_projection());
+            shader->set_uniform("spotLightsProjections[" + std::to_string(i) + "]", spotLights[i].get_frustum().get_projection_matrix());
             shader->set_uniform("spotLightsToLightTransformations[" + std::to_string(i) + "]", spotLights[i].get_transformation());
         }
     }

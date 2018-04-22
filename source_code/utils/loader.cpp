@@ -112,36 +112,36 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 	
 }
 
-std::unique_ptr<ms::Texture> ms::Loader::load_texture_from_file (std::string const & absolutePath) {
+std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string const & absolutePath) {
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
 	if (data) {
-		Texture::Format format;
+		Texture2D::Format format;
 		switch (bpp) {
 			case 3:
-				format = Texture::Format::rgb_8_8_8;
+				format = Texture2D::Format::rgb_8_8_8;
 				break;
 			case 4:
-				format = Texture::Format::rgba_8_8_8_8;
+				format = Texture2D::Format::rgba_8_8_8_8;
 				break;
 			case 1:
-				format = Texture::Format::r_8;
+				format = Texture2D::Format::r_8;
 				break;
 			default:
 				std::cerr << "FORMAT NOT SUPPORTED" << std::endl;
 				assert(false);
 		}
 
-        auto texture = std::make_unique<ms::Texture>(Texture::Type::tex_2d,
+        auto texture = std::make_unique<ms::Texture2D>(Texture2D::Type::tex_2d,
                                                      format,
-                                                     Texture::AssociatedType::UNSIGNED_BYTE,
+													   Texture2D::AssociatedType::UNSIGNED_BYTE,
                                                      static_cast<unsigned int>(width),
                                                      static_cast<unsigned int>(height),
                                                      absolutePath,
-                                                     Texture::MinFilter::linear,
-                                                     Texture::MagFilter::linear,
-                                                     Texture::Wrapping::repeat,
-                                                     Texture::Wrapping::repeat,
+													   Texture2D::MinFilter::linear,
+													   Texture2D::MagFilter::linear,
+													   Texture2D::Wrapping::repeat,
+													   Texture2D::Wrapping::repeat,
                                                      0);
 		
 		texture->copy_data(data, width * height * bpp);
@@ -276,7 +276,7 @@ std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & ty
 	return paths;
 }
 
-std::unique_ptr<ms::Texture> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) {
+std::unique_ptr<ms::Texture2D> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) {
 	//TODO implement embeded textures
 	assert(false);
 	return nullptr;

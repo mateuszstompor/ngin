@@ -8,8 +8,8 @@
 
 #include "renderbuffer.hpp"
 
-ms::Renderbuffer::Renderbuffer (Texture::Format             format,
-                                Texture::AssociatedType     associatedType,
+ms::Renderbuffer::Renderbuffer (Texture2D::Format             format,
+								Texture2D::AssociatedType     associatedType,
                                 unsigned int 				mipMapLevel,
                                 unsigned int 				width,
                                 unsigned int 				height ) :
@@ -18,13 +18,13 @@ ms::Renderbuffer::Renderbuffer (Texture::Format             format,
                                                                         mipMapLevel{mipMapLevel},
                                                                         width{width},
                                                                         height{height},
-                                                                        internalFormat(Texture::underlying_type(associatedType,format)),
+                                                                        internalFormat(Texture2D::underlying_type(associatedType,format)),
                                                                         renderBuffer{0} {
 	
 }
 
-ms::Renderbuffer::Renderbuffer (Texture::Format			    format,
-                                Texture::AssociatedType	    associatedType,
+ms::Renderbuffer::Renderbuffer (Texture2D::Format			    format,
+								Texture2D::AssociatedType	    associatedType,
                                 unsigned int 				width,
                                 unsigned int 				height ) : Renderbuffer(format, associatedType, 0, width, height) {}
 

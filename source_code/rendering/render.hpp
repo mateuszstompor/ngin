@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef render_h
-#define render_h
+#pragma once
 
 #include <memory>
 
@@ -43,6 +42,3 @@ namespace ms {
     
 }
 
-
-
-#endif /* render_h */

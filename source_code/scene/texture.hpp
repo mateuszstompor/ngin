@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef texture_hpp
-#define texture_hpp
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -22,7 +21,7 @@
 
 namespace ms {
 	
-	class Texture : public Resource {
+	class Texture2D : public Resource {
 		
         using byte = std::uint8_t;
         
@@ -51,10 +50,10 @@ namespace ms {
         
         enum class Type {
             tex_2d,
-            tex_cube_map
         };
         
         enum class Format {
+            rgb_32_32_32,
             rgb_16_16_16,
             rgb_8_8_8,
             rgba_8_8_8_8,
@@ -71,7 +70,7 @@ namespace ms {
             UNSIGNED_SHORT
         };
         
-                                    Texture			    (Texture::Type      type,
+                                    Texture2D           (Texture2D::Type    type,
                                                          Format             format,
                                                          AssociatedType     associatedType,
                                                          unsigned int       width,
@@ -83,15 +82,15 @@ namespace ms {
                                                          Wrapping           tWrapping = Wrapping::repeat,
                                                          unsigned int       mipMapLevel = 0);
 
-                                    Texture			    (const Texture & texture) = delete;
-                    Texture &	    operator =			(const Texture & texture) = delete;
+                                    Texture2D           (const Texture2D & texture) = delete;
+                    Texture2D &	    operator =			(const Texture2D & texture) = delete;
         constexpr   GLuint          get_underlying_id	() const { return glTexture; }
                     void            _load  				() override;
 		            void            _unload 			() override;
                     std::string		get_class			() const override;
-                    void 			use					() ;
-                                    ~Texture			();
-                    void            copy_data           (byte* data, size_t size);
+                    void 			use					();
+                                    ~Texture2D			();
+                    void            copy_data           (byte const * data, size_t size);
                     int             channels_amount     () const;
 
         static      GLenum          to_ogl              (MinFilter          minFilter);
@@ -99,7 +98,7 @@ namespace ms {
         static      GLenum          to_ogl              (Wrapping           wrapping);
         static      GLenum          to_ogl              (Format             format);
         static      GLenum          to_ogl              (AssociatedType     type);
-        static      GLenum          to_ogl              (Texture::Type      type);
+        static      GLenum          to_ogl              (Texture2D::Type    type);
         static      GLenum          underlying_type     (AssociatedType     associatedType,
                                                          Format             format);
 		
@@ -127,5 +126,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* texture_hpp */

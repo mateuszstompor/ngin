@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef drawable_hpp
-#define drawable_hpp
+#pragma once
 
 #include <memory>
 
@@ -47,7 +46,3 @@ namespace ms {
 	};
 	
 }
-
-
-
-#endif /* scene_node_hpp */

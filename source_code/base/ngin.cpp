@@ -78,96 +78,96 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
     
         for (int i = 0; i < 10; ++i) {
             shadows.push_back(std::make_unique<Framebuffer>(0, 0, shadowResolution, shadowResolution));
-            shadows[i]->bind_depth_buffer(std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                    Texture::Format::depth_32,
-                                                                    Texture::AssociatedType::FLOAT,
+            shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                      Texture2D::Format::depth_32,
+                                                                      Texture2D::AssociatedType::FLOAT,
                                                                     shadowResolution,
                                                                     shadowResolution));
             
             shadows[i]->configure();
         }
         
-        mainRenderFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture::Format::depth_32,
-                                                                                   Texture::AssociatedType::FLOAT,
+        mainRenderFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture2D::Format::depth_32,
+                                                                                Texture2D::AssociatedType::FLOAT,
                                                                                    0,
                                                                                    frameBufferWidth,
                                                                                    frameBufferHeight));
     
-        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                                 Texture::Format::rgb_16_16_16,
-                                                                                 Texture::AssociatedType::FLOAT,
+        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                              Texture2D::Format::rgb_16_16_16,
+                                                                              Texture2D::AssociatedType::FLOAT,
                                                                                  frameBufferWidth,
                                                                                  frameBufferHeight));
     
         mainRenderFramebuffer->configure();
     
     
-        lightSourceDrawerFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture::Format::depth_32,
-                                                                                          Texture::AssociatedType::FLOAT,
+        lightSourceDrawerFramebuffer->bind_depth_buffer(std::make_unique<Renderbuffer>(Texture2D::Format::depth_32,
+                                                                                       Texture2D::AssociatedType::FLOAT,
                                                                                           0,
                                                                                           frameBufferWidth,
                                                                                           frameBufferHeight));
     
-        lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                                        Texture::Format::rgb_16_16_16,
-                                                                                        Texture::AssociatedType::FLOAT,
+        lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                                     Texture2D::Format::rgb_16_16_16,
+                                                                                     Texture2D::AssociatedType::FLOAT,
                                                                                         frameBufferWidth,
                                                                                         frameBufferHeight));
     
         lightSourceDrawerFramebuffer->configure();
     
     
-        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                               Texture::Format::rgb_16_16_16,
-                                                                               Texture::AssociatedType::FLOAT,
+        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                            Texture2D::Format::rgb_16_16_16,
+                                                                            Texture2D::AssociatedType::FLOAT,
                                                                                frameBufferWidth,
                                                                                frameBufferHeight));
     
         vignetteFramebuffer->configure();
     
     
-        gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                               Texture::Format::rgb_16_16_16,
-                                                                               Texture::AssociatedType::FLOAT,
+        gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                                         Texture2D::Format::rgb_16_16_16,
+                                                                                         Texture2D::AssociatedType::FLOAT,
                                                                                          frameBufferHeight,
                                                                                          frameBufferWidth));
     
         gaussianBlurFirstStepFramebuffer->configure();
     
-        gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                                            Texture::Format::rgb_16_16_16,
-                                                                                            Texture::AssociatedType::FLOAT,
+        gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                                            Texture2D::Format::rgb_16_16_16,
+                                                                                            Texture2D::AssociatedType::FLOAT,
                                                                                           frameBufferWidth,
                                                                                           frameBufferHeight));
     
         gaussianBlurSecondStepFramebuffer->configure();
     
     
-        hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                               Texture::Format::rgb_16_16_16,
-                                                                               Texture::AssociatedType::FLOAT,
+        hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                       Texture2D::Format::rgb_16_16_16,
+                                                                       Texture2D::AssociatedType::FLOAT,
                                                                                frameBufferWidth,
                                                                                frameBufferHeight));
     
         hdrFramebuffer->configure();
     
     
-        bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                                  Texture::Format::rgb_16_16_16,
-                                                                                  Texture::AssociatedType::FLOAT,
+        bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                                      Texture2D::Format::rgb_16_16_16,
+                                                                                      Texture2D::AssociatedType::FLOAT,
                                                                                   frameBufferWidth,
                                                                                   frameBufferHeight));
     
-        bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                                Texture::Format::rgb_16_16_16,
-                                                                                Texture::AssociatedType::FLOAT,
+        bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                                    Texture2D::Format::rgb_16_16_16,
+                                                                                    Texture2D::AssociatedType::FLOAT,
                                                                                 frameBufferWidth,
                                                                                 frameBufferHeight));
         bloomTwoTexSplitFramebuffer->configure();
     
-        bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture>(Texture::Type::tex_2d,
-                                                                                       Texture::Format::rgb_16_16_16,
-                                                                                       Texture::AssociatedType::FLOAT,
+        bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
+                                                                                Texture2D::Format::rgb_16_16_16,
+                                                                                Texture2D::AssociatedType::FLOAT,
                                                                                        frameBufferWidth,
                                                                                        frameBufferHeight));
         bloomMergeFramebuffer->configure();
@@ -211,7 +211,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                  std::move(bloomTwoTexSplitFramebuffer),
                                                                  std::move(bloomSplitProgram));
     
-        std::vector<std::weak_ptr<Texture>> textures;
+        std::vector<std::weak_ptr<Texture2D>> textures;
         textures.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[0]);
     
         gaussianBlurFirstStepRenderer = std::make_unique<PostprocessDrawer>(textures,
@@ -222,7 +222,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                              std::move(gaussianBlurSecondStepFramebuffer),
                                                                              std::move(secondGaussianBlurProgram));
     
-        std::vector<std::weak_ptr<Texture>> textures2;
+        std::vector<std::weak_ptr<Texture2D>> textures2;
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
         textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
     
@@ -371,15 +371,19 @@ void ms::NGin::draw_scene() {
     
     for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
         
-        auto & spotLight = scene.get_spot_lights()[i];
-        
+        SpotLight & spotLight = scene.get_spot_lights()[i];
+
         shadows[1 + i]->use();
         shadows[1 + i]->clear_frame();
         shadowRenderer->use(*shadows[1 + i]);
-        shadowRenderer->setup_uniforms(spotLight.get_projection(), spotLight.get_transformation());
+        shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
 
         for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
+
+            if(spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * node->transformation, node->geometry->get_bounding_box())) {
+                shadowRenderer->draw(*node);
+            }
+
         }
     }
     
@@ -471,7 +475,7 @@ void ms::NGin::draw_scene() {
     for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
         glViewport(500 * i, 0, 500, 500);
         scaleRenderer->get_framebuffer().clear_depth();
-        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_projection(), scene.get_spot_lights()[i].get_transformation());
+        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
         for(auto & node : scene.get_nodes()) {
             shadowRenderer->draw(*node);
         }

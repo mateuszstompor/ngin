@@ -6,15 +6,11 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-
-
-#ifndef directional_shadow_render_hpp
-#define directional_shadow_render_hpp
+#pragma once
 
 #include <memory>
 
 #include "render.hpp"
-
 
 namespace ms {
     
@@ -36,5 +32,3 @@ namespace ms {
     };
     
 }
-
-#endif /* directional_shadow_render_hpp */

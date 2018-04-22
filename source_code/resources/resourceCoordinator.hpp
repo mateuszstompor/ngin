@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef resource_coordinator_h
-#define resource_coordinator_h
+#pragma once
 
 #include <set>
 #include <memory>
@@ -51,5 +50,3 @@ namespace ms {
     };
     
 }
-
-#endif /* resource_coordinator_h */

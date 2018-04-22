@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef perspective_camera_hpp
-#define perspective_camera_hpp
+#pragma once
 
 #include "camera.hpp"
 
@@ -34,5 +33,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* perspective_camera_hpp */

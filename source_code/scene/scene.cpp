@@ -12,11 +12,11 @@ ms::Scene::Scene (std::unique_ptr<Camera> && c) :
 directionalLight(nullptr),
 cam{std::move(c)} { }
 
-ms::Camera const & ms::Scene:: get_camera() const {
+ms::Camera const & ms::Scene::get_camera() const {
 	return *cam;
 }
 
-ms::Camera & ms::Scene::  get_camera() {
+ms::Camera & ms::Scene::get_camera() {
 	return *cam;
 }
 

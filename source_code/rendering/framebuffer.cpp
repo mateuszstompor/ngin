@@ -29,16 +29,16 @@ void ms::Framebuffer::clear_frame () {
 	
 }
 
-void ms::Framebuffer::copy_depth_from (Framebuffer & frame, Texture::MagFilter filter) {
+void ms::Framebuffer::copy_depth_from (Framebuffer & frame, Texture2D::MagFilter filter) {
 	frame.use_for_read();
 	(*this).use_for_write();
-	mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture::to_ogl(filter));
+	mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture2D::to_ogl(filter));
 }
 
-void ms::Framebuffer::copy_color_from (Framebuffer & frame, Texture::MagFilter filter) {
+void ms::Framebuffer::copy_color_from (Framebuffer & frame, Texture2D::MagFilter filter) {
     frame.use_for_read();
     (*this).use_for_write();
-    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture::to_ogl(filter));
+    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture2D::to_ogl(filter));
 }
 
 void ms::Framebuffer::clear_color () {
@@ -92,7 +92,7 @@ void ms::Framebuffer::_unload () {
 	}
 }
 
-void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Texture> && texture) {
+void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Texture2D> && texture) {
 	this->use();
 	texture->use();
 	mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, texture->get_underlying_id(), 0);
@@ -108,11 +108,11 @@ void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Renderbuffer
 	assert(false);
 }
 
-void ms::Framebuffer::copy_framebuffer (Framebuffer & frame, Texture::MagFilter filter) {
+void ms::Framebuffer::copy_framebuffer (Framebuffer & frame, Texture2D::MagFilter filter) {
     frame.use_for_read();
     (*this).use_for_write();
-    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture::to_ogl(filter));
-    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture::to_ogl(filter));
+    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_COLOR_BUFFER_BIT, Texture2D::to_ogl(filter));
+    mglBlitFramebuffer(0, 0, frame.get_width(), frame.get_height(), 0, 0, this->get_width(), this->get_height(), GL_DEPTH_BUFFER_BIT, Texture2D::to_ogl(filter));
 }
 
 void ms::Framebuffer::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer) {
@@ -167,13 +167,13 @@ void ms::Framebuffer::set_clear_color (math::vec4 const & color) {
 }
 
 ms::Framebuffer::weak_depth_texbuffer ms::Framebuffer::get_depth_texture() {
-    return std::weak_ptr<Texture>(depthTexture);
+    return std::weak_ptr<Texture2D>(depthTexture);
 }
 
 ms::Framebuffer::weak_color_texbuffers ms::Framebuffer::get_colors() {
     weak_color_texbuffers weak_colors;
     for(const auto & tex : this->colorTextureAttachments) {
-        weak_colors.push_back(std::weak_ptr<Texture>(tex));
+        weak_colors.push_back(std::weak_ptr<Texture2D>(tex));
     }
     return weak_colors;
 }
@@ -194,7 +194,7 @@ void ms::Framebuffer::set_underlying_id (GLuint framebufferID) {
 	framebuffer = framebufferID;
 }
 
-void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture> && texture) {
+void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2D> && texture) {
     this->use();
     texture->use();
     mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture->get_underlying_id(), 0);

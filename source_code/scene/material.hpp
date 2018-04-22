@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef material_hpp
-#define material_hpp
+#pragma once
 
 #include <string>
 #include <memory>
@@ -29,7 +28,7 @@ namespace ms {
                                                              float opacity,
                                                              std::string const & name);
                                     Material                (Material const &) = delete;
-        Material &                  operator =              (Material const &) = delete;
+        Material &                  operator =          	(Material const &) = delete;
         void				        use		                ();
 		
 		math::vec3 					diffuseColor;
@@ -46,10 +45,10 @@ namespace ms {
 		std::vector <std::string> 	normalTexturesNames;
 		std::vector <std::string> 	heightTexturesNames;
 		
-		std::weak_ptr<Texture> 		boundedDiffuseTexture;
-		std::weak_ptr<Texture> 		boundedSpecularTexture;
-		std::weak_ptr<Texture> 		boundedNormalTexture;
-		std::weak_ptr<Texture> 		boundedHeightTexture;
+		std::weak_ptr<Texture2D> 	boundedDiffuseTexture;
+		std::weak_ptr<Texture2D> 	boundedSpecularTexture;
+		std::weak_ptr<Texture2D> 	boundedNormalTexture;
+		std::weak_ptr<Texture2D> 	boundedHeightTexture;
         
     private:
         
@@ -61,5 +60,3 @@ namespace ms {
 	};
 	
 }
-
-#endif /* material_hpp */

@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef light_hpp
-#define light_hpp
+#pragma once
 
 #include "../../../../glMath/source/glMath.h"
 
@@ -22,15 +21,16 @@ namespace ms {
                                                                                  float              power,
                                                                                  math::mat4 const & transformation,
                                                                                  bool               castsShadow);
-        inline virtual		 	                        ~Light                 () = 0;
-        inline constexpr    math::vec3 const  &        get_color               () const { return color; }
-        inline constexpr    math::mat4 const &         get_transformation      () const { return transformation; }
-		inline constexpr    math::mat4 &               get_transformation      () { return transformation; }
-               virtual      math::mat4 const &         get_projection          () const = 0;
-        inline constexpr    float const &              get_power               () const { return power; }
+        inline virtual		 	                        ~Light                 	() = 0;
+        inline constexpr    math::vec3 const  &        get_color              	() const { return color; }
+        inline constexpr    math::mat4 const &         get_transformation     	() const { return transformation; }
+		inline constexpr    math::mat4 &               get_transformation     	() { return transformation; }
+        inline constexpr    float const &             get_power               () const { return power; }
+		inline constexpr    int const &             	casts_shadow            () const { return castsShadow; }
 
-        
-    protected:
+
+
+	protected:
         
         float                                       power;
 		math::vec3 		                            color;
@@ -48,4 +48,3 @@ ms::Light::Light (math::vec3 const & c,
 
 ms::Light::~Light () { }
 
-#endif /* light_hpp */

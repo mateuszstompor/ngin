@@ -8,7 +8,7 @@
 
 #include "postprocessDrawer.hpp"
 
-ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::weak_ptr<Texture>>     input,
+ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::weak_ptr<Texture2D>>     input,
                                          std::unique_ptr<Framebuffer> && framebuffer,
                                          std::unique_ptr<Shader> && shaderProgram) :    Render(std::move(framebuffer),
                                                                                                 std::move(shaderProgram)),
