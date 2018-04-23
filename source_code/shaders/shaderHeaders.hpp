@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef shader_headers_hpp
-#define shader_headers_hpp
+#pragma once
 
 #include <string>
 #include <cassert>
@@ -241,6 +240,3 @@ std::string ms::shader::get_shader_of_type(Type type) {
 
 	return shaderContent;
 }
-
-#endif // shader_headers_hpp
-

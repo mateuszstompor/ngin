@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef utils_hpp
-#define utils_hpp
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -64,5 +63,3 @@ namespace ms {
 	}
     
 }
-
-#endif /* utils_hpp */

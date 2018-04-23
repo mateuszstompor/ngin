@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef utils_ogl_hpp
-#define utils_ogl_hpp
+#pragma once
 
 #include <iostream>
 
@@ -43,7 +42,3 @@ namespace ms {
 	}
 	
 }
-
-
-
-#endif /* utils_ogl_hpp */

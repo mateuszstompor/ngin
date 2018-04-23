@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef proxy_ogl_h
-#define proxy_ogl_h
+#pragma once
 
 #include <cassert>
 #include <string>
@@ -236,5 +235,3 @@ void        _mglReadBuffer (GLenum mode);
 #endif
 
 std::string get_allocation_statistics();
-
-#endif /* proxy_ogl_h */

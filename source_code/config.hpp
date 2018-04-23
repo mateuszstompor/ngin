@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef config_hpp
-#define config_hpp
+#pragma once
 
 #ifdef DEBUG
 
@@ -37,5 +36,3 @@
 #define CALLS_TIME_CONSUMPTION
 
 #endif
-
-#endif /* config_hpp */

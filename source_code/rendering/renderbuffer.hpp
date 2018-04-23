@@ -39,7 +39,7 @@ namespace ms {
 		virtual void 		    _unload 			() override;
         constexpr GLuint		get_underlying_id	() { return renderBuffer; }
 		
-	protected:
+	private:
         
         Texture2D::AssociatedType associatedType;
         Texture2D::Format         format;

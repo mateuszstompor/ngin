@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef shader_ogl_hpp
-#define shader_ogl_hpp
+#pragma once
 
 #include <memory>
 #include <iostream>
@@ -17,31 +16,6 @@
 #include "../../utils/ogl/proxyOGL.hpp"
 #include "../../resources/resource.hpp"
 #include "../../scene/texture.hpp"
-
-namespace ms {
-	
-	#define AMOUNT_SPOT_LIGHT_PROPERTIES 	5
-	#define AMOUNT_POINT_LIGHT_PROPERTIES 	3
-	
-	namespace spotlight {
-		
-		#define SL_POWER			0
-		#define SL_COLOR			1
-		#define SL_POSITION			2
-		#define SL_ANGLE_DEGREES	3
-		#define SL_DIRECTION		4
-		
-	}
-	
-	namespace pointlight {
-		
-		#define PL_POWER			0
-		#define PL_COLOR			1
-		#define PL_POSITION			2
-		
-	}
-	
-}
 
 namespace ms {
     
@@ -78,7 +52,7 @@ namespace ms {
 		static 		program_ptr		vf_program 				(std::string const & vertexSource,
 															 std::string const & fragmentSource);
 
-	protected:
+	private:
 		
 		void 						compile_program			();
 		void 						compile_shader			(GLuint program,
@@ -100,5 +74,3 @@ namespace ms {
 	};
     
 }
-
-#endif /* shader_ogl_hpp */

@@ -6,8 +6,7 @@
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#ifndef umbrella_header_hpp
-#define umbrella_header_hpp
+#pragma once
 
 #include "base/ngin.hpp"
 #include "utils/utils.hpp"
@@ -16,4 +15,3 @@
 #include "scene/drawable.hpp"
 #include "utils/ogl/proxyOGL.hpp"
 
-#endif /* umbrella_header_hpp */

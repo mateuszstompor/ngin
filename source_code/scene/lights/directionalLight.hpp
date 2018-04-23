@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "general/light.hpp"
+#include "light.hpp"
 
 namespace ms {
 	

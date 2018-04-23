@@ -36,7 +36,7 @@ namespace ms {
                 std::weak_ptr<Material>		    boundedMaterial;
                 std::shared_ptr<Geometry>       geometry;
         
-	protected:
+	private:
         
                 void                            _load                   () override;
                 void                            _unload                 () override;

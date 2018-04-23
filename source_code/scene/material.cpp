@@ -29,13 +29,13 @@ bufferId{0} { }
 void ms::Material::_load () {
 	mglGenBuffers(1, &bufferId);
 	mglBindBuffer(GL_UNIFORM_BUFFER, bufferId);
-	mglBufferData(GL_UNIFORM_BUFFER, 64 * sizeof(GLbyte), nullptr, GL_STATIC_DRAW);
-	GLvoid* uniformBlock = glMapBufferRange(GL_UNIFORM_BUFFER, 0, 64 * sizeof(GLbyte), GL_MAP_WRITE_BIT);
-	memcpy(static_cast<GLbyte*>(uniformBlock), ambientColor.c_array(), 3 * sizeof(GLfloat));
-	memcpy((static_cast<GLbyte*>(uniformBlock) + 16), diffuseColor.c_array(), 3 * sizeof(GLfloat));
-	memcpy((static_cast<GLbyte*>(uniformBlock) + 32), specularColor.c_array(), 3 * sizeof(GLfloat));
-	memcpy((static_cast<GLbyte*>(uniformBlock) + 48), &shininess, sizeof(GLfloat));
-	memcpy((static_cast<GLbyte*>(uniformBlock) + 52), &opacity, sizeof(GLfloat));
+	mglBufferData(GL_UNIFORM_BUFFER, 52 * sizeof(GLbyte), nullptr, GL_STATIC_DRAW);
+	GLvoid* uniformBlock = mglMapBufferRange(GL_UNIFORM_BUFFER, 0, 52 * sizeof(GLbyte), GL_MAP_WRITE_BIT);
+	std::memcpy(static_cast<GLbyte*>(uniformBlock), ambientColor.c_array(), 3 * sizeof(GLfloat));
+	std::memcpy((static_cast<GLbyte*>(uniformBlock) + 16), diffuseColor.c_array(), 3 * sizeof(GLfloat));
+	std::memcpy((static_cast<GLbyte*>(uniformBlock) + 32), specularColor.c_array(), 3 * sizeof(GLfloat));
+	std::memcpy((static_cast<GLbyte*>(uniformBlock) + 44), &shininess, sizeof(GLfloat));
+	std::memcpy((static_cast<GLbyte*>(uniformBlock) + 48), &opacity, sizeof(GLfloat));
 	mglUnmapBuffer(GL_UNIFORM_BUFFER);
 	mglBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
