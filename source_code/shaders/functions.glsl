@@ -12,14 +12,15 @@ R"(
 #define SPOT_LIGHT_INNER_CUTOFF		0.91f
 #define SPOT_LIGHT_OUTER_CUTOFF		0.50f
 
-#define RED_VALUE_WEIGHT			0.2126
-#define GREEN_VALUE_WEIGHT			0.7152
-#define BLUE_VALUE_WEIGHT			0.0722
+#define RED_VALUE_WEIGHT			0.2126f
+#define GREEN_VALUE_WEIGHT			0.7152f
+#define BLUE_VALUE_WEIGHT			0.0722f
 
-#define RED_WEIGHT_ADAPTIVE_TONE	0.3
-#define GREEN_WEIGHT_ADAPTIVE_TONE	0.59
-#define BLUE_WEIGHT_ADAPTIVE_TONE	0.11
+#define RED_WEIGHT_ADAPTIVE_TONE	0.3f
+#define GREEN_WEIGHT_ADAPTIVE_TONE	0.59f
+#define BLUE_WEIGHT_ADAPTIVE_TONE	0.11f
 
+#define INNER_CUTOFF_BIAS           0.015f
 
 struct DirectionalLight {
 	vec3    	direction;
@@ -41,6 +42,10 @@ struct SpotLight {
 	vec3		position;
 	float		angleDegrees;
 	vec3		direction;
+    
+    mat4        transformation;
+    mat4        projection;
+    int         castsShadow;
 };
 
 
@@ -229,6 +234,22 @@ float calculate_pcf_shadow(sampler2D    textureToSample,
     float currentDepth = projectedCoordinates.z;
     float bias = max(maxBias * (1.0f - dot(surfaceNormal_N, lightDirection_N)), minBias);
 
+    return pcf_depth(textureToSample, projectedCoordinates.xy, 3, 3, currentDepth, bias);
+}
+
+float calculate_pcf_shadow(sampler2D    textureToSample,
+                           vec4         fragmentPositionInLightSpace,
+                           vec3         lightDirection_N,
+                           vec3         surfaceNormal_N,
+                           float        bias) {
+    // TODO do separate function for directional lights
+    // it is required to do this division for non-orthographic projections
+    vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
+    // we need to map value from range [0, 1] to [-1, 1]
+    if(projectedCoordinates.z > 1.0f) {
+        return 0.0f;
+    }
+    float currentDepth = projectedCoordinates.z;
     return pcf_depth(textureToSample, projectedCoordinates.xy, 3, 3, currentDepth, bias);
 }
 

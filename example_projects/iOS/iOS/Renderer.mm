@@ -46,8 +46,8 @@ using namespace math;
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
     
-    depthRenderBuffer = std::make_unique<ms::Renderbuffer>(ms::Texture::Format::depth_24,
-                                                           ms::Texture::AssociatedType::UNSIGNED_INT,
+    depthRenderBuffer = std::make_unique<ms::Renderbuffer>(ms::Texture2D::Format::depth_24,
+                                                           ms::Texture2D::AssociatedType::UNSIGNED_INT,
                                                            0,
                                                            backingWidth,
                                                            backingHeight);
@@ -72,15 +72,15 @@ using namespace math;
     NSString* coneModel = [[NSBundle mainBundle] pathForResource:@"cone" ofType:@"obj"];
     std::string coneModelPath = std::string([coneModel cStringUsingEncoding:NSUTF8StringEncoding]);
     
-//    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), math::projection4f::orthogonal_cube(44.0f), true));
-//
-//    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
-//                                     vec3( 0.0f, 0.0f,  0.0f),
-//                                     vec3( 0.0f, 0.0f,  1.0f));
-//    
-//    engine->scene.get_directional_light()->get_transformation() = lookat;
-        
-    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
+    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
+
+    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
+                                     vec3( 0.0f, 0.0f,  0.0f),
+                                     vec3( 0.0f, 0.0f,  1.0f));
+    
+    engine->scene.get_directional_light()->get_transformation() = lookat;
+    
+    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
     engine->scene.get_spot_lights().push_back(sl1);
     
     engine->load_model(modelPath);
@@ -146,8 +146,8 @@ using namespace math;
 		_colorRenderbuffer = 0;
 	}
 	
-    framebuffer->unload();
-    depthRenderBuffer->unload();
+//    framebuffer->unload();
+//    depthRenderBuffer->unload();
     engine = nullptr;
     depthRenderBuffer = nullptr;
     framebuffer = nullptr;

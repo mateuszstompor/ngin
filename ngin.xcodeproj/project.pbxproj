@@ -50,7 +50,6 @@
 		5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
 		56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
 		56716841204ADFAE0028EFAA /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716819204ADFAE0028EFAA /* camera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		5671684A204ADFAE0028EFAA /* light.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716820204ADFAE0028EFAA /* light.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716821204ADFAE0028EFAA /* directionalLight.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716822204ADFAE0028EFAA /* pointLight.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5671684D204ADFAE0028EFAA /* spotLight.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56716823204ADFAE0028EFAA /* spotLight.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -625,7 +624,6 @@
 				5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */,
 				5671684E204ADFAE0028EFAA /* scene.hpp in Headers */,
 				56716831204ADFAE0028EFAA /* resource.hpp in Headers */,
-				5671684A204ADFAE0028EFAA /* light.hpp in Headers */,
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
 				560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */,
 				56716841204ADFAE0028EFAA /* camera.hpp in Headers */,

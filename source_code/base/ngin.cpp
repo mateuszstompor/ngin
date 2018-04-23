@@ -360,31 +360,33 @@ void ms::NGin::draw_scene() {
     #endif
     
     if (auto dirLight = scene.get_directional_light()) {
-        shadows[0]->use();
-        shadows[0]->clear_frame();
-        shadowRenderer->use(*shadows[0]);
-        shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
-        for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
+        if(dirLight->casts_shadow()) {
+            shadows[0]->use();
+            shadows[0]->clear_frame();
+            shadowRenderer->use(*shadows[0]);
+            shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
+            for(auto & node : scene.get_nodes()) {
+                shadowRenderer->draw(*node);
+            }
         }
     }
     
     for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
         
         SpotLight & spotLight = scene.get_spot_lights()[i];
-
-        shadows[1 + i]->use();
-        shadows[1 + i]->clear_frame();
-        shadowRenderer->use(*shadows[1 + i]);
-        shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
-
-        for(auto & node : scene.get_nodes()) {
-
-            if(spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * node->transformation, node->geometry->get_bounding_box())) {
-                shadowRenderer->draw(*node);
+        if(spotLight.casts_shadow()) {
+            shadows[1 + i]->use();
+            shadows[1 + i]->clear_frame();
+            shadowRenderer->use(*shadows[1 + i]);
+            shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
+            
+            for(auto & node : scene.get_nodes()) {
+                if(spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * node->transformation, node->geometry->get_bounding_box())) {
+                    shadowRenderer->draw(*node);
+                }
             }
-
         }
+        
     }
     
     if(chosenRenderer == Renderer::deferred) {
@@ -431,7 +433,6 @@ void ms::NGin::draw_scene() {
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     }
 
-
 //    lightSourceRenderer->use();
 //    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
 //        lightSourceRenderer->draw(*scene.get_point_lights()[i], scene);
@@ -439,8 +440,7 @@ void ms::NGin::draw_scene() {
 //    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
 //        lightSourceRenderer->draw(*scene.get_spot_lights()[i], scene);
 //    }
-    bloomSplitRenderer->get_framebuffer().copy_framebuffer(lightSourceRenderer->get_framebuffer());
-
+    
     bloomSplitRenderer->use();
     bloomSplitRenderer->get_framebuffer().clear_frame();
     bloomSplitRenderer->draw_quad();
@@ -469,18 +469,16 @@ void ms::NGin::draw_scene() {
     scaleRenderer->get_framebuffer().clear_frame();
     scaleRenderer->draw_quad();
     
-    
-    scaleRenderer->get_framebuffer().use();
-    shadowRenderer->use(scaleRenderer->get_framebuffer());
-    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-        glViewport(500 * i, 0, 500, 500);
-        scaleRenderer->get_framebuffer().clear_depth();
-        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
-        for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
-        }
-    }
-
+//    scaleRenderer->get_framebuffer().use();
+//    shadowRenderer->use(scaleRenderer->get_framebuffer());
+//    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+//        glViewport(500 * i, 0, 500, 500);
+//        scaleRenderer->get_framebuffer().clear_depth();
+//        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
+//        for(auto & node : scene.get_nodes()) {
+//            shadowRenderer->draw(*node);
+//        }
+//    }
     
 }
 

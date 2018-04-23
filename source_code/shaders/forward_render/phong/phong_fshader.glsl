@@ -3,8 +3,6 @@ R"(
 uniform	int									spotLightsAmount;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 uniform sampler2D [MAX_SPOT_LIGHT_AMOUNT]   spotLightsShadowMaps;
-uniform mat4 [MAX_SPOT_LIGHT_AMOUNT]        spotLightsProjections;
-uniform mat4 [MAX_SPOT_LIGHT_AMOUNT]        spotLightsToLightTransformations;
 
 uniform	int									pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
@@ -92,20 +90,40 @@ void main(){
 	}
 	
     for(int j=0; j < spotLightsAmount; ++j) {
-        vec4 fm = spotLightsProjections[j] * spotLightsToLightTransformations[j] * vec4(fragmentPositionWorld, 1.0f);
+        vec3 lightDirection_N = normalize(vec3(spotLights[j].transformation[0][2], spotLights[j].transformation[1][2], spotLights[j].transformation[2][2]));
+        mat3 spotLightRotation = mat3(spotLights[j].transformation);
+        vec3 spotLightPosition = vec3(spotLights[j].transformation[3][0], spotLights[j].transformation[3][1], spotLights[j].transformation[3][2]);
+        vec3 transformatedLightPosition = spotLightPosition * spotLightRotation;
+
         
-        float sh = calculate_pcf_shadow(spotLightsShadowMaps[0], fm, spotLights[j].direction, normalInWorld, 0.00000001f, 0.000001f);
+        vec3 surfaceLightZ = -transformatedLightPosition - fragmentPositionWorld;
+        float distance = length(surfaceLightZ);
+        vec3 surfaceLightZ_N = surfaceLightZ / distance;
+        float attenuation = count_attenuation_factor(distance);
         
-        result += (1.0f - sh) * count_light_influence(spotLights[j],
-                                                        fragmentPosition,
-                                                        ambientColor,
-                                                        diffuseColor,
-                                                        specularColor,
-                                                        shininess,
-                                                        normalToUse_N,
-                                                        cameraPosition,
-                                                        surfaceZCamera_N,
-                                                        lightTransformationMatrix);
+        float spotLightAngleRadians = radians(spotLights[j].angleDegrees) + 0.05f;
+
+        vec3 res = vec3(0.0f);
+
+        //ambient
+        result += spotLights[j].color * diffuseColor * attenuation * AMBIENT_STRENGTH;
+        float dot_product = dot(surfaceLightZ_N, lightDirection_N);
+        if(dot_product > spotLightAngleRadians) {
+            float intensity = 1.0f;
+            if (dot_product - INNER_CUTOFF_BIAS < spotLightAngleRadians) {
+                intensity = clamp((dot_product - spotLightAngleRadians)/INNER_CUTOFF_BIAS, 0.0f, 1.0f);
+            }
+            vec4 fragmentInLightPos = spotLights[j].projection * spotLights[j].transformation * vec4(fragmentPositionWorld, 1.0f);
+            
+            float shadow = spotLights[j].castsShadow == 0 ? 0.0f : calculate_pcf_shadow(spotLightsShadowMaps[0], fragmentInLightPos, -lightDirection_N, normal_N, 0.000001f);
+            
+            res += spotLights[j].color * diffuseColor * count_diffuse_factor(normal_N, surfaceLightZ_N) * attenuation * DIFFUSE_STRENGTH;
+            res += spotLights[j].color * specularColor * count_blinn_phong_specular_factor(surfaceZCamera_N, surfaceLightZ_N, normal_N, shininess) * attenuation * SPECULAR_STRENGTH;
+            
+            res = (1.0f - shadow) * intensity * res;
+        }
+
+        result += res;
     }
     
     for (int i = 0; i < pointLightsAmount; ++i) {
