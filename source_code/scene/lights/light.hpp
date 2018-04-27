@@ -25,10 +25,8 @@ namespace ms {
         inline constexpr    math::vec3 const  &        get_color              	() const { return color; }
         inline constexpr    math::mat4 const &         get_transformation     	() const { return transformation; }
 		inline constexpr    math::mat4 &               get_transformation     	() { return transformation; }
-        inline constexpr    float const &             get_power               () const { return power; }
-		inline constexpr    int const &             	casts_shadow            () const { return castsShadow; }
-
-
+        inline constexpr    float const &              get_power                () const { return power; }
+		inline constexpr    int             	       casts_shadow             () const { return castsShadow; }
 
 	protected:
         

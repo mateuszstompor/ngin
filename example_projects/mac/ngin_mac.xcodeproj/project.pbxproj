@@ -339,6 +339,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				HEADER_SEARCH_PATHS = /usr/local/Cellar/glfw/3.2.1/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -27,7 +27,7 @@ namespace ms {
 																	 float              farPlane = 100.0f,
 																	 float              aspectRatio = 1.0f);
 
-        constexpr float						get_angle_degrees   () const { return lightingAngleDegrees; }
+        constexpr float						    get_angle_degrees   () const { return lightingAngleDegrees; }
 		constexpr math::frustum4f const &		get_frustum		   	() const { return frustum; }
         
     private:
