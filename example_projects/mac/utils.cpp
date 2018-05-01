@@ -15,7 +15,7 @@ void prepareRenderDoc() {
 	HINSTANCE hGetProcIDDLL = LoadLibrary("renderdoc.dll");
 	
 	if (!hGetProcIDDLL) {
-		std::cout << "could not load the dynamic library" << std::endl;
+		std::cout << "could not load the dynamic library\n";
 		return exit(0);
 	}
 	

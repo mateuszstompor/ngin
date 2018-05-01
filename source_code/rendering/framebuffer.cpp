@@ -10,8 +10,8 @@
 
 bool ms::Framebuffer::is_complete () const {
 	if (mglCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		std::cerr << "FRAMEBUFFER IS NOT COMPLETE" << std::endl;
-		return false;
+		std::cerr << "FRAMEBUFFER IS NOT COMPLETE\n";
+        return false;
 	}
 	return true;
 }
@@ -138,10 +138,10 @@ void ms::Framebuffer::configure () {
         mglReadBuffer(GL_NONE);
     }
     
-	if(!is_complete()) {
-		std::cerr << "FATAL ERROR" << std::endl;
-		assert(false);
-	}
+    if(!is_complete()){
+        std::cerr << "FATAL ERROR\n";
+        assert(false);
+    }
 
     isConfigured = true;
 }
@@ -188,7 +188,7 @@ std::string ms::Framebuffer::get_class () const {
 
 void ms::Framebuffer::set_underlying_id (GLuint framebufferID) {
 	if(!is_default_framebuffer) {
-		std::cerr << "ONLY DEFAULT FRAMEBUFFER'S ID CAN BE CHANGED" << std::endl;
+		std::cerr << "ONLY DEFAULT FRAMEBUFFER'S ID CAN BE CHANGED\n";
 		assert(false);
 	}
 	framebuffer = framebufferID;

@@ -50,7 +50,7 @@ GLuint _mglGetUniformBlockIndex (GLuint program, const GLchar *uniformBlockName)
 	GLuint location = glGetUniformBlockIndex(program, uniformBlockName);
 	if(location == -1) {
 		#ifdef POGL_UNEXISING_BLOCK_UNIFORMS
-			std::cerr<< "UNIFORM_BLOCK_DOESNT_EXIST" << " " << uniformBlockName <<  std::endl;
+			std::cerr<< "UNIFORM_BLOCK_DOESNT_EXIST " << uniformBlockName <<  '\n';
 		#endif
 	}
 	ms::utils::check_gl_error();
@@ -131,7 +131,7 @@ GLint _mglGetUniformLocation (GLuint program, const GLchar* name) {
 	ms::utils::check_gl_error();
 	if(tmp == -1) {
 		#ifdef POGL_UNEXISING_UNIFORMS
-			std::cerr<< "UNIFORM_DOESNT_EXIST" << " " << name <<  std::endl;
+			std::cerr<< "UNIFORM_DOESNT_EXIST " << name << '\n';
 		#endif
 	}
  	return tmp;

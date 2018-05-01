@@ -15,7 +15,7 @@ ms::Loader::model_data ms::Loader::load_model(std::string const & path) {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 	if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-		std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+		std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
 		assert(false);
 	}
 	
@@ -67,10 +67,10 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 		msMaterial->heightTexturesNames 	= get_texture_paths(aiTextureType_HEIGHT, mat, directoryPath);
 		
 		#ifdef LD_MAT_COMP_COUNT
-			std::cout << aiName.C_Str() << 	" DIFFUSE: " 	<< msMaterial->diffuseTexturesNames.size() 	<< std:: endl;
-			std::cout << aiName.C_Str() << 	" SPECULAR: " 	<< msMaterial->specularTexturesNames.size()	<< std:: endl;
-			std::cout << aiName.C_Str() <<  " NORMALS: " 	<< msMaterial->normalTexturesNames.size() 	<< std:: endl;
-			std::cout << aiName.C_Str() <<  " HEIGHT: " 	<< msMaterial->heightTexturesNames.size() 	<< std:: endl;
+			std::cout << aiName.C_Str() << 	" DIFFUSE: " 	<< msMaterial->diffuseTexturesNames.size() 	<< '\n'
+			std::cout << aiName.C_Str() << 	" SPECULAR: " 	<< msMaterial->specularTexturesNames.size()	<< '\n';
+			std::cout << aiName.C_Str() <<  " NORMALS: " 	<< msMaterial->normalTexturesNames.size() 	<< '\n';
+			std::cout << aiName.C_Str() <<  " HEIGHT: " 	<< msMaterial->heightTexturesNames.size() 	<< '\n';
 		#endif
 		
         for (auto absolutePath : msMaterial->diffuseTexturesNames) {
@@ -103,8 +103,8 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 	
 	#ifdef LD_MAT_SUMMARY
 	
-		std::cout << "materials count: " << materials.size() << std::endl;
-		std::cout << "textures count: " << textures.size() << std::endl;
+		std::cout << "materials count: " << materials.size() << '\n';
+		std::cout << "textures count: " << textures.size() << '\n';
 	
 	#endif
 	
@@ -128,21 +128,21 @@ std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string c
 				format = Texture2D::Format::r_8;
 				break;
 			default:
-				std::cerr << "FORMAT NOT SUPPORTED" << std::endl;
+				std::cerr << "FORMAT NOT SUPPORTED" << '\n';
 				assert(false);
 		}
 
         auto texture = std::make_unique<ms::Texture2D>(Texture2D::Type::tex_2d,
-                                                     format,
+                                                       format,
 													   Texture2D::AssociatedType::UNSIGNED_BYTE,
-                                                     static_cast<unsigned int>(width),
-                                                     static_cast<unsigned int>(height),
-                                                     absolutePath,
+                                                       static_cast<unsigned int>(width),
+                                                       static_cast<unsigned int>(height),
+                                                       absolutePath,
 													   Texture2D::MinFilter::linear,
 													   Texture2D::MagFilter::linear,
 													   Texture2D::Wrapping::repeat,
 													   Texture2D::Wrapping::repeat,
-                                                     0);
+                                                       0);
 		
 		texture->copy_data(data, width * height * bpp);
 		stbi_image_free(data);

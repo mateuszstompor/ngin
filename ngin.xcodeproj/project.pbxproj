@@ -215,7 +215,6 @@
 		56716816204ADFAE0028EFAA /* perspectiveCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = perspectiveCamera.hpp; sourceTree = "<group>"; };
 		56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = perspectiveCamera.cpp; sourceTree = "<group>"; };
 		56716819204ADFAE0028EFAA /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
-		56716820204ADFAE0028EFAA /* light.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = light.hpp; sourceTree = "<group>"; };
 		56716821204ADFAE0028EFAA /* directionalLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = directionalLight.hpp; sourceTree = "<group>"; };
 		56716822204ADFAE0028EFAA /* pointLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointLight.hpp; sourceTree = "<group>"; };
 		56716823204ADFAE0028EFAA /* spotLight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spotLight.hpp; sourceTree = "<group>"; };
@@ -515,20 +514,11 @@
 		5671681A204ADFAE0028EFAA /* lights */ = {
 			isa = PBXGroup;
 			children = (
-				5671681E204ADFAE0028EFAA /* general */,
 				56716821204ADFAE0028EFAA /* directionalLight.hpp */,
 				56716822204ADFAE0028EFAA /* pointLight.hpp */,
 				56716823204ADFAE0028EFAA /* spotLight.hpp */,
 			);
 			path = lights;
-			sourceTree = "<group>";
-		};
-		5671681E204ADFAE0028EFAA /* general */ = {
-			isa = PBXGroup;
-			children = (
-				56716820204ADFAE0028EFAA /* light.hpp */,
-			);
-			path = general;
 			sourceTree = "<group>";
 		};
 		56716825204ADFAE0028EFAA /* base */ = {

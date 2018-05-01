@@ -61,7 +61,7 @@ int main(int argc, const char * argv[]) { {
 	prepareRenderDoc();
 	
 	if(glfwInit()==0) {
-		std::cerr<<ms::libInitializationError<<std::endl;
+		std::cerr<<ms::libInitializationError<<'\n';
 	}
 	
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -78,16 +78,16 @@ int main(int argc, const char * argv[]) { {
 	actualScreenWidth = framebufferWidth;
 	actualScreenHeight = framebufferHeight;
 	
-    unsigned int shadowResolution = 1024 * 4;
+    unsigned int shadowResolution = 1024 * 6;
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
-        framebufferWidth /= 2;
-        framebufferHeight /= 2;
+//        framebufferWidth /= 2;
+//        framebufferHeight /= 2;
 	#endif
 	
 	if(window == nullptr){
-		std::cerr << ms::windowCreationError << std::endl;
+		std::cerr << ms::windowCreationError << '\n';
 		glfwTerminate();
 	}
 	
@@ -95,7 +95,7 @@ int main(int argc, const char * argv[]) { {
 	
 #ifdef __WIN32__
 	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-		std::cout << ms::contextInitializationFailure << std::endl;
+		std::cout << ms::contextInitializationFailure << '\n';
 		return -1;
 	}
 #endif
@@ -120,9 +120,9 @@ int main(int argc, const char * argv[]) { {
     SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
     SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
     engine->scene.get_spot_lights().push_back(sl1);
-    engine->scene.get_spot_lights().push_back(sl2);
-        engine->scene.get_spot_lights().push_back(sl3);
-//    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
+//    engine->scene.get_spot_lights().push_back(sl2);
+//    engine->scene.get_spot_lights().push_back(sl3);
+    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
 //    engine->scene.get_point_lights().push_back(pl1);
 
     for(int i = 0; i < engine->scene.get_nodes().size(); ++i) {
@@ -154,7 +154,7 @@ int main(int argc, const char * argv[]) { {
 
 	engine->unload();
 
-    std::cout<<get_allocation_statistics()<<std::endl;
+    std::cout<<get_allocation_statistics()<<'\n';
     
     engine = nullptr;
 	

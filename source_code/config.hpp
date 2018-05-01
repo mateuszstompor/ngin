@@ -34,5 +34,6 @@
 //NGin
 #define NGIN_COUNT_FPS
 #define CALLS_TIME_CONSUMPTION
+#define DRAW_LIGHT_POV
 
 #endif

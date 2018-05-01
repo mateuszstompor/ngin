@@ -45,7 +45,7 @@ namespace ms {
 		inline std::string load_contents_of_file(std::string pathToFile) {
 			std::ifstream inputStream(pathToFile, std::ios_base::in);
 			if(!inputStream.good()) {
-				std::cerr << FILE_DOESNT_EXIST << std::endl;
+				std::cerr << FILE_DOESNT_EXIST << '\n';
 			}
 			std::stringstream strStream;
 			strStream << inputStream.rdbuf();

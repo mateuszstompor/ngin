@@ -39,14 +39,14 @@ namespace ms {
 		using model_data                = std::tuple<geometries_vec, materials_map, textures_map>;
 		
 		model_data	                	load_model              (std::string const & path);
-		
+        std::unique_ptr<Texture2D>      load_texture_from_file  (std::string const & absolutePath);
+        
 	private:
 		
 		model_data                  	process_node			(aiNode const &	node, aiScene const & scene);
 		std::unique_ptr<Geometry>  		process_geometry		(aiMesh const & mesh, aiScene const & scene);
 		textures_and_materials      	load_materials			(aiScene const & scene, std::string const & directoryPath);
 		std::unique_ptr<Texture2D>    	load_embeded_texture	(aiTexture const & texture, std::string const & withName);
-		std::unique_ptr<Texture2D>    	load_texture_from_file	(std::string const & absolutePath);
 		std::vector<std::string>    	get_texture_paths		(aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath);
 		ms::math::vec3              	to_vec3					(aiColor3D const & color);
         

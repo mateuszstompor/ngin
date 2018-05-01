@@ -346,7 +346,7 @@ void ms::NGin::count_fps () {
 	fps += 1;
 	
 	if(timeElapsed > 1000.0f){
-		std::cout << fps/(timeElapsed/1000.0f) << std::endl;
+		std::cout << fps/(timeElapsed/1000.0f) << '\n';
 		fps = 0;
 		start = now;
 	}
@@ -435,10 +435,10 @@ void ms::NGin::draw_scene() {
 
 //    lightSourceRenderer->use();
 //    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
-//        lightSourceRenderer->draw(*scene.get_point_lights()[i], scene);
+//        lightSourceRenderer->draw(scene.get_point_lights()[i], scene);
 //    }
 //    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-//        lightSourceRenderer->draw(*scene.get_spot_lights()[i], scene);
+//        lightSourceRenderer->draw(scene.get_spot_lights()[i], scene);
 //    }
     
     bloomSplitRenderer->use();
@@ -469,16 +469,18 @@ void ms::NGin::draw_scene() {
     scaleRenderer->get_framebuffer().clear_frame();
     scaleRenderer->draw_quad();
     
-//    scaleRenderer->get_framebuffer().use();
-//    shadowRenderer->use(scaleRenderer->get_framebuffer());
-//    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-//        glViewport(500 * i, 0, 500, 500);
-//        scaleRenderer->get_framebuffer().clear_depth();
-//        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
-//        for(auto & node : scene.get_nodes()) {
-//            shadowRenderer->draw(*node);
-//        }
-//    }
+#ifdef DRAW_LIGHT_POV
+    scaleRenderer->get_framebuffer().use();
+    shadowRenderer->use(scaleRenderer->get_framebuffer());
+    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        glViewport(500 * i, 0, 500, 500);
+        scaleRenderer->get_framebuffer().clear_depth();
+        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node);
+        }
+    }
+#endif
     
 }
 

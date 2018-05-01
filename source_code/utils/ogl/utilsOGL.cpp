@@ -26,7 +26,7 @@ void ms::utils::_check_gl_error(const char *file, int line) {
 			case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  	break;
 		}
 		
-		std::cerr << "GL_" << error.c_str() <<" - "<<file<<":"<<line<<std::endl;
+		std::cerr << "GL_" << error.c_str() <<" - "<<file<<":"<<line<<'\n';
 		err=glGetError();
         assert(false);
         

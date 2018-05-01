@@ -174,7 +174,7 @@ int ms::Shader::get_shader_status(GLuint shader, GLenum statusType) {
 	mglGetShaderiv(shader, statusType, &code);
 	if (!code) {
 		mglGetShaderInfoLog(shader, INFO_LOG_SIZE, nullptr, infoLog);
-		std::cerr << SHADER_ERROR << std::endl<< infoLog << std::endl;
+		std::cerr << SHADER_ERROR << '\n' << infoLog << '\n';
 		assert(false);
 	}
 	return code;

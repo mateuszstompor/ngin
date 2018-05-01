@@ -36,27 +36,25 @@ namespace ms {
             forward_vertex
         };
         
-                                        NGin        		(unsigned int                       screenWidth,
-                                                             unsigned int                       screenHeight,
-                                                             unsigned int                       frameBufferWidth,
-                                                             unsigned int                       frameBufferHeight,
-                                                             unsigned int                       shadowsResolution,
-                                                             std::unique_ptr<Camera> &&			cam,
-                                                             std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
-		        
-        void                            set_renderer        (Renderer r);
-        void 							load 				();
-        void 							unload 				();
-        void							draw_scene  		();
-        DeferredRender & 		        get_deferred_render	() const;
-        void							load_model			(std::string const & absolutePath);
-		
-		Scene                           scene;
+                                                    NGin        		(unsigned int                       screenWidth,
+                                                                         unsigned int                       screenHeight,
+                                                                         unsigned int                       frameBufferWidth,
+                                                                         unsigned int                       frameBufferHeight,
+                                                                         unsigned int                       shadowsResolution,
+                                                                         std::unique_ptr<Camera> &&			cam,
+                                                                         std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
+        void                                        set_renderer        (Renderer r);
+        void 							            load 				();
+        void 							            unload 				();
+        void							            draw_scene  		();
+        DeferredRender & 		                    get_deferred_render	() const;
+        void							            load_model			(std::string const & absolutePath);
+		Scene                                       scene;
 		
 	private:
 		
-		void							count_fps			();
-		Loader					        loader;
+		void							            count_fps			();
+		Loader					                    loader;
         
 		std::unique_ptr<DeferredRender>             deferredRenderer;
         std::unique_ptr<DLShadowRender>             shadowRenderer;
@@ -80,7 +78,7 @@ namespace ms {
 		unsigned int 							    framebufferWidth;
 		unsigned int 							    framebufferHeight;
         
-        Renderer                                    chosenRenderer {Renderer::forward_fragment};
+        Renderer                                    chosenRenderer {Renderer::deferred};
 		
     };
     

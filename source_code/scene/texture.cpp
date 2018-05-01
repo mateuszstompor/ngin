@@ -82,7 +82,7 @@ GLenum ms::Texture2D::to_ogl (MinFilter minFilter) {
 			return GL_LINEAR_MIPMAP_LINEAR;
 		default:
 			//critical error
-            std::cerr << "Filter type not supported" << std::endl;
+            std::cerr << "Filter type not supported\n";
 			assert(false);
 	}
 }
@@ -94,7 +94,7 @@ GLenum ms::Texture2D::to_ogl (MagFilter magFilter) {
 		case Texture2D::MagFilter::nearest:
 			return GL_NEAREST;
 		default:
-			std::cerr << "Filter type not supported" << std::endl;
+			std::cerr << "Filter type not supported\n";
 			assert(false);
 	}
 }
@@ -113,7 +113,7 @@ GLenum ms::Texture2D::to_ogl (Wrapping wrapping) {
 			return GL_CLAMP_TO_BORDER;
 	#endif
 		default:
-			std::cerr << "Wrapping type not supported" << std::endl;
+			std::cerr << "Wrapping type not supported\n";
 			assert(false);
 	}
     
@@ -124,7 +124,7 @@ GLenum	ms::Texture2D::to_ogl (Texture2D::Type type) {
 		case ms::Texture2D::Type::tex_2d:
 			return GL_TEXTURE_2D;
 		default:
-            std::cerr << "Texture type not supported" << std::endl;
+            std::cerr << "Texture type not supported\n";
             assert(false);
 	}
 }
@@ -144,7 +144,7 @@ GLenum ms::Texture2D::to_ogl (Format format) {
         case Format::depth_32:
             return GL_DEPTH_COMPONENT;
 		default:
-			std::cerr << "format not supported" << std::endl;
+			std::cerr << "format not supported\n";
 			assert(false);
 	}
 }
@@ -161,7 +161,7 @@ GLenum ms::Texture2D::to_ogl (AssociatedType type) {
         case Texture2D::AssociatedType::UNSIGNED_SHORT:
             return GL_UNSIGNED_SHORT;
 		default:
-			std::cerr << "type not supported" << std::endl;
+			std::cerr << "type not supported\n";
 			assert(false);
 	}
 }
@@ -190,7 +190,7 @@ int ms::Texture2D::channels_amount () const {
         case Format::rgb_32_32_32:
             return 3;
         default:
-            std::cerr << "critical error, format not handled" << std::endl;
+            std::cerr << "critical error, format not handled\n";
             assert(false);
     }
 }
@@ -216,7 +216,7 @@ GLenum ms::Texture2D::underlying_type (AssociatedType associatedType, Format for
         if (format == Format::depth_16) { return GL_DEPTH_COMPONENT16; }
     }
 		
-	std::cerr << "Format not supported" << std::endl;
+	std::cerr << "Format not supported\n";
 	assert(false);
 }
 

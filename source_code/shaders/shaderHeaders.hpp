@@ -233,7 +233,7 @@ std::string ms::shader::get_shader_of_type(Type type) {
             shaderContent += shadowmapping::directionalLightShadowMappingFshader;
             break;
 		default:
-			std::cout << "critical error, shader type not recognized" << std::endl;
+			std::cout << "critical error, shader type not recognized\n";
 			assert(false);
 			break;
 	}

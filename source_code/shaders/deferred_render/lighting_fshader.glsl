@@ -186,7 +186,7 @@ void main() {
 
     float shininess         = 32.0f;
 
-    result += diffuseColor * 0.03f;
+    result += diffuseColor * 0.06f;
 
     if (hasDirLight == 1) {
         float shadow = 0.0f;

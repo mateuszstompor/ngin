@@ -34,26 +34,24 @@ namespace ms {
         using drawable_type     = std::vector<std::shared_ptr<Drawable>>;
         
                                                 Scene (std::unique_ptr<Camera> && cam);
-
         Camera const &                          get_camera() const;
 		Camera &                                get_camera();
 		DirectionalLight const *                get_directional_light() const;
-		DirectionalLight  *                     get_directional_light();
+		DirectionalLight *                      get_directional_light();
 		constexpr materials_type &              get_materials() { return materials; }
         constexpr textures_type &               get_textures() { return textures; }
         constexpr spot_lights_type &            get_spot_lights() { return spotLights; }
-        constexpr const spot_lights_type &      get_spot_lights() const { return spotLights; }
+        constexpr spot_lights_type const &      get_spot_lights() const { return spotLights; }
         constexpr point_lights_type &           get_point_lights() { return pointLights; }
-        constexpr const point_lights_type &     get_point_lights() const { return pointLights; }
+        constexpr point_lights_type const &     get_point_lights() const { return pointLights; }
         constexpr drawable_type &               get_nodes() { return nodes; }
-        constexpr const drawable_type &         get_nodes() const { return nodes; }
-        
+        constexpr drawable_type const &         get_nodes() const { return nodes; }
         void        							set_directional_light(std::unique_ptr<DirectionalLight> && dl) { directionalLight = std::move(dl); }
 		
     private:
         
         std::map<std::string, std::shared_ptr<Material>>    materials;
-        std::map<std::string, std::shared_ptr<Texture2D>>     textures;
+        std::map<std::string, std::shared_ptr<Texture2D>>   textures;
         std::vector<std::shared_ptr<Drawable>>              nodes;
         std::vector<PointLight>                             pointLights;
         std::vector<SpotLight>                              spotLights;
