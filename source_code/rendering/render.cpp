@@ -20,14 +20,11 @@ void ms::Render::_load () {
 }
 
 void ms::Render::use () {
-    shader->load();
-	
 	shader->use();
 	framebuffer->use();
 }
 
 void ms::Render::use (Framebuffer & fb) {
-    shader->load();
     shader->use();
     fb.use();
 }

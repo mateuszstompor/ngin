@@ -347,7 +347,8 @@
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
-					"-I/usr/local/Cellar/assimp/4.1.0/include\n",
+					"-I/usr/local/Cellar/assimp/4.1.0/include",
+					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
 				);
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/assimp/4.1.0/lib",
@@ -370,7 +371,8 @@
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
-					"-I/usr/local/Cellar/assimp/4.1.0/include\n",
+					"-I/usr/local/Cellar/assimp/4.1.0/include",
+					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
 				);
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/assimp/4.1.0/lib",

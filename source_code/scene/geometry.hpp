@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <string>
-#include <gsl/span>
+#include "gsl/span"
 
 #include "vertex.hpp"
 #include "geometry.hpp"

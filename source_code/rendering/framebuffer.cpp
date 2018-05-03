@@ -50,9 +50,7 @@ void ms::Framebuffer::clear_depth () {
 }
 
 void ms::Framebuffer::use () {
-	if(!is_loaded()) {
-		load();
-	}
+	load();
 	
 	if(isDepthTestEnabled) {
 		mglEnable(GL_DEPTH_TEST);
@@ -66,18 +64,12 @@ void ms::Framebuffer::use () {
 }
 
 void ms::Framebuffer::use_for_write () {
-	if(!is_loaded()) {
-		load();
-	}
-
+	load();
 	mglBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->framebuffer);
 }
 
 void ms::Framebuffer::use_for_read () {
-	if(!is_loaded()) {
-		load();
-	}
-	
+	load();
 	mglBindFramebuffer(GL_READ_FRAMEBUFFER, this->framebuffer);
 }
 
@@ -95,14 +87,14 @@ void ms::Framebuffer::_unload () {
 void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Texture2D> && texture) {
 	this->use();
 	texture->use();
-	mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, texture->get_underlying_id(), 0);
+	mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + static_cast<GLenum>(index), GL_TEXTURE_2D, texture->get_underlying_id(), 0);
     colorTextureAttachments[index] = std::move(texture);
 }
 
 void ms::Framebuffer::bind_color_buffer (int index, std::unique_ptr<Renderbuffer> && renderbuffer) {
 	this->use();
 	renderbuffer->use();
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_RENDERBUFFER, renderbuffer->get_underlying_id());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + static_cast<GLenum>(index), GL_RENDERBUFFER, renderbuffer->get_underlying_id());
     colorRenderbufferAttachments[index] = std::move(renderbuffer);
     // should work, but check it
 	assert(false);
@@ -123,18 +115,16 @@ void ms::Framebuffer::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && render
 }
 
 void ms::Framebuffer::configure () {
-	
 	this->use();
     if (colorTextureAttachmentsAmount > 0) {
-        GLuint* attachments = new GLuint[colorTextureAttachmentsAmount];
+        GLenum attachments[colorTextureAttachmentsAmount];
         for(int i = 0; i < colorTextureAttachmentsAmount; ++i) {
-            attachments[i] = GL_COLOR_ATTACHMENT0 + i;
+            attachments[i] = GL_COLOR_ATTACHMENT0 + static_cast<GLenum>(i);
         }
         mglDrawBuffers(colorTextureAttachmentsAmount, attachments);
-        delete [] attachments;
     } else {
-        GLenum drawBuffers[] = { GL_NONE };
-        mglDrawBuffers(1, drawBuffers);
+		GLenum attachments = { GL_NONE };
+        mglDrawBuffers(1, &attachments);
         mglReadBuffer(GL_NONE);
     }
     
@@ -158,8 +148,8 @@ isDepthTestEnabled{true},
 framebuffer{0},
 is_default_framebuffer{false} {
     
-    colorTextureAttachments.resize(colorAttachmentsAmount);
-    colorRenderbufferAttachments.resize(renderbufferAttachmentsAmount);
+    colorTextureAttachments.resize(static_cast<size_t>(colorAttachmentsAmount));
+    colorRenderbufferAttachments.resize(static_cast<size_t>(renderbufferAttachmentsAmount));
 }
 
 void ms::Framebuffer::set_clear_color (math::vec4 const & color) {

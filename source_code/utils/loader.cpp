@@ -14,7 +14,7 @@ ms::Loader::model_data ms::Loader::load_model(std::string const & path) {
 	
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
-	if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+	if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
 		std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
 		assert(false);
 	}
@@ -102,10 +102,8 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 	}
 	
 	#ifdef LD_MAT_SUMMARY
-	
 		std::cout << "materials count: " << materials.size() << '\n';
 		std::cout << "textures count: " << textures.size() << '\n';
-	
 	#endif
 	
 	return texmat;
@@ -115,7 +113,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string const & absolutePath) {
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
-	if (data) {
+	if (data != nullptr) {
 		Texture2D::Format format;
 		switch (bpp) {
 			case 3:
@@ -144,7 +142,7 @@ std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string c
 													   Texture2D::Wrapping::repeat,
                                                        0);
 		
-		texture->copy_data(data, width * height * bpp);
+		texture->copy_data(data, static_cast<size_t>(width * height * bpp));
 		stbi_image_free(data);
 		return texture;
 	} else {
@@ -192,7 +190,7 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
         maxZ = minZ = mesh.mVertices[0].z;
     }
 
-    for(unsigned int i = 0; i < mesh.mNumVertices; ++i) {
+    for(unsigned int i {0}; i < mesh.mNumVertices; ++i) {
 
         Vertex vertex;
 
@@ -205,29 +203,17 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
         maxZ = std::max(maxZ, mesh.mVertices[i].z);
         minZ = std::min(minZ, mesh.mVertices[i].z);
 
-        vertex.position.x() = mesh.mVertices[i].x;
-        vertex.position.y() = mesh.mVertices[i].y;
-        vertex.position.z() = mesh.mVertices[i].z;
-
-        if(mesh.HasNormals()) {
-            vertex.normal.x() = mesh.mNormals[i].x;
-            vertex.normal.y() = mesh.mNormals[i].y;
-            vertex.normal.z() = mesh.mNormals[i].z;
-        }
+        std::memcpy(vertex.position.c_array(), &mesh.mVertices[i], 3 * sizeof(float));
+        std::memcpy(vertex.normal.c_array(), &mesh.mNormals[i], 3 * sizeof(float));
 
         if(mesh.HasTangentsAndBitangents()) {
-            vertex.bitangent.x() = mesh.mBitangents[i].x;
-            vertex.bitangent.y() = mesh.mBitangents[i].y;
-            vertex.bitangent.z() = mesh.mBitangents[i].z;
-
-            vertex.tangent.x() = mesh.mTangents[i].x;
-            vertex.tangent.y() = mesh.mTangents[i].y;
-            vertex.tangent.z() = mesh.mTangents[i].z;
+            std::memcpy(vertex.bitangent.c_array(), &mesh.mBitangents[i], 3 * sizeof(float));
+            std::memcpy(vertex.tangent.c_array(), &mesh.mTangents[i], 3 * sizeof(float));
         }
 
-        if(mesh.mTextureCoords[0]) {
-            vertex.textureCoordinates.x() = mesh.mTextureCoords[0][i].x;
-            vertex.textureCoordinates.y() = mesh.mTextureCoords[0][i].y;
+        if(mesh.HasTextureCoords(0)) {
+            std::memcpy(vertex.textureCoordinates.c_array(), &mesh.mTextureCoords[0][i], 2 * sizeof(float));
+
         } else {
             vertex.textureCoordinates = math::vec2{0.0f, 0.0f};
         }
@@ -239,17 +225,10 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
     math::BoundingBox<float> boundingBox {minX, maxX, minY, maxY, minZ, maxZ};
 
     if(mesh.mMaterialIndex > 0) {
-
         aiString aiName;
-
         scene.mMaterials[mesh.mMaterialIndex]->Get(AI_MATKEY_NAME, aiName);
-
-        #ifdef DEBUG
         assert(strcmp(aiName.C_Str(), "") != 0);
-        #endif
-
         associatedMaterial = aiName.C_Str();
-
     }
 
     for(unsigned int i = 0; i < mesh.mNumFaces; ++i) {
@@ -259,8 +238,7 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
         }
     }
     
-    std::string meshName {mesh.mName.C_Str()};
-    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox), std::move(meshName));
+    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox), mesh.mName.C_Str());
 
 }
 
