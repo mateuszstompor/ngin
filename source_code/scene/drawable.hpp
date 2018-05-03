@@ -26,9 +26,12 @@ namespace ms {
 		
                                                 Drawable            	();
                                                 Drawable                (Drawable const &) = delete;
-                                                ~Drawable               () = default;
+												Drawable                (Drawable &&) = delete;
+
+												~Drawable               () = default;
         
         Drawable &                              operator =              (Drawable const &) = delete;
+		Drawable &                              operator =              (Drawable &&) = delete;
         
         std::string 	                        get_class	            () const override;
         virtual void			                draw            		();

@@ -14,7 +14,8 @@ endif(WIN32)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
-    message("Building project in release mode")
+    add_definitions(-DNDEBUG)
+message("Building project in release mode")
 else()
     add_definitions(-DDEBUG=1)
     message("Building project in debug mode")
@@ -46,6 +47,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
 
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include)
 include_directories(${OPENGL_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS})
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/GSL/include)
 
 set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.hpp

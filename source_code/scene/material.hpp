@@ -10,6 +10,7 @@
 
 #include <string>
 #include <memory>
+#include "gsl/span"
 
 #include "texture.hpp"
 #include "../resources/resource.hpp"

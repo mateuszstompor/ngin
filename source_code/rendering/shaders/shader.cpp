@@ -98,31 +98,31 @@ void ms::Shader::compile_program() {
 	
 	if (!vertexSource.empty()) {
 		vshader = mglCreateShader(GL_VERTEX_SHADER);
-		compile_shader(program, vshader, GL_VERTEX_SHADER, vertexSource);
+		compile_shader(program, vshader, vertexSource);
 	}
 	
 	#ifndef ios_build
 
 	if (!tesselationControlSource.empty()) {
 		cshader = mglCreateShader(GL_TESS_CONTROL_SHADER);
-		compile_shader(program, cshader, GL_TESS_CONTROL_SHADER, tesselationControlSource);
+		compile_shader(program, cshader, tesselationControlSource);
 	}
 	
 	if (!tesselationEvalutationSource.empty()) {
 		evalshader = mglCreateShader(GL_TESS_EVALUATION_SHADER);
-		compile_shader(program, evalshader, GL_TESS_EVALUATION_SHADER, tesselationEvalutationSource);
+		compile_shader(program, evalshader, tesselationEvalutationSource);
 	}
 
 	if (!geometrySource.empty()) {
 		gshader = mglCreateShader(GL_GEOMETRY_SHADER);
-		compile_shader(program, gshader, GL_GEOMETRY_SHADER, geometrySource);
+		compile_shader(program, gshader, geometrySource);
 	}
 	
 	#endif
 	
 	if (!fragmentSource.empty()) {
 		fshader = mglCreateShader(GL_FRAGMENT_SHADER);
-		compile_shader(program, fshader, GL_FRAGMENT_SHADER, fragmentSource);
+		compile_shader(program, fshader, fragmentSource);
 	}
 	
 	mglLinkProgram(program);
@@ -161,7 +161,7 @@ std::string ms::Shader::get_class () const {
 	return "ms::Shader";
 }
 
-void ms::Shader::compile_shader(GLuint program, GLuint shader, GLenum shaderType, std::string const & source) {
+void ms::Shader::compile_shader(GLuint program, GLuint shader, std::string const & source) {
 	const char * sourcePtr = source.c_str();
 	mglShaderSource(shader, 1, &sourcePtr, nullptr);
 	mglCompileShader(shader);
@@ -173,9 +173,11 @@ int ms::Shader::get_shader_status(GLuint shader, GLenum statusType) {
 	int code; char infoLog[INFO_LOG_SIZE];
 	mglGetShaderiv(shader, statusType, &code);
 	if (!code) {
-		mglGetShaderInfoLog(shader, INFO_LOG_SIZE, nullptr, infoLog);
-		std::cerr << SHADER_ERROR << '\n' << infoLog << '\n';
+		//array decay
+		mglGetShaderInfoLog(shader, INFO_LOG_SIZE, nullptr, static_cast<char *>(infoLog));
+		std::cerr << SHADER_ERROR << '\n' << static_cast<char*>(infoLog) << '\n';
 		assert(false);
 	}
+
 	return code;
 }

@@ -4,3 +4,6 @@
 [submodule "MSCirclePad"]
 	path = example_projects/iOS/MSCirclePad
 	url = https://github.com/mateuszstompor/MSCirclePad.git
+[submodule "third-party-libs/GSL"]
+	path = third-party-libs/GSL
+	url = https://github.com/Microsoft/GSL.git

@@ -57,7 +57,6 @@ namespace ms {
 		void 						compile_program			();
 		void 						compile_shader			(GLuint program,
 															 GLuint shader,
-															 GLenum shaderType,
 															 std::string const & source);
 		
 		int							get_shader_status		(GLuint shader,
