@@ -77,21 +77,21 @@ void ms::ForwardRender::setup_material_uniforms_for(const Scene * scene, const D
         auto & material = *mat;
 		material.use();
 		
-		if(auto diff = material.boundedDiffuseTexture.lock()) {
+        if(auto diff = node->boundedDiffuseTexture.lock()) {
             shader.bind_texture(0, *diff);
             shader.set_uniform("hasDiffuseTexture", 1);
-		} else {
+        } else {
             shader.set_uniform("hasDiffuseTexture", 0);
-		}
-		
-		if(auto spec = material.boundedSpecularTexture.lock()) {
+        }
+        
+        if(auto spec = node->boundedSpecularTexture.lock()) {
             shader.bind_texture(1, *spec);
             shader.set_uniform("hasSpecularTexture", 1);
-		} else {
+        } else {
             shader.set_uniform("hasSpecularTexture", 0);
-		}
+        }
         
-        if(auto normal = material.boundedHeightTexture.lock()) {
+        if(auto normal = node->boundedHeightTexture.lock()) {
             shader.bind_texture(2, *normal);
             shader.set_uniform("hasNormalTexture", 1);
         } else {

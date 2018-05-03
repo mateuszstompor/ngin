@@ -19,6 +19,7 @@
 		561F2EFC204F041D00D7E875 /* material.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 561F2EF9204F041D00D7E875 /* material.hpp */; };
 		56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
 		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
+		562BB821209A86D6003033A7 /* light.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 562BB81B209A86D6003033A7 /* light.hpp */; };
 		5633FA8F204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA90204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA97204B6F97003449EE /* geometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FA94204B6F97003449EE /* geometry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -189,6 +190,7 @@
 		56296722204F31E300685BAE /* g_buf_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = g_buf_fshader.glsl; sourceTree = "<group>"; };
 		56296723204F328200685BAE /* forwardRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = forwardRender.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		56296725204F37AD00685BAE /* deferredRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deferredRender.hpp; sourceTree = "<group>"; usesTabs = 1; };
+		562BB81B209A86D6003033A7 /* light.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = light.hpp; sourceTree = "<group>"; };
 		5632E38A205EE0DA00A323A4 /* functions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = functions.glsl; sourceTree = "<group>"; };
 		5633FA8E204B6988003449EE /* resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource.cpp; sourceTree = "<group>"; };
 		5633FA94204B6F97003449EE /* geometry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = geometry.hpp; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 		5671681A204ADFAE0028EFAA /* lights */ = {
 			isa = PBXGroup;
 			children = (
+				562BB81B209A86D6003033A7 /* light.hpp */,
 				56716821204ADFAE0028EFAA /* directionalLight.hpp */,
 				56716822204ADFAE0028EFAA /* pointLight.hpp */,
 				56716823204ADFAE0028EFAA /* spotLight.hpp */,
@@ -617,6 +620,7 @@
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
 				560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */,
 				56716841204ADFAE0028EFAA /* camera.hpp in Headers */,
+				562BB821209A86D6003033A7 /* light.hpp in Headers */,
 				56716854204ADFAE0028EFAA /* ngin.hpp in Headers */,
 				56716838204ADFAE0028EFAA /* render.hpp in Headers */,
 				5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */,
@@ -940,6 +944,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1004,6 +1010,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1058,12 +1066,15 @@
 		568FA87C2048A2E2005BD711 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"mac_build=1",
 					"DEBUG=1",
@@ -1080,6 +1091,9 @@
 		568FA87D2048A2E2005BD711 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
 				EXECUTABLE_PREFIX = lib;

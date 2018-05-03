@@ -55,9 +55,7 @@ void ms::Texture2D::_load () {
 }
 
 void ms::Texture2D::use () {
-	if(!is_loaded())
-		load();
-	
+    load();
 	mglBindTexture(this->glTarget, this->glTexture);
 }
 

@@ -170,21 +170,21 @@ void ms::DeferredRender::setup_material_uniforms(const Scene * scene, const Draw
         auto & material = *mat;
         material.use();
         
-        if(auto diff = material.boundedDiffuseTexture.lock()) {
+        if(auto diff = node->boundedDiffuseTexture.lock()) {
             shader.bind_texture(0, *diff);
             shader.set_uniform("hasDiffuseTexture", 1);
         } else {
             shader.set_uniform("hasDiffuseTexture", 0);
         }
-        
-        if(auto spec = material.boundedSpecularTexture.lock()) {
+
+        if(auto spec = node->boundedSpecularTexture.lock()) {
             shader.bind_texture(1, *spec);
             shader.set_uniform("hasSpecularTexture", 1);
         } else {
             shader.set_uniform("hasSpecularTexture", 0);
         }
-        
-        if(auto normal = material.boundedHeightTexture.lock()) {
+
+        if(auto normal = node->boundedHeightTexture.lock()) {
             shader.bind_texture(2, *normal);
             shader.set_uniform("hasNormalTexture", 1);
         } else {
@@ -226,10 +226,10 @@ void ms::DeferredRender::_load () {
 
 void ms::DeferredRender::_unload () {
     gFramebuffer->unload();
-    shader->unload();
     lightingShader->unload();
-    framebuffer->unload();
     quad->unload();
+    quad->boundedGeometry->unload();
+    Render::_unload();
 }
 
 void ms::DeferredRender::perform_light_pass (const Scene * scene) {

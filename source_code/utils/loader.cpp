@@ -240,11 +240,9 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
 
     if(mesh.mMaterialIndex > 0) {
 
-        aiMaterial const & material = *scene.mMaterials[mesh.mMaterialIndex];
-
         aiString aiName;
 
-        material.Get(AI_MATKEY_NAME, aiName);
+        scene.mMaterials[mesh.mMaterialIndex]->Get(AI_MATKEY_NAME, aiName);
 
         #ifdef DEBUG
         assert(strcmp(aiName.C_Str(), "") != 0);
@@ -260,8 +258,9 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
             indices.push_back(face.mIndices[j]);
         }
     }
-
-    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox));
+    
+    std::string meshName {mesh.mName.C_Str()};
+    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox), std::move(meshName));
 
 }
 

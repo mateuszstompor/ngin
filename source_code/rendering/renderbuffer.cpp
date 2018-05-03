@@ -44,9 +44,6 @@ void ms::Renderbuffer::_unload () {
 }
 
 void ms::Renderbuffer::use () {
-	if(!is_loaded()) {
-		load();
-	}
-	
+    load();
 	mglBindRenderbuffer(GL_RENDERBUFFER, this->renderBuffer);
 }

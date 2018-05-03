@@ -23,8 +23,8 @@ std::string ms::Drawable::get_class () const {
 
 void ms::Drawable::draw () {
 	use();
-	geometry->use_indicies();
-	mglDrawElements(GL_TRIANGLES, geometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
+	boundedGeometry->use_indicies();
+	mglDrawElements(GL_TRIANGLES, boundedGeometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
 }
 
 std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
@@ -58,7 +58,7 @@ std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
 		indices.push_back(quad_indicies::indicies[i]);
 	}
     
-	drawable->geometry = std::make_shared<Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox));
+	drawable->boundedGeometry = std::make_shared<Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox));
 	
 	return drawable;
 	
@@ -70,25 +70,25 @@ void ms::Drawable::_load	() {
 	
 	mglBindVertexArray(vertexArray);
 	
-	if(geometry) {
+	if(boundedGeometry) {
 		
-		geometry->use_vertices();
+		boundedGeometry->use_vertices();
 		mglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
 		mglEnableVertexAttribArray(0);
 		
-		geometry->use_normals();
+		boundedGeometry->use_normals();
 		mglVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
 		mglEnableVertexAttribArray(1);
 		
-		geometry->use_texture_coord();
+		boundedGeometry->use_texture_coord();
 		mglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), nullptr);
 		mglEnableVertexAttribArray(2);
 		
-        geometry->use_tangents();
+        boundedGeometry->use_tangents();
         mglVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
         mglEnableVertexAttribArray(3);
         
-        geometry->use_bitangents();
+        boundedGeometry->use_bitangents();
         mglVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
         mglEnableVertexAttribArray(4);
         

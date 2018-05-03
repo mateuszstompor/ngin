@@ -30,7 +30,8 @@ namespace ms {
                                             Geometry                    (std::vector <Vertex>  &&       vertices,
                                                                          std::vector <unsigned int> &&  indices,
                                                                          std::string &&                 associatedMaterial,
-                                                                         math::BoundingBox<float> &&    boundingBox);
+                                                                         math::BoundingBox<float> &&    boundingBox,
+                                                                         std::string &&                 name = "");
                                             Geometry                    (Geometry const &) = delete;
         Geometry &                          operator =                  (Geometry const &) = delete;
                                             ~Geometry                   () = default;
@@ -56,6 +57,7 @@ namespace ms {
 				
 		std::vector <Vertex> 			    vertices;
 		std::vector <unsigned int>          indices;
+        std::string                         name;
 		std::string		    	            associatedMaterial;
         math::BoundingBox<float>            boundingBox;
         

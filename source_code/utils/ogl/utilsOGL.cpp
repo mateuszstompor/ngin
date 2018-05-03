@@ -12,7 +12,7 @@
 
 void ms::utils::_check_gl_error(const char *file, int line) {
 	
-	GLenum err (glGetError());
+    GLenum err {glGetError()};
 	
 	while(err!=GL_NO_ERROR) {
 		
@@ -27,7 +27,6 @@ void ms::utils::_check_gl_error(const char *file, int line) {
 		}
 		
 		std::cerr << "GL_" << error.c_str() <<" - "<<file<<":"<<line<<'\n';
-		err=glGetError();
         assert(false);
         
 	}

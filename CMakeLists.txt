@@ -84,12 +84,11 @@ set(PROJECT_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/pointLight.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/spotLight.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/lights/directionalLight.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/lights/general/light.hpp
+        ${CMAKE_SOURCE_DIR}/source_code/scene/lights/light.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/scene.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/material.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.hpp
-        ${CMAKE_SOURCE_DIR}/source_code/scene/positionedObject.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/texture.hpp
         ${CMAKE_SOURCE_DIR}/source_code/scene/vertex.hpp
         ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.hpp

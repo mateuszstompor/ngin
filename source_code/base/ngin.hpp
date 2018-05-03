@@ -49,6 +49,8 @@ namespace ms {
         void							            draw_scene  		();
         DeferredRender & 		                    get_deferred_render	() const;
         void							            load_model			(std::string const & absolutePath);
+        void                                        pause_drawing       () { shouldDraw = false; }
+        void                                        resume_drawing      () { shouldDraw = true; }
 		Scene                                       scene;
 		
 	private:
@@ -70,7 +72,7 @@ namespace ms {
 		std::unique_ptr<PostprocessDrawer>     	    scaleRenderer;
         std::vector<std::unique_ptr<Framebuffer>>   shadows;
         
-        
+        bool                                        shouldDraw;
         unsigned int                                shadowResolution;
 		unsigned int							    screenWidth;
 		unsigned int							    screenHeight;

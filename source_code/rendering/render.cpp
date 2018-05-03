@@ -20,19 +20,14 @@ void ms::Render::_load () {
 }
 
 void ms::Render::use () {
-	if(!shader->is_loaded()) {
-		shader->load();
-	}
+    shader->load();
 	
 	shader->use();
 	framebuffer->use();
 }
 
 void ms::Render::use (Framebuffer & fb) {
-    if(!shader->is_loaded()) {
-        shader->load();
-    }
-    
+    shader->load();
     shader->use();
     fb.use();
 }

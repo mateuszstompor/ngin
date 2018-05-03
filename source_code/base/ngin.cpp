@@ -17,7 +17,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                unsigned int                     frameBufferHeight,
                unsigned int                     shadowsResolution,
                std::unique_ptr<Camera> &&       cam,
-               std::unique_ptr<Framebuffer> &&  defaultFramebuffer) :
+               std::unique_ptr<Framebuffer> &&  defaultFramebuffer) :   shouldDraw{true},
                                                                         scene{std::move(cam)},
                                                                         screenWidth{screenWidth},
                                                                         screenHeight{screenHeight},
@@ -188,25 +188,11 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         auto defGshader = Shader::vf_program(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
         auto defLightingShader = Shader::vf_program(deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
     
-        deferredRenderer = std::make_unique<DeferredRender> (AOL,
-                                                             AOL,
-                                                             std::move(mainRenderFramebuffer),
-                                                             std::move(defGshader),
-                                                             std::move(defLightingShader));
-    
+        deferredRenderer = std::make_unique<DeferredRender> (AOL, AOL, std::move(mainRenderFramebuffer), std::move(defGshader), std::move(defLightingShader));
         shadowRenderer = std::make_unique<DLShadowRender>(nullptr, std::move(shadowShader));
-    
-        phongForwardRenderer = std::make_unique<ForwardRender>(AOL,
-                                                               nullptr,
-                                                               std::move(phongforwardShader));
-    
-        gouraudForwardRenderer = std::make_unique<ForwardRender>(AOL,
-                                                                 nullptr,
-                                                                 std::move(gouraudforwardShader));
-    
-        lightSourceRenderer = std::make_unique<LightSourcesRender>(std::move(lightSourceDrawerFramebuffer),
-                                                                   std::move(lightSourceforwardShader));
-    
+        phongForwardRenderer = std::make_unique<ForwardRender>(AOL, nullptr, std::move(phongforwardShader));
+        gouraudForwardRenderer = std::make_unique<ForwardRender>(AOL, nullptr, std::move(gouraudforwardShader));
+        lightSourceRenderer = std::make_unique<LightSourcesRender>(std::move(lightSourceDrawerFramebuffer), std::move(lightSourceforwardShader));
         bloomSplitRenderer = std::make_unique<PostprocessDrawer>(lightSourceRenderer->get_framebuffer().get_colors(),
                                                                  std::move(bloomTwoTexSplitFramebuffer),
                                                                  std::move(bloomSplitProgram));
@@ -226,21 +212,10 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
         textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
     
-        bloomMergeRenderer = std::make_unique<PostprocessDrawer>(textures2,
-                                                                 std::move(bloomMergeFramebuffer),
-                                                                 std::move(bloomMergeProgram));
-    
-        hdrRenderer = std::make_unique<PostprocessDrawer>(bloomMergeRenderer->get_framebuffer().get_colors(),
-                                                          std::move(hdrFramebuffer),
-                                                          std::move(hdrProgram));
-    
-        vignetteRenderer = std::make_unique<PostprocessDrawer>(hdrRenderer->get_framebuffer().get_colors(),
-                                                               std::move(vignetteFramebuffer),
-                                                               std::move(vignetteProgram));
-    
-        scaleRenderer = std::make_unique<PostprocessDrawer>(vignetteRenderer->get_framebuffer().get_colors(),
-                                                            std::move(windowFramebuffer),
-                                                            std::move(scaleProgram));
+        bloomMergeRenderer = std::make_unique<PostprocessDrawer>(textures2, std::move(bloomMergeFramebuffer), std::move(bloomMergeProgram));
+        hdrRenderer = std::make_unique<PostprocessDrawer>(bloomMergeRenderer->get_framebuffer().get_colors(), std::move(hdrFramebuffer), std::move(hdrProgram));
+        vignetteRenderer = std::make_unique<PostprocessDrawer>(hdrRenderer->get_framebuffer().get_colors(), std::move(vignetteFramebuffer), std::move(vignetteProgram));
+        scaleRenderer = std::make_unique<PostprocessDrawer>(vignetteRenderer->get_framebuffer().get_colors(), std::move(windowFramebuffer), std::move(scaleProgram));
             
 }
 
@@ -248,25 +223,21 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
 void ms::NGin::load_model (std::string const & absolutePath) {
 	
     Loader::model_data loadedData = loader.load_model(absolutePath);
-    Loader::geometries_vec & geo = std::get<0>(loadedData);
     
     {
-        Loader::materials_map & mat = std::get<1>(loadedData);
-        Loader::textures_map & tex = std::get<2>(loadedData);
-
-        for (auto & material : mat) {
-            scene.get_materials().insert(std::move(material));
-        }
-        
-        for (auto & texture : tex) {
-            scene.get_textures().insert(std::move(texture));
-        }
-    }
+        auto & geo = std::get<0>(loadedData);
+        auto & mat = std::get<1>(loadedData);
+        auto & tex = std::get<2>(loadedData);
     
-    for (auto & geometry : geo) {
+        scene.get_materials().insert(std::make_move_iterator(mat.begin()), std::make_move_iterator(mat.end()));
+        scene.get_textures().insert(std::make_move_iterator(tex.begin()), std::make_move_iterator(tex.end()));
+        scene.get_geometries().insert(scene.get_geometries().end(), std::make_move_iterator(geo.begin()), std::make_move_iterator(geo.end()));
+    }
+        
+    for (auto & geometry : scene.get_geometries()) {
         auto node = std::make_shared<Drawable>();
-        node->geometry = std::move(geometry);
-        auto nodeMaterial = scene.get_materials().find(node->geometry->get_material_name());
+        node->boundedGeometry = geometry;
+        auto nodeMaterial = scene.get_materials().find(node->boundedGeometry->get_material_name());
         if(nodeMaterial != scene.get_materials().end()) {
 
             node->boundedMaterial = nodeMaterial->second;
@@ -274,28 +245,28 @@ void ms::NGin::load_model (std::string const & absolutePath) {
             if(nodeMaterial->second->diffuseTexturesNames.size() > 0) {
                 auto diffuseTexture = scene.get_textures().find(nodeMaterial->second->diffuseTexturesNames[0]);
                 if(diffuseTexture != scene.get_textures().end()) {
-                    nodeMaterial->second->boundedDiffuseTexture = diffuseTexture->second;
+                    node->boundedDiffuseTexture = diffuseTexture->second;
                 }
             }
 
             if(nodeMaterial->second->specularTexturesNames.size() > 0) {
                 auto specularTexture = scene.get_textures().find(nodeMaterial->second->specularTexturesNames[0]);
                 if(specularTexture != scene.get_textures().end()) {
-                    nodeMaterial->second->boundedSpecularTexture = specularTexture->second;
+                    node->boundedSpecularTexture = specularTexture->second;
                 }
             }
 
             if(nodeMaterial->second->heightTexturesNames.size() > 0) {
                 auto heightTexture = scene.get_textures().find(nodeMaterial->second->heightTexturesNames[0]);
                 if(heightTexture != scene.get_textures().end()) {
-                    nodeMaterial->second->boundedHeightTexture = heightTexture->second;
+                    node->boundedHeightTexture = heightTexture->second;
                 }
             }
 
             if(nodeMaterial->second->normalTexturesNames.size() > 0) {
                 auto normalTexture = scene.get_textures().find(nodeMaterial->second->normalTexturesNames[0]);
                 if(normalTexture != scene.get_textures().end()) {
-                    nodeMaterial->second->boundedNormalTexture = normalTexture->second;
+                    node->boundedNormalTexture = normalTexture->second;
                 }
             }
             
@@ -321,6 +292,8 @@ void ms::NGin::load () {
 }
 
 void ms::NGin::unload () {
+    pause_drawing();
+    
     phongForwardRenderer->unload();
     deferredRenderer->unload();
     gouraudForwardRenderer->unload();
@@ -333,12 +306,18 @@ void ms::NGin::unload () {
     gaussianBlurSecondStepRenderer->unload();
     scaleRenderer->unload();
     vignetteRenderer->unload();
+    
+    std::for_each(scene.get_geometries().begin(), scene.get_geometries().end(), [](auto const & geo) { geo->unload(); } );
+    std::for_each(scene.get_nodes().begin(), scene.get_nodes().end(), [](auto const & node) { node->unload(); } );
+    std::for_each(scene.get_textures().begin(), scene.get_textures().end(), [](auto const & texture) { texture.second->unload(); });
+    std::for_each(scene.get_materials().begin(), scene.get_materials().end(), [](auto const & material) { material.second->unload(); });
+    std::for_each(shadows.begin(), shadows.end(), [](auto const & fb) { fb->unload(); } );
+    
 }
 
 void ms::NGin::count_fps () {
 	static int fps = 0;
 	static auto start = std::chrono::high_resolution_clock::now();
-
 	
 	auto now = std::chrono::high_resolution_clock::now();
 	auto timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
@@ -355,132 +334,136 @@ void ms::NGin::count_fps () {
 
 void ms::NGin::draw_scene() {
 	
-    #ifdef NGIN_COUNT_FPS
-        count_fps();
-    #endif
-    
-    if (auto dirLight = scene.get_directional_light()) {
-        if(dirLight->casts_shadow()) {
-            shadows[0]->use();
-            shadows[0]->clear_frame();
-            shadowRenderer->use(*shadows[0]);
-            shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
-            for(auto & node : scene.get_nodes()) {
-                shadowRenderer->draw(*node);
-            }
-        }
-    }
-    
-    for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+    if(shouldDraw) {
         
-        SpotLight & spotLight = scene.get_spot_lights()[i];
-        if(spotLight.casts_shadow()) {
-            shadows[1 + i]->use();
-            shadows[1 + i]->clear_frame();
-            shadowRenderer->use(*shadows[1 + i]);
-            shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
-            
-            for(auto & node : scene.get_nodes()) {
-                if(spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * node->transformation, node->geometry->get_bounding_box())) {
+    #ifdef NGIN_COUNT_FPS
+            count_fps();
+    #endif
+        
+        if (auto dirLight = scene.get_directional_light()) {
+            if(dirLight->casts_shadow()) {
+                shadows[0]->use();
+                shadows[0]->clear_frame();
+                shadowRenderer->use(*shadows[0]);
+                shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
+                for(auto & node : scene.get_nodes()) {
                     shadowRenderer->draw(*node);
                 }
             }
         }
         
-    }
-    
-    if(chosenRenderer == Renderer::deferred) {
-        deferredRenderer->use();
-        deferredRenderer->setup_g_buffer_uniforms(&scene);
-        deferredRenderer->gFramebuffer->use();
-        deferredRenderer->gFramebuffer->clear_frame();
-        for(int i = 0; i < scene.get_nodes().size(); ++i) {
-            auto node = scene.get_nodes()[i];
-            if(scene.get_camera().is_in_camera_sight(node->transformation, node->geometry->get_bounding_box())) {
-                deferredRenderer->draw(*scene.get_nodes()[i], scene);
+        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            
+            SpotLight & spotLight = scene.get_spot_lights()[i];
+            if(spotLight.casts_shadow()) {
+                shadows[1 + i]->use();
+                shadows[1 + i]->clear_frame();
+                shadowRenderer->use(*shadows[1 + i]);
+                shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
+                
+                for(auto & node : scene.get_nodes()) {
+                    if(spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * node->transformation, node->boundedGeometry->get_bounding_box())) {
+                        shadowRenderer->draw(*node);
+                    }
+                }
+            }
+            
+        }
+        
+        if(chosenRenderer == Renderer::deferred) {
+            deferredRenderer->use();
+            deferredRenderer->setup_g_buffer_uniforms(&scene);
+            deferredRenderer->gFramebuffer->use();
+            deferredRenderer->gFramebuffer->clear_frame();
+            for(int i = 0; i < scene.get_nodes().size(); ++i) {
+                auto node = scene.get_nodes()[i];
+                if(scene.get_camera().is_in_camera_sight(node->transformation, node->boundedGeometry->get_bounding_box())) {
+                    deferredRenderer->draw(*scene.get_nodes()[i], scene);
+                }
+            }
+            deferredRenderer->get_framebuffer().use();
+            deferredRenderer->get_framebuffer().clear_frame();
+            deferredRenderer->lightingShader->use();
+            deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
+            for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+                deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+            }
+            deferredRenderer->perform_light_pass(&scene);
+            lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+        } else if(chosenRenderer == Renderer::forward_fragment) {
+            phongForwardRenderer->use(deferredRenderer->get_framebuffer());
+            deferredRenderer->get_framebuffer().clear_frame();
+            phongForwardRenderer->setup_uniforms(&scene);
+            phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+            
+            for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+                phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+            }
+            
+            for(int i = 0; i < scene.get_nodes().size(); ++i) {
+                phongForwardRenderer->draw(*scene.get_nodes()[i], scene);
+            }
+            lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+        } else {
+            gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
+            deferredRenderer->get_framebuffer().clear_frame();
+            gouraudForwardRenderer->setup_uniforms(&scene);
+            for(int i = 0; i < scene.get_nodes().size(); ++i) {
+                gouraudForwardRenderer->draw(*scene.get_nodes()[i], scene);
+            }
+            lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+        }
+        
+        //    lightSourceRenderer->use();
+        //    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
+        //        lightSourceRenderer->draw(scene.get_point_lights()[i], scene);
+        //    }
+        //    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        //        lightSourceRenderer->draw(scene.get_spot_lights()[i], scene);
+        //    }
+        
+        bloomSplitRenderer->use();
+        bloomSplitRenderer->get_framebuffer().clear_frame();
+        bloomSplitRenderer->draw_quad();
+        
+        gaussianBlurFirstStepRenderer->use();
+        gaussianBlurFirstStepRenderer->get_framebuffer().clear_frame();
+        gaussianBlurFirstStepRenderer->draw_quad();
+        
+        gaussianBlurSecondStepRenderer->use();
+        gaussianBlurSecondStepRenderer->get_framebuffer().clear_frame();
+        gaussianBlurSecondStepRenderer->draw_quad();
+        
+        bloomMergeRenderer->use();
+        bloomMergeRenderer->get_framebuffer().clear_frame();
+        bloomMergeRenderer->draw_quad();
+        
+        hdrRenderer->use();
+        hdrRenderer->get_framebuffer().clear_frame();
+        hdrRenderer->draw_quad();
+        
+        vignetteRenderer->use();
+        vignetteRenderer->get_framebuffer().clear_frame();
+        vignetteRenderer->draw_quad();
+        
+        scaleRenderer->use();
+        scaleRenderer->get_framebuffer().clear_frame();
+        scaleRenderer->draw_quad();
+        
+#ifdef DRAW_LIGHT_POV
+        scaleRenderer->get_framebuffer().use();
+        shadowRenderer->use(scaleRenderer->get_framebuffer());
+        for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            glViewport(500 * i, 0, 500, 500);
+            scaleRenderer->get_framebuffer().clear_depth();
+            shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
+            for(auto & node : scene.get_nodes()) {
+                shadowRenderer->draw(*node);
             }
         }
-        deferredRenderer->get_framebuffer().use();
-        deferredRenderer->get_framebuffer().clear_frame();
-        deferredRenderer->lightingShader->use();
-        deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
-            deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-        }
-        deferredRenderer->perform_light_pass(&scene);
-        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
-    } else if(chosenRenderer == Renderer::forward_fragment) {
-        phongForwardRenderer->use(deferredRenderer->get_framebuffer());
-        deferredRenderer->get_framebuffer().clear_frame();
-        phongForwardRenderer->setup_uniforms(&scene);
-        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        
-        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
-            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-        }
-    
-        for(int i = 0; i < scene.get_nodes().size(); ++i) {
-            phongForwardRenderer->draw(*scene.get_nodes()[i], scene);
-        }
-        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
-    } else {
-        gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
-        deferredRenderer->get_framebuffer().clear_frame();
-        gouraudForwardRenderer->setup_uniforms(&scene);
-        for(int i = 0; i < scene.get_nodes().size(); ++i) {
-            gouraudForwardRenderer->draw(*scene.get_nodes()[i], scene);
-        }
-        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
-    }
-
-//    lightSourceRenderer->use();
-//    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
-//        lightSourceRenderer->draw(scene.get_point_lights()[i], scene);
-//    }
-//    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-//        lightSourceRenderer->draw(scene.get_spot_lights()[i], scene);
-//    }
-    
-    bloomSplitRenderer->use();
-    bloomSplitRenderer->get_framebuffer().clear_frame();
-    bloomSplitRenderer->draw_quad();
-
-    gaussianBlurFirstStepRenderer->use();
-    gaussianBlurFirstStepRenderer->get_framebuffer().clear_frame();
-    gaussianBlurFirstStepRenderer->draw_quad();
-
-    gaussianBlurSecondStepRenderer->use();
-    gaussianBlurSecondStepRenderer->get_framebuffer().clear_frame();
-    gaussianBlurSecondStepRenderer->draw_quad();
-
-    bloomMergeRenderer->use();
-    bloomMergeRenderer->get_framebuffer().clear_frame();
-    bloomMergeRenderer->draw_quad();
-
-    hdrRenderer->use();
-    hdrRenderer->get_framebuffer().clear_frame();
-    hdrRenderer->draw_quad();
-
-    vignetteRenderer->use();
-    vignetteRenderer->get_framebuffer().clear_frame();
-    vignetteRenderer->draw_quad();
-
-    scaleRenderer->use();
-    scaleRenderer->get_framebuffer().clear_frame();
-    scaleRenderer->draw_quad();
-    
-#ifdef DRAW_LIGHT_POV
-    scaleRenderer->get_framebuffer().use();
-    shadowRenderer->use(scaleRenderer->get_framebuffer());
-    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-        glViewport(500 * i, 0, 500, 500);
-        scaleRenderer->get_framebuffer().clear_depth();
-        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
-        for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
-        }
-    }
 #endif
+    
+    }
     
 }
 

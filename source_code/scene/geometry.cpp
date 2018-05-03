@@ -11,11 +11,13 @@
 ms::Geometry::Geometry(std::vector <Vertex>  &&       vertices,
                        std::vector <unsigned int> &&  indices,
                        std::string &&                 associatedMaterial,
-                       math::BoundingBox<float> &&    boundingBox) :
+                       math::BoundingBox<float> &&    boundingBox,
+                       std::string &&                 name) :
                                                                         vertices{std::move(vertices)},
                                                                         indices{std::move(indices)},
                                                                         associatedMaterial{std::move(associatedMaterial)},
-                                                                        boundingBox{std::move(boundingBox)} {}
+                                                                        boundingBox{std::move(boundingBox)},
+                                                                        name{std::move(name)} {}
 
 int ms::Geometry::amount_of_vertices () const {
     return static_cast<int>(vertices.size());
@@ -38,47 +40,32 @@ void ms::Geometry::_load() {
 }
 
 void ms::Geometry::use_texture_coord () {
-    if(!is_loaded()) {
-        load();
-    }
-    
+    load();
     mglBindBuffer(GL_ARRAY_BUFFER, texturesCooridnatesBuffer);
 }
 
 void ms::Geometry::use_tangents () {
-    if(!is_loaded()) {
-        load();
-    }
-    
+    load();
     mglBindBuffer(GL_ARRAY_BUFFER, tangents);
 }
 
 void ms::Geometry::use_bitangents () {
-    if(!is_loaded()) {
-        load();
-    }
-    
+    load();
     mglBindBuffer(GL_ARRAY_BUFFER, bitangents);
 }
 
 void ms::Geometry::use_normals () {
-    if(!is_loaded()) {
-        load();
-    }
+    load();
     mglBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
 }
 
 void ms::Geometry::use_vertices () {
-    if(!is_loaded()) {
-        load();
-    }
+    load();
     mglBindBuffer(GL_ARRAY_BUFFER, positionsBuffer);
 }
 
 void ms::Geometry::use_indicies () {
-    if(!is_loaded()) {
-        load();
-    }
+    load();
     mglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiciesBuffer);
 }
 

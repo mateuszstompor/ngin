@@ -24,6 +24,7 @@ void ms::PostprocessDrawer::_load () {
 void ms::PostprocessDrawer::_unload () {
     Render::_unload();
     quad->unload();
+    quad->boundedGeometry->unload();
 }
 
 void ms::PostprocessDrawer::draw_quad() const {

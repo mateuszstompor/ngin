@@ -26,15 +26,23 @@ namespace ms {
 		
                                                 Drawable            	();
                                                 Drawable                (Drawable const &) = delete;
+                                                ~Drawable               () = default;
+        
         Drawable &                              operator =              (Drawable const &) = delete;
-		virtual std::string 	                get_class	            () const override;
+        
+        std::string 	                        get_class	            () const override;
         virtual void			                draw            		();
-        virtual 				                ~Drawable	            () = default;
+        
         static  std::unique_ptr<Drawable>       get_quad                ();
         
-                math::mat4                      transformation;
-                std::weak_ptr<Material>		    boundedMaterial;
-                std::shared_ptr<Geometry>       geometry;
+        math::mat4                              transformation;
+        
+        std::shared_ptr<Geometry>               boundedGeometry;
+        std::weak_ptr<Material>                 boundedMaterial;
+        std::weak_ptr<Texture2D>                boundedDiffuseTexture;
+        std::weak_ptr<Texture2D>                boundedSpecularTexture;
+        std::weak_ptr<Texture2D>                boundedNormalTexture;
+        std::weak_ptr<Texture2D>                boundedHeightTexture;
         
 	private:
         
