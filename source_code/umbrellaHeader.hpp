@@ -10,7 +10,7 @@
 
 #include "base/ngin.hpp"
 #include "utils/utils.hpp"
-#include "../glMath/source/glMath.h"
+#include "../third-party-libs/glMath/source/glMath.h"
 #include "scene/geometry.hpp"
 #include "scene/drawable.hpp"
 #include "utils/ogl/proxyOGL.hpp"

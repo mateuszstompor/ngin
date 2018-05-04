@@ -1,5 +1,5 @@
 [submodule "libs"]
-	path = glMath
+	path = third-party-libs/glMath
 	url = https://github.com/mateuszstompor/glMath.git
 [submodule "MSCirclePad"]
 	path = example_projects/iOS/MSCirclePad

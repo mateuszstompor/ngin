@@ -5,6 +5,7 @@ project(${PROJECT_NAME} CXX)
 project(${PROJECT_NAME} VERSION 0.0.1 DESCRIPTION "NGin, 3D graphics library")
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(WIN32)
   message("Build for windows")
