@@ -27,7 +27,7 @@ if(WIN32)
         file(COPY
                 ${CMAKE_SOURCE_DIR}/third-party-libs/config.h
              DESTINATION
-                ${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include/assimp
+                ${CMAKE_SOURCE_DIR}/third-party-libs/assimp/include/assimp
              )
 
         add_compile_options(/bigobj)
@@ -43,9 +43,9 @@ endif(WIN32)
 find_package(OpenGL REQUIRED)
 
 # assimp
-add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master)
+add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp)
 
-include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp-master/include)
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp/include)
 include_directories(${OPENGL_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/GSL/include)
 
@@ -127,11 +127,11 @@ target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master)
-include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/include)
+add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/glfw)
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw/include)
 
 if(WIN32)
-include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps)
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps)
 endif(WIN32)
 
 include_directories(${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIRS})
@@ -145,9 +145,9 @@ set(TEST_PROJECT_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/example_projects/mac/main.cp
 if (WIN32)
     set(TEST_PROJECT_SOURCE_FILES   ${TEST_PROJECT_SOURCE_FILES}
                                     third-party-libs/renderdoc.h
-                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/KHR/khrplatform.h
-                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad/glad.h
-                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw-master/deps/glad.c)
+                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps/KHR/khrplatform.h
+                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps/glad/glad.h
+                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps/glad.c)
 endif (WIN32)
 
 add_executable(testapp ${TEST_PROJECT_SOURCE_FILES})

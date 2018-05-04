@@ -7,3 +7,9 @@
 [submodule "third-party-libs/GSL"]
 	path = third-party-libs/GSL
 	url = https://github.com/Microsoft/GSL.git
+[submodule "third-party-libs/assimp"]
+	path = third-party-libs/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "third-party-libs/glfw"]
+	path = third-party-libs/glfw
+	url = https://github.com/glfw/glfw.git

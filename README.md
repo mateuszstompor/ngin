@@ -21,7 +21,7 @@
 
 ## Installation
 
-Project works on both Windows and macOS platforms. Use cmake in order to copile and run. macOS version can be opened as xcode project from
+Project works on both Windows and macOS platforms. Use cmake in order to compile and run. macOS version can be opened as xcode project from
 ngin/example_projects/mac/ngin_mac.xcodeproj as well
 
 ## 16.04.2018 Spot lights shadow mapping with depth linearization
