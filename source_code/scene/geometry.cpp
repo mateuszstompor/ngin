@@ -19,14 +19,6 @@ ms::Geometry::Geometry(std::vector <Vertex>  &&       vertices,
                                                                         boundingBox{std::move(boundingBox)},
                                                                         name{std::move(name)} {}
 
-int ms::Geometry::amount_of_vertices () const {
-    return static_cast<int>(vertices.size());
-}
-
-int ms::Geometry::amount_of_indices () const {
-    return static_cast<int>(indices.size());
-}
-
 void ms::Geometry::set_material (std::string const & name) {
     associatedMaterial = name;
 }
@@ -46,12 +38,12 @@ void ms::Geometry::use_texture_coord () {
 
 void ms::Geometry::use_tangents () {
     load();
-    mglBindBuffer(GL_ARRAY_BUFFER, tangents);
+    mglBindBuffer(GL_ARRAY_BUFFER, tangentsBuffer);
 }
 
 void ms::Geometry::use_bitangents () {
     load();
-    mglBindBuffer(GL_ARRAY_BUFFER, bitangents);
+    mglBindBuffer(GL_ARRAY_BUFFER, bitangentsBuffer);
 }
 
 void ms::Geometry::use_normals () {
@@ -74,90 +66,58 @@ void ms::Geometry::load_vertices_to_buffer () {
     
     {
         mglGenBuffers(1, &positionsBuffer);
-        mglBindBuffer(GL_ARRAY_BUFFER, positionsBuffer);
-        mglBufferData(GL_ARRAY_BUFFER, 3 * vertices.size() * sizeof(GLfloat), nullptr, GL_STATIC_DRAW);
-        auto elementsAmount = 3 * vertices.size();
-        auto rawBuffer = mglMapBufferRange(GL_ARRAY_BUFFER, 0, elementsAmount * sizeof(GLfloat),  GL_MAP_WRITE_BIT);
-        auto vBuf = gsl::make_span(static_cast<GLfloat*>(rawBuffer), elementsAmount);
-
-        for (unsigned long long i = 0; i < vertices.size(); ++i) {
-            std::memcpy(&vBuf[3 * i], vertices[i].position.c_array(), 3 * sizeof(GLfloat));
-        }
-        
-        mglUnmapBuffer(GL_ARRAY_BUFFER);
-        mglBindBuffer(GL_ARRAY_BUFFER, 0);
+        utils::map_buffer_range_for_writing<GLfloat>(GL_ARRAY_BUFFER, positionsBuffer, 3 * vertices.size(), GL_STATIC_DRAW, [&](auto vBuf){
+            for (unsigned long long i = 0; i < vertices.size(); ++i) {
+                std::memcpy(&vBuf[3 * i], vertices[i].position.c_array(), 3 * sizeof(GLfloat));
+            }
+        });
     }
     
     {
         mglGenBuffers(1, &normalsBuffer);
-        mglBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
-        mglBufferData(GL_ARRAY_BUFFER, 3 * vertices.size() * sizeof(GLfloat), nullptr, GL_STATIC_DRAW);
-        auto elementsAmount = 3 * vertices.size();
-        auto rawBuffer = mglMapBufferRange(GL_ARRAY_BUFFER, 0, elementsAmount * sizeof(GLfloat),  GL_MAP_WRITE_BIT);
-        auto nBuf = gsl::make_span(static_cast<GLfloat*>(rawBuffer), elementsAmount);
-
-        for (unsigned long long i = 0; i < vertices.size(); ++i) {
-            std::memcpy(&nBuf[3 * i], vertices[i].normal.c_array(), 3 * sizeof(GLfloat));
-        }
-        
-        mglUnmapBuffer(GL_ARRAY_BUFFER);
-        mglBindBuffer(GL_ARRAY_BUFFER, 0);
+        utils::map_buffer_range_for_writing<GLfloat>(GL_ARRAY_BUFFER, normalsBuffer, 3 * vertices.size(), GL_STATIC_DRAW, [&](auto nBuf){
+            for (unsigned long long i = 0; i < vertices.size(); ++i) {
+                std::memcpy(&nBuf[3 * i], vertices[i].normal.c_array(), 3 * sizeof(GLfloat));
+            }
+        });
     }
     
     {
-        mglGenBuffers(1, &tangents);
-        mglBindBuffer(GL_ARRAY_BUFFER, tangents);
-        mglBufferData(GL_ARRAY_BUFFER, 3 * vertices.size() * sizeof(GLfloat), nullptr, GL_STATIC_DRAW);
-        auto elementsAmount = 3 * vertices.size();
-        auto rawBuffer = mglMapBufferRange(GL_ARRAY_BUFFER, 0, elementsAmount * sizeof(GLfloat),  GL_MAP_WRITE_BIT);
-        auto tBuf = gsl::make_span(static_cast<GLfloat*>(rawBuffer), elementsAmount);
-
-        for (unsigned long long i = 0; i < vertices.size(); ++i) {
-            std::memcpy(&tBuf[3 * i], vertices[i].tangent.c_array(), 3 * sizeof(GLfloat));
-        }
-        
-        mglUnmapBuffer(GL_ARRAY_BUFFER);
-        mglBindBuffer(GL_ARRAY_BUFFER, 0);
+        mglGenBuffers(1, &tangentsBuffer);
+        utils::map_buffer_range_for_writing<GLfloat>(GL_ARRAY_BUFFER, tangentsBuffer, 3 * vertices.size(), GL_STATIC_DRAW, [&](auto tBuf){
+            for (unsigned long long i = 0; i < vertices.size(); ++i) {
+                std::memcpy(&tBuf[3 * i], vertices[i].tangent.c_array(), 3 * sizeof(GLfloat));
+            }
+        });
     }
     
     {
-        mglGenBuffers(1, &bitangents);
-        mglBindBuffer(GL_ARRAY_BUFFER, bitangents);
-        mglBufferData(GL_ARRAY_BUFFER, 3 * vertices.size() * sizeof(GLfloat), nullptr, GL_STATIC_DRAW);
-        auto elementsAmount = 3 * vertices.size();
-        auto rawBuffer = mglMapBufferRange(GL_ARRAY_BUFFER, 0, elementsAmount * sizeof(GLfloat),  GL_MAP_WRITE_BIT);
-        auto bitBuf = gsl::make_span(static_cast<GLfloat*>(rawBuffer), elementsAmount);
-
-        for (unsigned long long i = 0; i < vertices.size(); ++i) {
-            std::memcpy(&bitBuf[3 * i], vertices[i].bitangent.c_array(), 3 * sizeof(GLfloat));
-        }
-        
-        mglUnmapBuffer(GL_ARRAY_BUFFER);
-        mglBindBuffer(GL_ARRAY_BUFFER, 0);
+        mglGenBuffers(1, &bitangentsBuffer);
+        utils::map_buffer_range_for_writing<GLfloat>(GL_ARRAY_BUFFER, bitangentsBuffer, 3 * vertices.size(), GL_STATIC_DRAW, [&](auto bitBuf){
+            for (unsigned long long i = 0; i < vertices.size(); ++i) {
+                std::memcpy(&bitBuf[3 * i], vertices[i].bitangent.c_array(), 3 * sizeof(GLfloat));
+            }
+        });
     }
     
     {
         mglGenBuffers(1, &texturesCooridnatesBuffer);
-        mglBindBuffer(GL_ARRAY_BUFFER, texturesCooridnatesBuffer);
-        mglBufferData(GL_ARRAY_BUFFER, 2 * vertices.size() * sizeof(GLfloat), nullptr, GL_STATIC_DRAW);
-        auto elementsAmount = 2 * vertices.size();
-        auto rawBuffer = mglMapBufferRange(GL_ARRAY_BUFFER, 0, elementsAmount * sizeof(GLfloat),  GL_MAP_WRITE_BIT);
-        auto texCoBuf = gsl::make_span(static_cast<GLfloat*>(rawBuffer), elementsAmount);
-
-        for (unsigned long long i = 0; i < vertices.size(); ++i) {
-            std::memcpy(&texCoBuf[2 * i], vertices[i].textureCoordinates.c_array(), 2 * sizeof(GLfloat));
-        }
-        
-        mglUnmapBuffer(GL_ARRAY_BUFFER);
-        mglBindBuffer(GL_ARRAY_BUFFER, 0);
+        utils::map_buffer_range_for_writing<GLfloat>(GL_ARRAY_BUFFER, texturesCooridnatesBuffer, 2 * vertices.size(), GL_STATIC_DRAW, [&](auto texCoBuf){
+            for (unsigned long long i = 0; i < vertices.size(); ++i) {
+                std::memcpy(&texCoBuf[2 * i], vertices[i].textureCoordinates.c_array(), 2 * sizeof(GLfloat));
+            }
+        });
     }
-    
+    amountOfVertices = static_cast<int>(vertices.size());
+    vertices.clear();
     {
         mglGenBuffers(1, &indiciesBuffer);
         mglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiciesBuffer);
-        mglBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+        mglBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
         mglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
+    amountOfIndices = static_cast<int>(indices.size());
+    indices.clear();
 }
 
 std::string ms::Geometry::get_class () const {
@@ -165,8 +125,45 @@ std::string ms::Geometry::get_class () const {
 }
 
 void ms::Geometry::_unload() {
-    mglDeleteBuffers(1, &bitangents);
-    mglDeleteBuffers(1, &tangents);
+    indices.resize(amountOfIndices);
+    vertices.resize(amountOfVertices);
+    
+    utils::map_buffer_range_for_read<GLfloat>(GL_ARRAY_BUFFER, texturesCooridnatesBuffer, 2 * vertices.size(), [&](auto tBuf) {
+        for (unsigned long long i = 0; i < vertices.size(); ++i) {
+            std::memcpy(vertices[i].textureCoordinates.c_array(), &tBuf[2 * i], 2 * sizeof(GLfloat));
+        }
+    });
+    
+    utils::map_buffer_range_for_read<GLfloat>(GL_ARRAY_BUFFER, positionsBuffer, 3 * vertices.size(), [&](auto vBuf) {
+        for (unsigned long long i = 0; i < vertices.size(); ++i) {
+            std::memcpy(vertices[i].position.c_array(), &vBuf[3 * i], 3 * sizeof(GLfloat));
+        }
+    });
+    
+    utils::map_buffer_range_for_read<GLfloat>(GL_ARRAY_BUFFER, normalsBuffer, 3 * vertices.size(), [&](auto nBuf) {
+        for (unsigned long long i = 0; i < vertices.size(); ++i) {
+            std::memcpy(vertices[i].normal.c_array(), &nBuf[3 * i], 3 * sizeof(GLfloat));
+        }
+    });
+
+    utils::map_buffer_range_for_read<GLfloat>(GL_ARRAY_BUFFER, tangentsBuffer, 3 * vertices.size(), [&](auto tBuf) {
+        for (unsigned long long i = 0; i < vertices.size(); ++i) {
+            std::memcpy(vertices[i].tangent.c_array(), &tBuf[3 * i], 3 * sizeof(GLfloat));
+        }
+    });
+    
+    utils::map_buffer_range_for_read<GLfloat>(GL_ARRAY_BUFFER, bitangentsBuffer, 3 * vertices.size(), [&](auto bitBuf) {
+        for (unsigned long long i = 0; i < vertices.size(); ++i) {
+            std::memcpy(vertices[i].bitangent.c_array(), &bitBuf[3 * i], 3 * sizeof(GLfloat));
+        }
+    });
+    
+    utils::map_buffer_range_for_read<GLuint>(GL_ELEMENT_ARRAY_BUFFER, indiciesBuffer, amountOfIndices, [&](auto indicesBuf) {
+        std::memcpy(&indices[0], indicesBuf, amountOfIndices * sizeof(GLuint));
+    });
+        
+    mglDeleteBuffers(1, &bitangentsBuffer);
+    mglDeleteBuffers(1, &tangentsBuffer);
     mglDeleteBuffers(1, &positionsBuffer);
     mglDeleteBuffers(1, &normalsBuffer);
     mglDeleteBuffers(1, &texturesCooridnatesBuffer);

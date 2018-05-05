@@ -67,9 +67,6 @@
 		5674534320540C6F000E7EBD /* texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5674534020540C6F000E7EBD /* texture.hpp */; };
 		567453492054B391000E7EBD /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
 		5674534A2054B391000E7EBD /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
-		5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
-		5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
-		5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5676F296205222CB002EAB31 /* utilsOGL.hpp */; };
 		5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
@@ -89,7 +86,6 @@
 		56D29AB0207B8DED0080CB3B /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56D29AB1207B8DED0080CB3B /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
 		56D29AB2207B8DED0080CB3B /* perspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716818204ADFAE0028EFAA /* perspectiveCamera.cpp */; };
-		56D29AB3207B8DED0080CB3B /* utilsOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F295205222CB002EAB31 /* utilsOGL.cpp */; };
 		56D29AB5207B8DED0080CB3B /* framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627C820633B5F005085CD /* framebuffer.cpp */; };
 		56D29AB6207B8DED0080CB3B /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99632065A7BA00B54626 /* render.cpp */; };
 		56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
@@ -109,44 +105,6 @@
 		56DF0F3C20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56DF0F3D20571B6D00713420 /* loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F3A20571B6D00713420 /* loader.hpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		56A3C723208796FC00B22C65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56F423D32085780A003D6998;
-			remoteInfo = frustum_tests;
-		};
-		56E62A42207CC77700F2FC05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56443A85203E48A000A801A7;
-			remoteInfo = vector_tests;
-		};
-		56E62A44207CC77700F2FC05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 568BCA1F203F192800E02F23;
-			remoteInfo = matrix_tests;
-		};
-		56E62A46207CC77700F2FC05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 567B5F692070248B00855C50;
-			remoteInfo = boundingbox_tests;
-		};
-		56E62A48207CC77700F2FC05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 567B5F7620703AF700855C50;
-			remoteInfo = plane_tests;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		568A18A02049846C0017B5CF /* CopyFiles */ = {
@@ -231,8 +189,6 @@
 		5674533F20540C6F000E7EBD /* texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
 		5674534020540C6F000E7EBD /* texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		567453482054B391000E7EBD /* deferredRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deferredRender.cpp; sourceTree = "<group>"; };
-		5676F295205222CB002EAB31 /* utilsOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utilsOGL.cpp; sourceTree = "<group>"; };
-		5676F296205222CB002EAB31 /* utilsOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utilsOGL.hpp; sourceTree = "<group>"; };
 		5676F29A20522919002EAB31 /* proxyOGL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = proxyOGL.hpp; sourceTree = "<group>"; };
 		5676F29B20522AD1002EAB31 /* proxyOGL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = proxyOGL.cpp; sourceTree = "<group>"; };
 		5677DF06206C049000AD3590 /* vignette_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vignette_fshader.glsl; sourceTree = "<group>"; };
@@ -266,7 +222,6 @@
 		56E611B720574FFF0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "third-party-libs/assimp_iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56E611BC2057520E0036FA07 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = ../assimp/lib/iOS/x86_64/libassimp.a; sourceTree = "<group>"; };
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
-		56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = glMath/glMath.xcodeproj; sourceTree = "<group>"; };
 		56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = constantsDefinitions.glsl; sourceTree = "<group>"; };
 		56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_fshader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -380,7 +335,8 @@
 		5633FAB7204C6625003449EE /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				5676F292205222B7002EAB31 /* ogl */,
+				5676F29A20522919002EAB31 /* proxyOGL.hpp */,
+				5676F29B20522AD1002EAB31 /* proxyOGL.cpp */,
 				5633FAB8204C6625003449EE /* utils.hpp */,
 				56DF0F3920571B6D00713420 /* loader.cpp */,
 				56DF0F3A20571B6D00713420 /* loader.hpp */,
@@ -554,21 +510,9 @@
 			path = hdr;
 			sourceTree = "<group>";
 		};
-		5676F292205222B7002EAB31 /* ogl */ = {
-			isa = PBXGroup;
-			children = (
-				5676F295205222CB002EAB31 /* utilsOGL.cpp */,
-				5676F296205222CB002EAB31 /* utilsOGL.hpp */,
-				5676F29A20522919002EAB31 /* proxyOGL.hpp */,
-				5676F29B20522AD1002EAB31 /* proxyOGL.cpp */,
-			);
-			path = ogl;
-			sourceTree = "<group>";
-		};
 		568FA8672048A2E2005BD711 = {
 			isa = PBXGroup;
 			children = (
-				56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */,
 				56716803204ADFAE0028EFAA /* source_code */,
 				568FA8712048A2E2005BD711 /* Products */,
 				5626786D204AC01000A203F2 /* Frameworks */,
@@ -594,18 +538,6 @@
 			path = bloom;
 			sourceTree = "<group>";
 		};
-		56E62A3C207CC77700F2FC05 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				56E62A43207CC77700F2FC05 /* vector_tests */,
-				56E62A45207CC77700F2FC05 /* matrix_tests */,
-				56E62A47207CC77700F2FC05 /* boundingbox_tests */,
-				56E62A49207CC77700F2FC05 /* plane_tests */,
-				56A3C724208796FC00B22C65 /* frustum_tests */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -625,7 +557,6 @@
 				56716838204ADFAE0028EFAA /* render.hpp in Headers */,
 				5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */,
 				56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */,
-				5676F299205222CB002EAB31 /* utilsOGL.hpp in Headers */,
 				560627D120633B69005085CD /* renderbuffer.hpp in Headers */,
 				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
 				56CC7EC82088B20C00C2C8AA /* DLShadowRender.hpp in Headers */,
@@ -728,12 +659,6 @@
 			mainGroup = 568FA8672048A2E2005BD711;
 			productRefGroup = 568FA8712048A2E2005BD711 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 56E62A3C207CC77700F2FC05 /* Products */;
-					ProjectRef = 56E62A3B207CC77700F2FC05 /* glMath.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				568FA86F2048A2E2005BD711 /* ngin_mac */,
@@ -742,44 +667,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		56A3C724208796FC00B22C65 /* frustum_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = frustum_tests;
-			remoteRef = 56A3C723208796FC00B22C65 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56E62A43207CC77700F2FC05 /* vector_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = vector_tests;
-			remoteRef = 56E62A42207CC77700F2FC05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56E62A45207CC77700F2FC05 /* matrix_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = matrix_tests;
-			remoteRef = 56E62A44207CC77700F2FC05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56E62A47207CC77700F2FC05 /* boundingbox_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = boundingbox_tests;
-			remoteRef = 56E62A46207CC77700F2FC05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56E62A49207CC77700F2FC05 /* plane_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = plane_tests;
-			remoteRef = 56E62A48207CC77700F2FC05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		568A189E2049846C0017B5CF /* Sources */ = {
@@ -797,7 +684,6 @@
 				56DF0F3C20571B6D00713420 /* loader.cpp in Sources */,
 				5674534A2054B391000E7EBD /* deferredRender.cpp in Sources */,
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
-				5676F298205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				560627CB20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99652065A7BA00B54626 /* render.cpp in Sources */,
 				56CC7EC62088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
@@ -826,7 +712,6 @@
 				567453492054B391000E7EBD /* deferredRender.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				56CC7EC52088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
-				5676F297205222CB002EAB31 /* utilsOGL.cpp in Sources */,
 				560627CA20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99642065A7BA00B54626 /* render.cpp in Sources */,
 				56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */,
@@ -855,7 +740,6 @@
 				56D29AB0207B8DED0080CB3B /* loader.cpp in Sources */,
 				56D29AB1207B8DED0080CB3B /* deferredRender.cpp in Sources */,
 				56D29AB2207B8DED0080CB3B /* perspectiveCamera.cpp in Sources */,
-				56D29AB3207B8DED0080CB3B /* utilsOGL.cpp in Sources */,
 				56D29AB5207B8DED0080CB3B /* framebuffer.cpp in Sources */,
 				56D29AB6207B8DED0080CB3B /* render.cpp in Sources */,
 				56CC7EC72088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,

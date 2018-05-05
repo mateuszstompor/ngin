@@ -17,7 +17,7 @@
 #include <cstdint>
 
 #include "../resources/resource.hpp"
-#include "../utils/ogl/proxyOGL.hpp"
+#include "../utils/proxyOGL.hpp"
 
 namespace ms {
 	

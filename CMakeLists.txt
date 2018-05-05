@@ -56,8 +56,8 @@ set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/umbrellaHeader.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/config.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/proxyOGL.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/utilsOGL.hpp
+                                ${CMAKE_SOURCE_DIR}/source_code/utils/proxyOGL.hpp
+                                ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.hpp
@@ -88,8 +88,7 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/render.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
-                                ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/proxyOGL.cpp
-                                ${CMAKE_SOURCE_DIR}/source_code/utils/ogl/utilsOGL.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/utils/proxyOGL.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.cpp

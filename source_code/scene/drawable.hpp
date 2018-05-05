@@ -13,7 +13,7 @@
 #include "../resources/resource.hpp"
 #include "geometry.hpp"
 #include "material.hpp"
-#include "../utils/ogl/proxyOGL.hpp"
+#include "../utils/proxyOGL.hpp"
 #include "../rendering/reusableGeometry.hpp"
 
 namespace ms {

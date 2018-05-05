@@ -11,7 +11,7 @@
 #include <iostream>
 #include <cassert>
 
-#include "../utils/ogl/proxyOGL.hpp"
+#include "../utils/proxyOGL.hpp"
 #include "../scene/texture.hpp"
 
 namespace ms {

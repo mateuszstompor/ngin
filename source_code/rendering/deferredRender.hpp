@@ -16,9 +16,9 @@
 #include "../scene/texture.hpp"
 #include "framebuffer.hpp"
 #include "renderbuffer.hpp"
-#include "../utils/ogl/proxyOGL.hpp"
+#include "../utils/proxyOGL.hpp"
 #include "reusableGeometry.hpp"
-#include "../utils/ogl/utilsOGL.hpp"
+#include "../utils/utils.hpp"
 #include "../scene/drawable.hpp"
 
 namespace ms {

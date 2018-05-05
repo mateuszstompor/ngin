@@ -13,7 +13,7 @@
 #include <cstdlib>
 
 #include "../../shaders/shaderHeaders.hpp"
-#include "../../utils/ogl/proxyOGL.hpp"
+#include "../../utils/proxyOGL.hpp"
 #include "../../resources/resource.hpp"
 #include "../../scene/texture.hpp"
 

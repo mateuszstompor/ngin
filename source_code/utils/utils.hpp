@@ -16,13 +16,11 @@
 #include <functional>
 #include <vector>
 
-namespace ms {
-	
-	#define FILE_DOESNT_EXIST "There is no file in such location"
-	
-}
+#include "proxyOGL.hpp"
 
 namespace ms {
+    
+    #define FILE_DOESNT_EXIST "There is no file in such location"
     
 	namespace utils {
 
@@ -59,7 +57,26 @@ namespace ms {
 			auto now = std::chrono::high_resolution_clock::now();
 			return std::chrono::duration_cast<T>(now - start).count();
 		}
-		
+        
+        template <typename T>
+        inline void map_buffer_range_for_writing(GLenum bufferType, GLuint id, size_t amountOfElements, GLenum purpose, std::function<void(T*)> lambda) {
+            mglBindBuffer(bufferType, id);
+            mglBufferData(bufferType, amountOfElements * sizeof(T), nullptr, purpose);
+            //#define GL_MAP_WRITE_BIT 0x0002
+            lambda(static_cast<T*>(mglMapBufferRange(bufferType, 0, amountOfElements * sizeof(GLfloat), 0x0002)));
+            mglUnmapBuffer(bufferType);
+            mglBindBuffer(bufferType, 0);
+        }
+        
+        template <typename T>
+        inline void map_buffer_range_for_read(GLenum bufferType, GLuint id, size_t amountOfElements, std::function<void(T*)> lambda) {
+            mglBindBuffer(bufferType, id);
+            //#define GL_MAP_READ_BIT 0x0001
+            lambda(static_cast<T*>(mglMapBufferRange(bufferType, 0, amountOfElements * sizeof(GLfloat), 0x0001)));
+            mglUnmapBuffer(bufferType);
+            mglBindBuffer(bufferType, 0);
+        }
+        
 	}
     
 }

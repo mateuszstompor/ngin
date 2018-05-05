@@ -12,8 +12,7 @@
 #include <string>
 #include <iostream>
 
-#include "../../config.hpp"
-#include "utilsOGL.hpp"
+#include "../config.hpp"
 
 #ifdef __WIN32__
 
@@ -37,6 +36,15 @@
 #endif
 
 #if DEBUG
+
+namespace ms {
+    namespace utils {
+        
+        void _check_gl_error(const char * fileName, int line);
+        #define check_gl_error() _check_gl_error(__FILE__,__LINE__)
+        
+    }
+}
 
 void 		_mglDrawBuffers (GLsizei n, const GLenum* bufs);
 GLint 		_mglGetUniformLocation (GLuint program, const GLchar* name);

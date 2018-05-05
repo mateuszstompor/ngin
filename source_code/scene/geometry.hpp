@@ -13,8 +13,8 @@
 #include "gsl/span"
 
 #include "vertex.hpp"
-#include "geometry.hpp"
-#include "../utils/ogl/proxyOGL.hpp"
+#include "../utils/proxyOGL.hpp"
+#include "../utils/utils.hpp"
 #include "../resources/resource.hpp"
 
 namespace ms {
@@ -45,8 +45,8 @@ namespace ms {
         constexpr std::string const &       get_material_name	        () const { return associatedMaterial; }
         std::string		                    get_class			        () const override;
         bool			                    has_material        		() const;
-        int				                    amount_of_vertices	        () const;
-        int				                    amount_of_indices	        () const;
+        constexpr int				        amount_of_vertices	        () const { return amountOfVertices; }
+        constexpr int				        amount_of_indices	        () const { return amountOfIndices; }
 		void                                load_vertices_to_buffer     ();
         constexpr bounding_box_f const &    get_bounding_box            () const { return boundingBox; }
         
@@ -55,7 +55,9 @@ namespace ms {
         void                                _load                       () override;
         void                                _unload                     () override;
         void 			                    use_indicies 		        () ;
-				
+        int                                 amountOfVertices{0};
+        int                                 amountOfIndices{0};
+        
 		std::vector <Vertex> 			    vertices;
 		std::vector <unsigned int>          indices;
         std::string                         name;
@@ -63,8 +65,8 @@ namespace ms {
         math::BoundingBox<float>            boundingBox;
         
         GLuint                              normalsBuffer;
-        GLuint                              tangents;
-        GLuint                              bitangents;
+        GLuint                              tangentsBuffer;
+        GLuint                              bitangentsBuffer;
         GLuint                              positionsBuffer;
         GLuint                              texturesCooridnatesBuffer;
         GLuint                              indiciesBuffer;
