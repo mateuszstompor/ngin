@@ -60,10 +60,10 @@ set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.hpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/other/framebuffer.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/render.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.hpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/other/renderbuffer.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/reusableGeometry.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/resources/resource.hpp
@@ -82,7 +82,7 @@ set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/texture.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/vertex.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/DLShadowRender.hpp)
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/shadowRender.hpp)
 
 set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
@@ -90,10 +90,10 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/proxyOGL.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.cpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/framebuffer.cpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/renderbuffer.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/other/framebuffer.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/other/renderbuffer.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.cpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/DLShadowRender.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/shadowRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.cpp
