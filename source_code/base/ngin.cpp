@@ -372,13 +372,13 @@ void ms::NGin::draw_scene() {
         
         if(chosenRenderer == Renderer::deferred) {
             deferredRenderer->use();
-            deferredRenderer->setup_g_buffer_uniforms(&scene);
+            deferredRenderer->set_camera(scene.get_camera());
             deferredRenderer->gFramebuffer->use();
             deferredRenderer->gFramebuffer->clear_frame();
             for(int i = 0; i < scene.get_nodes().size(); ++i) {
                 auto node = scene.get_nodes()[i];
                 if(scene.get_camera().is_in_camera_sight(node->transformation, node->boundedGeometry->get_bounding_box())) {
-                    deferredRenderer->draw(*scene.get_nodes()[i], scene);
+                    deferredRenderer->draw(*scene.get_nodes()[i]);
                 }
             }
             deferredRenderer->get_framebuffer().use();
@@ -388,12 +388,15 @@ void ms::NGin::draw_scene() {
             for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
                 deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
-            deferredRenderer->perform_light_pass(&scene);
+            deferredRenderer->perform_light_pass(scene);
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else if(chosenRenderer == Renderer::forward_fragment) {
             phongForwardRenderer->use(deferredRenderer->get_framebuffer());
             deferredRenderer->get_framebuffer().clear_frame();
-            phongForwardRenderer->setup_uniforms(&scene);
+            phongForwardRenderer->set_camera(scene.get_camera());
+            phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
+            phongForwardRenderer->set_directionallight(scene.get_directional_light());
+            phongForwardRenderer->set_point_lights(scene.get_point_lights());
             phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
             
             for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
@@ -401,15 +404,26 @@ void ms::NGin::draw_scene() {
             }
             
             for(int i = 0; i < scene.get_nodes().size(); ++i) {
-                phongForwardRenderer->draw(*scene.get_nodes()[i], scene);
+                phongForwardRenderer->set_material(scene.get_nodes()[i]->boundedMaterial.lock().get());
+                phongForwardRenderer->draw(*scene.get_nodes()[i]);
             }
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else {
             gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
             deferredRenderer->get_framebuffer().clear_frame();
-            gouraudForwardRenderer->setup_uniforms(&scene);
+            gouraudForwardRenderer->set_camera(scene.get_camera());
+            gouraudForwardRenderer->set_spot_lights(scene.get_spot_lights());
+            gouraudForwardRenderer->set_directionallight(scene.get_directional_light());
+            gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
+            gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+            
+            for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+                gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+            }
+            
             for(int i = 0; i < scene.get_nodes().size(); ++i) {
-                gouraudForwardRenderer->draw(*scene.get_nodes()[i], scene);
+                gouraudForwardRenderer->set_material(scene.get_nodes()[i]->boundedMaterial.lock().get());
+                gouraudForwardRenderer->draw(*scene.get_nodes()[i]);
             }
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         }
@@ -424,37 +438,37 @@ void ms::NGin::draw_scene() {
         
         bloomSplitRenderer->use();
         bloomSplitRenderer->get_framebuffer().clear_frame();
-        bloomSplitRenderer->draw_quad();
+        bloomSplitRenderer->draw();
         
         gaussianBlurFirstStepRenderer->use();
         gaussianBlurFirstStepRenderer->get_framebuffer().clear_frame();
-        gaussianBlurFirstStepRenderer->draw_quad();
+        gaussianBlurFirstStepRenderer->draw();
         
         gaussianBlurSecondStepRenderer->use();
         gaussianBlurSecondStepRenderer->get_framebuffer().clear_frame();
-        gaussianBlurSecondStepRenderer->draw_quad();
+        gaussianBlurSecondStepRenderer->draw();
         
         bloomMergeRenderer->use();
         bloomMergeRenderer->get_framebuffer().clear_frame();
-        bloomMergeRenderer->draw_quad();
+        bloomMergeRenderer->draw();
         
         hdrRenderer->use();
         hdrRenderer->get_framebuffer().clear_frame();
-        hdrRenderer->draw_quad();
+        hdrRenderer->draw();
         
         vignetteRenderer->use();
         vignetteRenderer->get_framebuffer().clear_frame();
-        vignetteRenderer->draw_quad();
+        vignetteRenderer->draw();
         
         scaleRenderer->use();
         scaleRenderer->get_framebuffer().clear_frame();
-        scaleRenderer->draw_quad();
+        scaleRenderer->draw();
         
 #ifdef DRAW_LIGHT_POV
         scaleRenderer->get_framebuffer().use();
         shadowRenderer->use(scaleRenderer->get_framebuffer());
         for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-            glViewport(500 * i, 0, 500, 500);
+            mglViewport(500 * i, 0, 500, 500);
             scaleRenderer->get_framebuffer().clear_depth();
             shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
             for(auto & node : scene.get_nodes()) {

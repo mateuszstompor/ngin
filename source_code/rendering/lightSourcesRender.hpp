@@ -20,7 +20,8 @@ namespace ms {
 										 std::unique_ptr<Shader> &&         shader);
 		
 		virtual ~LightSourcesRender		() = default;
-		void	draw  					(Drawable & node, const Scene & scene)			override;
+        void	draw  					(Drawable & node);
+        void    set_camera              (Camera const & camera);
 		
 	};
 	

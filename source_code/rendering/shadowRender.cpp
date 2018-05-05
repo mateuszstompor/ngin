@@ -1,12 +1,12 @@
 //
-//  DLShadowRender.cpp
+//  shadowRender.cpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 19/04/2018.
 //  Copyright © 2018 Mateusz Stompór. All rights reserved.
 //
 
-#include "DLShadowRender.hpp"
+#include "shadowRender.hpp"
 
 ms::DLShadowRender::DLShadowRender(std::unique_ptr<Framebuffer> &&    framebuffer,
                                    std::unique_ptr<Shader> &&         shader) : Render{std::move(framebuffer), std::move(shader)} {}

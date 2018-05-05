@@ -14,7 +14,7 @@
 #include "../rendering/forwardRender.hpp"
 #include "../rendering/deferredRender.hpp"
 #include "../rendering/lightSourcesRender.hpp"
-#include "../rendering/DLShadowRender.hpp"
+#include "../rendering/shadowRender.hpp"
 #include "../scene/scene.hpp"
 #include "../resources/resource.hpp"
 #include "../resources/resourceCoordinator.hpp"
@@ -80,7 +80,7 @@ namespace ms {
 		unsigned int 							    framebufferWidth;
 		unsigned int 							    framebufferHeight;
         
-        Renderer                                    chosenRenderer {Renderer::forward_fragment};
+        Renderer                                    chosenRenderer {Renderer::deferred};
 		
     };
     

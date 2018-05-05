@@ -27,7 +27,7 @@ void ms::PostprocessDrawer::_unload () {
     quad->boundedGeometry->unload();
 }
 
-void ms::PostprocessDrawer::draw_quad() const {
+void ms::PostprocessDrawer::draw() const {
 	
 	{
 		for(int i = 0; i < inputTextures.size(); ++i) {

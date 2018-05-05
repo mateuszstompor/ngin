@@ -12,7 +12,7 @@
 
 #include "../resources/resource.hpp"
 #include "../scene/scene.hpp"
-#include "framebuffer.hpp"
+#include "other/framebuffer.hpp"
 #include "shaders/shader.hpp"
 
 namespace ms {
@@ -28,7 +28,6 @@ namespace ms {
 		virtual	void			_load			() override;
 		virtual	void 			_unload			() override;
 		virtual std::string 	get_class		() const override;
-		virtual void			draw  			(Drawable & node, const Scene & scene) = 0;
 		Framebuffer &			get_framebuffer () { return *framebuffer; }
 		Shader &				get_shader		() { return *shader; }
 		virtual					~Render 		() = default;

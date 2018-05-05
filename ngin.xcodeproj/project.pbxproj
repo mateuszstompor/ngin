@@ -72,10 +72,10 @@
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
 		56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
-		56CC7EC52088B20C00C2C8AA /* DLShadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */; };
-		56CC7EC62088B20C00C2C8AA /* DLShadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */; };
-		56CC7EC72088B20C00C2C8AA /* DLShadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */; };
-		56CC7EC82088B20C00C2C8AA /* DLShadowRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56CC7EC42088B20C00C2C8AA /* DLShadowRender.hpp */; };
+		56CC7EC52088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
+		56CC7EC62088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
+		56CC7EC72088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
+		56CC7EC82088B20C00C2C8AA /* shadowRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56CC7EC42088B20C00C2C8AA /* shadowRender.hpp */; };
 		56D29AA4207B8DED0080CB3B /* renderbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627CD20633B69005085CD /* renderbuffer.cpp */; };
 		56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99682065B66900B54626 /* forwardRender.cpp */; };
 		56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
@@ -164,6 +164,7 @@
 		5640FED2204AE77600512938 /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; usesTabs = 1; };
 		5640FED3204AE77600512938 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		5642559D2068865200AF650F /* pass_trough_vshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = pass_trough_vshader.glsl; sourceTree = "<group>"; };
+		564D04C6209DBADB007C7340 /* modelRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = modelRender.hpp; sourceTree = "<group>"; };
 		565231B0206B9598001766F3 /* scale_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = scale_fshader.glsl; sourceTree = "<group>"; };
 		565AAAC62069B5F3002B6C6B /* material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
 		566BCF2B204EAF6500E90246 /* scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
@@ -208,8 +209,8 @@
 		56C3C6A920655EFE0003F630 /* config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
 		56C3C6AD206584420003F630 /* bloom_merger_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_merger_fshader.glsl; sourceTree = "<group>"; };
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
-		56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLShadowRender.cpp; path = source_code/rendering/DLShadowRender.cpp; sourceTree = SOURCE_ROOT; };
-		56CC7EC42088B20C00C2C8AA /* DLShadowRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DLShadowRender.hpp; path = source_code/rendering/DLShadowRender.hpp; sourceTree = SOURCE_ROOT; };
+		56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shadowRender.cpp; path = source_code/rendering/shadowRender.cpp; sourceTree = SOURCE_ROOT; };
+		56CC7EC42088B20C00C2C8AA /* shadowRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = shadowRender.hpp; path = source_code/rendering/shadowRender.hpp; sourceTree = SOURCE_ROOT; };
 		56D29AC8207B8DED0080CB3B /* libngin_ios_x86_64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios_x86_64.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		56D29AC9207B8E120080CB3B /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/x86_64/libassimp.a"; sourceTree = "<group>"; };
 		56D29ACA207B8E120080CB3B /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/x86_64/libzlibstatic.a"; sourceTree = "<group>"; };
@@ -377,6 +378,17 @@
 			path = shadow_mapping;
 			sourceTree = "<group>";
 		};
+		564D04C5209DBA76007C7340 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				560627C420632CCB005085CD /* framebuffer.hpp */,
+				560627C820633B5F005085CD /* framebuffer.cpp */,
+				560627CD20633B69005085CD /* renderbuffer.cpp */,
+				560627CE20633B69005085CD /* renderbuffer.hpp */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
 		56716803204ADFAE0028EFAA /* source_code */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,13 +418,12 @@
 		5671680A204ADFAE0028EFAA /* rendering */ = {
 			isa = PBXGroup;
 			children = (
-				560627CD20633B69005085CD /* renderbuffer.cpp */,
-				560627CE20633B69005085CD /* renderbuffer.hpp */,
+				564D04C5209DBA76007C7340 /* other */,
 				569A899C204FFF6200A9A292 /* reusableGeometry.hpp */,
 				56736CAF206453F500CE636A /* postprocessDrawer.hpp */,
 				56736CBA2064572400CE636A /* postprocessDrawer.cpp */,
-				56CC7EC32088B20C00C2C8AA /* DLShadowRender.cpp */,
-				56CC7EC42088B20C00C2C8AA /* DLShadowRender.hpp */,
+				56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */,
+				56CC7EC42088B20C00C2C8AA /* shadowRender.hpp */,
 				5671680E204ADFAE0028EFAA /* shaders */,
 				56716811204ADFAE0028EFAA /* render.hpp */,
 				563B99632065A7BA00B54626 /* render.cpp */,
@@ -422,8 +433,7 @@
 				567453482054B391000E7EBD /* deferredRender.cpp */,
 				566D1E1A205F4CAE00CE2F84 /* lightSourcesRender.hpp */,
 				563B996B2065BF3000B54626 /* lightSourcesRender.cpp */,
-				560627C420632CCB005085CD /* framebuffer.hpp */,
-				560627C820633B5F005085CD /* framebuffer.cpp */,
+				564D04C6209DBADB007C7340 /* modelRender.hpp */,
 			);
 			path = rendering;
 			sourceTree = "<group>";
@@ -559,7 +569,7 @@
 				56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */,
 				560627D120633B69005085CD /* renderbuffer.hpp in Headers */,
 				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
-				56CC7EC82088B20C00C2C8AA /* DLShadowRender.hpp in Headers */,
+				56CC7EC82088B20C00C2C8AA /* shadowRender.hpp in Headers */,
 				5640FED4204AE77600512938 /* shader.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
 				56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */,
@@ -686,7 +696,7 @@
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				560627CB20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99652065A7BA00B54626 /* render.cpp in Sources */,
-				56CC7EC62088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
+				56CC7EC62088B20C00C2C8AA /* shadowRender.cpp in Sources */,
 				56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				560313E6207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
@@ -711,7 +721,7 @@
 				56DF0F3B20571B6D00713420 /* loader.cpp in Sources */,
 				567453492054B391000E7EBD /* deferredRender.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
-				56CC7EC52088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
+				56CC7EC52088B20C00C2C8AA /* shadowRender.cpp in Sources */,
 				560627CA20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99642065A7BA00B54626 /* render.cpp in Sources */,
 				56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */,
@@ -742,7 +752,7 @@
 				56D29AB2207B8DED0080CB3B /* perspectiveCamera.cpp in Sources */,
 				56D29AB5207B8DED0080CB3B /* framebuffer.cpp in Sources */,
 				56D29AB6207B8DED0080CB3B /* render.cpp in Sources */,
-				56CC7EC72088B20C00C2C8AA /* DLShadowRender.cpp in Sources */,
+				56CC7EC72088B20C00C2C8AA /* shadowRender.cpp in Sources */,
 				56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */,
 				56D29AB8207B8DED0080CB3B /* ngin.cpp in Sources */,
 				560313E7207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,

@@ -64,7 +64,7 @@ std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
 	
 }
 
-void ms::Drawable::_load	() {
+void ms::Drawable::_load () {
 
 	mglGenVertexArrays(1, &vertexArray);
 	

@@ -1,5 +1,5 @@
 //
-//  DLShadowRender.hpp
+//  shadowRender.hpp
 //  ngin
 //
 //  Created by Mateusz Stompór on 19/04/2018.
@@ -24,10 +24,6 @@ namespace ms {
         std::string     get_class               () const override;
         void            draw                    (Drawable & node);
         void            setup_uniforms          (math::mat4 const & projection, math::mat4 const & transformation);
-        
-    private:
-        
-        void            draw                    (Drawable & node, Scene const  & scene) override {}
         
     };
     

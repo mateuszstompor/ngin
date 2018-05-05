@@ -12,10 +12,8 @@
 #include <vector>
 #include <tuple>
 
-#include "render.hpp"
+#include "modelRender.hpp"
 #include "../scene/texture.hpp"
-#include "framebuffer.hpp"
-#include "renderbuffer.hpp"
 #include "../utils/proxyOGL.hpp"
 #include "reusableGeometry.hpp"
 #include "../utils/utils.hpp"
@@ -23,7 +21,7 @@
 
 namespace ms {
 	
-	class DeferredRender : public Render {
+	class DeferredRender : public ModelRender {
 		
 	public:
 		
@@ -36,12 +34,14 @@ namespace ms {
 																	 std::unique_ptr<Shader> &&			lightingShader);
 		
 		void							use			     			() override;
-		void 							draw						(Drawable & node, const Scene & scene) override;
-		void 							perform_light_pass			(const Scene * scene);
-		void 							setup_material_uniforms		(const Scene * scene, const Drawable * node);
-		void 							setup_lightpass_uniforms	(const Scene * scene);
-		void 							setup_g_buffer_uniforms		(const Scene * scene);
-		void 							set_render_type				(DebugType type);
+		void 							perform_light_pass			(const Scene & scene);		
+		void    						draw                    	(Drawable & node) override;
+		void    						set_material            	(Material * material) override;
+		void    						set_spot_lights         	(std::vector<SpotLight> const & spotLights) override;
+		void    						set_point_lights        	(std::vector<PointLight> const & pointLights) override;
+		void    						set_directionallight    	(DirectionalLight const * directionalLight) override;
+		void    						set_camera              	(Camera const & camera) override;
+		
 		void							_load						() override;
 		void 							_unload						() override;
 
@@ -51,22 +51,10 @@ namespace ms {
 		
 		unsigned int 					maxPointLightsAmount;
 		unsigned int 					maxSpotLightsAmount;
-		
-		unsigned int					renderMode;
-		bool							debugMode;
-		DebugType						debugType;
-		
+				
 		std::unique_ptr<Framebuffer>	gFramebuffer;
 		std::shared_ptr<Drawable> 		quad;
 		
 	};
 	
 }
-
-enum class ms::DeferredRender::DebugType {
-	standard,
-	position,
-	normals,
-	albedo,
-	specular
-};

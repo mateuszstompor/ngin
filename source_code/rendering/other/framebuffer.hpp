@@ -12,8 +12,8 @@
 #include <memory>
 #include <algorithm>
 
-#include "../resources/resource.hpp"
-#include "../scene/texture.hpp"
+#include "../../resources/resource.hpp"
+#include "../../scene/texture.hpp"
 #include "renderbuffer.hpp"
 
 
