@@ -13,3 +13,6 @@
 [submodule "third-party-libs/glfw"]
 	path = third-party-libs/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "third-party-libs/aTree"]
+	path = third-party-libs/aTree
+	url = https://github.com/mateuszstompor/aTree.git
