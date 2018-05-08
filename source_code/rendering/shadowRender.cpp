@@ -16,7 +16,7 @@ std::string ms::DLShadowRender::get_class () const {
 }
 
 void ms::DLShadowRender::draw (Drawable & node) {
-    shader->set_uniform("toWorld", node.transformation);
+    shader->set_uniform("toWorld", node.get_transformation());
     node.draw();
 }
 

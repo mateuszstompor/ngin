@@ -20,28 +20,31 @@ lightingShader{std::move(lightingShader)},
 quad{Drawable::get_quad()} { }
 
 void ms::DeferredRender::draw (Drawable & node) {
-    if(auto diff = node.boundedDiffuseTexture.lock()) {
-        shader->bind_texture(0, *diff);
-        shader->set_uniform("hasDiffuseTexture", 1);
-    } else {
-        shader->set_uniform("hasDiffuseTexture", 0);
+    auto material = node.get_material();
+    if (material) {
+        if(auto diff = material->boundedDiffuseTexture.lock()) {
+            shader->bind_texture(0, *diff);
+            shader->set_uniform("hasDiffuseTexture", 1);
+        } else {
+            shader->set_uniform("hasDiffuseTexture", 0);
+        }
+        
+        if(auto spec = material->boundedSpecularTexture.lock()) {
+            shader->bind_texture(1, *spec);
+            shader->set_uniform("hasSpecularTexture", 1);
+        } else {
+            shader->set_uniform("hasSpecularTexture", 0);
+        }
+        
+        if(auto normal = material->boundedHeightTexture.lock()) {
+            shader->bind_texture(2, *normal);
+            shader->set_uniform("hasNormalTexture", 1);
+        } else {
+            shader->set_uniform("hasNormalTexture", 0);
+        }
     }
-    
-    if(auto spec = node.boundedSpecularTexture.lock()) {
-        shader->bind_texture(1, *spec);
-        shader->set_uniform("hasSpecularTexture", 1);
-    } else {
-        shader->set_uniform("hasSpecularTexture", 0);
-    }
-    
-    if(auto normal = node.boundedHeightTexture.lock()) {
-        shader->bind_texture(2, *normal);
-        shader->set_uniform("hasNormalTexture", 1);
-    } else {
-        shader->set_uniform("hasNormalTexture", 0);
-    }
-    shader->set_uniform("modelTransformation", node.transformation);
-    set_material(node.boundedMaterial.lock().get());
+    set_material(material);
+    shader->set_uniform("modelTransformation", node.get_transformation());
     node.draw();
 }
 
@@ -148,7 +151,7 @@ void ms::DeferredRender::_unload () {
     gFramebuffer->unload();
     lightingShader->unload();
     quad->unload();
-    quad->boundedGeometry->unload();
+    quad->get_geometry()->unload();
     Render::_unload();
 }
 

@@ -24,7 +24,7 @@ namespace ms {
 		
 		friend class Loader;
 		
-                                                Drawable            	();
+                                                Drawable                (std::shared_ptr<Geometry> geometry = nullptr, std::shared_ptr<Material> material = nullptr);
                                                 Drawable                (Drawable const &) = delete;
 												Drawable                (Drawable &&) = delete;
 
@@ -37,22 +37,24 @@ namespace ms {
         virtual void			                draw            		();
         
         static  std::unique_ptr<Drawable>       get_quad                ();
+        constexpr math::mat4 const &            get_transformation      () const { return transformation; }
+        constexpr math::mat4 &                  get_transformation      () { return transformation; }
+        void                                    bind_geometry           (std::shared_ptr<Geometry> geometry);
+        void                                    bind_material           (std::shared_ptr<Material> material);
+        Material *                              get_material            ();
+        Geometry *                              get_geometry            ();
+        constexpr bool                          is_invalidated          () const { return invalidated; }
         
-        math::mat4                              transformation;
-        
-        std::shared_ptr<Geometry>               boundedGeometry;
-        std::weak_ptr<Material>                 boundedMaterial;
-        std::weak_ptr<Texture2D>                boundedDiffuseTexture;
-        std::weak_ptr<Texture2D>                boundedSpecularTexture;
-        std::weak_ptr<Texture2D>                boundedNormalTexture;
-        std::weak_ptr<Texture2D>                boundedHeightTexture;
-        
-	private:
+    private:
         
                 void                            _load                   () override;
                 void                            _unload                 () override;
         virtual void                            use                     ();
-		GLuint                                  vertexArray;
+        bool                                    invalidated;
+        std::shared_ptr<Geometry>               boundedGeometry;
+        std::shared_ptr<Material>               boundedMaterial;
+		math::mat4                              transformation;
+        GLuint                                  vertexArray;
 		
 	};
 	

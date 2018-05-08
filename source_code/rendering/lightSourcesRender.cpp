@@ -13,8 +13,8 @@ ms::LightSourcesRender::LightSourcesRender(
                                            std::unique_ptr<Shader> && shader) : Render(std::move(framebuffer), std::move(shader)) { }
 
 void ms::LightSourcesRender::draw (Drawable & node) {
-    shader->set_uniform("modelTransformation", node.transformation);
-    if(auto material = node.boundedMaterial.lock()) {
+    shader->set_uniform("modelTransformation", node.get_transformation());
+    if(auto material = node.get_material()) {
         shader->set_uniform("lightSourceColor", material->diffuseColor);
     } else {
         shader->set_uniform("lightSourceColor", math::vec3{0.0f, 1.0f, 0.0f});

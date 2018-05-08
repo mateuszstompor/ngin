@@ -80,7 +80,7 @@ namespace ms {
 		unsigned int 							    framebufferWidth;
 		unsigned int 							    framebufferHeight;
         
-        Renderer                                    chosenRenderer {Renderer::deferred};
+        Renderer                                    chosenRenderer {Renderer::forward_fragment};
 		
     };
     

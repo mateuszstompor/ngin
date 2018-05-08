@@ -8,9 +8,20 @@
 
 #include "drawable.hpp"
 
-ms::Drawable::Drawable() : transformation {math::mat4::identity()} { }
+ms::Drawable::Drawable (std::shared_ptr<Geometry> geometry, std::shared_ptr<Material> material) :
+transformation {math::mat4::identity()},
+boundedGeometry{geometry},
+boundedMaterial{material},
+invalidated {false} {
+
+}
 
 void ms::Drawable::use () {
+    if(invalidated) {
+        unload();
+        invalidated = false;
+    }
+    
 	if(!is_loaded())
 		load();
 	
@@ -23,8 +34,10 @@ std::string ms::Drawable::get_class () const {
 
 void ms::Drawable::draw () {
 	use();
-	boundedGeometry->use_indicies();
-	mglDrawElements(GL_TRIANGLES, boundedGeometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
+    if(boundedGeometry) {
+        boundedGeometry->use_indicies();
+        mglDrawElements(GL_TRIANGLES, boundedGeometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
+    }
 }
 
 std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
@@ -62,6 +75,24 @@ std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
 	
 	return drawable;
 	
+}
+
+ms::Material * ms::Drawable::get_material () {
+    return boundedMaterial.get();
+}
+
+ms::Geometry * ms::Drawable::get_geometry () {
+    return boundedGeometry.get();
+}
+
+void ms::Drawable::bind_geometry (std::shared_ptr<Geometry> geometry) {
+    boundedGeometry = geometry;
+    invalidated = true;
+}
+
+void ms::Drawable::bind_material (std::shared_ptr<Material> material) {
+    boundedMaterial = material;
+    invalidated = true;
 }
 
 void ms::Drawable::_load () {

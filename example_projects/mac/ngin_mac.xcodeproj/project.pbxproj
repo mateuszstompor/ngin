@@ -23,6 +23,48 @@
 			remoteGlobalIDString = 56D29AC8207B8DED0080CB3B;
 			remoteInfo = ngin_ios_x86_64;
 		};
+		561842C120A11F2B00770492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 561842BD20A11F2B00770492 /* aTree.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5626102F209F67A500731C17;
+			remoteInfo = aTree;
+		};
+		561842CB20A11F3500770492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 561842C320A11F3500770492 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56443A85203E48A000A801A7;
+			remoteInfo = vector_tests;
+		};
+		561842CD20A11F3500770492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 561842C320A11F3500770492 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 568BCA1F203F192800E02F23;
+			remoteInfo = matrix_tests;
+		};
+		561842CF20A11F3500770492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 561842C320A11F3500770492 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 567B5F692070248B00855C50;
+			remoteInfo = boundingbox_tests;
+		};
+		561842D120A11F3500770492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 561842C320A11F3500770492 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 567B5F7620703AF700855C50;
+			remoteInfo = plane_tests;
+		};
+		561842D320A11F3500770492 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 561842C320A11F3500770492 /* glMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56F423D32085780A003D6998;
+			remoteInfo = frustum_tests;
+		};
 		56329EDB204ABC0C00AF29CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */;
@@ -59,6 +101,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		561842BD20A11F2B00770492 /* aTree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aTree.xcodeproj; path = "../../third-party-libs/aTree/aTree.xcodeproj"; sourceTree = "<group>"; };
+		561842C320A11F3500770492 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = "../../third-party-libs/glMath/glMath.xcodeproj"; sourceTree = "<group>"; };
 		5626786A204ABCAA00A203F2 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 		56329EC9204ABBEA00AF29CA /* ngin_mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ngin_mac; sourceTree = BUILT_PRODUCTS_DIR; };
 		56329ED3204ABC0600AF29CA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -84,9 +128,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		561842BE20A11F2B00770492 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				561842C220A11F2B00770492 /* aTree */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		561842C420A11F3500770492 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				561842CC20A11F3500770492 /* vector_tests */,
+				561842CE20A11F3500770492 /* matrix_tests */,
+				561842D020A11F3500770492 /* boundingbox_tests */,
+				561842D220A11F3500770492 /* plane_tests */,
+				561842D420A11F3500770492 /* frustum_tests */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		56329EC0204ABBEA00AF29CA = {
 			isa = PBXGroup;
 			children = (
+				561842C320A11F3500770492 /* glMath.xcodeproj */,
+				561842BD20A11F2B00770492 /* aTree.xcodeproj */,
 				56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */,
 				56329ED3204ABC0600AF29CA /* main.cpp */,
 				56D3992A206B014700E71A59 /* utils.cpp */,
@@ -173,6 +239,14 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 561842BE20A11F2B00770492 /* Products */;
+					ProjectRef = 561842BD20A11F2B00770492 /* aTree.xcodeproj */;
+				},
+				{
+					ProductGroup = 561842C420A11F3500770492 /* Products */;
+					ProjectRef = 561842C320A11F3500770492 /* glMath.xcodeproj */;
+				},
+				{
 					ProductGroup = 56329ED6204ABC0C00AF29CA /* Products */;
 					ProjectRef = 56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */;
 				},
@@ -190,6 +264,48 @@
 			fileType = archive.ar;
 			path = libngin_ios_x86_64.a;
 			remoteRef = 560313EF207FA8EE00C37C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		561842C220A11F2B00770492 /* aTree */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = aTree;
+			remoteRef = 561842C120A11F2B00770492 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		561842CC20A11F3500770492 /* vector_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = vector_tests;
+			remoteRef = 561842CB20A11F3500770492 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		561842CE20A11F3500770492 /* matrix_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = matrix_tests;
+			remoteRef = 561842CD20A11F3500770492 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		561842D020A11F3500770492 /* boundingbox_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = boundingbox_tests;
+			remoteRef = 561842CF20A11F3500770492 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		561842D220A11F3500770492 /* plane_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = plane_tests;
+			remoteRef = 561842D120A11F3500770492 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		561842D420A11F3500770492 /* frustum_tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = frustum_tests;
+			remoteRef = 561842D320A11F3500770492 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		56329EDC204ABC0C00AF29CA /* libngin_mac.a */ = {
@@ -339,7 +455,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R78NEXF6E2;
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = /usr/local/Cellar/glfw/3.2.1/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

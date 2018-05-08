@@ -116,19 +116,19 @@ int main(int argc, const char * argv[]) { {
 
     engine->scene.get_directional_light()->get_transformation() = lookat;
 
-    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
-    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
-    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
-    engine->scene.get_spot_lights().push_back(sl1);
+//    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
+//    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+//    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+//    engine->scene.get_spot_lights().push_back(sl1);
 //    engine->scene.get_spot_lights().push_back(sl2);
 //    engine->scene.get_spot_lights().push_back(sl3);
-    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
+//    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
 //    engine->scene.get_point_lights().push_back(pl1);
 
-    for(int i = 0; i < engine->scene.get_nodes().size(); ++i) {
-        engine->scene.get_nodes()[i]->transformation = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene.get_nodes()[i]->transformation;
+    for (auto & node : engine->scene.get_nodes()) {
+        node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();
     }
-
+    
     engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
 	
 	engine->load();

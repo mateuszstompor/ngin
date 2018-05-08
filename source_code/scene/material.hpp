@@ -46,6 +46,11 @@ namespace ms {
 		std::vector <std::string> 	normalTexturesNames;
 		std::vector <std::string> 	heightTexturesNames;
         
+        std::weak_ptr<Texture2D>    boundedDiffuseTexture;
+        std::weak_ptr<Texture2D>    boundedSpecularTexture;
+        std::weak_ptr<Texture2D>    boundedNormalTexture;
+        std::weak_ptr<Texture2D>    boundedHeightTexture;
+        
     private:
         
         virtual void                _load                   () override;
