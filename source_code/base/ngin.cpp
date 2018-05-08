@@ -245,28 +245,28 @@ void ms::NGin::load_model (std::string const & absolutePath) {
             if(nodeMaterial->second->diffuseTexturesNames.size() > 0) {
                 auto diffuseTexture = scene.get_textures().find(nodeMaterial->second->diffuseTexturesNames[0]);
                 if(diffuseTexture != scene.get_textures().end()) {
-                    node->get_material()->boundedDiffuseTexture = diffuseTexture->second;
+                    node->get_material()->bind_diffuse_texture(diffuseTexture->second);
                 }
             }
 
             if(nodeMaterial->second->specularTexturesNames.size() > 0) {
                 auto specularTexture = scene.get_textures().find(nodeMaterial->second->specularTexturesNames[0]);
                 if(specularTexture != scene.get_textures().end()) {
-                    node->get_material()->boundedSpecularTexture = specularTexture->second;
+                    node->get_material()->bind_specular_texture(specularTexture->second);
                 }
             }
 
             if(nodeMaterial->second->heightTexturesNames.size() > 0) {
                 auto heightTexture = scene.get_textures().find(nodeMaterial->second->heightTexturesNames[0]);
                 if(heightTexture != scene.get_textures().end()) {
-                    node->get_material()->boundedHeightTexture = heightTexture->second;
+                    node->get_material()->bind_height_texture(heightTexture->second);
                 }
             }
 
             if(nodeMaterial->second->normalTexturesNames.size() > 0) {
                 auto normalTexture = scene.get_textures().find(nodeMaterial->second->normalTexturesNames[0]);
                 if(normalTexture != scene.get_textures().end()) {
-                    node->get_material()->boundedNormalTexture = normalTexture->second;
+                    node->get_material()->bind_normal_texture(normalTexture->second);
                 }
             }
             

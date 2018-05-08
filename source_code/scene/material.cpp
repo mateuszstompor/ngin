@@ -24,7 +24,8 @@ specularColor{specular},
 shininess{shin},
 opacity{opac},
 name{nam},
-bufferId{0} { }
+bufferId{0},
+invalidated{false} { }
 
 void ms::Material::_load () {
 	mglGenBuffers(1, &bufferId);
@@ -46,13 +47,89 @@ void ms::Material::_load () {
 
 void ms::Material::_unload () {
 	mglDeleteBuffers(1, &bufferId);
+    invalidated = false;
 }
 
 std::string ms::Material::get_class () const {
     return "ms::Material";
 }
 
+void ms::Material::set_name (std::string const & n) {
+    name = n;
+}
+
+void ms::Material::set_opacity (float o) {
+    opacity = o;
+    if(is_loaded()) {
+        invalidated = true;
+    }
+}
+
+void ms::Material::set_shininess (float s) {
+    shininess = s;
+    if(is_loaded()) {
+        invalidated = true;
+    }
+}
+
+void ms::Material::set_ambient_color (math::vec3 const & ambient) {
+    ambientColor = ambient;
+    if(is_loaded()) {
+        invalidated = true;
+    }
+}
+
+void ms::Material::set_diffuse_color (math::vec3 const & diffuse) {
+    diffuseColor = diffuse;
+    if(is_loaded()) {
+        invalidated = true;
+    }
+}
+
+void ms::Material::set_specular_color (math::vec3 const & specular) {
+    specularColor = specular;
+    if(is_loaded()) {
+        specularColor = specular;
+    }
+}
+
+void ms::Material::bind_diffuse_texture (std::shared_ptr<Texture2D> diffuse) {
+    boundedDiffuseTexture = diffuse;
+}
+
+void ms::Material::bind_specular_texture (std::shared_ptr<Texture2D> specular) {
+    boundedSpecularTexture = specular;
+}
+
+void ms::Material::bind_normal_texture (std::shared_ptr<Texture2D> normal) {
+    boundedNormalTexture = normal;
+}
+
+void ms::Material::bind_height_texture (std::shared_ptr<Texture2D> height) {
+    boundedHeightTexture = height;
+}
+
+ms::Texture2D * ms::Material::get_diffuse_texture () {
+    return boundedDiffuseTexture.get();
+}
+
+ms::Texture2D * ms::Material::get_specular_texture () {
+    return boundedSpecularTexture.get();
+}
+
+ms::Texture2D * ms::Material::get_normal_texture () {
+    return boundedNormalTexture.get();
+}
+
+ms::Texture2D * ms::Material::get_height_texture () {
+    return boundedHeightTexture.get();
+}
+
 void ms::Material::use () {
+    if(invalidated) {
+        unload();
+    }
+    
 	if(!is_loaded())
 		load();
 	

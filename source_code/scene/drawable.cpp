@@ -12,14 +12,19 @@ ms::Drawable::Drawable (std::shared_ptr<Geometry> geometry, std::shared_ptr<Mate
 transformation {math::mat4::identity()},
 boundedGeometry{geometry},
 boundedMaterial{material},
-invalidated {false} {
+invalidated {false} { }
 
-}
+//
+//  Invalidation mechanism
+//
+//  Object can be invalidated only when is loaded to graphics
+//  Object unload make object valid
+//  If object is going to be used and has already been loaded should be unloaded - which make it valid again and loaded once again
+//
 
 void ms::Drawable::use () {
     if(invalidated) {
         unload();
-        invalidated = false;
     }
     
 	if(!is_loaded())
@@ -87,12 +92,16 @@ ms::Geometry * ms::Drawable::get_geometry () {
 
 void ms::Drawable::bind_geometry (std::shared_ptr<Geometry> geometry) {
     boundedGeometry = geometry;
-    invalidated = true;
+    if(is_loaded()) {
+        invalidated = true;
+    }
 }
 
 void ms::Drawable::bind_material (std::shared_ptr<Material> material) {
     boundedMaterial = material;
-    invalidated = true;
+    if(is_loaded()) {
+        invalidated = true;
+    }
 }
 
 void ms::Drawable::_load () {
@@ -131,4 +140,5 @@ void ms::Drawable::_load () {
 
 void ms::Drawable::_unload () {
 	mglDeleteVertexArrays(1, &vertexArray);
+    invalidated = false;
 }

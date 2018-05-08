@@ -22,21 +22,21 @@ quad{Drawable::get_quad()} { }
 void ms::DeferredRender::draw (Drawable & node) {
     auto material = node.get_material();
     if (material) {
-        if(auto diff = material->boundedDiffuseTexture.lock()) {
+        if(auto diff = material->get_diffuse_texture()) {
             shader->bind_texture(0, *diff);
             shader->set_uniform("hasDiffuseTexture", 1);
         } else {
             shader->set_uniform("hasDiffuseTexture", 0);
         }
         
-        if(auto spec = material->boundedSpecularTexture.lock()) {
+        if(auto spec = material->get_specular_texture()) {
             shader->bind_texture(1, *spec);
             shader->set_uniform("hasSpecularTexture", 1);
         } else {
             shader->set_uniform("hasSpecularTexture", 0);
         }
         
-        if(auto normal = material->boundedHeightTexture.lock()) {
+        if(auto normal = material->get_height_texture()) {
             shader->bind_texture(2, *normal);
             shader->set_uniform("hasNormalTexture", 1);
         } else {

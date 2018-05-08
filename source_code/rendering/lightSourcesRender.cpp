@@ -15,7 +15,7 @@ ms::LightSourcesRender::LightSourcesRender(
 void ms::LightSourcesRender::draw (Drawable & node) {
     shader->set_uniform("modelTransformation", node.get_transformation());
     if(auto material = node.get_material()) {
-        shader->set_uniform("lightSourceColor", material->diffuseColor);
+        shader->set_uniform("lightSourceColor", material->get_diffuse_color());
     } else {
         shader->set_uniform("lightSourceColor", math::vec3{0.0f, 1.0f, 0.0f});
     }
