@@ -104,6 +104,10 @@ void ms::Drawable::bind_material (std::shared_ptr<Material> material) {
     }
 }
 
+ bool ms::Drawable::can_be_drawn () const {
+     return boundedGeometry != nullptr && boundedGeometry != nullptr;
+ }
+
 void ms::Drawable::_load () {
 
 	mglGenVertexArrays(1, &vertexArray);

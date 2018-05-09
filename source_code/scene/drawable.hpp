@@ -22,34 +22,37 @@ namespace ms {
 		
 	public:
 		
-		friend class Loader;
-		
+        friend class Render;
+        friend class NGin;
+        friend class LightSourcesRender;
+        friend class DLShadowRender;
+        friend class ForwardRender;
+        friend class DeferredRender;
+        friend class PostprocessDrawer;
+        
                                                 Drawable                (std::shared_ptr<Geometry> geometry = nullptr, std::shared_ptr<Material> material = nullptr);
                                                 Drawable                (Drawable const &) = delete;
-												Drawable                (Drawable &&) = delete;
 
 												~Drawable               () = default;
         
         Drawable &                              operator =              (Drawable const &) = delete;
-		Drawable &                              operator =              (Drawable &&) = delete;
         
         std::string 	                        get_class	            () const override;
-        virtual void			                draw            		();
         
-        static  std::unique_ptr<Drawable>       get_quad                ();
         constexpr math::mat4 const &            get_transformation      () const { return transformation; }
         constexpr math::mat4 &                  get_transformation      () { return transformation; }
         void                                    bind_geometry           (std::shared_ptr<Geometry> geometry);
         void                                    bind_material           (std::shared_ptr<Material> material);
         Material *                              get_material            ();
         Geometry *                              get_geometry            ();
-        constexpr bool                          is_invalidated          () const { return invalidated; }
         
     private:
-        
+        bool                                    can_be_drawn            () const;
                 void                            _load                   () override;
                 void                            _unload                 () override;
         virtual void                            use                     ();
+        virtual void                            draw                    ();
+        static  std::unique_ptr<Drawable>       get_quad                ();
         bool                                    invalidated;
         std::shared_ptr<Geometry>               boundedGeometry;
         std::shared_ptr<Material>               boundedMaterial;

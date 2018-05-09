@@ -16,6 +16,7 @@
 #include <tuple>
 #include <cassert>
 #include <cmath>
+#include <stdexcept>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

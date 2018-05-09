@@ -237,7 +237,7 @@ void ms::NGin::load_model (std::string const & absolutePath) {
     for (auto & geometry : scene.get_geometries()) {
         auto node = std::make_shared<Drawable>();
         node->bind_geometry(geometry);
-        auto nodeMaterial = scene.get_materials().find(node->get_geometry()->get_material_name());
+        auto nodeMaterial = scene.get_materials().find(node->get_geometry()->get_preferred_material_name());
         if(nodeMaterial != scene.get_materials().end()) {
 
             node->bind_material(nodeMaterial->second);
@@ -382,8 +382,10 @@ void ms::NGin::draw_scene() {
             deferredRenderer->gFramebuffer->use();
             deferredRenderer->gFramebuffer->clear_frame();
             for(auto node : scene.get_nodes()) {
-                if(scene.get_camera().is_in_camera_sight(node->get_transformation(), node->get_geometry()->get_bounding_box())) {
-                    deferredRenderer->draw(*node);
+                if(node->can_be_drawn()) {
+                    if(scene.get_camera().is_in_camera_sight(node->get_transformation(), node->get_geometry()->get_bounding_box())) {
+                        deferredRenderer->draw(*node);
+                    }
                 }
             }
             deferredRenderer->get_framebuffer().use();
@@ -408,8 +410,10 @@ void ms::NGin::draw_scene() {
                 phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
             for(auto node : scene.get_nodes()) {
-                phongForwardRenderer->set_material(node->get_material());
-                phongForwardRenderer->draw(*node);
+                if(node->can_be_drawn()) {
+                    phongForwardRenderer->set_material(node->get_material());
+                    phongForwardRenderer->draw(*node);
+                }
             }
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else {
@@ -425,8 +429,10 @@ void ms::NGin::draw_scene() {
                 gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
             for(auto node : scene.get_nodes()) {
-                gouraudForwardRenderer->set_material(node->get_material());
-                gouraudForwardRenderer->draw(*node);
+                if(node->can_be_drawn()) {
+                    gouraudForwardRenderer->set_material(node->get_material());
+                    gouraudForwardRenderer->draw(*node);
+                }
             }
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         }

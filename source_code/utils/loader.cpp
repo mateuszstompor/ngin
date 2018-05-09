@@ -67,7 +67,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 		msMaterial->heightTexturesNames 	= get_texture_paths(aiTextureType_HEIGHT, mat, directoryPath);
 		
 		#ifdef LD_MAT_COMP_COUNT
-			std::cout << aiName.C_Str() << 	" DIFFUSE: " 	<< msMaterial->diffuseTexturesNames.size() 	<< '\n'
+            std::cout << aiName.C_Str() << 	" DIFFUSE: " 	<< msMaterial->diffuseTexturesNames.size() 	<< '\n';
 			std::cout << aiName.C_Str() << 	" SPECULAR: " 	<< msMaterial->specularTexturesNames.size()	<< '\n';
 			std::cout << aiName.C_Str() <<  " NORMALS: " 	<< msMaterial->normalTexturesNames.size() 	<< '\n';
 			std::cout << aiName.C_Str() <<  " HEIGHT: " 	<< msMaterial->heightTexturesNames.size() 	<< '\n';
@@ -180,28 +180,9 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
     std::vector <unsigned int> indices;
     std::string associatedMaterial;
 
-    float minX = 0, maxX = 0;
-    float minY = 0, maxY = 0;
-    float minZ = 0, maxZ = 0;
-
-    if(mesh.mNumVertices > 0) {
-        maxX = minX = mesh.mVertices[0].x;
-        maxY = minY = mesh.mVertices[0].y;
-        maxZ = minZ = mesh.mVertices[0].z;
-    }
-
     for(unsigned int i {0}; i < mesh.mNumVertices; ++i) {
 
         Vertex vertex;
-
-        maxX = std::max(maxX, mesh.mVertices[i].x);
-        minX = std::min(minX, mesh.mVertices[i].x);
-
-        maxY = std::max(maxY, mesh.mVertices[i].y);
-        minY = std::min(minY, mesh.mVertices[i].y);
-
-        maxZ = std::max(maxZ, mesh.mVertices[i].z);
-        minZ = std::min(minZ, mesh.mVertices[i].z);
 
         std::memcpy(vertex.position.c_array(), &mesh.mVertices[i], 3 * sizeof(float));
         std::memcpy(vertex.normal.c_array(), &mesh.mNormals[i], 3 * sizeof(float));
@@ -222,8 +203,6 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
 
     }
     
-    math::BoundingBox<float> boundingBox {minX, maxX, minY, maxY, minZ, maxZ};
-
     if(mesh.mMaterialIndex > 0) {
         aiString aiName;
         scene.mMaterials[mesh.mMaterialIndex]->Get(AI_MATKEY_NAME, aiName);
@@ -238,7 +217,7 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
         }
     }
     
-    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox), mesh.mName.C_Str());
+    return std::make_unique<ms::Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), mesh.mName.C_Str());
 
 }
 

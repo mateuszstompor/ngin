@@ -21,55 +21,64 @@ namespace ms {
 	
 	class Geometry : public Resource {
 	
-		friend class Drawable;
-		friend class Loader;
-        using bounding_box_f = math::BoundingBox<float>;
+        friend class Drawable;
         
 	public:
 		
-		
-                                            Geometry                    (std::vector <Vertex>  &&       vertices,
-                                                                         std::vector <unsigned int> &&  indices,
-                                                                         std::string &&                 associatedMaterial,
-                                                                         math::BoundingBox<float> &&    boundingBox,
-                                                                         std::string &&                 name = "");
-                                            Geometry                    (Geometry const &) = delete;
-        Geometry &                          operator =                  (Geometry const &) = delete;
-                                            ~Geometry                   () = default;
-        void 			                    use_normals          		();
-        void                                use_tangents                ();
-        void                                use_bitangents              ();
-        void 			                    use_vertices         		();
-        void 			                    use_texture_coord        	();
-        void			                    set_material		        (std::string const & name);
-        constexpr std::string const &       get_material_name	        () const { return associatedMaterial; }
-        std::string		                    get_class			        () const override;
-        bool			                    has_material        		() const;
-        constexpr int				        amount_of_vertices	        () const { return amountOfVertices; }
-        constexpr int				        amount_of_indices	        () const { return amountOfIndices; }
-		void                                load_vertices_to_buffer     ();
-        constexpr bounding_box_f const &    get_bounding_box            () const { return boundingBox; }
+                                                        Geometry                    (std::vector <Vertex>  &&       vertices,
+                                                                                     std::vector <unsigned int> &&  indices,
+                                                                                     std::string &&                 associatedMaterial,
+                                                                                     math::BoundingBox<float> &&    boundingBox,
+                                                                                     std::string &&                 name = "");
+        
+                                                        Geometry                    (std::vector <Vertex>  &&       vertices,
+                                                                                     std::vector <unsigned int> &&  indices,
+                                                                                     std::string &&                 associatedMaterial,
+                                                                                     std::string &&                 name = "");
+        
+                                                        Geometry                    (Geometry const &) = delete;
+        Geometry &                                      operator =                  (Geometry const &) = delete;
+                                                        ~Geometry                   () = default;
+        
+        void			                                set_preferred_material      (std::string const & name);
+        constexpr std::string const &                   get_preferred_material_name () const { return preferredMaterialName; }
+        std::string		                                get_class			        () const override;
+        bool			                                has_preferred_material      () const;
+        constexpr size_t				                amount_of_vertices	        () const { return amountOfVertices; }
+        constexpr size_t				                amount_of_indices	        () const { return amountOfIndices; }
+        constexpr math::BoundingBox<float> const &      get_bounding_box            () const { return boundingBox; }
+        
+        void                                            add_index                   (unsigned int index, std::vector<unsigned int>::iterator position);
+        void                                            add_vertex                  (Vertex vertex, std::vector<Vertex>::iterator position, bool recalculateBoundingBox = true);
+        constexpr std::vector<Vertex> const &           get_vertices                () const { return vertices; }
+        constexpr std::vector<unsigned int> const &     get_indices                 () const { return indices; }
+        static math::BoundingBox<float>                 calculate_bounding_box      (std::vector<Vertex> const & vertices);
         
 	private:
+        void                                            load_vertices_to_buffer     ();
+        void                                            _load                       () override;
+        void                                            _unload                     () override;
+        void 			                                use_indicies 		        ();
+        void                                            use_normals                 ();
+        void                                            use_tangents                ();
+        void                                            use_bitangents              ();
+        void                                            use_vertices                ();
+        void                                            use_texture_coord           ();
+        size_t                                          amountOfVertices;
+		size_t                                          amountOfIndices;
         
-        void                                _load                       () override;
-        void                                _unload                     () override;
-        void 			                    use_indicies 		        () ;
-        int                                 amountOfVertices{0};
-        int                                 amountOfIndices{0};
+		std::vector <Vertex> 			                vertices;
+		std::vector <unsigned int>                      indices;
+        std::string                                     name;
+		std::string		    	                        preferredMaterialName;
+        math::BoundingBox<float>                        boundingBox;
         
-		std::vector <Vertex> 			    vertices;
-		std::vector <unsigned int>          indices;
-        std::string                         name;
-		std::string		    	            associatedMaterial;
-        math::BoundingBox<float>            boundingBox;
-        
-        GLuint                              normalsBuffer;
-        GLuint                              tangentsBuffer;
-        GLuint                              bitangentsBuffer;
-        GLuint                              positionsBuffer;
-        GLuint                              texturesCooridnatesBuffer;
-        GLuint                              indiciesBuffer;
+        GLuint                                          normalsBuffer;
+        GLuint                                          tangentsBuffer;
+        GLuint                                          bitangentsBuffer;
+        GLuint                                          positionsBuffer;
+        GLuint                                          texturesCooridnatesBuffer;
+        GLuint                                          indiciesBuffer;
 
 	};
 	

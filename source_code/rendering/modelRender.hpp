@@ -14,7 +14,10 @@ namespace ms {
     
     class ModelRender : public Render {
     
-    public:
+        private:
+        
+        friend class ForwardRender;
+        friend class DeferredRender;
         
         inline          ModelRender             (std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader);
         virtual void    draw                    (Drawable & node) = 0;

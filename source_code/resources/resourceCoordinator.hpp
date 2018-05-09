@@ -24,7 +24,14 @@ namespace ms {
     
     class ResourceCoordinator {
 		
+        friend class NGin;
+        friend class Resource;
+    
     public:
+        
+                                                        ~ResourceCoordinator        () = default;
+
+    private:
 														ResourceCoordinator			(ResourceCoordinator const & rc) = delete;
 		ResourceCoordinator & 							operator = 					(ResourceCoordinator const & rc) = delete;
 
@@ -36,15 +43,10 @@ namespace ms {
 		virtual void 									register_allocation			(Resource * resource);
 		virtual void 									register_deallocation		(Resource * resource);
 		virtual void									unload_all_resources		();
-														~ResourceCoordinator		() = default;
-    private:
-		
 														ResourceCoordinator			();
 		std::set<std::string> 							loadedResources;
         std::set<std::string> 							allocatedResources;
-	
-	public:
-		
+			
 		static std::shared_ptr<ResourceCoordinator> 	sharedInstance;
 		
     };
