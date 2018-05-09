@@ -27,3 +27,6 @@ void ms::LightSourcesRender::set_camera (Camera const & camera) {
     shader->set_uniform("perspectiveProjection", camera.get_projection_matrix());
 }
 
+std::string ms::LightSourcesRender::get_class () const {
+    return "ms::LightSourcesRender";
+}

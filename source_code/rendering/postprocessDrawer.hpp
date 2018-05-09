@@ -29,8 +29,9 @@ namespace ms {
         std::string                             get_class           () const override;
         constexpr bool                          is_enabled          () const { return isOn; }
         void                                    set_enabled         (bool state);
-	private:
         
+	private:
+
         bool                                    isOn;
         void                                    draw                () const;
         void                                    _load               () override;

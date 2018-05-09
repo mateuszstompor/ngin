@@ -19,7 +19,7 @@ maxSpotLightsAmount{maxSpotLightsAmount},
 lightingShader{std::move(lightingShader)},
 quad{Drawable::get_quad()} { }
 
-void ms::DeferredRender::draw (Drawable & node) {
+void ms::DeferredRender::draw (Drawable & node, math::mat4 const & transformation) {
     auto material = node.get_material();
     if (material) {
         if(auto diff = material->get_diffuse_texture()) {
@@ -44,8 +44,12 @@ void ms::DeferredRender::draw (Drawable & node) {
         }
     }
     set_material(material);
-    shader->set_uniform("modelTransformation", node.get_transformation());
+    shader->set_uniform("modelTransformation", transformation);
     node.draw();
+}
+
+void ms::DeferredRender::draw (Drawable & node) {
+    draw(node, node.get_transformation());
 }
 
 void ms::DeferredRender::set_material (Material * material) {

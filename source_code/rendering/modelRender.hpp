@@ -21,6 +21,7 @@ namespace ms {
         
         inline          ModelRender             (std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader);
         virtual void    draw                    (Drawable & node) = 0;
+        virtual void    draw                    (Drawable & node, math::mat4 const & transformation) = 0;
         virtual void    set_material            (Material * material) = 0;
         virtual void    set_spot_lights         (std::vector<SpotLight> const & spotLights) = 0;
         virtual void    set_point_lights        (std::vector<PointLight> const & pointLights) = 0;

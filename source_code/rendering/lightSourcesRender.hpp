@@ -14,14 +14,19 @@ namespace ms {
 	
 	class LightSourcesRender : public Render {
 		
-	public:
+        friend class LightSourcesRender;
+        
+    public:
 		
-		 		LightSourcesRender		(std::unique_ptr<Framebuffer> &&    framebuffer,
-										 std::unique_ptr<Shader> &&         shader);
-		
-		virtual ~LightSourcesRender		() = default;
-        void	draw  					(Drawable & node);
-        void    set_camera              (Camera const & camera);
+                        LightSourcesRender		(std::unique_ptr<Framebuffer> &&    framebuffer,
+                                                 std::unique_ptr<Shader> &&         shader);
+                        ~LightSourcesRender     () = default;
+        std::string     get_class               () const override;
+    
+    private:
+        
+        void	        draw  					(Drawable & node);
+        void            set_camera              (Camera const & camera);
 		
 	};
 	

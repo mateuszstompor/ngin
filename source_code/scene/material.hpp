@@ -19,6 +19,9 @@ namespace ms {
 	
 	class Material : public Resource {
         
+        friend class ForwardRender;
+        friend class DeferredRender;
+        
 	public:
 		
         
@@ -30,7 +33,6 @@ namespace ms {
                                                                  std::string const & name);
                                         Material                (Material const &) = delete;
         Material &                      operator =          	(Material const &) = delete;
-        void				            use		                ();
         constexpr math::vec3 const &    get_ambient_color       () const { return ambientColor; }
         void                            set_ambient_color       (math::vec3 const & ambient);
         constexpr math::vec3 const &    get_diffuse_color       () const { return diffuseColor; }
@@ -64,6 +66,7 @@ namespace ms {
         
         
     private:
+        void                            use                        ();
         virtual void                    _load                   () override;
         virtual void                    _unload                 () override;
         

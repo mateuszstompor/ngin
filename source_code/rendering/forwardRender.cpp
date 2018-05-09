@@ -26,7 +26,7 @@ void ms::ForwardRender::_load () {
     
 }
 
-void ms::ForwardRender::draw (Drawable & node) {
+void ms::ForwardRender::draw (Drawable & node, math::mat4 const & transformation) {
     auto material = node.get_material();
     if (material) {
         if(auto diff = material->get_diffuse_texture()) {
@@ -51,8 +51,12 @@ void ms::ForwardRender::draw (Drawable & node) {
         }
     }
     set_material(material);
-    shader->set_uniform("modelTransformation", node.get_transformation());
+    shader->set_uniform("modelTransformation", transformation);
     node.draw();
+}
+
+void ms::ForwardRender::draw (Drawable & node) {
+    draw(node, node.get_transformation());
 }
 
 void ms::ForwardRender::set_material (Material * material) {

@@ -16,12 +16,17 @@ namespace ms {
     
     class DLShadowRender : public Render {
         
+        friend class NGin;
+        
     public:
         
                         DLShadowRender          (std::unique_ptr<Framebuffer> &&    framebuffer,
                                                  std::unique_ptr<Shader> &&         shader);
-        
+                        ~DLShadowRender         () = default;
         std::string     get_class               () const override;
+        
+    private:
+        
         void            draw                    (Drawable & node);
         void            setup_uniforms          (math::mat4 const & projection, math::mat4 const & transformation);
         
