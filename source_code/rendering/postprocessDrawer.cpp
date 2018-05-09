@@ -13,7 +13,8 @@ ms::PostprocessDrawer::PostprocessDrawer(std::vector<std::weak_ptr<Texture2D>>  
                                          std::unique_ptr<Shader> && shaderProgram) :    Render(std::move(framebuffer),
                                                                                                 std::move(shaderProgram)),
                                                                                         inputTextures(input),
-                                                                                        quad(Drawable::get_quad()) {}
+                                                                                        quad(Drawable::get_quad()),
+                                                                                        isOn{true} {}
 
 
 void ms::PostprocessDrawer::_load () {
@@ -27,10 +28,15 @@ void ms::PostprocessDrawer::_unload () {
     quad->get_geometry()->unload();
 }
 
+void ms::PostprocessDrawer::set_enabled (bool state) {
+    isOn = state;
+}
+
 void ms::PostprocessDrawer::draw() const {
 	
 	{
 		for(int i = 0; i < inputTextures.size(); ++i) {
+            shader->set_uniform("isOn", isOn ? 1 : 0);
 			shader->set_uniform("in" + std::to_string(i), i);
             shader->bind_texture(i, *(inputTextures[i].lock()));
 		}
