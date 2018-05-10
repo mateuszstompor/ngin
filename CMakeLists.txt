@@ -24,16 +24,8 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 if(WIN32)
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-
-        file(COPY
-                ${CMAKE_SOURCE_DIR}/third-party-libs/config.h
-             DESTINATION
-                ${CMAKE_SOURCE_DIR}/third-party-libs/assimp/include/assimp
-             )
-
         add_compile_options(/bigobj)
         add_definitions(-D__WIN32__)
-
     else()
         message( FATAL_ERROR "Compiler not supported. You need to use visual studio compiler" )
     endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
@@ -46,9 +38,11 @@ find_package(OpenGL REQUIRED)
 # assimp
 add_subdirectory(${CMAKE_SOURCE_DIR}/third-party-libs/assimp)
 
-include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/assimp/include)
+include_directories("${CMAKE_SOURCE_DIR}/third-party-libs/assimp/include" "${CMAKE_CURRENT_BINARY_DIR}/third-party-libs/assimp/include")
 include_directories(${OPENGL_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/GSL/include)
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glMath/source)
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/aTree)
 
 set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.hpp
@@ -106,7 +100,18 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/texture.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp)
 
-add_library(${PROJECT_NAME} ${NGIN_LIBRARY_SOURCE_FILES})
+if (WIN32)
+    set(NGIN_LIBRARY_HEADER_FILES   ${NGIN_LIBRARY_HEADER_FILES}
+                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps/KHR/khrplatform.h
+                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps/glad/glad.h)
+endif (WIN32)
+
+if (WIN32)
+    set(NGIN_LIBRARY_SOURCE_FILES   ${NGIN_LIBRARY_SOURCE_FILES}
+                                    ${CMAKE_SOURCE_DIR}/third-party-libs/glfw/deps/glad.c)
+endif (WIN32)
+
+add_library(${PROJECT_NAME} STATIC ${NGIN_LIBRARY_SOURCE_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 1 PUBLIC_HEADER ${NGIN_LIBRARY_HEADER_FILES})
 
 target_link_libraries(${PROJECT_NAME} assimp ${ASSIMP_LIBRARIES})

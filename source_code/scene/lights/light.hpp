@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../../../third-party-libs/glMath/source/glMath.h"
+#include <glMath.h>
 
 namespace ms {
 	

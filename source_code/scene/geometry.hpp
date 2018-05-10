@@ -10,7 +10,8 @@
 
 #include <vector>
 #include <string>
-#include "gsl/span"
+#include <algorithm>
+#include <gsl/span>
 
 #include "vertex.hpp"
 #include "../utils/proxyOGL.hpp"

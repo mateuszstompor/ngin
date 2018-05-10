@@ -17,8 +17,8 @@
 #include "texture.hpp"
 #include "drawable.hpp"
 #include "geometry.hpp"
-#include "../../third-party-libs/aTree/aTree.hpp"
 
+#include <aTree.hpp>
 #include <map>
 #include <vector>
 

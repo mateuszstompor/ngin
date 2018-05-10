@@ -102,22 +102,22 @@ void ms::Shader::compile_program() {
 	}
 	
 	#ifndef ios_build
-
-	if (!tesselationControlSource.empty()) {
-		cshader = mglCreateShader(GL_TESS_CONTROL_SHADER);
-		compile_shader(program, cshader, tesselationControlSource);
+	#ifndef __WIN32__
+	if (!tesselationcontrolsource.empty()) {
+		cshader = mglcreateshader(gl_tess_control_shader);
+		compile_shader(program, cshader, tesselationcontrolsource);
 	}
-	
-	if (!tesselationEvalutationSource.empty()) {
-		evalshader = mglCreateShader(GL_TESS_EVALUATION_SHADER);
-		compile_shader(program, evalshader, tesselationEvalutationSource);
+
+	if (!tesselationevalutationsource.empty()) {
+		evalshader = mglcreateshader(gl_tess_evaluation_shader);
+		compile_shader(program, evalshader, tesselationevalutationsource);
 	}
 
 	if (!geometrySource.empty()) {
 		gshader = mglCreateShader(GL_GEOMETRY_SHADER);
 		compile_shader(program, gshader, geometrySource);
 	}
-	
+	#endif
 	#endif
 	
 	if (!fragmentSource.empty()) {

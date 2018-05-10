@@ -124,11 +124,14 @@ void ms::Framebuffer::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && render
 void ms::Framebuffer::configure () {
 	this->use();
     if (colorTextureAttachmentsAmount > 0) {
-        GLenum attachments[colorTextureAttachmentsAmount];
+
+        GLenum* attachments;
+		attachments = new GLenum[colorTextureAttachmentsAmount];
         for(int i = 0; i < colorTextureAttachmentsAmount; ++i) {
             attachments[i] = GL_COLOR_ATTACHMENT0 + static_cast<GLenum>(i);
         }
         mglDrawBuffers(colorTextureAttachmentsAmount, attachments);
+		delete attachments;
     } else {
 		GLenum attachments = { GL_NONE };
         mglDrawBuffers(1, &attachments);

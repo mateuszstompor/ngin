@@ -80,14 +80,14 @@ ms::math::BoundingBox<float> ms::Geometry::calculate_bounding_box (std::vector<V
         float minY{vertices[0].position.y()}, maxY{vertices[0].position.y()};
         float minZ{vertices[0].position.z()}, maxZ{vertices[0].position.z()};
         for (auto const & vert : vertices) {
-            maxX = std::max(maxX, vert.position.x());
-            minX = std::min(minX, vert.position.x());
+            maxX = std::max<float>(maxX, vert.position.x());
+            minX = std::min<float>(minX, vert.position.x());
 
-            maxY = std::max(maxY, vert.position.y());
-            minY = std::min(minY, vert.position.y());
+            maxY = std::max<float>(maxY, vert.position.y());
+            minY = std::min<float>(minY, vert.position.y());
 
-            maxZ = std::max(maxZ, vert.position.z());
-            minZ = std::min(minZ, vert.position.z());
+            maxZ = std::max<float>(maxZ, vert.position.z());
+            minZ = std::min<float>(minZ, vert.position.z());
         }
         return math::BoundingBox<float> {minX, maxX, minY, maxY, minZ, maxZ};
     }
