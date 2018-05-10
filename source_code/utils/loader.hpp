@@ -37,19 +37,24 @@ namespace ms {
 		using materials_map             = std::map<std::string, std::unique_ptr<Material>>;
 		using textures_map              = std::map<std::string, std::unique_ptr<Texture2D>>;
         using textures_and_materials    = std::tuple<materials_map, textures_map>;
+        using material_vec              = std::vector<std::unique_ptr<Material>>;
 		using model_data                = std::tuple<geometries_vec, materials_map, textures_map>;
+        using texture                   = std::unique_ptr<Texture2D>;
 		
-		model_data	                	load_model              (std::string const & path);
-        std::unique_ptr<Texture2D>      load_texture_from_file  (std::string const & absolutePath);
+		model_data	                	load_model_from_file            (std::string const & absolutePath) const;
+        texture                         load_texture_from_file          (std::string const & absolutePath) const;
+        materials_map                   load_materials_from_file        (std::string const & absolutePath) const;
+        textures_map                    load_textures_from_file         (std::string const & absolutePath) const;
+        geometries_vec                  load_geometry_from_file         (std::string const & absolutePath) const;
         
 	private:
 		
-		model_data                  	process_node			(aiNode const &	node, aiScene const & scene);
-		std::unique_ptr<Geometry>  		process_geometry		(aiMesh const & mesh, aiScene const & scene);
-		textures_and_materials      	load_materials			(aiScene const & scene, std::string const & directoryPath);
-		std::unique_ptr<Texture2D>    	load_embeded_texture	(aiTexture const & texture, std::string const & withName);
-		std::vector<std::string>    	get_texture_paths		(aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath);
-		ms::math::vec3              	to_vec3					(aiColor3D const & color);
+		geometries_vec                  process_node			        (aiNode const &	node, aiScene const & scene) const;
+		std::unique_ptr<Geometry>  		process_geometry		        (aiMesh const & mesh, aiScene const & scene) const;
+		textures_and_materials      	load_materials_with_textures	(aiScene const & scene, std::string const & directoryPath) const;
+		std::unique_ptr<Texture2D>    	load_embeded_texture	        (aiTexture const & texture, std::string const & withName) const;
+		std::vector<std::string>    	get_texture_paths		        (aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath) const;
+		static ms::math::vec3           to_vec3					        (aiColor3D const & color);
         
 	};
 	

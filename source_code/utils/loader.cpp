@@ -10,17 +10,16 @@
 
 #include "../../third-party-libs/stb_image.h"
 
-ms::Loader::model_data ms::Loader::load_model(std::string const & path) {
-	
+ms::Loader::model_data ms::Loader::load_model_from_file (std::string const & path) const {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 	if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
 		std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
 		assert(false);
 	}
-	
-	model_data data = process_node(*scene->mRootNode, *scene);
-	textures_and_materials texmat = load_materials(*scene, path.substr(0, path.find_last_of('/')));
+    model_data data{};
+    std::get<0>(data) = process_node(*scene->mRootNode, *scene);
+	textures_and_materials texmat = load_materials_with_textures(*scene, path.substr(0, path.find_last_of('/')));
     std::get<2>(data) = std::get<1>(std::move(texmat));
 
 	if(scene->HasMaterials()) {
@@ -30,7 +29,37 @@ ms::Loader::model_data ms::Loader::load_model(std::string const & path) {
 	return data;
 }
 
-ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & scene, std::string const & directoryPath) {
+ms::Loader::geometries_vec ms::Loader::load_geometry_from_file (std::string const & path) const {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+    if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
+        std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
+        assert(false);
+    }
+    return process_node(*scene->mRootNode, *scene);
+}
+
+ms::Loader::materials_map ms::Loader::load_materials_from_file (std::string const & path) const {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+    if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
+        std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
+        assert(false);
+    }
+    return std::get<0>(load_materials_with_textures(*scene, path.substr(0, path.find_last_of('/'))));
+}
+
+ms::Loader::textures_map ms::Loader::load_textures_from_file (std::string const & path) const {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+    if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
+        std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
+        assert(false);
+    }
+    return std::get<1>(load_materials_with_textures(*scene, path.substr(0, path.find_last_of('/'))));
+}
+
+ms::Loader::textures_and_materials ms::Loader::load_materials_with_textures (aiScene const & scene, std::string const & directoryPath) const {
 	
 	textures_and_materials  texmat;
 	
@@ -110,7 +139,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials (aiScene const & s
 	
 }
 
-std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string const & absolutePath) {
+std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string const & absolutePath) const {
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
 	if (data != nullptr) {
@@ -150,11 +179,9 @@ std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string c
 	}
 }
 
-ms::Loader::model_data ms::Loader::process_node (aiNode const & node, aiScene const & scene) {
-	
-	model_data data;
-	
-	geometries_vec & geometries = std::get<0>(data);
+ms::Loader::geometries_vec ms::Loader::process_node (aiNode const & node, aiScene const & scene) const {
+		
+    geometries_vec geometries{};
 	
 		for(unsigned int i = 0; i < node.mNumMeshes; ++i) {
 			aiMesh const & mesh = *scene.mMeshes[node.mMeshes[i]];
@@ -164,17 +191,16 @@ ms::Loader::model_data ms::Loader::process_node (aiNode const & node, aiScene co
 		}
 	
 		for(unsigned int i = 0; i < node.mNumChildren; ++i) {
-			model_data proceededNodes = process_node(*node.mChildren[i], scene);
-			geometries_vec & proceededGeo = std::get<0>(proceededNodes);
+			geometries_vec proceededGeo = process_node(*node.mChildren[i], scene);
 			geometries.insert(geometries.end(),
 							  std::make_move_iterator(proceededGeo.begin()),
 							  std::make_move_iterator(proceededGeo.end()));
 		}
 	
-	return data;
+	return geometries;
 }
 
-std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, aiScene const & scene) {
+std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, aiScene const & scene) const {
 
     std::vector <Vertex> vertices;
     std::vector <unsigned int> indices;
@@ -221,7 +247,7 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
 
 }
 
-std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath) {
+std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath) const {
 	std::vector<std::string> paths;
 	unsigned int texCount = mat.GetTextureCount(type);
 	for (unsigned int i = 0; i < texCount; ++i) {
@@ -232,7 +258,7 @@ std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & ty
 	return paths;
 }
 
-std::unique_ptr<ms::Texture2D> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) {
+std::unique_ptr<ms::Texture2D> ms::Loader::load_embeded_texture (aiTexture const & texture, std::string const & withName) const {
 	//TODO implement embeded textures
 	assert(false);
 	return nullptr;

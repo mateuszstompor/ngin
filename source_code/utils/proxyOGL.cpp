@@ -141,6 +141,11 @@ void _mglVertexAttribPointer (GLuint indx, GLint size, GLenum type, GLboolean no
 	ms::utils::check_gl_error();
 }
 
+void _mglBlendFunc (GLenum sfactor, GLenum dfactor) {
+    glBlendFunc(sfactor, dfactor);
+    ms::utils::check_gl_error();
+}
+
 void _mglEnableVertexAttribArray (GLuint index) {
 	glEnableVertexAttribArray(index);
 	ms::utils::check_gl_error();

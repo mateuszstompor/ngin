@@ -45,7 +45,7 @@ namespace ms {
         void                            set_opacity             (float opacity);
         std::string const &             get_name                () const { return name; }
         void                            set_name                (std::string const & name);
-        
+        bool                            is_translucent          () const;
         std::string                     get_class               () const override;
 		
         void                            bind_diffuse_texture    (std::shared_ptr<Texture2D> diffuse);

@@ -79,6 +79,10 @@ void ms::Material::set_ambient_color (math::vec3 const & ambient) {
     }
 }
 
+bool ms::Material::is_translucent () const {
+    return opacity < 1.0f;
+}
+
 void ms::Material::set_diffuse_color (math::vec3 const & diffuse) {
     diffuseColor = diffuse;
     if(is_loaded()) {

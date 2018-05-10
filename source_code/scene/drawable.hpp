@@ -45,6 +45,8 @@ namespace ms {
         void                                    bind_material           (std::shared_ptr<Material> material);
         Material *                              get_material            ();
         Geometry *                              get_geometry            ();
+        void                                    set_shading             (bool shouldBeShaded);
+        constexpr bool                          is_shaded               () const { return isShaded; }
         
     private:
         bool                                    can_be_drawn            () const;
@@ -56,6 +58,7 @@ namespace ms {
         bool                                    invalidated;
         std::shared_ptr<Geometry>               boundedGeometry;
         std::shared_ptr<Material>               boundedMaterial;
+        bool                                    isShaded;
 		math::mat4                              transformation;
         GLuint                                  vertexArray;
 		

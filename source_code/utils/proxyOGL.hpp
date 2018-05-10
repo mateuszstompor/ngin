@@ -109,7 +109,9 @@ GLuint 		_mglGetUniformBlockIndex (GLuint program, const GLchar *uniformBlockNam
 void		_mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
 void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 void        _mglReadBuffer (GLenum mode);
+void        _mglBlendFunc (GLenum sfactor, GLenum dfactor);
 
+#define mglBlendFunc                _mglBlendFunc
 #define mglDrawElements				_mglDrawElements
 #define mglFramebufferRenderbuffer	_mglFramebufferRenderbuffer
 #define mglViewport					_mglViewport
@@ -176,6 +178,7 @@ void        _mglReadBuffer (GLenum mode);
 
 #else
 
+#define mglBlendFunc                glBlendFunc
 #define mglDrawElements				glDrawElements
 #define mglFramebufferRenderbuffer	glFramebufferRenderbuffer
 #define mglViewport					glViewport

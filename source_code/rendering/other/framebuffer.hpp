@@ -80,6 +80,8 @@ namespace ms {
 		void				            clear_color			();
 		void				            clear_depth			();
 		void				            clear_frame			();
+        void                            set_blending        (bool enabled);
+        constexpr bool                  get_blending        () const { return isBlendingEnabled; }
         void				            set_depth_test		(bool enabled);
         void				            set_clear_color		(math::vec4 const & color);
         constexpr int                   get_height			() const { return height; }
@@ -110,6 +112,7 @@ namespace ms {
         strong_depth_renderbuffer       depthRenderbuffer;
 		bool							isConfigured;
         bool                            is_default_framebuffer;
+        bool                            isBlendingEnabled;
         GLuint                          framebuffer;
 	};
 	

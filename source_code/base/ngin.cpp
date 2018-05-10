@@ -222,7 +222,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
 //TODO this function is implemented three times
 void ms::NGin::load_model (std::string const & absolutePath) {
 	
-    Loader::model_data loadedData = loader.load_model(absolutePath);
+    Loader::model_data loadedData = loader.load_model_from_file(absolutePath);
     
     {
         auto & geo = std::get<0>(loadedData);
@@ -233,7 +233,6 @@ void ms::NGin::load_model (std::string const & absolutePath) {
         scene.get_textures().insert(std::make_move_iterator(tex.begin()), std::make_move_iterator(tex.end()));
         scene.get_geometries().insert(scene.get_geometries().end(), std::make_move_iterator(geo.begin()), std::make_move_iterator(geo.end()));
     }
-//    scene.get_nodes().add_root(std::make_shared<Drawable>());
     for (auto & geometry : scene.get_geometries()) {
         auto node = std::make_shared<Drawable>();
         node->bind_geometry(geometry);
@@ -382,7 +381,7 @@ void ms::NGin::draw_scene() {
             deferredRenderer->gFramebuffer->use();
             deferredRenderer->gFramebuffer->clear_frame();
             for(auto node : scene.get_nodes()) {
-                if(node->can_be_drawn()) {
+                if(node->can_be_drawn() && node->is_shaded() && !node->boundedMaterial->is_translucent()) {
                     if(scene.get_camera().is_in_camera_sight(node->get_transformation(), node->get_geometry()->get_bounding_box())) {
                         deferredRenderer->draw(*node);
                     }
@@ -437,13 +436,35 @@ void ms::NGin::draw_scene() {
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         }
         
-        //    lightSourceRenderer->use();
-        //    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
-        //        lightSourceRenderer->draw(scene.get_point_lights()[i], scene);
-        //    }
-        //    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-        //        lightSourceRenderer->draw(scene.get_spot_lights()[i], scene);
-        //    }
+        lightSourceRenderer->use();
+        lightSourceRenderer->set_camera(scene.get_camera());
+        for(auto node : scene.get_nodes()) {
+            if(node->can_be_drawn() && !node->is_shaded() && !node->get_material()->is_translucent()) {
+                if(scene.get_camera().is_in_camera_sight(node->get_transformation(), node->get_geometry()->get_bounding_box())) {
+                    lightSourceRenderer->draw(*node);
+                }
+            }
+        }
+        
+        //translucency
+        lightSourceRenderer->get_framebuffer().set_blending(true);
+        phongForwardRenderer->use(lightSourceRenderer->get_framebuffer());
+        phongForwardRenderer->set_camera(scene.get_camera());
+        phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
+        phongForwardRenderer->set_directionallight(scene.get_directional_light());
+        phongForwardRenderer->set_point_lights(scene.get_point_lights());
+        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        
+        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
+        for(auto node : scene.get_nodes()) {
+            if(node->can_be_drawn()) {
+                phongForwardRenderer->set_material(node->get_material());
+                phongForwardRenderer->draw(*node);
+            }
+        }
+        lightSourceRenderer->get_framebuffer().set_blending(false);
         
         bloomSplitRenderer->use();
         bloomSplitRenderer->get_framebuffer().clear_frame();

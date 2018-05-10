@@ -47,6 +47,7 @@ namespace ms {
         void 							            load 				();
         void 							            unload 				();
         void							            draw_scene  		();
+        constexpr Loader const &                    get_loader          () const { return loader; }
         DeferredRender & 		                    get_deferred_render	() const;
         void							            load_model			(std::string const & absolutePath);
         void                                        pause_drawing       () { shouldDraw = false; }

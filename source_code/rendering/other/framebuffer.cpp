@@ -59,6 +59,13 @@ void ms::Framebuffer::use () {
 		mglDisable(GL_DEPTH_TEST);
 	}
 	
+    if(isBlendingEnabled) {
+        mglEnable(GL_BLEND);
+        mglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    } else {
+        mglDisable(GL_BLEND);
+    }
+    
 	mglViewport(0, 0, width, height);
 	mglBindFramebuffer(GL_FRAMEBUFFER, this->framebuffer);
 }
@@ -146,7 +153,8 @@ colorTextureAttachmentsAmount{colorAttachmentsAmount},
 colorRenderbufferAttachmentsAmount{renderbufferAttachmentsAmount},
 isDepthTestEnabled{true},
 framebuffer{0},
-is_default_framebuffer{false} {
+is_default_framebuffer{false},
+isBlendingEnabled{false} {
     
     colorTextureAttachments.resize(static_cast<size_t>(colorAttachmentsAmount));
     colorRenderbufferAttachments.resize(static_cast<size_t>(renderbufferAttachmentsAmount));
@@ -182,6 +190,10 @@ void ms::Framebuffer::set_underlying_id (GLuint framebufferID) {
 		assert(false);
 	}
 	framebuffer = framebufferID;
+}
+
+void ms::Framebuffer::set_blending (bool enabled) {
+    isBlendingEnabled = enabled;
 }
 
 void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2D> && texture) {

@@ -14,7 +14,7 @@ namespace ms {
 	
 	class LightSourcesRender : public Render {
 		
-        friend class LightSourcesRender;
+        friend class NGin;
         
     public:
 		
