@@ -18,13 +18,12 @@ namespace ms {
         
     public:
 		
-                        LightSourcesRender		(std::unique_ptr<Framebuffer> &&    framebuffer,
-                                                 std::unique_ptr<Shader> &&         shader);
                         ~LightSourcesRender     () = default;
         std::string     get_class               () const override;
     
     private:
-        
+                        LightSourcesRender        (std::unique_ptr<Framebuffer> &&    framebuffer,
+                                                   std::unique_ptr<Shader> &&         shader);
         void	        draw  					(Drawable & node);
         void            set_camera              (Camera const & camera);
 		

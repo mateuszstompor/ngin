@@ -18,11 +18,13 @@
 namespace ms {
 	
     class Render : public Resource {
-		
-    public:
+	public:
+
+		virtual					~Render 		() = default;
+
+    protected:
 								Render			(std::unique_ptr<Framebuffer> && 	framebuffer,
 												 std::unique_ptr<Shader> && 		shader);
-		
 		virtual void			use		     	();
 		virtual void			use		     	(Framebuffer & framebuffer);
 		virtual	void			_load			() override;
@@ -30,9 +32,6 @@ namespace ms {
 		virtual std::string 	get_class		() const override;
 		Framebuffer &			get_framebuffer () { return *framebuffer; }
 		Shader &				get_shader		() { return *shader; }
-		virtual					~Render 		() = default;
-		
-	protected:
 		
 		std::unique_ptr<Framebuffer> 	framebuffer;
 		std::unique_ptr<Shader>			shader;

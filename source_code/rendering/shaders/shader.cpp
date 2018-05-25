@@ -152,7 +152,7 @@ void ms::Shader::bind_texture(std::size_t index, Texture2D & texture) {
 }
 
 ms::Shader::program_ptr ms::Shader::vf_program 	(std::string const & vertexSource, std::string const & fragmentSource) {
-	return std::make_unique<Shader>(vertexSource, "", "", "", fragmentSource);
+	return std::unique_ptr<Shader>(new Shader{vertexSource, "", "", "", fragmentSource});
 }
 
 std::string ms::Shader::get_class () const {

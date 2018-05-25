@@ -52,10 +52,11 @@ namespace ms {
         void							            load_model			(std::string const & absolutePath);
         void                                        pause_drawing       () { shouldDraw = false; }
         void                                        resume_drawing      () { shouldDraw = true; }
-		Scene                                       scene;
+        constexpr Scene &                           get_scene           () { return scene; }
 		
 	private:
 		
+        Scene                                       scene;
 		void							            count_fps			();
 		Loader					                    loader;
         

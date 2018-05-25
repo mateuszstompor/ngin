@@ -45,12 +45,12 @@ namespace ms {
         using texture                   = std::unique_ptr<Texture2D>;
         using paths                     = std::vector<std::string>;
 		
-		model_data	                	load_model_from_file                    (std::string const & absolutePath) const;
-        texture                         load_texture_from_file                  (std::string const & absolutePath) const;
-        materials_map                   load_materials_from_file                (std::string const & absolutePath) const;
-        textures_map                    load_textures_from_file                 (std::string const & absolutePath) const;
-        geometries_vec                  load_geometry_from_file                 (std::string const & absolutePath) const;
-        geometries_vec_h                load_geometry_preserving_hierarchy      (std::string const & absolutePath) const;
+		model_data	                	load_flat_model                         (std::string const & absolutePath) const;
+        texture                         load_texture                            (std::string const & absolutePath) const;
+        materials_map                   load_materials                          (std::string const & absolutePath) const;
+        textures_map                    load_textures_for_materials             (std::string const & absolutePath) const;
+        geometries_vec                  load_flat_geometry                      (std::string const & absolutePath) const;
+        geometries_vec_h                load_hierarchical_geometry              (std::string const & absolutePath) const;
         
 	private:
 		

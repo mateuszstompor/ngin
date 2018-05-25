@@ -29,7 +29,11 @@ namespace ms {
 	class Framebuffer : public Resource {
         
         using fb_ptr = std::unique_ptr<Framebuffer>;
-
+        
+        friend class Render;
+        friend class DeferredRender;
+        friend class NGin;
+        
 	protected:
 		
 		using strong_color_texbuffers       = std::vector<std::shared_ptr<Texture2D>>;
@@ -43,8 +47,6 @@ namespace ms {
     
         using weak_color_renderbuffers      = std::vector<std::weak_ptr<Renderbuffer>>;
         using weak_depth_renderbuffer       = std::weak_ptr<Renderbuffer>;
-		
-	public:
 		
           						        Framebuffer			(int    colorAttachmentsAmount,
                                                              int    renderbufferAttachmentsAmount,
@@ -93,7 +95,10 @@ namespace ms {
         static  fb_ptr                  window_framebuffer  (int width, int height);
         constexpr GLuint                get_underlying_id   () const { return framebuffer; }
         void                            set_underlying_id   (GLuint framebufferID);
-		    						    ~Framebuffer		() = default;
+    
+    public:
+    
+                                        ~Framebuffer		() = default;
 
 	private:
 		

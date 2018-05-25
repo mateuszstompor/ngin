@@ -20,14 +20,13 @@ namespace ms {
 		
 	public:
 		
-						ForwardRender					(unsigned int 						maximalAmountOfLights,
-														 std::unique_ptr<Framebuffer> && 	framebuffer,
-														 std::unique_ptr<Shader> && 		shader);
 						~ForwardRender					() = default;
 		std::string 	get_class						() const override;
 	
 	private:
-	
+						ForwardRender					(unsigned int 						maximalAmountOfLights,
+														 std::unique_ptr<Framebuffer> && 	framebuffer,
+														 std::unique_ptr<Shader> && 		shader);
 		void 			draw  							(Drawable & node) override;
 		void    		draw                    		(Drawable & node, math::mat4 const & transformation);
 		void    		set_material            		(Material * material) override;

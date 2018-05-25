@@ -19,14 +19,13 @@ namespace ms {
         friend class NGin;
         
     public:
-        
-                        DLShadowRender          (std::unique_ptr<Framebuffer> &&    framebuffer,
-                                                 std::unique_ptr<Shader> &&         shader);
+    
                         ~DLShadowRender         () = default;
         std::string     get_class               () const override;
         
     private:
-        
+                        DLShadowRender          (std::unique_ptr<Framebuffer> &&    framebuffer,
+                                                 std::unique_ptr<Shader> &&         shader);
         void            draw                    (Drawable & node);
         void            setup_uniforms          (math::mat4 const & projection, math::mat4 const & transformation);
         

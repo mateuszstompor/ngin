@@ -20,18 +20,17 @@ namespace ms {
         
         friend class NGin;
         
-	public:
-        
-									            PostprocessDrawer	(std::vector<std::weak_ptr<Texture2D>> 	input,
-                                                                     std::unique_ptr<Framebuffer> &&        framebuffer,
-                                                                     std::unique_ptr<Shader> &&             shaderProgram);
-        
-        std::string                             get_class           () const override;
+    public:
+
         constexpr bool                          is_enabled          () const { return isOn; }
         void                                    set_enabled         (bool state);
         
 	private:
-
+                                                PostprocessDrawer   (std::vector<std::weak_ptr<Texture2D>>  input,
+                                                                     std::unique_ptr<Framebuffer> &&        framebuffer,
+                                                                     std::unique_ptr<Shader> &&             shaderProgram);
+        
+        std::string                             get_class           () const override;
         bool                                    isOn;
         void                                    draw                () const;
         void                                    _load               () override;

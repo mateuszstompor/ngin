@@ -13,9 +13,7 @@
 namespace ms {
     
     class ModelRender : public Render {
-    
-        private:
-        
+            
         friend class ForwardRender;
         friend class DeferredRender;
         

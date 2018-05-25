@@ -10,7 +10,7 @@
 
 #include "../../third-party-libs/stb_image.h"
 
-ms::Loader::model_data ms::Loader::load_model_from_file (std::string const & path) const {
+ms::Loader::model_data ms::Loader::load_flat_model (std::string const & path) const {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 	if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
@@ -29,7 +29,7 @@ ms::Loader::model_data ms::Loader::load_model_from_file (std::string const & pat
 	return data;
 }
 
-ms::Loader::geometries_vec_h ms::Loader::load_geometry_preserving_hierarchy (std::string const & path) const {
+ms::Loader::geometries_vec_h ms::Loader::load_hierarchical_geometry (std::string const & path) const {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
     if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
@@ -55,7 +55,7 @@ void ms::Loader::process_node (tree<geometry> & tree, ::ms::tree<geometry>::iter
     }
 }
 
-ms::Loader::geometries_vec ms::Loader::load_geometry_from_file (std::string const & path) const {
+ms::Loader::geometries_vec ms::Loader::load_flat_geometry (std::string const & path) const {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
     if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
@@ -65,7 +65,7 @@ ms::Loader::geometries_vec ms::Loader::load_geometry_from_file (std::string cons
     return process_node(*scene->mRootNode, *scene);
 }
 
-ms::Loader::materials_map ms::Loader::load_materials_from_file (std::string const & path) const {
+ms::Loader::materials_map ms::Loader::load_materials (std::string const & path) const {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
     if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
@@ -75,7 +75,7 @@ ms::Loader::materials_map ms::Loader::load_materials_from_file (std::string cons
     return std::get<0>(load_materials_with_textures(*scene, path.substr(0, path.find_last_of('/'))));
 }
 
-ms::Loader::textures_map ms::Loader::load_textures_from_file (std::string const & path) const {
+ms::Loader::textures_map ms::Loader::load_textures_for_materials (std::string const & path) const {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
     if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
@@ -129,27 +129,23 @@ ms::Loader::textures_and_materials ms::Loader::load_materials_with_textures (aiS
 		#endif
 		
         for (auto absolutePath : msMaterial->diffuseTexturesNames) {
-            if(auto texture = load_texture_from_file(absolutePath)) {
+            if(auto texture = load_texture(absolutePath))
                 textures.insert(std::make_pair(absolutePath, std::move(texture)));
-            }
         }
     
         for (auto absolutePath : msMaterial->specularTexturesNames) {
-            if(auto texture = load_texture_from_file(absolutePath)) {
+            if(auto texture = load_texture(absolutePath))
                 textures.insert(std::make_pair(absolutePath, std::move(texture)));
-            }
         }
         
         for (auto absolutePath : msMaterial->normalTexturesNames) {
-            if(auto texture = load_texture_from_file(absolutePath)) {
+            if(auto texture = load_texture(absolutePath))
                 textures.insert(std::make_pair(absolutePath, std::move(texture)));
-            }
         }
         
         for (auto absolutePath : msMaterial->heightTexturesNames) {
-            if(auto texture = load_texture_from_file(absolutePath)) {
+            if(auto texture = load_texture(absolutePath))
                 textures.insert(std::make_pair(absolutePath, std::move(texture)));
-            }
         }
 		
         materials.insert(std::make_pair(name, std::move(msMaterial)));
@@ -165,7 +161,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials_with_textures (aiS
 	
 }
 
-std::unique_ptr<ms::Texture2D> ms::Loader::load_texture_from_file (std::string const & absolutePath) const {
+std::unique_ptr<ms::Texture2D> ms::Loader::load_texture (std::string const & absolutePath) const {
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
 	if (data != nullptr) {
