@@ -21,8 +21,10 @@ R"(
 #define BLUE_WEIGHT_ADAPTIVE_TONE	0.11f
 
 #define INNER_CUTOFF_BIAS           0.015f
+#define USUAL_POWER                 100.0f
 
 struct DirectionalLight {
+    float       power;
 	vec3    	direction;
 	vec3    	color;
 };
@@ -194,7 +196,7 @@ void main() {
             vec4 fragmentInLightPos = dirLightProjection * dirLightTransformation * vec4(fragmentPosition, 1.0f);
             shadow = calculate_pcf_shadow(dirLightShadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
         }
-        result += (1.0f - shadow) * dirLight.color.xyz * diffuseColor * count_diffuse_factor(normal_N, normalize(dirLight.direction)) * DIFFUSE_STRENGTH;
+        result += dirLight.power/USUAL_POWER * (1.0f - shadow) * dirLight.color.xyz * diffuseColor * count_diffuse_factor(normal_N, normalize(dirLight.direction)) * DIFFUSE_STRENGTH;
     }
 
 
@@ -209,7 +211,7 @@ void main() {
         vec3 surfaceLightZ = -transformatedLightPosition - fragmentPosition;
         float distance = length(surfaceLightZ);
         vec3 surfaceLightZ_N = surfaceLightZ / distance;
-        float attenuation = count_attenuation_factor(distance);
+        float attenuation = count_attenuation_factor(distance) * spotLights[j].power/USUAL_POWER;
 
         float spotLightAngleRadians = radians(spotLights[j].angleDegrees) + 0.05f;
 
@@ -247,7 +249,7 @@ void main() {
                                         normal_N,
                                         surfaceCameraZ_N,
                                         surfaceLightZ,
-                                        surfaceLightZ_N);
+                                        surfaceLightZ_N) * pointLights[i].power/USUAL_POWER;
     }
 
     outputColor = vec4(result, 1.0f);

@@ -22,7 +22,7 @@ namespace ms {
                                                              bool               castsShadow,
                                                              math::mat4 const & projection = math::projection4f::orthogonal_cube(44.0f));
         
-        constexpr math::mat4 const &      get_projection      () const { return projection; }
+        constexpr math::mat4 const &    get_projection      () const { return projection; }
 		virtual                         ~DirectionalLight   () = default;
         
     private:

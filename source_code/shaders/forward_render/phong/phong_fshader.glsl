@@ -86,7 +86,7 @@ void main(){
             vec4 fragmentInLightPos = dirLightProjection * dirLightTransformation * vec4(fragmentPositionWorld, 1.0f);
             shadow = calculate_pcf_shadow(dirLightShadowMap, fragmentInLightPos, dirLight.direction, normalInWorld, 0.005f, 0.05f);
         }
-        result += (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normalToUse_N, lightTransformationMatrix);
+        result += dirLight.power/USUAL_POWER * (1.0f - shadow) * count_light_influence(dirLight, diffuseColor, normalToUse_N, lightTransformationMatrix);
 	}
 	
     for(int j=0; j < spotLightsAmount; ++j) {
@@ -99,7 +99,7 @@ void main(){
         vec3 surfaceLightZ = -transformatedLightPosition - fragmentPositionWorld;
         float distance = length(surfaceLightZ);
         vec3 surfaceLightZ_N = surfaceLightZ / distance;
-        float attenuation = count_attenuation_factor(distance);
+        float attenuation = count_attenuation_factor(distance) * spotLights[j].power/USUAL_POWER;
         
         float spotLightAngleRadians = radians(spotLights[j].angleDegrees) + 0.05f;
 
@@ -136,7 +136,7 @@ void main(){
                                         normalToUse_N,
                                         cameraPosition,
                                         surfaceZCamera_N,
-                                        lightTransformationMatrix);
+                                        lightTransformationMatrix) * pointLights[i].power/USUAL_POWER;
     }
 
 	FragColor = vec4(result, materialBlock.opacity);

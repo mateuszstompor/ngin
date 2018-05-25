@@ -93,6 +93,7 @@ void ms::ForwardRender::set_directionallight (DirectionalLight const * direction
     if(directionalLight) {
         shader->set_uniform("hasDirLight", 1);
         shader->set_uniform("dirLight.color", directionalLight->get_color());
+        shader->set_uniform("dirLight.power", directionalLight->get_power());
         shader->set_uniform("dirLight.direction", math::back(directionalLight->get_transformation()));
         shader->set_uniform("dirLightProjection", directionalLight->get_projection());
         shader->set_uniform("dirLightTransformation", directionalLight->get_transformation());

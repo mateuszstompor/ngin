@@ -222,7 +222,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
 //TODO this function is implemented three times
 void ms::NGin::load_model (std::string const & absolutePath) {
 	
-    Loader::model_data loadedData = loader.load_model_from_file(absolutePath);
+    Loader::model_data loadedData = loader.load_flat_model(absolutePath);
     
     {
         auto & geo = std::get<0>(loadedData);
@@ -389,7 +389,6 @@ void ms::NGin::draw_scene() {
                 deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
             deferredRenderer->perform_light_pass(scene);
-            lightSourceRenderer->get_framebuffer().clear_frame();
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else if(chosenRenderer == Renderer::forward_fragment) {
             phongForwardRenderer->use(deferredRenderer->get_framebuffer());
@@ -399,7 +398,7 @@ void ms::NGin::draw_scene() {
             phongForwardRenderer->set_directionallight(scene.get_directional_light());
             phongForwardRenderer->set_point_lights(scene.get_point_lights());
             phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-            
+
             for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
                 phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
@@ -409,7 +408,6 @@ void ms::NGin::draw_scene() {
                     phongForwardRenderer->draw(*node);
                 }
             }
-            lightSourceRenderer->get_framebuffer().clear_frame();
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else {
             gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
@@ -419,7 +417,7 @@ void ms::NGin::draw_scene() {
             gouraudForwardRenderer->set_directionallight(scene.get_directional_light());
             gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
             gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-            
+
             for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
                 gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
@@ -429,10 +427,9 @@ void ms::NGin::draw_scene() {
                     gouraudForwardRenderer->draw(*node);
                 }
             }
-            lightSourceRenderer->get_framebuffer().clear_frame();
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         }
-        
+    
         lightSourceRenderer->use();
         lightSourceRenderer->set_camera(scene.get_camera());
         for(auto node : scene.get_nodes()) {
@@ -451,12 +448,12 @@ void ms::NGin::draw_scene() {
         phongForwardRenderer->set_directionallight(scene.get_directional_light());
         phongForwardRenderer->set_point_lights(scene.get_point_lights());
         phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        
+
         for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
             phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
         }
         for(auto node : scene.get_nodes()) {
-            if(node->can_be_drawn()) {
+            if(node->can_be_drawn() && node->is_shaded() && node->get_material()->is_translucent()) {
                 phongForwardRenderer->set_material(node->get_material());
                 phongForwardRenderer->draw(*node);
             }

@@ -29,7 +29,7 @@ namespace ms {
 		inline constexpr    int             	       casts_shadow             () const { return castsShadow; }
 
 	protected:
-        
+        //  power should be in range from 0 to 200
         float                                       power;
 		math::vec3 		                            color;
         math::mat4                                  transformation;

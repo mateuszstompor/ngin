@@ -87,6 +87,7 @@ void ms::DeferredRender::set_directionallight (DirectionalLight const * directio
     if(directionalLight) {
         lightingShader->set_uniform("hasDirLight", 1);
         lightingShader->set_uniform("dirLight.color", directionalLight->get_color());
+        lightingShader->set_uniform("dirLight.power", directionalLight->get_power());
         lightingShader->set_uniform("dirLight.direction", math::back(directionalLight->get_transformation()));
         lightingShader->set_uniform("dirLightProjection", directionalLight->get_projection());
         lightingShader->set_uniform("dirLightTransformation", directionalLight->get_transformation());
