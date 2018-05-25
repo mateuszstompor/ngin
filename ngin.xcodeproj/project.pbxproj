@@ -10,16 +10,16 @@
 		560313E5207F9EB300C37C68 /* orthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560313E3207F9EB300C37C68 /* orthographicCamera.cpp */; };
 		560313E6207F9EB300C37C68 /* orthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560313E3207F9EB300C37C68 /* orthographicCamera.cpp */; };
 		560313E7207F9EB300C37C68 /* orthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560313E3207F9EB300C37C68 /* orthographicCamera.cpp */; };
-		560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560313E4207F9EB300C37C68 /* orthographicCamera.hpp */; };
+		560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560313E4207F9EB300C37C68 /* orthographicCamera.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		560627CA20633B5F005085CD /* framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627C820633B5F005085CD /* framebuffer.cpp */; };
 		560627CB20633B5F005085CD /* framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627C820633B5F005085CD /* framebuffer.cpp */; };
 		560627CF20633B69005085CD /* renderbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627CD20633B69005085CD /* renderbuffer.cpp */; };
 		560627D020633B69005085CD /* renderbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627CD20633B69005085CD /* renderbuffer.cpp */; };
-		560627D120633B69005085CD /* renderbuffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560627CE20633B69005085CD /* renderbuffer.hpp */; };
-		561F2EFC204F041D00D7E875 /* material.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 561F2EF9204F041D00D7E875 /* material.hpp */; };
+		560627D120633B69005085CD /* renderbuffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560627CE20633B69005085CD /* renderbuffer.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		561F2EFC204F041D00D7E875 /* material.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 561F2EF9204F041D00D7E875 /* material.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56267871204AC01000A203F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267870204AC01000A203F2 /* OpenGLES.framework */; };
 		56267873204AC01B00A203F2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56267872204AC01A00A203F2 /* OpenGL.framework */; };
-		562BB821209A86D6003033A7 /* light.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 562BB81B209A86D6003033A7 /* light.hpp */; };
+		562BB821209A86D6003033A7 /* light.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 562BB81B209A86D6003033A7 /* light.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		5633FA8F204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA90204B6988003449EE /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5633FA8E204B6988003449EE /* resource.cpp */; };
 		5633FA97204B6F97003449EE /* geometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5633FA94204B6F97003449EE /* geometry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,24 +58,23 @@
 		5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
 		56716850204ADFAE0028EFAA /* ngin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56716826204ADFAE0028EFAA /* ngin.cpp */; };
 		56716854204ADFAE0028EFAA /* ngin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5671682A204ADFAE0028EFAA /* ngin.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56736CAF206453F500CE636A /* postprocessDrawer.hpp */; };
+		56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56736CAF206453F500CE636A /* postprocessDrawer.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56736CBC2064572400CE636A /* postprocessDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawer.cpp */; };
 		56736CBD2064572400CE636A /* postprocessDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56736CBA2064572400CE636A /* postprocessDrawer.cpp */; };
-		56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */ = {isa = PBXBuildFile; fileRef = 56736CC32064745D00CE636A /* hdr_fshader.glsl */; };
 		5674534120540C6F000E7EBD /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* texture.cpp */; };
 		5674534220540C6F000E7EBD /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5674533F20540C6F000E7EBD /* texture.cpp */; };
-		5674534320540C6F000E7EBD /* texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5674534020540C6F000E7EBD /* texture.hpp */; };
+		5674534320540C6F000E7EBD /* texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5674534020540C6F000E7EBD /* texture.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		567453492054B391000E7EBD /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
 		5674534A2054B391000E7EBD /* deferredRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567453482054B391000E7EBD /* deferredRender.cpp */; };
 		5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
 		5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
-		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; };
+		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56CC7EC52088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
 		56CC7EC62088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
 		56CC7EC72088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
-		56CC7EC82088B20C00C2C8AA /* shadowRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56CC7EC42088B20C00C2C8AA /* shadowRender.hpp */; };
+		56CC7EC82088B20C00C2C8AA /* shadowRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56CC7EC42088B20C00C2C8AA /* shadowRender.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56D29AA4207B8DED0080CB3B /* renderbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560627CD20633B69005085CD /* renderbuffer.cpp */; };
 		56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 563B99682065B66900B54626 /* forwardRender.cpp */; };
 		56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5676F29B20522AD1002EAB31 /* proxyOGL.cpp */; };
@@ -103,7 +102,16 @@
 		56D29AD4207B8E2B0080CB3B /* libzlibstatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29AD1207B8E2B0080CB3B /* libzlibstatic.a */; };
 		56DF0F3B20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
 		56DF0F3C20571B6D00713420 /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DF0F3920571B6D00713420 /* loader.cpp */; };
-		56DF0F3D20571B6D00713420 /* loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F3A20571B6D00713420 /* loader.hpp */; };
+		56DF0F3D20571B6D00713420 /* loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56DF0F3A20571B6D00713420 /* loader.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F5669C20B8A38900D8E5FC /* shaderHeaders.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F5669D20B8A38900D8E5FC /* proxyOGL.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5676F29A20522919002EAB31 /* proxyOGL.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F5669E20B8A38900D8E5FC /* framebuffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 560627C420632CCB005085CD /* framebuffer.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F5669F20B8A38900D8E5FC /* forwardRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56296723204F328200685BAE /* forwardRender.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F566A020B8A38900D8E5FC /* deferredRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56296725204F37AD00685BAE /* deferredRender.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F566A120B8A38900D8E5FC /* lightSourcesRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 566D1E1A205F4CAE00CE2F84 /* lightSourcesRender.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F566A220B8A38900D8E5FC /* modelRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 564D04C6209DBADB007C7340 /* modelRender.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F566A320B8A38900D8E5FC /* vertex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56C9A15E2056C301008AD76B /* vertex.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56F566A420B8A38900D8E5FC /* config.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56C3C6A920655EFE0003F630 /* config.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -555,31 +563,39 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5674534320540C6F000E7EBD /* texture.hpp in Headers */,
 				5671684B204ADFAE0028EFAA /* directionalLight.hpp in Headers */,
 				5671684E204ADFAE0028EFAA /* scene.hpp in Headers */,
 				56716831204ADFAE0028EFAA /* resource.hpp in Headers */,
 				5671684C204ADFAE0028EFAA /* pointLight.hpp in Headers */,
-				560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */,
 				56716841204ADFAE0028EFAA /* camera.hpp in Headers */,
-				562BB821209A86D6003033A7 /* light.hpp in Headers */,
 				56716854204ADFAE0028EFAA /* ngin.hpp in Headers */,
 				56716838204ADFAE0028EFAA /* render.hpp in Headers */,
 				5671683C204ADFAE0028EFAA /* perspectiveCamera.hpp in Headers */,
+				5674534320540C6F000E7EBD /* texture.hpp in Headers */,
+				560313E8207F9EB300C37C68 /* orthographicCamera.hpp in Headers */,
+				562BB821209A86D6003033A7 /* light.hpp in Headers */,
 				56736CB2206453F500CE636A /* postprocessDrawer.hpp in Headers */,
 				560627D120633B69005085CD /* renderbuffer.hpp in Headers */,
 				561F2EFC204F041D00D7E875 /* material.hpp in Headers */,
 				56CC7EC82088B20C00C2C8AA /* shadowRender.hpp in Headers */,
+				56DF0F3D20571B6D00713420 /* loader.hpp in Headers */,
+				569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */,
 				5640FED4204AE77600512938 /* shader.hpp in Headers */,
 				5633FA97204B6F97003449EE /* geometry.hpp in Headers */,
-				56736CC62064745D00CE636A /* hdr_fshader.glsl in Headers */,
-				56DF0F3D20571B6D00713420 /* loader.hpp in Headers */,
 				5633FAB9204C6625003449EE /* utils.hpp in Headers */,
 				5633FAB6204C661A003449EE /* umbrellaHeader.hpp in Headers */,
 				5633FAAA204C565B003449EE /* drawable.hpp in Headers */,
 				5671684D204ADFAE0028EFAA /* spotLight.hpp in Headers */,
+				56F5669C20B8A38900D8E5FC /* shaderHeaders.hpp in Headers */,
+				56F5669D20B8A38900D8E5FC /* proxyOGL.hpp in Headers */,
+				56F5669E20B8A38900D8E5FC /* framebuffer.hpp in Headers */,
+				56F5669F20B8A38900D8E5FC /* forwardRender.hpp in Headers */,
+				56F566A020B8A38900D8E5FC /* deferredRender.hpp in Headers */,
+				56F566A120B8A38900D8E5FC /* lightSourcesRender.hpp in Headers */,
+				56F566A220B8A38900D8E5FC /* modelRender.hpp in Headers */,
+				56F566A320B8A38900D8E5FC /* vertex.hpp in Headers */,
+				56F566A420B8A38900D8E5FC /* config.hpp in Headers */,
 				56716830204ADFAE0028EFAA /* resourceCoordinator.hpp in Headers */,
-				569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,10 +802,7 @@
 					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/arm64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -818,10 +831,7 @@
 					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/arm64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -887,8 +897,10 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
+					"-I$(PROJECT_DIR)/third-party-libs/aTree",
 					"-I/usr/local/Cellar/assimp/4.1.0/include",
-					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
+					"-I$(PROJECT_DIR)/third-party-libs/GSL/include",
+					"-I$(PROJECT_DIR)/third-party-libs/glMath/source",
 				);
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/assimp/4.1.0/lib",
@@ -947,8 +959,10 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
+					"-I$(PROJECT_DIR)/third-party-libs/aTree",
 					"-I/usr/local/Cellar/assimp/4.1.0/include",
-					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
+					"-I$(PROJECT_DIR)/third-party-libs/GSL/include",
+					"-I$(PROJECT_DIR)/third-party-libs/glMath/source",
 				);
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/assimp/4.1.0/lib",
@@ -976,11 +990,7 @@
 					"DEBUG=1",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-I/usr/local/Cellar/assimp/4.1.0/include",
-					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -998,11 +1008,7 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "mac_build=1";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-I/usr/local/Cellar/assimp/4.1.0/include",
-					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1027,10 +1033,7 @@
 					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/x86_64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1059,10 +1062,7 @@
 					"$(PROJECT_DIR)/third-party-libs/assimp_iOS/x86_64",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-I$(PROJECT_DIR)/third-party-libs/assimp_iOS/include",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

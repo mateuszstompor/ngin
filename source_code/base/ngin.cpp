@@ -270,13 +270,7 @@ void ms::NGin::load_model (std::string const & absolutePath) {
             }
             
         }
-        
-        if(scene.get_nodes().get_root_node() == nullptr) {
-            scene.get_nodes().add_root(node);
-        } else {
-            scene.get_nodes().get_root_node()->insert_child(node);
-        }
-        
+        scene.get_nodes().insert_s(scene.get_nodes().begin(), node);
     }
     
 }
@@ -357,7 +351,7 @@ void ms::NGin::draw_scene() {
             }
         }
         
-        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
             
             SpotLight & spotLight = scene.get_spot_lights()[i];
             if(spotLight.casts_shadow()) {
@@ -391,10 +385,11 @@ void ms::NGin::draw_scene() {
             deferredRenderer->get_framebuffer().clear_frame();
             deferredRenderer->lightingShader->use();
             deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
-            for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
                 deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
             deferredRenderer->perform_light_pass(scene);
+            lightSourceRenderer->get_framebuffer().clear_frame();
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else if(chosenRenderer == Renderer::forward_fragment) {
             phongForwardRenderer->use(deferredRenderer->get_framebuffer());
@@ -405,7 +400,7 @@ void ms::NGin::draw_scene() {
             phongForwardRenderer->set_point_lights(scene.get_point_lights());
             phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
             
-            for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
                 phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
             for(auto node : scene.get_nodes()) {
@@ -414,6 +409,7 @@ void ms::NGin::draw_scene() {
                     phongForwardRenderer->draw(*node);
                 }
             }
+            lightSourceRenderer->get_framebuffer().clear_frame();
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         } else {
             gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
@@ -424,7 +420,7 @@ void ms::NGin::draw_scene() {
             gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
             gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
             
-            for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
                 gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
             }
             for(auto node : scene.get_nodes()) {
@@ -433,6 +429,7 @@ void ms::NGin::draw_scene() {
                     gouraudForwardRenderer->draw(*node);
                 }
             }
+            lightSourceRenderer->get_framebuffer().clear_frame();
             lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
         }
         
@@ -455,7 +452,7 @@ void ms::NGin::draw_scene() {
         phongForwardRenderer->set_point_lights(scene.get_point_lights());
         phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
         
-        for (int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
             phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
         }
         for(auto node : scene.get_nodes()) {

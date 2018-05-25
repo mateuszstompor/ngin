@@ -85,8 +85,8 @@ using namespace math;
     
     engine->load_model(modelPath);
 
-    for(int i = 0; i < engine->scene.get_nodes().size(); ++i) {
-        engine->scene.get_nodes()[i]->transformation = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * engine->scene.get_nodes()[i]->transformation;
+    for (auto & node : engine->scene.get_nodes()) {
+        node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();
     }
 
     engine->load();

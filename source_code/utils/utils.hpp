@@ -59,7 +59,7 @@ namespace ms {
 		}
         
         template <typename T>
-        inline void map_buffer_range_for_writing(GLenum bufferType, GLuint id, size_t amountOfElements, GLenum purpose, std::function<void(T*)> lambda) {
+        inline void map_buffer_range_for_writing(GLenum bufferType, GLuint id, std::size_t amountOfElements, GLenum purpose, std::function<void(T*)> lambda) {
             mglBindBuffer(bufferType, id);
             mglBufferData(bufferType, amountOfElements * sizeof(T), nullptr, purpose);
             //TODO find out why this needs workaround
@@ -70,7 +70,7 @@ namespace ms {
         }
         
         template <typename T>
-        inline void map_buffer_range_for_read(GLenum bufferType, GLuint id, size_t amountOfElements, std::function<void(T*)> lambda) {
+        inline void map_buffer_range_for_read(GLenum bufferType, GLuint id, std::size_t amountOfElements, std::function<void(T*)> lambda) {
             mglBindBuffer(bufferType, id);
             //TODO find out why this needs workaround
             //#define GL_MAP_READ_BIT 0x0001

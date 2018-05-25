@@ -35,7 +35,7 @@ namespace ms {
 									Shader					(Shader const &) = delete;
 					Shader & 		operator = 				(Shader const &) = delete;
 		
-		virtual		void 			bind_texture			(unsigned int index, Texture2D & texture) ;
+		virtual		void 			bind_texture			(std::size_t index, Texture2D & texture) ;
 		virtual 	void 			use						();
 		virtual 	void 			_load					() override;
 		virtual 	void 			_unload					() override;

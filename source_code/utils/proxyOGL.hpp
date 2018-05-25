@@ -35,8 +35,6 @@
 
 #endif
 
-#if DEBUG
-
 namespace ms {
     namespace utils {
         
@@ -110,6 +108,8 @@ void		_mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint 
 void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 void        _mglReadBuffer (GLenum mode);
 void        _mglBlendFunc (GLenum sfactor, GLenum dfactor);
+
+#if DEBUG
 
 #define mglBlendFunc                _mglBlendFunc
 #define mglDrawElements				_mglDrawElements

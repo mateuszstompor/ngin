@@ -17,8 +17,8 @@
 #include "texture.hpp"
 #include "drawable.hpp"
 #include "geometry.hpp"
+#include "tree.hpp"
 
-#include <aTree.hpp>
 #include <map>
 #include <vector>
 
@@ -31,7 +31,7 @@ namespace ms {
         using geometries_vec    = std::vector<std::shared_ptr<Geometry>>;
         using spot_lights_type  = std::vector<SpotLight>;
         using point_lights_type = std::vector<PointLight>;
-        using drawable_type     = ms::aTree<std::shared_ptr<Drawable>>;
+        using drawable_type     = ms::tree<std::shared_ptr<Drawable>>;
         
 	public:
         

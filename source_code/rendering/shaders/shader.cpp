@@ -102,22 +102,20 @@ void ms::Shader::compile_program() {
 	}
 	
 	#ifndef ios_build
-	#ifndef __WIN32__
-	if (!tesselationcontrolsource.empty()) {
-		cshader = mglcreateshader(gl_tess_control_shader);
-		compile_shader(program, cshader, tesselationcontrolsource);
+	if (!tesselationControlSource.empty()) {
+		cshader = mglCreateShader(GL_TESS_CONTROL_SHADER);
+		compile_shader(program, cshader, tesselationControlSource);
 	}
 
-	if (!tesselationevalutationsource.empty()) {
-		evalshader = mglcreateshader(gl_tess_evaluation_shader);
-		compile_shader(program, evalshader, tesselationevalutationsource);
+	if (!tesselationEvalutationSource.empty()) {
+		evalshader = mglCreateShader(GL_TESS_EVALUATION_SHADER);
+		compile_shader(program, evalshader, tesselationEvalutationSource);
 	}
 
 	if (!geometrySource.empty()) {
 		gshader = mglCreateShader(GL_GEOMETRY_SHADER);
 		compile_shader(program, gshader, geometrySource);
 	}
-	#endif
 	#endif
 	
 	if (!fragmentSource.empty()) {
@@ -148,7 +146,7 @@ void ms::Shader::compile_program() {
 
 }
 
-void ms::Shader::bind_texture(unsigned int index, Texture2D & texture) {
+void ms::Shader::bind_texture(std::size_t index, Texture2D & texture) {
 	mglActiveTexture(GL_TEXTURE0 + index);
 	texture.use();
 }

@@ -29,6 +29,32 @@ ms::Loader::model_data ms::Loader::load_model_from_file (std::string const & pat
 	return data;
 }
 
+ms::Loader::geometries_vec_h ms::Loader::load_geometry_preserving_hierarchy (std::string const & path) const {
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+    if(scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr) {
+        std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
+        assert(false);
+    }
+    tree<std::unique_ptr<Geometry>> t {};
+    process_node(t, t.begin(), *scene->mRootNode, *scene);
+    return t;
+}
+
+void ms::Loader::process_node (tree<geometry> & tree, ::ms::tree<geometry>::iterator parent, aiNode const & node, aiScene const & scene) const {
+    //check it
+    for(auto i{0}; i < node.mNumMeshes; ++i) {
+        auto const & mesh = *scene.mMeshes[node.mMeshes[i]];
+        if(mesh.HasNormals() && mesh.HasFaces() && mesh.HasPositions()) {
+            tree.insert_c(parent, i, process_geometry(mesh, scene));
+        }
+    }
+    auto tmp{parent};
+    for(auto i{0}; i < node.mNumChildren; ++i) {
+        process_node(tree, ++tmp, *node.mChildren[i], scene);
+    }
+}
+
 ms::Loader::geometries_vec ms::Loader::load_geometry_from_file (std::string const & path) const {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
@@ -67,7 +93,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials_with_textures (aiS
 	textures_map & 		    textures 	= std::get<1>(texmat);
 	
 	for(unsigned int i = 0; i < scene.mNumMaterials; ++i) {
-		aiMaterial const & mat = *scene.mMaterials[i];
+		auto const & mat = *scene.mMaterials[i];
 		aiColor3D ambient, diffuse, specular;
 		float opacity, shininess;
 		aiString aiName;
@@ -81,7 +107,7 @@ ms::Loader::textures_and_materials ms::Loader::load_materials_with_textures (aiS
 		
 		//TODO handle embedded textures
 		
-		std::string name (aiName.C_Str());
+		auto name (aiName.C_Str());
 		
         auto msMaterial = std::make_unique<Material>(to_vec3(ambient),
                                                     to_vec3(diffuse),
@@ -183,14 +209,14 @@ ms::Loader::geometries_vec ms::Loader::process_node (aiNode const & node, aiScen
 		
     geometries_vec geometries{};
 	
-		for(unsigned int i = 0; i < node.mNumMeshes; ++i) {
+		for(auto i = 0; i < node.mNumMeshes; ++i) {
 			aiMesh const & mesh = *scene.mMeshes[node.mMeshes[i]];
 			if(mesh.HasNormals() && mesh.HasFaces() && mesh.HasPositions()) {
                 geometries.push_back(process_geometry(mesh, scene));
 			}
 		}
 	
-		for(unsigned int i = 0; i < node.mNumChildren; ++i) {
+		for(auto i = 0; i < node.mNumChildren; ++i) {
 			geometries_vec proceededGeo = process_node(*node.mChildren[i], scene);
 			geometries.insert(geometries.end(),
 							  std::make_move_iterator(proceededGeo.begin()),
@@ -237,7 +263,7 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
     }
 
     for(unsigned int i = 0; i < mesh.mNumFaces; ++i) {
-        aiFace face = mesh.mFaces[i];
+        auto face = mesh.mFaces[i];
         for(unsigned int j = 0; j < face.mNumIndices; ++j) {
             indices.push_back(face.mIndices[j]);
         }
@@ -249,8 +275,8 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
 
 std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath) const {
 	std::vector<std::string> paths;
-	unsigned int texCount = mat.GetTextureCount(type);
-	for (unsigned int i = 0; i < texCount; ++i) {
+	auto texCount = mat.GetTextureCount(type);
+	for (auto i = 0; i < texCount; ++i) {
 		aiString path;
 		mat.GetTexture(type, i, &path);
 		paths.push_back(directoryPath + "/" + path.C_Str());

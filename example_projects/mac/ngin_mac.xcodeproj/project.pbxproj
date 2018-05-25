@@ -23,12 +23,12 @@
 			remoteGlobalIDString = 56D29AC8207B8DED0080CB3B;
 			remoteInfo = ngin_ios_x86_64;
 		};
-		561842C120A11F2B00770492 /* PBXContainerItemProxy */ = {
+		5604A8C420AD98DE0011A16A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 561842BD20A11F2B00770492 /* aTree.xcodeproj */;
+			containerPortal = 5604A8C020AD98DD0011A16A /* tree.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 5626102F209F67A500731C17;
-			remoteInfo = aTree;
+			remoteInfo = tree;
 		};
 		561842CB20A11F3500770492 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -101,7 +101,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		561842BD20A11F2B00770492 /* aTree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aTree.xcodeproj; path = "../../third-party-libs/aTree/aTree.xcodeproj"; sourceTree = "<group>"; };
+		5604A8C020AD98DD0011A16A /* tree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = tree.xcodeproj; path = "../../third-party-libs/aTree/tree.xcodeproj"; sourceTree = "<group>"; };
 		561842C320A11F3500770492 /* glMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glMath.xcodeproj; path = "../../third-party-libs/glMath/glMath.xcodeproj"; sourceTree = "<group>"; };
 		5626786A204ABCAA00A203F2 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 		56329EC9204ABBEA00AF29CA /* ngin_mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ngin_mac; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,10 +128,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		561842BE20A11F2B00770492 /* Products */ = {
+		5604A8C120AD98DD0011A16A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				561842C220A11F2B00770492 /* aTree */,
+				5604A8C520AD98DE0011A16A /* tree */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,8 +151,8 @@
 		56329EC0204ABBEA00AF29CA = {
 			isa = PBXGroup;
 			children = (
+				5604A8C020AD98DD0011A16A /* tree.xcodeproj */,
 				561842C320A11F3500770492 /* glMath.xcodeproj */,
-				561842BD20A11F2B00770492 /* aTree.xcodeproj */,
 				56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */,
 				56329ED3204ABC0600AF29CA /* main.cpp */,
 				56D3992A206B014700E71A59 /* utils.cpp */,
@@ -239,16 +239,16 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 561842BE20A11F2B00770492 /* Products */;
-					ProjectRef = 561842BD20A11F2B00770492 /* aTree.xcodeproj */;
-				},
-				{
 					ProductGroup = 561842C420A11F3500770492 /* Products */;
 					ProjectRef = 561842C320A11F3500770492 /* glMath.xcodeproj */;
 				},
 				{
 					ProductGroup = 56329ED6204ABC0C00AF29CA /* Products */;
 					ProjectRef = 56329ED5204ABC0C00AF29CA /* ngin.xcodeproj */;
+				},
+				{
+					ProductGroup = 5604A8C120AD98DD0011A16A /* Products */;
+					ProjectRef = 5604A8C020AD98DD0011A16A /* tree.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -266,11 +266,11 @@
 			remoteRef = 560313EF207FA8EE00C37C68 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		561842C220A11F2B00770492 /* aTree */ = {
+		5604A8C520AD98DE0011A16A /* tree */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = aTree;
-			remoteRef = 561842C120A11F2B00770492 /* PBXContainerItemProxy */;
+			path = tree;
+			remoteRef = 5604A8C420AD98DE0011A16A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		561842CC20A11F3500770492 /* vector_tests */ = {
@@ -465,6 +465,8 @@
 					"$(OTHER_CFLAGS)",
 					"-I/usr/local/Cellar/assimp/4.1.0/include",
 					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
+					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/aTree",
+					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/glMath/source",
 				);
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/assimp/4.1.0/lib",
@@ -489,6 +491,8 @@
 					"$(OTHER_CFLAGS)",
 					"-I/usr/local/Cellar/assimp/4.1.0/include",
 					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/GSL/include",
+					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/aTree",
+					"-I/Users/mateuszstompor/Documents/ngin/third-party-libs/glMath/source",
 				);
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/assimp/4.1.0/lib",
