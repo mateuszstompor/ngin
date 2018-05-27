@@ -30,7 +30,7 @@ if(WIN32)
         message( FATAL_ERROR "Compiler not supported. You need to use visual studio compiler" )
     endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 else()
-    set (CMAKE_CXX_FLAGS "-g -fno-inline -fno-omit-frame-pointer -m64")
+    set (CMAKE_CXX_FLAGS "-g -fno-inline -fno-omit-frame-pointer -m64 -Wc++1z-extensions")
 endif(WIN32)
 
 find_package(OpenGL REQUIRED)
@@ -42,6 +42,7 @@ include_directories("${CMAKE_SOURCE_DIR}/third-party-libs/assimp/include" "${CMA
 include_directories(${OPENGL_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/GSL/include)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/glMath/source)
+include_directories(${CMAKE_SOURCE_DIR}/third-party-libs)
 include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/aTree)
 
 set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
@@ -75,11 +76,13 @@ set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/texture.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/vertex.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.hpp
+#                                ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/gaussianBlurPostprocessRender.hpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/postprocessRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shadowRender.hpp)
 
-set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessDrawer.cpp
+set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/postprocessRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/gaussianBlurPostprocessRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/render.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/proxyOGL.cpp

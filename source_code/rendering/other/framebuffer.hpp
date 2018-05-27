@@ -29,8 +29,30 @@ namespace ms {
 	class Framebuffer : public Resource {
         
         using fb_ptr = std::unique_ptr<Framebuffer>;
-
-	protected:
+        
+        friend class Render;
+        friend class DeferredRender;
+        friend class NGin;
+        
+    public:
+        
+                                        Framebuffer         (int    colorAttachmentsAmount,
+                                                             int    renderbufferAttachmentsAmount,
+                                                             int     width,
+                                                             int     height);
+        void                            bind_color_buffer   (int index,
+                                                             std::unique_ptr<Texture2D> && Texture2D);
+        
+        void                            bind_color_buffer   (int index,
+                                                             std::unique_ptr<Renderbuffer> && renderbuffer);
+        
+        void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> && renderbuffer);
+        void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
+        void                            configure           ();
+        void                            use                 ();
+                                        ~Framebuffer        () = default;
+        
+	private:
 		
 		using strong_color_texbuffers       = std::vector<std::shared_ptr<Texture2D>>;
         using strong_depth_texbuffer        = std::shared_ptr<Texture2D>;
@@ -44,31 +66,15 @@ namespace ms {
         using weak_color_renderbuffers      = std::vector<std::weak_ptr<Renderbuffer>>;
         using weak_depth_renderbuffer       = std::weak_ptr<Renderbuffer>;
 		
-	public:
-		
-          						        Framebuffer			(int    colorAttachmentsAmount,
-                                                             int    renderbufferAttachmentsAmount,
-                                                             int 	width,
-                                                             int 	height);
-		
 									    Framebuffer			(Framebuffer const &) = delete;
 		Framebuffer & 				    operator = 			(Framebuffer const &) = delete;
 		
-        void 				            bind_color_buffer	(int index,
-                                                            std::unique_ptr<Texture2D> && Texture2D);
         
-		void 				            bind_color_buffer	(int index,
-                                                             std::unique_ptr<Renderbuffer> && renderbuffer);
-        
-		void 					        bind_depth_buffer	(std::unique_ptr<Renderbuffer> && renderbuffer);
-        void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
 		
 					//														//
 					// 	Checks completeness and merge all things together	//
 					//														//
 		
-        void					        configure			();
-		void					        use					();
 		void					        use_for_read		();
         std::string			            get_class			() const override;
         void 					        copy_depth_from		(Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
@@ -93,9 +99,6 @@ namespace ms {
         static  fb_ptr                  window_framebuffer  (int width, int height);
         constexpr GLuint                get_underlying_id   () const { return framebuffer; }
         void                            set_underlying_id   (GLuint framebufferID);
-		    						    ~Framebuffer		() = default;
-
-	private:
 		
 		int 						    width;
 		int 							height;

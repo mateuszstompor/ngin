@@ -26,10 +26,10 @@ namespace ms {
         inline constexpr    math::mat4 const &         get_transformation     	() const { return transformation; }
 		inline constexpr    math::mat4 &               get_transformation     	() { return transformation; }
         inline constexpr    float const &              get_power                () const { return power; }
-		inline constexpr    int             	       casts_shadow             () const { return castsShadow; }
+		inline constexpr    bool             	       casts_shadow             () const { return castsShadow; }
 
 	protected:
-        
+        //  power should be in range from 0 to 200
         float                                       power;
 		math::vec3 		                            color;
         math::mat4                                  transformation;

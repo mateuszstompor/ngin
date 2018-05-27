@@ -23,8 +23,20 @@ namespace ms {
 		
 		using program_ptr = std::unique_ptr<Shader>;
 		
+		friend class NGin;
+		friend class Render;
+		friend class PostprocessRender;
+		friend class GaussianBlurPostprocessRender;
+		friend class DLShadowRender;
+		friend class ForwardRender;
+		friend class DeferredRender;
+		friend class LightSourcesRender;
+		
 	public:
 		
+		virtual 					~Shader					() = default;
+
+	private:
 		
 									Shader					(std::string const & vertexShader,
 															 std::string const & tessellationControlShader,
@@ -40,7 +52,6 @@ namespace ms {
 		virtual 	void 			_load					() override;
 		virtual 	void 			_unload					() override;
 		virtual 	std::string		get_class				() const override;
-		virtual 					~Shader					() = default;
 		constexpr 	GLuint 			get_gl_id				() const { return program; }
 					GLint			set_uniform				(std::string const & name, int value);
 					GLint			set_uniform				(std::string const & name, unsigned int value);
@@ -51,9 +62,6 @@ namespace ms {
 					GLint			set_uniform				(std::string const & name, math::vec3 const & v);
 		static 		program_ptr		vf_program 				(std::string const & vertexSource,
 															 std::string const & fragmentSource);
-
-	private:
-		
 		void 						compile_program			();
 		void 						compile_shader			(GLuint program,
 															 GLuint shader,

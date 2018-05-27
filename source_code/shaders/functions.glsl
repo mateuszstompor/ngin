@@ -21,8 +21,10 @@ R"(
 #define BLUE_WEIGHT_ADAPTIVE_TONE	0.11f
 
 #define INNER_CUTOFF_BIAS           0.015f
+#define USUAL_POWER                 100.0f
 
 struct DirectionalLight {
+    float       power;
 	vec3    	direction;
 	vec3    	color;
 };

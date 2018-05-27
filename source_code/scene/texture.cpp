@@ -8,8 +8,7 @@
 
 #include "texture.hpp"
 
-ms::Texture2D::Texture2D 	(Texture2D::Type    textureType,
-							 Format             internalFormat,
+ms::Texture2D::Texture2D 	(Format             internalFormat,
 							 AssociatedType     associatedType,
 							 unsigned int       width,
 							 unsigned int       height,
@@ -19,7 +18,6 @@ ms::Texture2D::Texture2D 	(Texture2D::Type    textureType,
 							 Wrapping           sWrapping,
 							 Wrapping           tWrapping,
 							 unsigned int       mipMapLevel) :
-                                                            type{textureType},
                                                             name{name},
                                                             format(internalFormat),
                                                             associatedType{associatedType},
@@ -32,7 +30,7 @@ ms::Texture2D::Texture2D 	(Texture2D::Type    textureType,
                                                             height{height},
                                                             rawData{nullptr},
                                                             glTexture{0},
-                                                            glTarget{to_ogl(textureType)},
+                                                            glTarget{GL_TEXTURE_2D},
                                                             glType{Texture2D::to_ogl(associatedType)},
                                                             glColorFormat{Texture2D::to_ogl(internalFormat)},
                                                             glInternalFormat{Texture2D::underlying_type(this->associatedType, this->format)} {

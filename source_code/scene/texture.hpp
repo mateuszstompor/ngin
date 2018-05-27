@@ -23,6 +23,10 @@ namespace ms {
 	
 	class Texture2D : public Resource {
 		
+        friend class Renderbuffer;
+        friend class Framebuffer;
+        friend class Shader;
+        
         using byte = std::uint8_t;
         
 	public:
@@ -70,8 +74,7 @@ namespace ms {
             UNSIGNED_SHORT
         };
         
-                                    Texture2D           (Texture2D::Type    type,
-                                                         Format             format,
+                                    Texture2D           (Format             format,
                                                          AssociatedType     associatedType,
                                                          unsigned int       width,
                                                          unsigned int       height,
@@ -84,15 +87,15 @@ namespace ms {
 
                                     Texture2D           (const Texture2D & texture) = delete;
                     Texture2D &	    operator =			(const Texture2D & texture) = delete;
-        constexpr   GLuint          get_underlying_id	() const { return glTexture; }
-                    void            _load  				() override;
-		            void            _unload 			() override;
+        
                     std::string		get_class			() const override;
-                    void 			use					();
+        
                                     ~Texture2D			();
                     void            copy_data           (byte const * data, size_t size);
                     int             channels_amount     () const;
 
+	private:
+        
         static      GLenum          to_ogl              (MinFilter          minFilter);
         static      GLenum          to_ogl              (MagFilter          magFilter);
         static      GLenum          to_ogl              (Wrapping           wrapping);
@@ -101,11 +104,12 @@ namespace ms {
         static      GLenum          to_ogl              (Texture2D::Type    type);
         static      GLenum          underlying_type     (AssociatedType     associatedType,
                                                          Format             format);
-		
-	private:
-		
+        constexpr   GLuint          get_underlying_id   () const { return glTexture; }
+                    void            _load               () override;
+                    void            _unload             () override;
+                    void             use                ();
+        
         std::string                 name;
-        Type                        type;
         Format                      format;
         AssociatedType              associatedType;
         MinFilter                   minFilter;

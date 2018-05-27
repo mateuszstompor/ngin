@@ -19,7 +19,8 @@
 #include "../resources/resource.hpp"
 #include "../resources/resourceCoordinator.hpp"
 #include "../utils/loader.hpp"
-#include "../rendering/postprocessDrawer.hpp"
+#include "../rendering/postprocessing/postprocessRender.hpp"
+#include "../rendering/postprocessing/gaussianBlurPostprocessRender.hpp"
 #include "../utils/loader.hpp"
 #include "../scene/drawable.hpp"
 #include "../shaders/shaderHeaders.hpp"
@@ -36,52 +37,53 @@ namespace ms {
             forward_vertex
         };
         
-                                                    NGin        		(unsigned int                       screenWidth,
-                                                                         unsigned int                       screenHeight,
-                                                                         unsigned int                       frameBufferWidth,
-                                                                         unsigned int                       frameBufferHeight,
-                                                                         unsigned int                       shadowsResolution,
-                                                                         std::unique_ptr<Camera> &&			cam,
-                                                                         std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
-        void                                        set_renderer        (Renderer r);
-        void 							            load 				();
-        void 							            unload 				();
-        void							            draw_scene  		();
-        constexpr Loader const &                    get_loader          () const { return loader; }
-        DeferredRender & 		                    get_deferred_render	() const;
-        void							            load_model			(std::string const & absolutePath);
-        void                                        pause_drawing       () { shouldDraw = false; }
-        void                                        resume_drawing      () { shouldDraw = true; }
-		Scene                                       scene;
+                                                        NGin        		(unsigned int                       screenWidth,
+                                                                             unsigned int                       screenHeight,
+                                                                             unsigned int                       frameBufferWidth,
+                                                                             unsigned int                       frameBufferHeight,
+                                                                             unsigned int                       shadowsResolution,
+                                                                             std::unique_ptr<Camera> &&			cam,
+                                                                             std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
+        void                                            set_renderer        (Renderer r);
+        void 							                load 				();
+        void 							                unload 				();
+        void							                draw_scene  		();
+        constexpr Loader const &                        get_loader          () const { return loader; }
+        DeferredRender & 		                        get_deferred_render	() const;
+        void							                load_model			(std::string const & absolutePath);
+        void                                            pause_drawing       () { shouldDraw = false; }
+        void                                            resume_drawing      () { shouldDraw = true; }
+        constexpr Scene &                               get_scene           () { return scene; }
 		
 	private:
 		
-		void							            count_fps			();
-		Loader					                    loader;
+        Scene                                           scene;
+		void							                count_fps			();
+		Loader					                        loader;
         
-		std::unique_ptr<DeferredRender>             deferredRenderer;
-        std::unique_ptr<DLShadowRender>             shadowRenderer;
-		std::unique_ptr<ForwardRender>              gouraudForwardRenderer;
-		std::unique_ptr<ForwardRender>              phongForwardRenderer;
-		std::unique_ptr<LightSourcesRender>         lightSourceRenderer;
-		std::unique_ptr<PostprocessDrawer>     		hdrRenderer;
-		std::unique_ptr<PostprocessDrawer>     	    bloomSplitRenderer;
-		std::unique_ptr<PostprocessDrawer>     	    bloomMergeRenderer;
-		std::unique_ptr<PostprocessDrawer>     	    gaussianBlurFirstStepRenderer;
-		std::unique_ptr<PostprocessDrawer>     	    gaussianBlurSecondStepRenderer;
-        std::unique_ptr<PostprocessDrawer>          vignetteRenderer;
-		std::unique_ptr<PostprocessDrawer>     	    scaleRenderer;
-        std::vector<std::unique_ptr<Framebuffer>>   shadows;
+		std::unique_ptr<DeferredRender>                 deferredRenderer;
+        std::unique_ptr<DLShadowRender>                 shadowRenderer;
+		std::unique_ptr<ForwardRender>                  gouraudForwardRenderer;
+		std::unique_ptr<ForwardRender>                  phongForwardRenderer;
+		std::unique_ptr<LightSourcesRender>             lightSourceRenderer;
+		std::unique_ptr<PostprocessRender>     		    hdrRenderer;
+		std::unique_ptr<PostprocessRender>     	        bloomSplitRenderer;
+		std::unique_ptr<PostprocessRender>     	        bloomMergeRenderer;
+		std::unique_ptr<GaussianBlurPostprocessRender>  gaussianBlurFirstStepRenderer;
+		std::unique_ptr<GaussianBlurPostprocessRender>  gaussianBlurSecondStepRenderer;
+        std::unique_ptr<PostprocessRender>              vignetteRenderer;
+		std::unique_ptr<PostprocessRender>     	        scaleRenderer;
+        std::vector<std::unique_ptr<Framebuffer>>       shadows;
         
-        bool                                        shouldDraw;
-        unsigned int                                shadowResolution;
-		unsigned int							    screenWidth;
-		unsigned int							    screenHeight;
+        bool                                            shouldDraw;
+        unsigned int                                    shadowResolution;
+		unsigned int							        screenWidth;
+		unsigned int							        screenHeight;
 
-		unsigned int 							    framebufferWidth;
-		unsigned int 							    framebufferHeight;
+		unsigned int 							        framebufferWidth;
+		unsigned int 							        framebufferHeight;
         
-        Renderer                                    chosenRenderer {Renderer::deferred};
+        Renderer                                        chosenRenderer {Renderer::deferred};
 		
     };
     

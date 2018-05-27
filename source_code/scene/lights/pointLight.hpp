@@ -17,12 +17,11 @@ namespace ms {
 	
 	public:
 		
-		inline 	PointLight (math::vec3 const &  color,
-                            float 		        power,
-							math::vec3 const &  position,
-                            bool                castsShadow);
-        
-        constexpr math::mat4 const &      get_projection          () const { return projection; }
+		inline 	                            PointLight              (math::vec3 const &  color,
+                                                                     float 		        power,
+                                                                     math::vec3 const &  position,
+                                                                     bool                castsShadow);
+        constexpr math::mat4 const &        get_projection          () const { return projection; }
 
     private:
         

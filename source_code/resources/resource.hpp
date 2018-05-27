@@ -12,37 +12,38 @@
 #include <iostream>
 #include <string>
 
-#include "../../glMath/source/glMath.h"
+#include "glMath.h"
 
 namespace ms {
 
 	class ResourceCoordinator;
 
     class Resource {
-		
-	protected:
-		
-		 						Resource		();
 
-    public:
-	
+        friend class ResourceCoordinator;
+        friend class DeferredRender;
+        friend class NGin;
+        friend class LightSourcesRender;
+        friend class PostprocessRender;
+        friend class Render;
+        friend class ForwardRender;
+        friend class Renderbuffer;
+        friend class Framebuffer;
+        
+	protected:
+        
+		 						Resource		();
 		virtual void    		load  			() final;
 		virtual void 			unload 			() final;
-		
 		virtual bool    		is_loaded   	() const final;
-		
+        virtual void            _load            () = 0;
+        virtual void            _unload            () = 0;
 		virtual std::string 	get_class		() const = 0;
 		virtual         		~Resource   	();
 	
-	protected:
-		
-		virtual void			_load			() = 0;
-		virtual void			_unload			() = 0;
-		
-	private:
-		
+    private:
+        
 				bool			isLoaded;
-		
     };
     
 }

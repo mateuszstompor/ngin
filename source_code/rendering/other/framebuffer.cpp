@@ -207,7 +207,7 @@ void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2D> && texture) 
 }
 
 std::unique_ptr<ms::Framebuffer> ms::Framebuffer::window_framebuffer	(int width, int height) {
-	auto framebuffer = std::make_unique<ms::Framebuffer>(0, 0, width, height);
+    auto framebuffer = std::unique_ptr<Framebuffer>(new Framebuffer{0, 0, width, height});
 	framebuffer->is_default_framebuffer = true;
 	framebuffer->framebuffer = 0;
 	return framebuffer;

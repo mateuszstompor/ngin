@@ -26,14 +26,16 @@ namespace ms {
 		friend class NGin;
 		
 	public:
+		
+										~DeferredRender				() = default;
+		
+	private:
+		
 										DeferredRender				(unsigned int 						maxPointLightsAmount,
 																	 unsigned int 						maxSpotLightsAmount,
 																	 std::unique_ptr<Framebuffer> && 	framebuffer,
 																	 std::unique_ptr<Shader> && 		gShader,
 																	 std::unique_ptr<Shader> &&			lightingShader);
-										~DeferredRender				() = default;
-	private:
-		
 		void							use			     			() override;
 		void 							perform_light_pass			(const Scene & scene);		
 		void    						draw                    	(Drawable & node) override;
@@ -45,12 +47,8 @@ namespace ms {
 		void    						set_camera              	(Camera const & camera) override;
 		void							_load						() override;
 		void 							_unload						() override;
-
-
-		
 		unsigned int 					maxPointLightsAmount;
 		unsigned int 					maxSpotLightsAmount;
-
 		std::unique_ptr<Shader>			lightingShader;
 		std::unique_ptr<Framebuffer>	gFramebuffer;
 		std::shared_ptr<Drawable> 		quad;

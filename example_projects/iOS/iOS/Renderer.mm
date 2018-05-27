@@ -33,7 +33,7 @@ using namespace math;
 
     _context = context;
     
-    framebuffer = make_unique<Framebuffer>(1, 1, 680, 375);
+    framebuffer = unique_ptr<Framebuffer>(new Framebuffer(1, 1, 680, 375));
     framebuffer->use();
     
     glGenRenderbuffers(1, &_colorRenderbuffer);
@@ -46,11 +46,11 @@ using namespace math;
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
     
-    depthRenderBuffer = std::make_unique<ms::Renderbuffer>(ms::Texture2D::Format::depth_24,
-                                                           ms::Texture2D::AssociatedType::UNSIGNED_INT,
-                                                           0,
-                                                           backingWidth,
-                                                           backingHeight);
+    depthRenderBuffer = std::unique_ptr<ms::Renderbuffer>(new Renderbuffer( ms::Texture2D::Format::depth_24,
+                                                                            ms::Texture2D::AssociatedType::UNSIGNED_INT,
+                                                                            0,
+                                                                            backingWidth,
+                                                                            backingHeight));
     
     framebuffer->bind_depth_buffer(std::move(depthRenderBuffer));
 	
@@ -72,20 +72,20 @@ using namespace math;
     NSString* coneModel = [[NSBundle mainBundle] pathForResource:@"cone" ofType:@"obj"];
     std::string coneModelPath = std::string([coneModel cStringUsingEncoding:NSUTF8StringEncoding]);
     
-    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
+    engine->get_scene().set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
 
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
                                      vec3( 0.0f, 0.0f,  1.0f));
     
-    engine->scene.get_directional_light()->get_transformation() = lookat;
+    engine->get_scene().get_directional_light()->get_transformation() = lookat;
     
     SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
-    engine->scene.get_spot_lights().push_back(sl1);
+    engine->get_scene().get_spot_lights().push_back(sl1);
     
     engine->load_model(modelPath);
 
-    for (auto & node : engine->scene.get_nodes()) {
+    for (auto & node : engine->get_scene().get_nodes()) {
         node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();
     }
 
@@ -101,14 +101,14 @@ using namespace math;
 - (void)render {
 
     
-    vec3 camDir = back(engine->scene.get_camera().get_transformation());
-    vec3 camRight = -1.0f * right(engine->scene.get_camera().get_transformation());
+    vec3 camDir = back(engine->get_scene().get_camera().get_transformation());
+    vec3 camRight = -1.0f * right(engine->get_scene().get_camera().get_transformation());
     
-    engine->scene.get_camera().get_transformation() = transform::rotate_about_y_radians<float, 4>(0.03f * rotation.x) * engine->scene.get_camera().get_transformation();
-    engine->scene.get_camera().get_transformation() = transform::rotate_about_x_radians<float, 4>(-0.03f * rotation.y) * engine->scene.get_camera().get_transformation();
+    engine->get_scene().get_camera().get_transformation() = transform::rotate_about_y_radians<float, 4>(0.03f * rotation.x) * engine->get_scene().get_camera().get_transformation();
+    engine->get_scene().get_camera().get_transformation() = transform::rotate_about_x_radians<float, 4>(-0.03f * rotation.y) * engine->get_scene().get_camera().get_transformation();
     
-    engine->scene.get_camera().get_transformation() =  engine->scene.get_camera().get_transformation() * transform::translate<float, 4>(0.07f * camDir * translation.y);
-    engine->scene.get_camera().get_transformation() =  engine->scene.get_camera().get_transformation() * transform::translate<float, 4>(0.07f * camRight * translation.x);
+    engine->get_scene().get_camera().get_transformation() =  engine->get_scene().get_camera().get_transformation() * transform::translate<float, 4>(0.07f * camDir * translation.y);
+    engine->get_scene().get_camera().get_transformation() =  engine->get_scene().get_camera().get_transformation() * transform::translate<float, 4>(0.07f * camRight * translation.x);
     engine->draw_scene();
 	
     glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);

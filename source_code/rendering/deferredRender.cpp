@@ -87,6 +87,7 @@ void ms::DeferredRender::set_directionallight (DirectionalLight const * directio
     if(directionalLight) {
         lightingShader->set_uniform("hasDirLight", 1);
         lightingShader->set_uniform("dirLight.color", directionalLight->get_color());
+        lightingShader->set_uniform("dirLight.power", directionalLight->get_power());
         lightingShader->set_uniform("dirLight.direction", math::back(directionalLight->get_transformation()));
         lightingShader->set_uniform("dirLightProjection", directionalLight->get_projection());
         lightingShader->set_uniform("dirLightTransformation", directionalLight->get_transformation());
@@ -114,19 +115,19 @@ void ms::DeferredRender::use () {
 
 void ms::DeferredRender::_load () {
     
-    auto gPosition = std::make_unique<Texture2D>(Texture2D::Type::tex_2d, Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
+    auto gPosition = std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
                                                  framebuffer->get_width(), framebuffer->get_height());
     
-    auto gNormal = std::make_unique<Texture2D>(Texture2D::Type::tex_2d, Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
+    auto gNormal = std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
                                                framebuffer->get_width(), framebuffer->get_height());
     
-    auto gAlbedo = std::make_unique<Texture2D>(Texture2D::Type::tex_2d, Texture2D::Format::rgba_8_8_8_8, Texture2D::AssociatedType::UNSIGNED_BYTE,
+    auto gAlbedo = std::make_unique<Texture2D>(Texture2D::Format::rgba_8_8_8_8, Texture2D::AssociatedType::UNSIGNED_BYTE,
                                                framebuffer->get_width(), framebuffer->get_height());
     
-    auto depthRenderbuffer = std::make_unique<Renderbuffer>(Texture2D::Format::depth_32, Texture2D::AssociatedType::FLOAT, 0,
-                                                            framebuffer->get_width(), framebuffer->get_height());
+    auto depthRenderbuffer = std::unique_ptr<Renderbuffer>(new Renderbuffer(Texture2D::Format::depth_32, Texture2D::AssociatedType::FLOAT, 0,
+                                                                            framebuffer->get_width(), framebuffer->get_height()));
     
-    gFramebuffer = std::make_unique<Framebuffer>(3, 1, framebuffer->get_width(), framebuffer->get_height());
+    gFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer{3, 1, framebuffer->get_width(), framebuffer->get_height()});
     gFramebuffer->bind_color_buffer(0, std::move(gPosition));
     gFramebuffer->bind_color_buffer(1, std::move(gNormal));
     gFramebuffer->bind_color_buffer(2, std::move(gAlbedo));

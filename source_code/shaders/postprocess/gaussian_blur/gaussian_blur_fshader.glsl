@@ -5,6 +5,7 @@ in vec2 texCoords;
 layout (location = 0) out vec4 out1;
 
 uniform int isOn;
+uniform int amountOfSamplesToTake;
 uniform sampler2D in0;
 
 const float weights[] = float[](0.0024499299678342,
@@ -36,8 +37,9 @@ const float weights[] = float[](0.0024499299678342,
 void main(void) {
     if (isOn == 1) {
         vec4 c = vec4(0.0);
-        ivec2 P = ivec2(gl_FragCoord.yx) - ivec2(0, weights.length() >> 1); int i;
-        for (i = 0; i < weights.length(); i++) {
+        int aos = amountOfSamplesToTake > weights.length() ? weights.length() : amountOfSamplesToTake;
+        ivec2 P = ivec2(gl_FragCoord.yx) - ivec2(0, aos >> 1); int i;
+        for (i = 0; i < aos; i++) {
             c += texelFetch(in0, P + ivec2(0, i), 0) * weights[i];
         }
         out1 = c;

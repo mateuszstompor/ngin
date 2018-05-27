@@ -108,24 +108,26 @@ int main(int argc, const char * argv[]) { {
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-    engine->scene.set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 50, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
+    auto m = engine->get_loader().load_hierarchical_geometry("/Users/mateuszstompor/Downloads/free3DmodelFBX.fbx");
+    
+    engine->get_scene().set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 300, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
 
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
                                      vec3( 0.0f, 0.0f,  0.0f),
                                      vec3( 0.0f, 0.0f,  1.0f));
 
-    engine->scene.get_directional_light()->get_transformation() = lookat;
+    engine->get_scene().get_directional_light()->get_transformation() = lookat;
 
 //    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
 //    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
 //    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
-//    engine->scene.get_spot_lights().push_back(sl1);
-//    engine->scene.get_spot_lights().push_back(sl2);
-//    engine->scene.get_spot_lights().push_back(sl3);
+//    engine->get_scene().get_spot_lights().push_back(sl1);
+//    engine->get_scene().get_spot_lights().push_back(sl2);
+//    engine->get_scene().get_spot_lights().push_back(sl3);
 //    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
-//    engine->scene.get_point_lights().push_back(pl1);
+//    engine->get_scene().get_point_lights().push_back(pl1);
 
-    for (auto & node : engine->scene.get_nodes()) {
+    for (auto & node : engine->get_scene().get_nodes()) {
         node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();
     }
     
