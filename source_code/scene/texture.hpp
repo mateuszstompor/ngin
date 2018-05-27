@@ -74,8 +74,7 @@ namespace ms {
             UNSIGNED_SHORT
         };
         
-                                    Texture2D           (Texture2D::Type    type,
-                                                         Format             format,
+                                    Texture2D           (Format             format,
                                                          AssociatedType     associatedType,
                                                          unsigned int       width,
                                                          unsigned int       height,
@@ -111,7 +110,6 @@ namespace ms {
                     void             use                ();
         
         std::string                 name;
-        Type                        type;
         Format                      format;
         AssociatedType              associatedType;
         MinFilter                   minFilter;

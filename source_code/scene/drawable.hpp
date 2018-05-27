@@ -28,7 +28,7 @@ namespace ms {
         friend class DLShadowRender;
         friend class ForwardRender;
         friend class DeferredRender;
-        friend class PostprocessDrawer;
+        friend class PostprocessRender;
         
                                                 Drawable                (std::shared_ptr<Geometry> geometry = nullptr, std::shared_ptr<Material> material = nullptr);
                                                 Drawable                (Drawable const &) = delete;

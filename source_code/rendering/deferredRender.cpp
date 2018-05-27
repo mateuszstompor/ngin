@@ -115,13 +115,13 @@ void ms::DeferredRender::use () {
 
 void ms::DeferredRender::_load () {
     
-    auto gPosition = std::make_unique<Texture2D>(Texture2D::Type::tex_2d, Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
+    auto gPosition = std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
                                                  framebuffer->get_width(), framebuffer->get_height());
     
-    auto gNormal = std::make_unique<Texture2D>(Texture2D::Type::tex_2d, Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
+    auto gNormal = std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
                                                framebuffer->get_width(), framebuffer->get_height());
     
-    auto gAlbedo = std::make_unique<Texture2D>(Texture2D::Type::tex_2d, Texture2D::Format::rgba_8_8_8_8, Texture2D::AssociatedType::UNSIGNED_BYTE,
+    auto gAlbedo = std::make_unique<Texture2D>(Texture2D::Format::rgba_8_8_8_8, Texture2D::AssociatedType::UNSIGNED_BYTE,
                                                framebuffer->get_width(), framebuffer->get_height());
     
     auto depthRenderbuffer = std::unique_ptr<Renderbuffer>(new Renderbuffer(Texture2D::Format::depth_32, Texture2D::AssociatedType::FLOAT, 0,

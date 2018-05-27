@@ -8,8 +8,8 @@
 
 #include "renderbuffer.hpp"
 
-ms::Renderbuffer::Renderbuffer (Texture2D::Format             format,
-								Texture2D::AssociatedType     associatedType,
+ms::Renderbuffer::Renderbuffer (Texture2D::Format           format,
+								Texture2D::AssociatedType   associatedType,
                                 unsigned int 				mipMapLevel,
                                 unsigned int 				width,
                                 unsigned int 				height ) :

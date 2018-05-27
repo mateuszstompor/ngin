@@ -24,20 +24,19 @@ namespace ms {
         
     public:
                                     ~Renderbuffer       () = default;
+                                    Renderbuffer        (Texture2D::Format            format,
+                                                         Texture2D::AssociatedType    associatedType,
+                                                         unsigned int                 mipMapLevel,
+                                                         unsigned int                 width,
+                                                         unsigned int                 height);
+        
+                                    Renderbuffer        (Texture2D::Format            format,
+                                                         Texture2D::AssociatedType    associatedType,
+                                                         unsigned int                 width,
+                                                         unsigned int                 height);
  	protected:
+        
                                     Renderbuffer        (const Renderbuffer &) = delete;
-        
-                                    Renderbuffer		(Texture2D::Format			format,
-                                                         Texture2D::AssociatedType	associatedType,
-                                                         unsigned int 				mipMapLevel,
-                                                         unsigned int 				width,
-                                                         unsigned int 				height);
-        
-                                    Renderbuffer		(Texture2D::Format			format,
-                                                         Texture2D::AssociatedType	associatedType,
-                                                         unsigned int 				width,
-                                                         unsigned int 				height);
-		
         Renderbuffer &              operator =          (const Texture2D &) = delete;
         std::string	                get_class			() const override;
 		virtual void 		        use					();

@@ -8,7 +8,7 @@
 
 #include "loader.hpp"
 
-#include "../../third-party-libs/stb_image.h"
+#include "stb_image.h"
 
 ms::Loader::model_data ms::Loader::load_flat_model (std::string const & path) const {
 	Assimp::Importer importer;
@@ -181,8 +181,7 @@ std::unique_ptr<ms::Texture2D> ms::Loader::load_texture (std::string const & abs
 				assert(false);
 		}
 
-        auto texture = std::make_unique<ms::Texture2D>(Texture2D::Type::tex_2d,
-                                                       format,
+        auto texture = std::make_unique<ms::Texture2D>(format,
 													   Texture2D::AssociatedType::UNSIGNED_BYTE,
                                                        static_cast<unsigned int>(width),
                                                        static_cast<unsigned int>(height),

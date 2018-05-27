@@ -25,7 +25,8 @@ namespace ms {
 		
 		friend class NGin;
 		friend class Render;
-		friend class PostprocessDrawer;
+		friend class PostprocessRender;
+		friend class GaussianBlurPostprocessRender;
 		friend class DLShadowRender;
 		friend class ForwardRender;
 		friend class DeferredRender;

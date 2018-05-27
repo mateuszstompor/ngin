@@ -24,7 +24,7 @@ namespace ms {
         friend class DeferredRender;
         friend class NGin;
         friend class LightSourcesRender;
-        friend class PostprocessDrawer;
+        friend class PostprocessRender;
         friend class Render;
         friend class ForwardRender;
         friend class Renderbuffer;

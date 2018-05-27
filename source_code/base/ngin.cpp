@@ -76,14 +76,9 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         auto gaussianBlurSecondStepFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
         auto bloomMergeFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
     
-        for (int i = 0; i < 10; ++i) {
+        for (std::size_t i = 0; i < 10; ++i) {
             shadows.push_back(std::unique_ptr<Framebuffer>(new Framebuffer(0, 0, shadowResolution, shadowResolution)));
-            shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                      Texture2D::Format::depth_32,
-                                                                      Texture2D::AssociatedType::FLOAT,
-                                                                      shadowResolution,
-                                                                      shadowResolution));
-            
+            shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(Texture2D::Format::depth_32, Texture2D::AssociatedType::FLOAT, shadowResolution, shadowResolution));
             shadows[i]->configure();
         }
         
@@ -93,11 +88,10 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                                                 frameBufferWidth,
                                                                                                 frameBufferHeight)));
     
-        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                              Texture2D::Format::rgb_16_16_16,
-                                                                              Texture2D::AssociatedType::FLOAT,
-                                                                                 frameBufferWidth,
-                                                                                 frameBufferHeight));
+        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
+                                                                                Texture2D::AssociatedType::FLOAT,
+                                                                                frameBufferWidth,
+                                                                                frameBufferHeight));
     
         mainRenderFramebuffer->configure();
     
@@ -108,68 +102,60 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                                                        frameBufferWidth,
                                                                                                        frameBufferHeight)));
     
-        lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                                     Texture2D::Format::rgb_16_16_16,
-                                                                                     Texture2D::AssociatedType::FLOAT,
-                                                                                        frameBufferWidth,
-                                                                                        frameBufferHeight));
+        lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
+                                                                                       Texture2D::AssociatedType::FLOAT,
+                                                                                       frameBufferWidth,
+                                                                                       frameBufferHeight));
     
         lightSourceDrawerFramebuffer->configure();
     
     
-        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                            Texture2D::Format::rgb_16_16_16,
-                                                                            Texture2D::AssociatedType::FLOAT,
-                                                                               frameBufferWidth,
-                                                                               frameBufferHeight));
+        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
+                                                                              Texture2D::AssociatedType::FLOAT,
+                                                                              frameBufferWidth,
+                                                                              frameBufferHeight));
     
         vignetteFramebuffer->configure();
     
     
-        gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                                         Texture2D::Format::rgb_16_16_16,
-                                                                                         Texture2D::AssociatedType::FLOAT,
-                                                                                         frameBufferHeight,
-                                                                                         frameBufferWidth));
+        gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
+                                                                                           Texture2D::AssociatedType::FLOAT,
+                                                                                           frameBufferHeight,
+                                                                                           frameBufferWidth));
     
         gaussianBlurFirstStepFramebuffer->configure();
     
-        gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                                            Texture2D::Format::rgb_16_16_16,
+        gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
                                                                                             Texture2D::AssociatedType::FLOAT,
-                                                                                          frameBufferWidth,
-                                                                                          frameBufferHeight));
+                                                                                            frameBufferWidth,
+                                                                                            frameBufferHeight));
     
         gaussianBlurSecondStepFramebuffer->configure();
     
     
-        hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                       Texture2D::Format::rgb_16_16_16,
-                                                                       Texture2D::AssociatedType::FLOAT,
-                                                                               frameBufferWidth,
-                                                                               frameBufferHeight));
+        hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
+                                                                         Texture2D::AssociatedType::FLOAT,
+                                                                         frameBufferWidth,
+                                                                         frameBufferHeight));
     
         hdrFramebuffer->configure();
     
     
-        bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                                      Texture2D::Format::rgb_16_16_16,
+        bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
                                                                                       Texture2D::AssociatedType::FLOAT,
-                                                                                  frameBufferWidth,
-                                                                                  frameBufferHeight));
+                                                                                      frameBufferWidth,
+                                                                                      frameBufferHeight));
     
-        bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                                    Texture2D::Format::rgb_16_16_16,
-                                                                                    Texture2D::AssociatedType::FLOAT,
-                                                                                frameBufferWidth,
-                                                                                frameBufferHeight));
+        bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
+                                                                                      Texture2D::AssociatedType::FLOAT,
+                                                                                      frameBufferWidth,
+                                                                                      frameBufferHeight));
         bloomTwoTexSplitFramebuffer->configure();
     
-        bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Type::tex_2d,
-                                                                                Texture2D::Format::rgb_16_16_16,
+        bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
                                                                                 Texture2D::AssociatedType::FLOAT,
-                                                                                       frameBufferWidth,
-                                                                                       frameBufferHeight));
+                                                                                frameBufferWidth,
+                                                                                frameBufferHeight));
         bloomMergeFramebuffer->configure();
     
         unsigned int AOL = 100;
@@ -193,29 +179,28 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender{AOL, nullptr, std::move(phongforwardShader)});
         gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL, nullptr, std::move(gouraudforwardShader)));
         lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender{std::move(lightSourceDrawerFramebuffer), std::move(lightSourceforwardShader)});
-        bloomSplitRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer(lightSourceRenderer->get_framebuffer().get_colors(),
+        bloomSplitRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(lightSourceRenderer->get_framebuffer().get_colors(),
                                                                                       std::move(bloomTwoTexSplitFramebuffer),
                                                                                       std::move(bloomSplitProgram)));
     
         std::vector<std::weak_ptr<Texture2D>> textures;
         textures.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[0]);
     
-        gaussianBlurFirstStepRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer{textures, std::move(gaussianBlurFirstStepFramebuffer), std::move(gaussianBlurProgram)});
+        gaussianBlurFirstStepRenderer = std::unique_ptr<GaussianBlurPostprocessRender>(new GaussianBlurPostprocessRender{textures, std::move(gaussianBlurFirstStepFramebuffer), std::move(gaussianBlurProgram)});
     
-        gaussianBlurSecondStepRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(), std::move(gaussianBlurSecondStepFramebuffer), std::move(secondGaussianBlurProgram)));
+        gaussianBlurSecondStepRenderer = std::unique_ptr<GaussianBlurPostprocessRender>(new GaussianBlurPostprocessRender(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(), std::move(gaussianBlurSecondStepFramebuffer), std::move(secondGaussianBlurProgram)));
     
         std::vector<std::weak_ptr<Texture2D>> textures2;
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
         textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
     
-        bloomMergeRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer(textures2, std::move(bloomMergeFramebuffer), std::move(bloomMergeProgram)));
-        hdrRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer(bloomMergeRenderer->get_framebuffer().get_colors(), std::move(hdrFramebuffer), std::move(hdrProgram)));
-        vignetteRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer(hdrRenderer->get_framebuffer().get_colors(), std::move(vignetteFramebuffer), std::move(vignetteProgram)));
-        scaleRenderer = std::unique_ptr<PostprocessDrawer>(new PostprocessDrawer(vignetteRenderer->get_framebuffer().get_colors(), std::move(windowFramebuffer), std::move(scaleProgram)));
+        bloomMergeRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(textures2, std::move(bloomMergeFramebuffer), std::move(bloomMergeProgram)));
+        hdrRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(bloomMergeRenderer->get_framebuffer().get_colors(), std::move(hdrFramebuffer), std::move(hdrProgram)));
+        vignetteRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(hdrRenderer->get_framebuffer().get_colors(), std::move(vignetteFramebuffer), std::move(vignetteProgram)));
+        scaleRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(vignetteRenderer->get_framebuffer().get_colors(), std::move(windowFramebuffer), std::move(scaleProgram)));
             
 }
 
-//TODO this function is implemented three times
 void ms::NGin::load_model (std::string const & absolutePath) {
 	
     Loader::model_data loadedData = loader.load_flat_model(absolutePath);

@@ -28,7 +28,7 @@ namespace ms {
 														 std::unique_ptr<Framebuffer> && 	framebuffer,
 														 std::unique_ptr<Shader> && 		shader);
 		void 			draw  							(Drawable & node) override;
-		void    		draw                    		(Drawable & node, math::mat4 const & transformation);
+		void    		draw                    		(Drawable & node, math::mat4 const & transformation) override;
 		void    		set_material            		(Material * material) override;
 		void    		set_spot_lights         		(std::vector<SpotLight> const & spotLights) override;
 		void    		set_point_lights        		(std::vector<PointLight> const & pointLights) override;
