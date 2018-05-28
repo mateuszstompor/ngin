@@ -4,7 +4,7 @@ project(ngin)
 project(${PROJECT_NAME} CXX)
 project(${PROJECT_NAME} VERSION 0.0.1 DESCRIPTION "NGin, 3D graphics library")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(WIN32)
@@ -76,13 +76,13 @@ set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/texture.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/vertex.hpp
-#                                ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/gaussianBlurPostprocessRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/postprocessRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shadowRender.hpp)
 
 set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/postprocessRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/gaussianBlurPostprocessRender.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/postprocessing/vignettePostprocessRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/render.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/loader.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/proxyOGL.cpp
