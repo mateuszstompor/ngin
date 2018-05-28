@@ -4,9 +4,9 @@ in vec2 texCoords;
 
 layout (location = 0) out vec4 fragment;
 
-float innerCircleRadius = 0.25f;
-float outerCircleRadius = 0.8f;
-float effectIntensity = 0.7f;
+uniform float innerCircleRadius;
+uniform float outerCircleRadius;
+uniform float effectIntensity;
 
 uniform sampler2D in0;
 uniform int isOn;

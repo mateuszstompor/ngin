@@ -27,6 +27,7 @@ namespace ms {
 		friend class Render;
 		friend class PostprocessRender;
 		friend class GaussianBlurPostprocessRender;
+		friend class VignettePostprocessRender;
 		friend class DLShadowRender;
 		friend class ForwardRender;
 		friend class DeferredRender;

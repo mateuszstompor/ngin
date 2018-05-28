@@ -196,7 +196,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
     
         bloomMergeRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(textures2, std::move(bloomMergeFramebuffer), std::move(bloomMergeProgram)));
         hdrRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(bloomMergeRenderer->get_framebuffer().get_colors(), std::move(hdrFramebuffer), std::move(hdrProgram)));
-        vignetteRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(hdrRenderer->get_framebuffer().get_colors(), std::move(vignetteFramebuffer), std::move(vignetteProgram)));
+        vignetteRenderer = std::unique_ptr<VignettePostprocessRender>(new VignettePostprocessRender(hdrRenderer->get_framebuffer().get_colors(), std::move(vignetteFramebuffer), std::move(vignetteProgram)));
         scaleRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(vignetteRenderer->get_framebuffer().get_colors(), std::move(windowFramebuffer), std::move(scaleProgram)));
             
 }

@@ -21,6 +21,7 @@
 #include "../utils/loader.hpp"
 #include "../rendering/postprocessing/postprocessRender.hpp"
 #include "../rendering/postprocessing/gaussianBlurPostprocessRender.hpp"
+#include "../rendering/postprocessing/vignettePostprocessRender.hpp"
 #include "../utils/loader.hpp"
 #include "../scene/drawable.hpp"
 #include "../shaders/shaderHeaders.hpp"
@@ -71,7 +72,7 @@ namespace ms {
 		std::unique_ptr<PostprocessRender>     	        bloomMergeRenderer;
 		std::unique_ptr<GaussianBlurPostprocessRender>  gaussianBlurFirstStepRenderer;
 		std::unique_ptr<GaussianBlurPostprocessRender>  gaussianBlurSecondStepRenderer;
-        std::unique_ptr<PostprocessRender>              vignetteRenderer;
+        std::unique_ptr<VignettePostprocessRender>      vignetteRenderer;
 		std::unique_ptr<PostprocessRender>     	        scaleRenderer;
         std::vector<std::unique_ptr<Framebuffer>>       shadows;
         
