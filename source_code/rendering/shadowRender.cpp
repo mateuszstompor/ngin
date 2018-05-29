@@ -16,7 +16,11 @@ std::string ms::DLShadowRender::get_class () const {
 }
 
 void ms::DLShadowRender::draw (Drawable & node) {
-    shader->set_uniform("toWorld", node.get_transformation());
+    draw(node, node.get_transformation());
+}
+
+void ms::DLShadowRender::draw (Drawable & node, math::mat4 const & transformation) {
+    shader->set_uniform("toWorld", transformation);
     node.draw();
 }
 

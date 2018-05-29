@@ -27,6 +27,7 @@ namespace ms {
                         DLShadowRender          (std::unique_ptr<Framebuffer> &&    framebuffer,
                                                  std::unique_ptr<Shader> &&         shader);
         void            draw                    (Drawable & node);
+        virtual void    draw                    (Drawable & node, math::mat4 const & transformation);
         void            setup_uniforms          (math::mat4 const & projection, math::mat4 const & transformation);
         
     };

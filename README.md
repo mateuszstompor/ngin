@@ -24,6 +24,9 @@
 Project works on both Windows and macOS platforms. Use cmake in order to compile and run. macOS version can be opened as xcode project from
 ngin/example_projects/mac/ngin_mac.xcodeproj as well
 
+## 20.05.2017 Transparency
+<img src="/screenshots/transparency.jpg" width="100%" style="float: left; display:inline-block;"/>
+
 ## 16.04.2018 Spot lights shadow mapping with depth linearization
 <img src="/screenshots/spot_lights_shadow_mapping.jpg" width="100%" style="float: left; display:inline-block;"/>
 <img src="/screenshots/ngin.jpg" width="100%" style="float: left; display:inline-block;"/>

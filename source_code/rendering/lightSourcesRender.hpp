@@ -25,6 +25,7 @@ namespace ms {
                         LightSourcesRender        (std::unique_ptr<Framebuffer> &&    framebuffer,
                                                    std::unique_ptr<Shader> &&         shader);
         void	        draw  					(Drawable & node);
+        void            draw                    (Drawable & node, math::mat4 const & transformation);
         void            set_camera              (Camera const & camera);
 		
 	};

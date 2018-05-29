@@ -42,7 +42,7 @@ void ms::Drawable::draw () {
 	use();
     if(boundedGeometry) {
         boundedGeometry->use_indicies();
-        mglDrawElements(GL_TRIANGLES, boundedGeometry->amount_of_indices(), GL_UNSIGNED_INT, nullptr);
+        mglDrawElements(GL_TRIANGLES, static_cast<int>(boundedGeometry->amount_of_indices()), GL_UNSIGNED_INT, nullptr);
     }
 }
 
