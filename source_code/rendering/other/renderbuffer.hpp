@@ -23,7 +23,6 @@ namespace ms {
         friend class NGin;
         
     public:
-                                    ~Renderbuffer       () = default;
                                     Renderbuffer        (Texture2D::Format            format,
                                                          Texture2D::AssociatedType    associatedType,
                                                          unsigned int                 mipMapLevel,
@@ -34,17 +33,21 @@ namespace ms {
                                                          Texture2D::AssociatedType    associatedType,
                                                          unsigned int                 width,
                                                          unsigned int                 height);
- 	protected:
+                                    ~Renderbuffer       () = default;
+        std::string                 get_class           () const override;
         
                                     Renderbuffer        (const Renderbuffer &) = delete;
         Renderbuffer &              operator =          (const Texture2D &) = delete;
-        std::string	                get_class			() const override;
+        
+ 	protected:
+        
 		virtual void 		        use					();
-		void    	                _load  				() override;
-        void 		                _unload 			() override;
         constexpr GLuint		    get_underlying_id	() { return renderBuffer; }
 		
 	private:
+        
+        void                        _load               () override;
+        void                        _unload             () override;
         
         Texture2D::AssociatedType   associatedType;
         Texture2D::Format           format;

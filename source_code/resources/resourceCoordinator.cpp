@@ -73,8 +73,7 @@ void ms::ResourceCoordinator::unload_all_resources () {
 }
 
 std::shared_ptr<ms::ResourceCoordinator> ms::ResourceCoordinator::get_instance () {
-	if (ResourceCoordinator::sharedInstance == nullptr) {
+	if (ResourceCoordinator::sharedInstance == nullptr)
 		sharedInstance = std::shared_ptr<ResourceCoordinator>(new ResourceCoordinator);
-	}
 	return sharedInstance;
 }

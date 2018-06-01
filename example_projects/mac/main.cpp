@@ -36,7 +36,6 @@ namespace ms {
 
 int main(int argc, const char * argv[]) { {
 
-	
 	// pass path to scene with building as first param
 	// pass path to nanosuit as second param
 	// pass path to cone as third param
@@ -82,8 +81,8 @@ int main(int argc, const char * argv[]) { {
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
-//        framebufferWidth /= 2;
-//        framebufferHeight /= 2;
+        framebufferWidth /= 2;
+        framebufferHeight /= 2;
 	#endif
 	
 	if(window == nullptr){
@@ -93,12 +92,12 @@ int main(int argc, const char * argv[]) { {
 	
 	glfwMakeContextCurrent(window);
 	
-#ifdef __WIN32__
-	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-		std::cout << ms::contextInitializationFailure << '\n';
-		return -1;
-	}
-#endif
+    #ifdef __WIN32__
+        if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+            std::cout << ms::contextInitializationFailure << '\n';
+            return -1;
+        }
+    #endif
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -112,20 +111,18 @@ int main(int argc, const char * argv[]) { {
     
     engine->get_scene().set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 300, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
 
-    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f),
-                                     vec3( 0.0f, 0.0f,  0.0f),
-                                     vec3( 0.0f, 0.0f,  1.0f));
+    mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f), vec3( 0.0f, 0.0f,  0.0f), vec3( 0.0f, 0.0f,  1.0f));
 
     engine->get_scene().get_directional_light()->get_transformation() = lookat;
 
-//    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
-//    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
-//    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
-//    engine->get_scene().get_spot_lights().push_back(sl1);
-//    engine->get_scene().get_spot_lights().push_back(sl2);
-//    engine->get_scene().get_spot_lights().push_back(sl3);
-//    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
-//    engine->get_scene().get_point_lights().push_back(pl1);
+    SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
+    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+    engine->get_scene().get_spot_lights().push_back(sl1);
+    engine->get_scene().get_spot_lights().push_back(sl2);
+    engine->get_scene().get_spot_lights().push_back(sl3);
+    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
+    engine->get_scene().get_point_lights().push_back(pl1);
 
     for (auto & node : engine->get_scene().get_nodes()) {
         node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();

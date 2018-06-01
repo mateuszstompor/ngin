@@ -20,12 +20,10 @@
 
 namespace ms {
     
-    #define FILE_DOESNT_EXIST "There is no file in such location"
-    
 	namespace utils {
 
 		template <typename T>
-		inline std::string ptr_to_string(T* ptr) {
+		inline std::string ptr_to_string(T * ptr) {
 			std::stringstream stream;
 			stream << static_cast<const void *>(ptr);
 			return stream.str();
@@ -34,17 +32,16 @@ namespace ms {
 		template <typename T>
 		inline T* ptr_from_string (std::string ptrInString){
 			std::stringstream ss;
-			ss<<ptrInString;
-			long long unsigned int i;
-			ss>>std::hex>>i;
+			ss << ptrInString;
+			unsigned long long int i;
+			ss >> std::hex >> i;
 			return reinterpret_cast<T *>(i);
 		}
 		
 		inline std::string load_contents_of_file(std::string pathToFile) {
 			std::ifstream inputStream(pathToFile, std::ios_base::in);
-			if(!inputStream.good()) {
-				std::cerr << FILE_DOESNT_EXIST << '\n';
-			}
+			if(!inputStream.good())
+				std::cerr << "There is no file in such location" << '\n';
 			std::stringstream strStream;
 			strStream << inputStream.rdbuf();
 			return strStream.str();

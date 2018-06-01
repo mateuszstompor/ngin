@@ -204,19 +204,19 @@ ms::Loader::geometries_vec ms::Loader::process_node (aiNode const & node, aiScen
 		
     geometries_vec geometries{};
 	
-		for(auto i = 0; i < node.mNumMeshes; ++i) {
-			aiMesh const & mesh = *scene.mMeshes[node.mMeshes[i]];
-			if(mesh.HasNormals() && mesh.HasFaces() && mesh.HasPositions()) {
-                geometries.push_back(process_geometry(mesh, scene));
-			}
-		}
-	
-		for(auto i = 0; i < node.mNumChildren; ++i) {
-			geometries_vec proceededGeo = process_node(*node.mChildren[i], scene);
-			geometries.insert(geometries.end(),
-							  std::make_move_iterator(proceededGeo.begin()),
-							  std::make_move_iterator(proceededGeo.end()));
-		}
+    for(auto i{0}; i < node.mNumMeshes; ++i) {
+        aiMesh const & mesh = *scene.mMeshes[node.mMeshes[i]];
+        if(mesh.HasNormals() && mesh.HasFaces() && mesh.HasPositions()) {
+            geometries.push_back(process_geometry(mesh, scene));
+        }
+    }
+
+    for(auto i{0}; i < node.mNumChildren; ++i) {
+        geometries_vec proceededGeo = process_node(*node.mChildren[i], scene);
+        geometries.insert(geometries.end(),
+                          std::make_move_iterator(proceededGeo.begin()),
+                          std::make_move_iterator(proceededGeo.end()));
+    }
 	
 	return geometries;
 }
@@ -241,9 +241,6 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
 
         if(mesh.HasTextureCoords(0)) {
             std::memcpy(vertex.textureCoordinates.c_array(), &mesh.mTextureCoords[0][i], 2 * sizeof(float));
-
-        } else {
-            vertex.textureCoordinates = math::vec2{0.0f, 0.0f};
         }
 
         vertices.push_back(vertex);
@@ -270,8 +267,7 @@ std::unique_ptr<ms::Geometry> ms::Loader::process_geometry(aiMesh const & mesh, 
 
 std::vector<std::string> ms::Loader::get_texture_paths (aiTextureType const & type, aiMaterial const & mat, std::string const & directoryPath) const {
 	std::vector<std::string> paths;
-	auto texCount = mat.GetTextureCount(type);
-	for (auto i = 0; i < texCount; ++i) {
+    for (auto i{0}; i < mat.GetTextureCount(type); ++i) {
 		aiString path;
 		mat.GetTexture(type, i, &path);
 		paths.push_back(directoryPath + "/" + path.C_Str());

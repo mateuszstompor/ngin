@@ -13,105 +13,71 @@ using namespace shader;
 
 ms::NGin::NGin(unsigned int                   	screenWidth,
                unsigned int                     screenHeight,
-               unsigned int                     frameBufferWidth,
-               unsigned int                     frameBufferHeight,
+               unsigned int                     fbW,
+               unsigned int                     fbH,
                unsigned int                     shadowsResolution,
                std::unique_ptr<Camera> &&       cam,
-               std::unique_ptr<Framebuffer> &&  defaultFramebuffer) :   shouldDraw{true},
-                                                                        scene{std::move(cam)},
-                                                                        screenWidth{screenWidth},
-                                                                        screenHeight{screenHeight},
-                                                                        framebufferWidth{frameBufferWidth},
-                                                                        framebufferHeight{frameBufferHeight},
-                                                                        loader{},
-                                                                        shadowResolution{shadowsResolution}{
-                                                                            
-        auto windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
-            
+               std::unique_ptr<Framebuffer> &&  defaultFramebuffer) :
+shouldDraw{true},
+scene{std::move(cam)},
+screenWidth{screenWidth},
+screenHeight{screenHeight},
+framebufferWidth{fbW},
+framebufferHeight{fbH},
+loader{},
+shadowResolution{shadowsResolution}{
     
-        auto vignetteFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
-        auto hdrFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
-        auto mainRenderFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 1, frameBufferWidth, frameBufferHeight));
-        auto lightSourceDrawerFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 1, frameBufferWidth, frameBufferHeight));
-        auto bloomTwoTexSplitFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(2, 0, frameBufferWidth, frameBufferHeight));
-        auto gaussianBlurFirstStepFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferHeight, frameBufferWidth));
-        auto gaussianBlurSecondStepFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
-        auto bloomMergeFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
+        using tf = Texture2D::Format;
+        using tt = Texture2D::AssociatedType;
+    
+        auto windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
+    
+        auto vignetteFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
+        auto hdrFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
+        auto mainRenderFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 1, fbW, fbH));
+        auto lsFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 1, fbW, fbH));
+        auto bloomSplitFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(2, 0, fbW, fbH));
+        //gaussian blur
+        auto gbfFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbH, fbW));
+        auto gbsFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
+        auto bloomMergeFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
     
         for (std::size_t i = 0; i < 10; ++i) {
             shadows.push_back(std::unique_ptr<Framebuffer>(new Framebuffer(0, 0, shadowResolution, shadowResolution)));
-            shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(Texture2D::Format::depth_32, Texture2D::AssociatedType::FLOAT, shadowResolution, shadowResolution));
+            shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution));
             shadows[i]->configure();
         }
-        
-        mainRenderFramebuffer->bind_depth_buffer(std::unique_ptr<Renderbuffer>(new Renderbuffer(Texture2D::Format::depth_32,
-                                                                                                Texture2D::AssociatedType::FLOAT,
-                                                                                                0,
-                                                                                                frameBufferWidth,
-                                                                                                frameBufferHeight)));
     
-        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT, frameBufferWidth, frameBufferHeight));
-    
+        mainRenderFramebuffer->bind_depth_buffer(std::unique_ptr<Renderbuffer>(new Renderbuffer(tf::depth_32, tt::FLOAT, 0, fbW, fbH)));
+        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
         mainRenderFramebuffer->configure();
     
-    
-        lightSourceDrawerFramebuffer->bind_depth_buffer(std::unique_ptr<Renderbuffer>(new Renderbuffer(Texture2D::Format::depth_32,
-                                                                                                       Texture2D::AssociatedType::FLOAT,
-                                                                                                       0,
-                                                                                                       frameBufferWidth,
-                                                                                                       frameBufferHeight)));
-    
-        lightSourceDrawerFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                       Texture2D::AssociatedType::FLOAT,
-                                                                                       frameBufferWidth,
-                                                                                       frameBufferHeight));
-    
-        lightSourceDrawerFramebuffer->configure();
+
+        lsFramebuffer->bind_depth_buffer(std::unique_ptr<Renderbuffer>(new Renderbuffer(tf::depth_32, tt::FLOAT, 0, fbW, fbH)));
+        lsFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
+        lsFramebuffer->configure();
     
     
-        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT, frameBufferWidth, frameBufferHeight));
-    
+        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
         vignetteFramebuffer->configure();
     
     
-        gaussianBlurFirstStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                           Texture2D::AssociatedType::FLOAT,
-                                                                                           frameBufferHeight,
-                                                                                           frameBufferWidth));
+        gbfFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbH, fbW));
+        gbfFramebuffer->configure();
     
-        gaussianBlurFirstStepFramebuffer->configure();
-    
-        gaussianBlurSecondStepFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                            Texture2D::AssociatedType::FLOAT,
-                                                                                            frameBufferWidth,
-                                                                                            frameBufferHeight));
-    
-        gaussianBlurSecondStepFramebuffer->configure();
+        gbsFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
+        gbsFramebuffer->configure();
     
     
-        hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                         Texture2D::AssociatedType::FLOAT,
-                                                                         frameBufferWidth,
-                                                                         frameBufferHeight));
-    
+        hdrFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
         hdrFramebuffer->configure();
     
     
-        bloomTwoTexSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                      Texture2D::AssociatedType::FLOAT,
-                                                                                      frameBufferWidth,
-                                                                                      frameBufferHeight));
+        bloomSplitFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
+        bloomSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
+        bloomSplitFramebuffer->configure();
     
-        bloomTwoTexSplitFramebuffer->bind_color_buffer(1, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                      Texture2D::AssociatedType::FLOAT,
-                                                                                      frameBufferWidth,
-                                                                                      frameBufferHeight));
-        bloomTwoTexSplitFramebuffer->configure();
-    
-        bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                Texture2D::AssociatedType::FLOAT,
-                                                                                frameBufferWidth,
-                                                                                frameBufferHeight));
+        bloomMergeFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
         bloomMergeFramebuffer->configure();
     
         unsigned int AOL = 100;
@@ -134,17 +100,15 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         shadowRenderer = std::unique_ptr<DLShadowRender>(new DLShadowRender{nullptr, std::move(shadowShader)});
         phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender{AOL, nullptr, std::move(phongforwardShader)});
         gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL, nullptr, std::move(gouraudforwardShader)));
-        lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender{std::move(lightSourceDrawerFramebuffer), std::move(lightSourceforwardShader)});
-        bloomSplitRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(lightSourceRenderer->get_framebuffer().get_colors(),
-                                                                                      std::move(bloomTwoTexSplitFramebuffer),
-                                                                                      std::move(bloomSplitProgram)));
+        lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender{std::move(lsFramebuffer), std::move(lightSourceforwardShader)});
+        bloomSplitRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(lightSourceRenderer->get_framebuffer().get_colors(), std::move(bloomSplitFramebuffer), std::move(bloomSplitProgram)));
     
         std::vector<std::weak_ptr<Texture2D>> textures;
         textures.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[0]);
     
-        gaussianBlurFirstStepRenderer = std::unique_ptr<GaussianBlurPostprocessRender>(new GaussianBlurPostprocessRender{textures, std::move(gaussianBlurFirstStepFramebuffer), std::move(gaussianBlurProgram)});
+        gaussianBlurFirstStepRenderer = std::unique_ptr<GaussianBlurPostprocessRender>(new GaussianBlurPostprocessRender{textures, std::move(gbfFramebuffer), std::move(gaussianBlurProgram)});
     
-        gaussianBlurSecondStepRenderer = std::unique_ptr<GaussianBlurPostprocessRender>(new GaussianBlurPostprocessRender(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(), std::move(gaussianBlurSecondStepFramebuffer), std::move(secondGaussianBlurProgram)));
+        gaussianBlurSecondStepRenderer = std::unique_ptr<GaussianBlurPostprocessRender>(new GaussianBlurPostprocessRender(gaussianBlurFirstStepRenderer->get_framebuffer().get_colors(), std::move(gbsFramebuffer), std::move(secondGaussianBlurProgram)));
     
         std::vector<std::weak_ptr<Texture2D>> textures2;
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
@@ -273,234 +237,247 @@ void ms::NGin::draw_scene() {
     #ifdef NGIN_COUNT_FPS
             count_fps();
     #endif
-        std::stack<math::mat4> s{};
-        std::function<void(tree<std::shared_ptr<Drawable>>::depth_change, tree<std::shared_ptr<Drawable>>::iterator)> l = [&](auto direction, auto it){
-            if (direction == tree<std::shared_ptr<Drawable>>::depth_change::up) {
-                if(!s.empty())
-                    s.pop();
-            } else {
-                s.push(s.empty() ? (*it.parent())->get_transformation() : (*it.parent())->get_transformation() * s.top());
-            }
-        };
-
-        if (auto dirLight = scene.get_directional_light()) {
-            if(dirLight->casts_shadow()) {
-                shadows[0]->use();
-                shadows[0]->clear_frame();
-                shadowRenderer->use(*shadows[0]);
-                shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
-                s = std::stack<math::mat4>{};
-                auto it = scene.get_nodes().begin(l);
-                while(it != scene.get_nodes().end()) {
-                    shadowRenderer->draw(*(*it), s.empty() ? (*it)->get_transformation() : (*it)->get_transformation() * s.top());
-                    ++it;
-                }
-            }
-        }
         
-        lightSourceRenderer->use();
-        lightSourceRenderer->get_framebuffer().clear_frame();
+        draw_models();
+        draw_postprocess();
         
-        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
+    #ifdef DRAW_LIGHT_POV
+        draw_sl_pov(0, 0, 500, 500);
+    #endif
+        
+    }
+    
+}
 
-            SpotLight & spotLight = scene.get_spot_lights()[i];
-            if(spotLight.casts_shadow()) {
-                shadows[1 + i]->use();
-                shadows[1 + i]->clear_frame();
-                shadowRenderer->use(*shadows[1 + i]);
-                shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
-                s = std::stack<math::mat4>{};
-                auto it = scene.get_nodes().begin(l);
-                
-                while(it != scene.get_nodes().end()) {
-                    auto node = *it;
-                    auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-
-                    if(node->can_be_drawn() && spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * transform, node->get_geometry()->get_bounding_box())) {
-                        shadowRenderer->draw(*(*it), transform);
-                    }
-                    ++it;
-                }
-
-            }
-            
-        }
-        s = std::stack<math::mat4>{};
-        if(chosenRenderer == Renderer::deferred) {
-            deferredRenderer->use();
-            deferredRenderer->set_camera(scene.get_camera());
-            deferredRenderer->gFramebuffer->use();
-            deferredRenderer->gFramebuffer->clear_frame();
-            
-            tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
-            
-            while(it != scene.get_nodes().end()) {
-                auto node = *it;
-                auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
-                    if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
-                        deferredRenderer->draw(*node, transform);
-                    }
-                }
-                ++it;
-            }
-            
-            deferredRenderer->get_framebuffer().use();
-            deferredRenderer->get_framebuffer().clear_frame();
-            deferredRenderer->lightingShader->use();
-            deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
-            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-                deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-            }
-            deferredRenderer->perform_light_pass(scene);
-            lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
-        } else if(chosenRenderer == Renderer::forward_fragment) {
-            phongForwardRenderer->use(deferredRenderer->get_framebuffer());
-            deferredRenderer->get_framebuffer().clear_frame();
-            phongForwardRenderer->set_camera(scene.get_camera());
-            phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
-            phongForwardRenderer->set_directionallight(scene.get_directional_light());
-            phongForwardRenderer->set_point_lights(scene.get_point_lights());
-            phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-
-            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-                phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-            }
-            tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
-
-            while(it != scene.get_nodes().end()) {
-                auto node = *it;
-                auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
-                    if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
-                        phongForwardRenderer->set_material(node->get_material());
-                        phongForwardRenderer->draw(*node, transform);
-                    }
-                }
-                ++it;
-            }
-            
-            lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+void ms::NGin::draw_models () {
+    std::stack<math::mat4> s{};
+    std::function<void(tree<std::shared_ptr<Drawable>>::depth_change, tree<std::shared_ptr<Drawable>>::iterator)> l = [&](auto direction, auto it){
+        if (direction == tree<std::shared_ptr<Drawable>>::depth_change::up) {
+            if(!s.empty())
+                s.pop();
         } else {
-            gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
-            deferredRenderer->get_framebuffer().clear_frame();
-            gouraudForwardRenderer->set_camera(scene.get_camera());
-            gouraudForwardRenderer->set_spot_lights(scene.get_spot_lights());
-            gouraudForwardRenderer->set_directionallight(scene.get_directional_light());
-            gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
-            gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-
-            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-                gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-            }
-            tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
-
-            while(it != scene.get_nodes().end()) {
-                auto node = *it;
-                auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
-                    if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
-                        gouraudForwardRenderer->set_material(node->get_material());
-                        gouraudForwardRenderer->draw(*node, transform);
-                    }
-                }
-                ++it;
-            }
-            lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+            s.push(s.empty() ? (*it.parent())->get_transformation() : (*it.parent())->get_transformation() * s.top());
         }
+    };
     
-        {
-            lightSourceRenderer->use();
-            lightSourceRenderer->set_camera(scene.get_camera());
+    if (auto dirLight = scene.get_directional_light()) {
+        if(dirLight->casts_shadow()) {
+            shadows[0]->use();
+            shadows[0]->clear_frame();
+            shadowRenderer->use(*shadows[0]);
+            shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
             s = std::stack<math::mat4>{};
-            tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
-    
+            auto it = scene.get_nodes().begin(l);
             while(it != scene.get_nodes().end()) {
-                auto node = *it;
-                auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && !node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
-                    if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
-                        lightSourceRenderer->draw(*node, transform);
-                    }
-                }
+                shadowRenderer->draw(*(*it), s.empty() ? (*it)->get_transformation() : (*it)->get_transformation() * s.top());
                 ++it;
             }
         }
+    }
+    
+    lightSourceRenderer->use();
+    lightSourceRenderer->get_framebuffer().clear_frame();
+    
+    for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
         
-        {
-            //        translucency
-            lightSourceRenderer->get_framebuffer().set_blending(true);
-            phongForwardRenderer->use(lightSourceRenderer->get_framebuffer());
-            phongForwardRenderer->set_camera(scene.get_camera());
-            phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
-            phongForwardRenderer->set_directionallight(scene.get_directional_light());
-            phongForwardRenderer->set_point_lights(scene.get_point_lights());
-            phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-            
-            for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-                phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-            }
+        SpotLight & spotLight = scene.get_spot_lights()[i];
+        if(spotLight.casts_shadow()) {
+            shadows[1 + i]->use();
+            shadows[1 + i]->clear_frame();
+            shadowRenderer->use(*shadows[1 + i]);
+            shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
             s = std::stack<math::mat4>{};
             auto it = scene.get_nodes().begin(l);
             
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->get_material()->is_shaded() && node->get_material()->is_translucent()) {
-                    if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
-                        phongForwardRenderer->set_material(node->get_material());
-                        phongForwardRenderer->draw(*node, transform);
-                    }
+                
+                if(node->can_be_drawn() && spotLight.get_frustum().is_in_camera_sight( spotLight.get_transformation() * transform, node->get_geometry()->get_bounding_box())) {
+                    shadowRenderer->draw(*(*it), transform);
                 }
                 ++it;
             }
             
-            lightSourceRenderer->get_framebuffer().set_blending(false);
         }
-        
-        bloomSplitRenderer->use();
-        bloomSplitRenderer->get_framebuffer().clear_frame();
-        bloomSplitRenderer->draw();
-        
-        gaussianBlurFirstStepRenderer->use();
-        gaussianBlurFirstStepRenderer->get_framebuffer().clear_frame();
-        gaussianBlurFirstStepRenderer->draw();
-        
-        gaussianBlurSecondStepRenderer->use();
-        gaussianBlurSecondStepRenderer->get_framebuffer().clear_frame();
-        gaussianBlurSecondStepRenderer->draw();
-        
-        bloomMergeRenderer->use();
-        bloomMergeRenderer->get_framebuffer().clear_frame();
-        bloomMergeRenderer->draw();
-        
-        hdrRenderer->use();
-        hdrRenderer->get_framebuffer().clear_frame();
-        hdrRenderer->draw();
-        
-        vignetteRenderer->use();
-        vignetteRenderer->get_framebuffer().clear_frame();
-        vignetteRenderer->draw();
-        
-        scaleRenderer->use();
-        scaleRenderer->get_framebuffer().clear_frame();
-        scaleRenderer->draw();
-        
-#ifdef DRAW_LIGHT_POV
-        scaleRenderer->get_framebuffer().use();
-        shadowRenderer->use(scaleRenderer->get_framebuffer());
-        for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
-            mglViewport(500 * i, 0, 500, 500);
-            scaleRenderer->get_framebuffer().clear_depth();
-            shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
-            for(auto & node : scene.get_nodes()) {
-                shadowRenderer->draw(*node);
-            }
-        }
-#endif
-    
+
     }
     
+    s = std::stack<math::mat4>{};
+    if(chosenRenderer == Renderer::deferred) {
+        deferredRenderer->use();
+        deferredRenderer->set_camera(scene.get_camera());
+        deferredRenderer->gFramebuffer->use();
+        deferredRenderer->gFramebuffer->clear_frame();
+        
+        tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
+        
+        while(it != scene.get_nodes().end()) {
+            auto node = *it;
+            auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
+            if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
+                    deferredRenderer->draw(*node, transform);
+                }
+            }
+            ++it;
+        }
+        
+        deferredRenderer->get_framebuffer().use();
+        deferredRenderer->get_framebuffer().clear_frame();
+        deferredRenderer->lightingShader->use();
+        deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
+            deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
+        deferredRenderer->perform_light_pass(scene);
+        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+    } else if(chosenRenderer == Renderer::forward_fragment) {
+        phongForwardRenderer->use(deferredRenderer->get_framebuffer());
+        deferredRenderer->get_framebuffer().clear_frame();
+        phongForwardRenderer->set_camera(scene.get_camera());
+        phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
+        phongForwardRenderer->set_directionallight(scene.get_directional_light());
+        phongForwardRenderer->set_point_lights(scene.get_point_lights());
+        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        
+        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
+            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
+        tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
+        
+        while(it != scene.get_nodes().end()) {
+            auto node = *it;
+            auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
+            if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
+                    phongForwardRenderer->set_material(node->get_material());
+                    phongForwardRenderer->draw(*node, transform);
+                }
+            }
+            ++it;
+        }
+        
+        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+    } else {
+        gouraudForwardRenderer->use(deferredRenderer->get_framebuffer());
+        deferredRenderer->get_framebuffer().clear_frame();
+        gouraudForwardRenderer->set_camera(scene.get_camera());
+        gouraudForwardRenderer->set_spot_lights(scene.get_spot_lights());
+        gouraudForwardRenderer->set_directionallight(scene.get_directional_light());
+        gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
+        gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        
+        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
+            gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
+        tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
+        
+        while(it != scene.get_nodes().end()) {
+            auto node = *it;
+            auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
+            if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
+                    gouraudForwardRenderer->set_material(node->get_material());
+                    gouraudForwardRenderer->draw(*node, transform);
+                }
+            }
+            ++it;
+        }
+        lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
+    }
+    
+    {
+        lightSourceRenderer->use();
+        lightSourceRenderer->set_camera(scene.get_camera());
+        s = std::stack<math::mat4>{};
+        tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
+        
+        while(it != scene.get_nodes().end()) {
+            auto node = *it;
+            auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
+            if(node->can_be_drawn() && !node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
+                    lightSourceRenderer->draw(*node, transform);
+                }
+            }
+            ++it;
+        }
+    }
+    
+    {
+        //        translucency
+        lightSourceRenderer->get_framebuffer().set_blending(true);
+        phongForwardRenderer->use(lightSourceRenderer->get_framebuffer());
+        phongForwardRenderer->set_camera(scene.get_camera());
+        phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
+        phongForwardRenderer->set_directionallight(scene.get_directional_light());
+        phongForwardRenderer->set_point_lights(scene.get_point_lights());
+        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
+        
+        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
+            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
+        }
+        s = std::stack<math::mat4>{};
+        auto it = scene.get_nodes().begin(l);
+        
+        while(it != scene.get_nodes().end()) {
+            auto node = *it;
+            auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
+            if(node->can_be_drawn() && node->get_material()->is_shaded() && node->get_material()->is_translucent()) {
+                if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
+                    phongForwardRenderer->set_material(node->get_material());
+                    phongForwardRenderer->draw(*node, transform);
+                }
+            }
+            ++it;
+        }
+        
+        lightSourceRenderer->get_framebuffer().set_blending(false);
+    }
+}
+
+void ms::NGin::draw_sl_pov (std::uint16_t x, std::uint16_t y, std::uint16_t tileWidth, std::uint16_t tileHeight) {
+    scaleRenderer->get_framebuffer().use();
+    shadowRenderer->use(scaleRenderer->get_framebuffer());
+    for(int i = 0; i < scene.get_spot_lights().size(); ++i) {
+        mglViewport(x + tileWidth * i, y, tileWidth, tileWidth);
+        scaleRenderer->get_framebuffer().clear_depth();
+        shadowRenderer->setup_uniforms(scene.get_spot_lights()[i].get_frustum().get_projection_matrix(), scene.get_spot_lights()[i].get_transformation());
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node);
+        }
+    }
+}
+
+void ms::NGin::draw_postprocess () {
+    bloomSplitRenderer->use();
+    bloomSplitRenderer->get_framebuffer().clear_frame();
+    bloomSplitRenderer->draw();
+    
+    gaussianBlurFirstStepRenderer->use();
+    gaussianBlurFirstStepRenderer->get_framebuffer().clear_frame();
+    gaussianBlurFirstStepRenderer->draw();
+    
+    gaussianBlurSecondStepRenderer->use();
+    gaussianBlurSecondStepRenderer->get_framebuffer().clear_frame();
+    gaussianBlurSecondStepRenderer->draw();
+    
+    bloomMergeRenderer->use();
+    bloomMergeRenderer->get_framebuffer().clear_frame();
+    bloomMergeRenderer->draw();
+    
+    hdrRenderer->use();
+    hdrRenderer->get_framebuffer().clear_frame();
+    hdrRenderer->draw();
+    
+    vignetteRenderer->use();
+    vignetteRenderer->get_framebuffer().clear_frame();
+    vignetteRenderer->draw();
+    
+    scaleRenderer->use();
+    scaleRenderer->get_framebuffer().clear_frame();
+    scaleRenderer->draw();
 }
 
 void ms::NGin::set_renderer (Renderer r) {

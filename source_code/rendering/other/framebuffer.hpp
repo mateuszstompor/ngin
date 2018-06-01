@@ -38,13 +38,13 @@ namespace ms {
         
                                         Framebuffer         (int    colorAttachmentsAmount,
                                                              int    renderbufferAttachmentsAmount,
-                                                             int     width,
-                                                             int     height);
-        void                            bind_color_buffer   (int index,
-                                                             std::unique_ptr<Texture2D> && Texture2D);
+                                                             int    width,
+                                                             int    height);
+        void                            bind_color_buffer   (int                            index,
+                                                             std::unique_ptr<Texture2D> &&  Texture2D);
         
-        void                            bind_color_buffer   (int index,
-                                                             std::unique_ptr<Renderbuffer> && renderbuffer);
+        void                            bind_color_buffer   (int                                index,
+                                                             std::unique_ptr<Renderbuffer> &&   renderbuffer);
         
         void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> && renderbuffer);
         void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);

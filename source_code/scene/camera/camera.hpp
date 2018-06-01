@@ -19,10 +19,9 @@ namespace ms {
 		
 		inline 						            Camera                  ();
 		virtual 					            ~Camera                 () = default;
-        virtual math::mat4 const &              get_projection_matrix   () const = 0;
         virtual bool                            is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
                                                                          math::BoundingBox<float> const & boundingBox) const = 0;
-        
+        virtual math::mat4 const &              get_projection_matrix   () const = 0;
         constexpr math::mat4 const &            get_transformation      () const { return transformation; }
         constexpr math::mat4 &                  get_transformation      () { return transformation; }
         

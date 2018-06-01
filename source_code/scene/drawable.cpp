@@ -54,16 +54,16 @@ std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
     std::string                         associatedMaterial;
     math::BoundingBox<float>            boundingBox{0,0,0,0,0,0};
     
-	for(int i = 0; i < 4; ++i) {
+    for(int i{0}; i < 4; ++i) {
 		int positionOffset = 3 * i;
 		int textureOffset = 2 * i;
 		
-		math::vec3 position = math::vec3{	gsl::at(quad_indicies::vertices, positionOffset),
-											gsl::at(quad_indicies::vertices, positionOffset+1),
-											gsl::at(quad_indicies::vertices, positionOffset+2)};
+		math::vec3 position = math::vec3{	gsl::at(quad_indexed::vertices, positionOffset),
+											gsl::at(quad_indexed::vertices, positionOffset+1),
+											gsl::at(quad_indexed::vertices, positionOffset+2)};
 		
-		math::vec2 textureCoordinate = math::vec2{gsl::at(quad_indicies::textureCoordinates, textureOffset),
-                                                  gsl::at(quad_indicies::textureCoordinates, textureOffset+1)};
+		math::vec2 textureCoordinate = math::vec2{gsl::at(quad_indexed::textureCoordinates, textureOffset),
+                                                  gsl::at(quad_indexed::textureCoordinates, textureOffset+1)};
 		
         math::vec3 normal{};
         math::vec3 tangent{};
@@ -72,8 +72,8 @@ std::unique_ptr<ms::Drawable> ms::Drawable::get_quad () {
         vertices.push_back(Vertex{std::move(position), std::move(normal), std::move(tangent), std::move(bitangent), std::move(textureCoordinate)});
 	}
 	
-	for(int i = 0; i < 6; ++i) {
-		indices.push_back(gsl::at(quad_indicies::indicies, i));
+    for(int i{0}; i < 6; ++i) {
+		indices.push_back(gsl::at(quad_indexed::indicies, i));
 	}
     
 	drawable->boundedGeometry = std::make_shared<Geometry>(std::move(vertices), std::move(indices), std::move(associatedMaterial), std::move(boundingBox));

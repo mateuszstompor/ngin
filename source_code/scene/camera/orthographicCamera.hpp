@@ -22,9 +22,9 @@ namespace ms {
         
                                         ~OrthographicCamera     () = default;
         bool                            is_in_camera_sight      (math::mat4 const & boundingBoxTransformation,
-                                                                 math::BoundingBox<float> const & boundingBox) const;
+                                                                 math::BoundingBox<float> const & boundingBox) const override;
         
-        math::mat4 const &              get_projection_matrix   () const;
+        math::mat4 const &              get_projection_matrix   () const override;
         
     private:
         
