@@ -117,6 +117,32 @@
 		56D29B12207B8E430080CB3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56B12307207B79A0001046CD /* Assets.xcassets */; };
 		56D29B13207B8E430080CB3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56B12304207B79A0001046CD /* Main.storyboard */; };
 		56D29B1B207B8E5B0080CB3B /* libngin_ios_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D29AD8207B8E410080CB3B /* libngin_ios_x86_64.a */; };
+		56DE711B20C0811E005CC7AD /* VasePlant_diffuse_alpha.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12361207B81AF001046CD /* VasePlant_diffuse_alpha.tga */; };
+		56DE711C20C0811E005CC7AD /* Vase_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12366207B81AF001046CD /* Vase_roughness.tga */; };
+		56DE711D20C0811E005CC7AD /* copyright.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236B207B81AF001046CD /* copyright.txt */; };
+		56DE711E20C0811E005CC7AD /* Lion_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1236D207B81AF001046CD /* Lion_Roughness.tga */; };
+		56DE711F20C0811E005CC7AD /* VasePlant_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12371207B81AF001046CD /* VasePlant_normal.tga */; };
+		56DE712020C0811E005CC7AD /* Background_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12376207B81AF001046CD /* Background_Normal.tga */; };
+		56DE712120C0811E005CC7AD /* Lion_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237B207B81AF001046CD /* Lion_Normal.tga */; };
+		56DE712220C0811E005CC7AD /* ChainTexture_Albedo_alpha.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237C207B81AF001046CD /* ChainTexture_Albedo_alpha.tga */; };
+		56DE712320C0811E005CC7AD /* VasePlant_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237D207B81AF001046CD /* VasePlant_roughness.tga */; };
+		56DE712420C0811E005CC7AD /* VaseRound_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237E207B81AF001046CD /* VaseRound_roughness.tga */; };
+		56DE712520C0811E005CC7AD /* VaseHanging_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1237F207B81AF001046CD /* VaseHanging_normal.tga */; };
+		56DE712620C0811E005CC7AD /* gi_flag.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12383207B81AF001046CD /* gi_flag.tga */; };
+		56DE712720C0811E005CC7AD /* VaseHanging_roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12385207B81AF001046CD /* VaseHanging_roughness.tga */; };
+		56DE712820C0811E005CC7AD /* ChainTexture_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12386207B81AF001046CD /* ChainTexture_Roughness.tga */; };
+		56DE712920C0811E005CC7AD /* ChainTexture_Metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12387207B81AF001046CD /* ChainTexture_Metallic.tga */; };
+		56DE712A20C0811E005CC7AD /* VaseRound_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1238D207B81AF001046CD /* VaseRound_diffuse.tga */; };
+		56DE712B20C0811E005CC7AD /* Metallic_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12390207B81AF001046CD /* Metallic_metallic.tga */; };
+		56DE712C20C0811E005CC7AD /* Vase_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12392207B81AF001046CD /* Vase_normal.tga */; };
+		56DE712D20C0811E005CC7AD /* VaseRound_normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12393207B81AF001046CD /* VaseRound_normal.tga */; };
+		56DE712E20C0811E005CC7AD /* Background_Albedo.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B12396207B81AF001046CD /* Background_Albedo.tga */; };
+		56DE712F20C0811E005CC7AD /* ChainTexture_Normal.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239E207B81AF001046CD /* ChainTexture_Normal.tga */; };
+		56DE713020C0811E005CC7AD /* Lion_Albedo.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B1239F207B81AF001046CD /* Lion_Albedo.tga */; };
+		56DE713120C0811E005CC7AD /* Background_Roughness.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A2207B81AF001046CD /* Background_Roughness.tga */; };
+		56DE713220C0811E005CC7AD /* Vase_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A4207B81AF001046CD /* Vase_diffuse.tga */; };
+		56DE713320C0811E005CC7AD /* VaseHanging_diffuse.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A8207B81AF001046CD /* VaseHanging_diffuse.tga */; };
+		56DE713420C0811E005CC7AD /* Dielectric_metallic.tga in Resources */ = {isa = PBXBuildFile; fileRef = 56B123A9207B81AF001046CD /* Dielectric_metallic.tga */; };
 		56E62A1B207CC5EA00F2FC05 /* iOS_arm64-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56E62A19207CC5E400F2FC05 /* iOS_arm64-Info.plist */; };
 		56E62A1C207CC5EE00F2FC05 /* iOS_x86_64-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56E62A1A207CC5E400F2FC05 /* iOS_x86_64-Info.plist */; };
 		56E62A61207CCFBD00F2FC05 /* SceneViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56E62A60207CCFBD00F2FC05 /* SceneViewController.mm */; };
@@ -1130,6 +1156,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56DE711B20C0811E005CC7AD /* VasePlant_diffuse_alpha.tga in Resources */,
+				56DE711C20C0811E005CC7AD /* Vase_roughness.tga in Resources */,
+				56DE711D20C0811E005CC7AD /* copyright.txt in Resources */,
+				56DE711E20C0811E005CC7AD /* Lion_Roughness.tga in Resources */,
+				56DE711F20C0811E005CC7AD /* VasePlant_normal.tga in Resources */,
+				56DE712020C0811E005CC7AD /* Background_Normal.tga in Resources */,
+				56DE712120C0811E005CC7AD /* Lion_Normal.tga in Resources */,
+				56DE712220C0811E005CC7AD /* ChainTexture_Albedo_alpha.tga in Resources */,
+				56DE712320C0811E005CC7AD /* VasePlant_roughness.tga in Resources */,
+				56DE712420C0811E005CC7AD /* VaseRound_roughness.tga in Resources */,
+				56DE712520C0811E005CC7AD /* VaseHanging_normal.tga in Resources */,
+				56DE712620C0811E005CC7AD /* gi_flag.tga in Resources */,
+				56DE712720C0811E005CC7AD /* VaseHanging_roughness.tga in Resources */,
+				56DE712820C0811E005CC7AD /* ChainTexture_Roughness.tga in Resources */,
+				56DE712920C0811E005CC7AD /* ChainTexture_Metallic.tga in Resources */,
+				56DE712A20C0811E005CC7AD /* VaseRound_diffuse.tga in Resources */,
+				56DE712B20C0811E005CC7AD /* Metallic_metallic.tga in Resources */,
+				56DE712C20C0811E005CC7AD /* Vase_normal.tga in Resources */,
+				56DE712D20C0811E005CC7AD /* VaseRound_normal.tga in Resources */,
+				56DE712E20C0811E005CC7AD /* Background_Albedo.tga in Resources */,
+				56DE712F20C0811E005CC7AD /* ChainTexture_Normal.tga in Resources */,
+				56DE713020C0811E005CC7AD /* Lion_Albedo.tga in Resources */,
+				56DE713120C0811E005CC7AD /* Background_Roughness.tga in Resources */,
+				56DE713220C0811E005CC7AD /* Vase_diffuse.tga in Resources */,
+				56DE713320C0811E005CC7AD /* VaseHanging_diffuse.tga in Resources */,
+				56DE713420C0811E005CC7AD /* Dielectric_metallic.tga in Resources */,
 				56F566DD20B8A72700D8E5FC /* cone.obj in Resources */,
 				56F566DE20B8A72700D8E5FC /* cone.mtl in Resources */,
 				56F566A920B8A6F200D8E5FC /* Sponza_Fabric_Green_normal.tga in Resources */,

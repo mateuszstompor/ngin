@@ -27,45 +27,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                         shadowResolution{shadowsResolution}{
                                                                             
         auto windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
-        
-        auto shadowMapperVertexShaderSource = get_shader_of_type(Type::shadow_mapping_dir_vshader);
-        auto shadowMapperFragmentShaderSource = get_shader_of_type(Type::shadow_mapping_dir_fshader);
-    
-        auto forwardRenderVertexShaderSource = get_shader_of_type(Type::forward_render_phong_vshader);
-        auto forwardRenderFragmentShaderSource = get_shader_of_type(Type::forward_render_phong_fshader);
-    
-        auto gouraudVertexShaderSource = get_shader_of_type(Type::forward_render_gouraud_vshader);
-        auto gouraudRenderFragmentShaderSource = get_shader_of_type(Type::forward_render_gouraud_fshader);
-    
-        auto deferredRenderVertexShaderSource = get_shader_of_type(Type::deferred_render_g_buf_vertex_shader);
-        auto deferredRenderFragmentShaderSource = get_shader_of_type(Type::deferred_render_g_buf_fragment_shader);
-    
-        auto deferredRenderLightingVertexShaderSource = get_shader_of_type(Type::deferred_render_light_pass_vshader);
-        auto deferredRenderLightingFragmentShaderSource = get_shader_of_type(Type::deferred_render_light_pass_fshader);
-    
-        auto lightSourceDrawerVertexShader = get_shader_of_type(Type::forward_render_light_drawer_vshader);
-        auto lightSourceDrawerFragmentShader = get_shader_of_type(Type::forward_render_light_drawer_fshader);
-    
-        auto shadowMappingVertexShader = get_shader_of_type(Type::shadow_mapping_dir_vshader);
-        auto shadowMappingFragmentShader = get_shader_of_type(Type::shadow_mapping_dir_fshader);
-    
-        auto hdrVertexShader = get_shader_of_type(Type::post_process_hdr_vshader);
-        auto hdrFragmentShader = get_shader_of_type(Type::post_process_hdr_fshader);
-    
-        auto bloomSplitterVertexShader = get_shader_of_type(Type::post_process_bloom_splitter_vshader);
-        auto bloomSplitterFragmentShader = get_shader_of_type(Type::post_process_bloom_splitter_fshader);
-    
-        auto bloomMergerVertexShader = get_shader_of_type(Type::post_process_bloom_merger_vshader);
-        auto bloomMergerFragmentShader = get_shader_of_type(Type::post_process_bloom_merger_fshader);
-    
-        auto gaussianBlurVertexShader = get_shader_of_type(Type::post_process_gaussian_blur_vshader);
-        auto gaussianBlurFragmentShader = get_shader_of_type(Type::post_process_gaussian_blur_fshader);
-    
-        auto vignetteVertexShader = get_shader_of_type(Type::post_process_vignette_vshader);
-        auto vignetteFragmentShader = get_shader_of_type(Type::post_process_vignette_fshader);
-    
-        auto scaleVertexShader = get_shader_of_type(Type::post_process_scale_vshader);
-        auto scaleFragmentShader = get_shader_of_type(Type::post_process_scale_fshader);
+            
     
         auto vignetteFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
         auto hdrFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, frameBufferWidth, frameBufferHeight));
@@ -88,10 +50,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
                                                                                                 frameBufferWidth,
                                                                                                 frameBufferHeight)));
     
-        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                                Texture2D::AssociatedType::FLOAT,
-                                                                                frameBufferWidth,
-                                                                                frameBufferHeight));
+        mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT, frameBufferWidth, frameBufferHeight));
     
         mainRenderFramebuffer->configure();
     
@@ -110,10 +69,7 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
         lightSourceDrawerFramebuffer->configure();
     
     
-        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16,
-                                                                              Texture2D::AssociatedType::FLOAT,
-                                                                              frameBufferWidth,
-                                                                              frameBufferHeight));
+        vignetteFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT, frameBufferWidth, frameBufferHeight));
     
         vignetteFramebuffer->configure();
     
@@ -160,19 +116,19 @@ ms::NGin::NGin(unsigned int                   	screenWidth,
     
         unsigned int AOL = 100;
     
-        auto shadowShader = Shader::vf_program(shadowMappingVertexShader, shadowMappingFragmentShader);
-        auto phongforwardShader = Shader::vf_program(forwardRenderVertexShaderSource, forwardRenderFragmentShaderSource);
-        auto gouraudforwardShader = Shader::vf_program(gouraudVertexShaderSource, gouraudRenderFragmentShaderSource);
-        auto lightSourceforwardShader = Shader::vf_program(lightSourceDrawerVertexShader, lightSourceDrawerFragmentShader);
-        auto bloomSplitProgram = Shader::vf_program(bloomSplitterVertexShader, bloomSplitterFragmentShader);
-        auto bloomMergeProgram = Shader::vf_program(bloomMergerVertexShader, bloomMergerFragmentShader);
-        auto hdrProgram = Shader::vf_program(hdrVertexShader, hdrFragmentShader);
-        auto gaussianBlurProgram = Shader::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
-        auto secondGaussianBlurProgram = Shader::vf_program(gaussianBlurVertexShader, gaussianBlurFragmentShader);
-        auto vignetteProgram = Shader::vf_program(vignetteVertexShader, vignetteFragmentShader);
-        auto scaleProgram = Shader::vf_program(scaleVertexShader, scaleFragmentShader);
-        auto defGshader = Shader::vf_program(deferredRenderVertexShaderSource, deferredRenderFragmentShaderSource);
-        auto defLightingShader = Shader::vf_program(deferredRenderLightingVertexShaderSource, deferredRenderLightingFragmentShaderSource);
+        auto shadowShader = Shader::vf_program(get_shader_of_type(Type::shadow_mapping_dir_vshader), get_shader_of_type(Type::shadow_mapping_dir_fshader));
+        auto phongforwardShader = Shader::vf_program(get_shader_of_type(Type::forward_render_phong_vshader), get_shader_of_type(Type::forward_render_phong_fshader));
+        auto gouraudforwardShader = Shader::vf_program(get_shader_of_type(Type::forward_render_gouraud_vshader), get_shader_of_type(Type::forward_render_gouraud_fshader));
+        auto lightSourceforwardShader = Shader::vf_program(get_shader_of_type(Type::forward_render_light_drawer_vshader), get_shader_of_type(Type::forward_render_light_drawer_fshader));
+        auto bloomSplitProgram = Shader::vf_program(get_shader_of_type(Type::post_process_bloom_splitter_vshader), get_shader_of_type(Type::post_process_bloom_splitter_fshader));
+        auto bloomMergeProgram = Shader::vf_program(get_shader_of_type(Type::post_process_bloom_merger_vshader), get_shader_of_type(Type::post_process_bloom_merger_fshader));
+        auto hdrProgram = Shader::vf_program(get_shader_of_type(Type::post_process_hdr_vshader), get_shader_of_type(Type::post_process_hdr_fshader));
+        auto gaussianBlurProgram = Shader::vf_program(get_shader_of_type(Type::post_process_gaussian_blur_vshader), get_shader_of_type(Type::post_process_gaussian_blur_fshader));
+        auto secondGaussianBlurProgram = Shader::vf_program(get_shader_of_type(Type::post_process_gaussian_blur_vshader), get_shader_of_type(Type::post_process_gaussian_blur_fshader));
+        auto vignetteProgram = Shader::vf_program(get_shader_of_type(Type::post_process_vignette_vshader), get_shader_of_type(Type::post_process_vignette_fshader));
+        auto scaleProgram = Shader::vf_program(get_shader_of_type(Type::post_process_scale_vshader), get_shader_of_type(Type::post_process_scale_fshader));
+        auto defGshader = Shader::vf_program(get_shader_of_type(Type::deferred_render_g_buf_vertex_shader), get_shader_of_type(Type::deferred_render_g_buf_fragment_shader));
+        auto defLightingShader = Shader::vf_program(get_shader_of_type(Type::deferred_render_light_pass_vshader), get_shader_of_type(Type::deferred_render_light_pass_fshader));
     
         deferredRenderer = std::unique_ptr<DeferredRender> (new DeferredRender{AOL, AOL, std::move(mainRenderFramebuffer), std::move(defGshader), std::move(defLightingShader)});
         shadowRenderer = std::unique_ptr<DLShadowRender>(new DLShadowRender{nullptr, std::move(shadowShader)});
@@ -273,7 +229,6 @@ void ms::NGin::load () {
 
 void ms::NGin::unload () {
     pause_drawing();
-    
     phongForwardRenderer->unload();
     deferredRenderer->unload();
     gouraudForwardRenderer->unload();
@@ -292,7 +247,6 @@ void ms::NGin::unload () {
     std::for_each(scene.get_textures().begin(), scene.get_textures().end(), [](auto const & texture) { texture.second->unload(); });
     std::for_each(scene.get_materials().begin(), scene.get_materials().end(), [](auto const & material) { material.second->unload(); });
     std::for_each(shadows.begin(), shadows.end(), [](auto const & fb) { fb->unload(); } );
-    
 }
 
 void ms::NGin::count_fps () {
@@ -383,7 +337,7 @@ void ms::NGin::draw_scene() {
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
                     if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
                         deferredRenderer->draw(*node, transform);
                     }
@@ -417,7 +371,7 @@ void ms::NGin::draw_scene() {
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
                     if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
                         phongForwardRenderer->set_material(node->get_material());
                         phongForwardRenderer->draw(*node, transform);
@@ -444,7 +398,7 @@ void ms::NGin::draw_scene() {
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(node->can_be_drawn() && node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
                     if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
                         gouraudForwardRenderer->set_material(node->get_material());
                         gouraudForwardRenderer->draw(*node, transform);
@@ -464,7 +418,7 @@ void ms::NGin::draw_scene() {
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && !node->is_shaded() && !node->boundedMaterial->is_translucent()) {
+                if(node->can_be_drawn() && !node->get_material()->is_shaded() && !node->boundedMaterial->is_translucent()) {
                     if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
                         lightSourceRenderer->draw(*node, transform);
                     }
@@ -492,7 +446,7 @@ void ms::NGin::draw_scene() {
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
-                if(node->can_be_drawn() && node->is_shaded() && node->get_material()->is_translucent()) {
+                if(node->can_be_drawn() && node->get_material()->is_shaded() && node->get_material()->is_translucent()) {
                     if(scene.get_camera().is_in_camera_sight(transform, node->get_geometry()->get_bounding_box())) {
                         phongForwardRenderer->set_material(node->get_material());
                         phongForwardRenderer->draw(*node, transform);

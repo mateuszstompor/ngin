@@ -12,8 +12,7 @@ ms::Drawable::Drawable (std::shared_ptr<Geometry> geometry, std::shared_ptr<Mate
 transformation {math::mat4::identity()},
 boundedGeometry{geometry},
 boundedMaterial{material},
-invalidated{false},
-isShaded{true} { }
+invalidated{false} { }
 
 //
 //  Invalidation mechanism
@@ -105,12 +104,8 @@ void ms::Drawable::bind_material (std::shared_ptr<Material> material) {
     }
 }
 
- bool ms::Drawable::can_be_drawn () const {
-     return boundedGeometry != nullptr && boundedGeometry != nullptr;
- }
-
-void ms::Drawable::set_shading (bool shouldBeShaded) {
-    isShaded = shouldBeShaded;
+bool ms::Drawable::can_be_drawn () const {
+    return boundedGeometry != nullptr && boundedGeometry != nullptr;
 }
 
 void ms::Drawable::_load () {

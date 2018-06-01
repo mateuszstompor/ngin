@@ -25,7 +25,8 @@ shininess{shin},
 opacity{opac},
 name{nam},
 bufferId{0},
-invalidated{false} { }
+invalidated{false},
+isShaded{true} { }
 
 void ms::Material::_load () {
 	mglGenBuffers(1, &bufferId);
@@ -77,6 +78,10 @@ void ms::Material::set_ambient_color (math::vec3 const & ambient) {
     if(is_loaded()) {
         invalidated = true;
     }
+}
+
+void ms::Material::set_shading (bool shouldBeShaded) {
+    isShaded = shouldBeShaded;
 }
 
 bool ms::Material::is_translucent () const {

@@ -46,6 +46,8 @@ namespace ms {
         std::string const &             get_name                () const { return name; }
         void                            set_name                (std::string const & name);
         bool                            is_translucent          () const;
+        void                            set_shading             (bool shouldBeShaded);
+        constexpr bool                  is_shaded               () const { return isShaded; }
         std::string                     get_class               () const override;
 		
         void                            bind_diffuse_texture    (std::shared_ptr<Texture2D> diffuse);
@@ -79,7 +81,8 @@ namespace ms {
         std::string                     name;
         float                           shininess;
         float                           opacity;
-        
+        bool                            isShaded;
+
         std::shared_ptr<Texture2D>      boundedDiffuseTexture;
         std::shared_ptr<Texture2D>      boundedSpecularTexture;
         std::shared_ptr<Texture2D>      boundedNormalTexture;
