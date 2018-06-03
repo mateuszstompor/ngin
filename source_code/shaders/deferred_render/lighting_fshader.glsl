@@ -93,12 +93,12 @@ vec3 count_light_influence(vec3     lightColor,
 
 }
 
-float pcf_depth(sampler2D textureToSample,
-                vec2 sampleCoordinate,
-                int rowSamples,
-                int columnSamples,
-                float countedDepth,
-                float bias) {
+float pcf_depth(in sampler2D    textureToSample,
+                vec2            sampleCoordinate,
+                int             rowSamples,
+                int             columnSamples,
+                float           countedDepth,
+                float           bias) {
 
     vec2 texelSize = vec2(1.0f) / vec2(textureSize(textureToSample, 0));
     float result = 0.0f;
@@ -113,12 +113,33 @@ float pcf_depth(sampler2D textureToSample,
     return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
 }
 
-float calculate_pcf_shadow(sampler2D    textureToSample,
-                           vec4         fragmentPositionInLightSpace,
-                           vec3         lightDirection_N,
-                           vec3         surfaceNormal_N,
-                           float        minBias,
-                           float        maxBias) {
+float pcf_depth(sampler2DArray  textureToSample,
+                int             layer,
+                vec2            sampleCoordinate,
+                int             rowSamples,
+                int             columnSamples,
+                float           countedDepth,
+                float           bias) {
+    
+    vec2 texelSize = vec2(1.0f) / vec2(textureSize(textureToSample, 0));
+    float result = 0.0f;
+    
+    for (int i = -rowSamples; i <= rowSamples; ++i) {
+        for (int j = -columnSamples; j <= columnSamples; ++j) {
+            float depth = texture(textureToSample, vec3(sampleCoordinate + vec2(i, j) * texelSize, layer)).r;
+            result += countedDepth - bias > depth ? 1.0 : 0.0f;
+        }
+    }
+    
+    return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
+}
+
+float calculate_pcf_shadow(in sampler2D     textureToSample,
+                           vec4             fragmentPositionInLightSpace,
+                           vec3             lightDirection_N,
+                           vec3             surfaceNormal_N,
+                           float            minBias,
+                           float            maxBias) {
     // TODO do separate function for directional lights
     // it is required to do this division for non-orthographic projections
     vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
@@ -148,6 +169,23 @@ float calculate_pcf_shadow(sampler2D    textureToSample,
     return pcf_depth(textureToSample, projectedCoordinates.xy, 3, 3, currentDepth, bias);
 }
 
+float calculate_pcf_shadow(in sampler2DArray    textureToSample,
+                           int                  layer,
+                           vec4                 fragmentPositionInLightSpace,
+                           vec3                 lightDirection_N,
+                           vec3                 surfaceNormal_N,
+                           float                bias) {
+    // TODO do separate function for directional lights
+    // it is required to do this division for non-orthographic projections
+    vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
+    // we need to map value from range [0, 1] to [-1, 1]
+    if(projectedCoordinates.z > 1.0f) {
+        return 0.0f;
+    }
+    float currentDepth = projectedCoordinates.z;
+    return pcf_depth(textureToSample, layer, projectedCoordinates.xy, 3, 3, currentDepth, bias);
+}
+
 #define MAX_SPOT_LIGHT_AMOUNT	12
 #define MAX_POINT_LIGHT_AMOUNT	12
 
@@ -159,8 +197,9 @@ uniform sampler2D 							gNormal;
 uniform sampler2D 							gAlbedo;
 
 uniform	int									spotLightsAmount;
-uniform sampler2D [MAX_SPOT_LIGHT_AMOUNT]   spotLightsShadowMaps;
+uniform sampler2DArray                      spotLightsShadowMaps;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
+
 
 uniform	int									pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
@@ -228,7 +267,7 @@ void main() {
             
             vec4 fragmentInLightPos = spotLights[j].projection * spotLights[j].transformation * vec4(fragmentPosition, 1.0f);
             
-            float shadow = spotLights[j].castsShadow == 0 ? 0.0f : calculate_pcf_shadow(spotLightsShadowMaps[0], fragmentInLightPos, -lightDirection_N, normal_N, 0.000001f);
+            float shadow = spotLights[j].castsShadow == 0 ? 0.0f : calculate_pcf_shadow(spotLightsShadowMaps, j, fragmentInLightPos, -lightDirection_N, normal_N, 0.000001f);
 
             res += spotLights[j].color * diffuseColor * count_diffuse_factor(normal_N, surfaceLightZ_N) * attenuation * DIFFUSE_STRENGTH;
             res += spotLights[j].color * specularColor * count_blinn_phong_specular_factor(surfaceCameraZ_N, surfaceLightZ_N, normal_N, shininess) * attenuation * SPECULAR_STRENGTH;

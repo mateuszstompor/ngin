@@ -108,6 +108,9 @@ void		_mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint 
 void	 	_mglBindBufferBase (GLenum target, GLuint index, GLuint buffer);
 void        _mglReadBuffer (GLenum mode);
 void        _mglBlendFunc (GLenum sfactor, GLenum dfactor);
+void        _mglTexImage3D (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+void        _mglFramebufferTextureLayer (GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer);
+
 
 #if DEBUG
 
@@ -175,6 +178,8 @@ void        _mglBlendFunc (GLenum sfactor, GLenum dfactor);
 #define mglBindBufferBase			_mglBindBufferBase
 #define mglUniformBlockBinding		_mglUniformBlockBinding
 #define mglReadBuffer               _mglReadBuffer
+#define mglTexImage3D               _mglTexImage3D
+#define mglFramebufferTextureLayer  _mglFramebufferTextureLayer
 
 #else
 
@@ -242,6 +247,8 @@ void        _mglBlendFunc (GLenum sfactor, GLenum dfactor);
 #define mglBindBufferBase			glBindBufferBase
 #define mglUniformBlockBinding		glUniformBlockBinding
 #define mglReadBuffer               glReadBuffer
+#define mglTexImage3D               glTexImage3D
+#define mglFramebufferTextureLayer  glFramebufferTextureLayer
 
 #endif
 

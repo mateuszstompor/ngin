@@ -1,1 +1,1 @@
-cloc . --exclude-dir=assimp,cmake-build-debug,ngin.xcodeproj,.idea,assimp_iOS,glfw,GSL,renderdoc.h,stb_image.h,config.h,renderdoc.dll,build-debug,screenshots,models,faced_problems, --exclude-lang=XML,JSON
+cloc . --exclude-dir=assimp,cmake-build-debug,ngin.xcodeproj,.idea,assimp_iOS,glfw,GSL,renderdoc.h,stb_image.h,config.h,renderdoc.dll,build-debug,screenshots,models,faced_problems,docs --exclude-lang=XML,JSON

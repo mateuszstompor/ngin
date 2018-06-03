@@ -15,15 +15,15 @@
 #include "../rendering/deferredRender.hpp"
 #include "../rendering/lightSourcesRender.hpp"
 #include "../rendering/shadowRender.hpp"
-#include "../scene/scene.hpp"
-#include "../resources/resource.hpp"
-#include "../resources/resourceCoordinator.hpp"
-#include "../utils/loader.hpp"
 #include "../rendering/postprocessing/postprocessRender.hpp"
 #include "../rendering/postprocessing/gaussianBlurPostprocessRender.hpp"
 #include "../rendering/postprocessing/vignettePostprocessRender.hpp"
+
+#include "../scene/scene.hpp"
+#include "../scene/textureArray.hpp"
+
 #include "../utils/loader.hpp"
-#include "../scene/drawable.hpp"
+
 #include "../shaders/shaderHeaders.hpp"
 
 namespace ms {
@@ -78,6 +78,7 @@ namespace ms {
         std::unique_ptr<VignettePostprocessRender>      vignetteRenderer;
 		std::unique_ptr<PostprocessRender>     	        scaleRenderer;
         std::vector<std::unique_ptr<Framebuffer>>       shadows;
+        std::unique_ptr<Texture2DArray>                 shadowsArray;
         
         bool                                            shouldDraw;
         unsigned int                                    shadowResolution;

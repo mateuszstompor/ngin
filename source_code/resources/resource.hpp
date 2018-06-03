@@ -36,8 +36,8 @@ namespace ms {
 		virtual void    		load  			() final;
 		virtual void 			unload 			() final;
 		virtual bool    		is_loaded   	() const final;
-        virtual void            _load            () = 0;
-        virtual void            _unload            () = 0;
+        virtual void            _load           () = 0;
+        virtual void            _unload         () = 0;
 		virtual std::string 	get_class		() const = 0;
 		virtual         		~Resource   	();
 	

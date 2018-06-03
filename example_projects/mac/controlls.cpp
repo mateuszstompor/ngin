@@ -84,40 +84,40 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
             break;
         case GLFW_KEY_T: {
-            auto forward = 0.2f * ms::math::back(engine->get_scene().get_spot_lights()[0].get_transformation());
+            auto forward = 0.2f * ms::math::back(engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation());
             auto transform = translate<float, 4>(forward);
             engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
             
         case GLFW_KEY_G: {
-            auto forward = -0.2f * ms::math::back(engine->get_scene().get_spot_lights()[0].get_transformation());
+            auto forward = -0.2f * ms::math::back(engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation());
             auto transform = translate<float, 4>(forward);
             engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
         case GLFW_KEY_R: {
-            auto up = 0.2f * ms::math::up(engine->get_scene().get_spot_lights()[0].get_transformation());
+            auto up = 0.2f * ms::math::up(engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation());
             auto transform = translate<float, 4>(up);
             engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
             
         case GLFW_KEY_Y: {
-            auto up = -0.2f * ms::math::up(engine->get_scene().get_spot_lights()[0].get_transformation());
+            auto up = -0.2f * ms::math::up(engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation());
             auto transform = translate<float, 4>(up);
             engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
         case GLFW_KEY_F: {
-            auto right = 0.2f * ms::math::right(engine->get_scene().get_spot_lights()[0].get_transformation());
+            auto right = 0.2f * ms::math::right(engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation());
             auto transform = translate<float, 4>(right);
             engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
             break;
             
         case GLFW_KEY_H: {
-            auto right = -0.2f * ms::math::right(engine->get_scene().get_spot_lights()[0].get_transformation());
+            auto right = -0.2f * ms::math::right(engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation());
             auto transform = translate<float, 4>(right);
             engine->get_scene().get_spot_lights()[usedSpotLight].get_transformation() *= transform;
         }
@@ -143,16 +143,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
             break;
         case GLFW_KEY_1:
-            usedSpotLight = 1;
+            usedSpotLight = 0;
             break;
         case GLFW_KEY_2:
-            usedSpotLight = 2;
+            usedSpotLight = 1;
             break;
         case GLFW_KEY_3:
-            usedSpotLight = 3;
+            usedSpotLight = 2;
             break;
         case GLFW_KEY_4:
-            usedSpotLight = 4;
+            usedSpotLight = 3;
             break;
         case GLFW_KEY_8:
         engine->set_renderer(ms::NGin::Renderer::deferred);

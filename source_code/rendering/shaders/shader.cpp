@@ -147,7 +147,12 @@ void ms::Shader::compile_program() {
 }
 
 void ms::Shader::bind_texture(std::size_t index, Texture2D & texture) {
-	mglActiveTexture(GL_TEXTURE0 + index);
+	mglActiveTexture(GL_TEXTURE0 + static_cast<int>(index));
+	texture.use();
+}
+
+void ms::Shader::bind_texture (std::size_t index, Texture2DArray & texture) {
+	mglActiveTexture(GL_TEXTURE0 + static_cast<int>(index));
 	texture.use();
 }
 

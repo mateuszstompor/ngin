@@ -27,8 +27,8 @@ framebufferHeight{fbH},
 loader{},
 shadowResolution{shadowsResolution}{
     
-        using tf = Texture2D::Format;
-        using tt = Texture2D::AssociatedType;
+        using tf = texture::Format;
+        using tt = texture::AssociatedType;
     
         auto windowFramebuffer(defaultFramebuffer == nullptr ? Framebuffer::window_framebuffer(screenWidth, screenHeight) : std::move(defaultFramebuffer));
     
@@ -42,9 +42,16 @@ shadowResolution{shadowsResolution}{
         auto gbsFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
         auto bloomMergeFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
     
-        for (std::size_t i = 0; i < 10; ++i) {
+        shadowsArray = std::unique_ptr<Texture2DArray>( new Texture2DArray{10, tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution} );
+        shadowsArray->load();
+    
+        for (std::size_t i = 0; i < 11; ++i) {
             shadows.push_back(std::unique_ptr<Framebuffer>(new Framebuffer(0, 0, shadowResolution, shadowResolution)));
-            shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution));
+            if(i == 0) {
+                shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution));
+            } else {
+                shadows[i]->bind_depth_buffer(shadowsArray, i-1);
+            }
             shadows[i]->configure();
         }
     
@@ -118,7 +125,6 @@ shadowResolution{shadowsResolution}{
         hdrRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(bloomMergeRenderer->get_framebuffer().get_colors(), std::move(hdrFramebuffer), std::move(hdrProgram)));
         vignetteRenderer = std::unique_ptr<VignettePostprocessRender>(new VignettePostprocessRender(hdrRenderer->get_framebuffer().get_colors(), std::move(vignetteFramebuffer), std::move(vignetteProgram)));
         scaleRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(vignetteRenderer->get_framebuffer().get_colors(), std::move(windowFramebuffer), std::move(scaleProgram)));
-            
 }
 
 void ms::NGin::load_model (std::string const & absolutePath) {
@@ -193,6 +199,7 @@ void ms::NGin::load () {
 
 void ms::NGin::unload () {
     pause_drawing();
+    shadowsArray->unload();
     phongForwardRenderer->unload();
     deferredRenderer->unload();
     gouraudForwardRenderer->unload();
@@ -327,9 +334,7 @@ void ms::NGin::draw_models () {
         deferredRenderer->get_framebuffer().clear_frame();
         deferredRenderer->lightingShader->use();
         deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-            deferredRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-        }
+        deferredRenderer->get_shader().bind_texture(4, *shadowsArray);
         deferredRenderer->perform_light_pass(scene);
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {
@@ -340,10 +345,7 @@ void ms::NGin::draw_models () {
         phongForwardRenderer->set_directionallight(scene.get_directional_light());
         phongForwardRenderer->set_point_lights(scene.get_point_lights());
         phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        
-        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-        }
+        phongForwardRenderer->get_shader().bind_texture(4, *shadowsArray);
         tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
         
         while(it != scene.get_nodes().end()) {
@@ -367,10 +369,7 @@ void ms::NGin::draw_models () {
         gouraudForwardRenderer->set_directionallight(scene.get_directional_light());
         gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
         gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        
-        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-            gouraudForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-        }
+        gouraudForwardRenderer->get_shader().bind_texture(4, *shadowsArray);
         tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
         
         while(it != scene.get_nodes().end()) {
@@ -414,10 +413,7 @@ void ms::NGin::draw_models () {
         phongForwardRenderer->set_directionallight(scene.get_directional_light());
         phongForwardRenderer->set_point_lights(scene.get_point_lights());
         phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        
-        for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-            phongForwardRenderer->get_shader().bind_texture(4 + i, *shadows[1 + i]->get_depth_texture().lock());
-        }
+        phongForwardRenderer->get_shader().bind_texture(4, *shadowsArray);
         s = std::stack<math::mat4>{};
         auto it = scene.get_nodes().begin(l);
         

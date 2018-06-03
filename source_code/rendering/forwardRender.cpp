@@ -19,11 +19,7 @@ void ms::ForwardRender::_load () {
     shader->set_uniform("specularTexture", 1);
     shader->set_uniform("normalTexture", 2);
     shader->set_uniform("dirLightShadowMap", 3);
-    
-    for (int i = 0; i < maximalAmountOfLights; ++i) {
-        shader->set_uniform("spotLightsShadowMaps[" + std::to_string(i) + "]", 4 + i);
-    }
-    
+    shader->set_uniform("spotLightsShadowMaps", 4);
 }
 
 void ms::ForwardRender::draw (Drawable & node, math::mat4 const & transformation) {
@@ -70,7 +66,7 @@ void ms::ForwardRender::set_material (Material * material) {
 
 void ms::ForwardRender::set_spot_lights (std::vector<SpotLight> const & spotLights) {
     shader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
-    for(unsigned int i = 0; i < spotLights.size(); ++i) {
+    for(auto i{0}; i < spotLights.size(); ++i) {
         shader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i].get_power());
         shader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i].get_color());
         shader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].get_angle_degrees());
@@ -82,7 +78,7 @@ void ms::ForwardRender::set_spot_lights (std::vector<SpotLight> const & spotLigh
 
 void ms::ForwardRender::set_point_lights (std::vector<PointLight> const & pointLights) {
     shader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
-    for(unsigned int i = 0; i < pointLights.size(); ++i) {
+    for(auto i{0}; i < pointLights.size(); ++i) {
         shader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i].get_color());
         shader->set_uniform("pointLights[" + std::to_string(i) + "].position", math::get_position(pointLights[i].get_transformation()));
         shader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i].get_power());

@@ -13,7 +13,10 @@
 #include <algorithm>
 
 #include "../../resources/resource.hpp"
+
 #include "../../scene/texture.hpp"
+#include "../../scene/textureArray.hpp"
+
 #include "renderbuffer.hpp"
 
 
@@ -48,6 +51,7 @@ namespace ms {
         
         void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> && renderbuffer);
         void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
+        void                            bind_depth_buffer   (std::unique_ptr<Texture2DArray> & texture, std::size_t layer);
         void                            configure           ();
         void                            use                 ();
                                         ~Framebuffer        () = default;
@@ -77,9 +81,9 @@ namespace ms {
 		
 		void					        use_for_read		();
         std::string			            get_class			() const override;
-        void 					        copy_depth_from		(Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
-        void                            copy_color_from     (Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
-        void                            copy_framebuffer    (Framebuffer & frame, Texture2D::MagFilter filter = Texture2D::MagFilter::nearest);
+        void 					        copy_depth_from		(Framebuffer & frame, texture::MagFilter filter = texture::MagFilter::nearest);
+        void                            copy_color_from     (Framebuffer & frame, texture::MagFilter filter = texture::MagFilter::nearest);
+        void                            copy_framebuffer    (Framebuffer & frame, texture::MagFilter filter = texture::MagFilter::nearest);
 		void				            use_for_write		();
 		bool				            is_complete			() const;
         constexpr bool                  is_configured		() const { return isConfigured; }
