@@ -107,8 +107,6 @@ int main(int argc, const char * argv[]) { {
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
-    auto m = engine->get_loader().load_hierarchical_geometry("/Users/mateuszstompor/Downloads/free3DmodelFBX.fbx");
-    
     engine->get_scene().set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 300, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
 
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f), vec3( 0.0f, 0.0f,  0.0f), vec3( 0.0f, 0.0f,  1.0f));
