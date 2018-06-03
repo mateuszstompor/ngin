@@ -101,6 +101,8 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/texture.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/textureArray.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/textureUtilities.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp)
 
 if (WIN32)
