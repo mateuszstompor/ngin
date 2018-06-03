@@ -16,6 +16,8 @@
 #include <iostream>
 #include <cstdint>
 
+
+#include "textureUtilities.hpp"
 #include "../resources/resource.hpp"
 #include "../utils/proxyOGL.hpp"
 
@@ -31,58 +33,15 @@ namespace ms {
         
 	public:
         
-        enum class MinFilter {
-            nearest,
-            linear,
-            nearest_mipmap_nearest,
-            linear_mipmap_nearest,
-            nearest_mipmap_linear,
-            linear_mipmap_linear
-        };
-        
-        enum class MagFilter {
-            nearest,
-            linear
-        };
-        
-        enum class Wrapping {
-            repeat,
-            mirrored_repeat,
-            clamp_to_edge,
-            clamp_to_border
-        };
-        
-        enum class Type {
-            tex_2d,
-        };
-        
-        enum class Format {
-            rgb_32_32_32,
-            rgb_16_16_16,
-            rgb_8_8_8,
-            rgba_8_8_8_8,
-            r_8,
-            depth_16,
-            depth_24,
-            depth_32
-        };
-        
-        enum class AssociatedType {
-            FLOAT,
-            UNSIGNED_BYTE,
-            UNSIGNED_INT,
-            UNSIGNED_SHORT
-        };
-        
-                                    Texture2D           (Format             format,
-                                                         AssociatedType     associatedType,
+                                    Texture2D           (texture::Format             format,
+                                                         texture::AssociatedType     associatedType,
                                                          unsigned int       width,
                                                          unsigned int       height,
                                                          std::string        name = "",
-                                                         MinFilter          minFilter = MinFilter::nearest,
-                                                         MagFilter          magFilter = MagFilter::nearest,
-                                                         Wrapping           sWrapping = Wrapping::repeat,
-                                                         Wrapping           tWrapping = Wrapping::repeat,
+                                                         texture::MinFilter          minFilter = texture::MinFilter::nearest,
+                                                         texture::MagFilter          magFilter = texture::MagFilter::nearest,
+                                                         texture::Wrapping           sWrapping = texture::Wrapping::repeat,
+                                                         texture::Wrapping           tWrapping = texture::Wrapping::repeat,
                                                          unsigned int       mipMapLevel = 0);
 
                                     Texture2D           (const Texture2D & texture) = delete;
@@ -92,30 +51,21 @@ namespace ms {
         
                                     ~Texture2D			();
                     void            copy_data           (byte const * data, size_t size);
-                    int             channels_amount     () const;
-
+        
 	private:
         
-        static      GLenum          to_ogl              (MinFilter          minFilter);
-        static      GLenum          to_ogl              (MagFilter          magFilter);
-        static      GLenum          to_ogl              (Wrapping           wrapping);
-        static      GLenum          to_ogl              (Format             format);
-        static      GLenum          to_ogl              (AssociatedType     type);
-        static      GLenum          to_ogl              (Texture2D::Type    type);
-        static      GLenum          underlying_type     (AssociatedType     associatedType,
-                                                         Format             format);
         constexpr   GLuint          get_underlying_id   () const { return glTexture; }
                     void            _load               () override;
                     void            _unload             () override;
                     void             use                ();
-        
+    
         std::string                 name;
-        Format                      format;
-        AssociatedType              associatedType;
-        MinFilter                   minFilter;
-        MagFilter                   magFilter;
-        Wrapping                    sWrapping;
-        Wrapping                    tWrapping;
+        texture::Format             format;
+        texture::AssociatedType     associatedType;
+        texture::MinFilter          minFilter;
+        texture::MagFilter          magFilter;
+        texture::Wrapping           sWrapping;
+        texture::Wrapping           tWrapping;
         unsigned int                mipMapLevel;
         unsigned int                width;
         unsigned int                height;

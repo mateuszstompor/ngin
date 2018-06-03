@@ -77,12 +77,12 @@ int main(int argc, const char * argv[]) { {
 	actualScreenWidth = framebufferWidth;
 	actualScreenHeight = framebufferHeight;
 	
-    unsigned int shadowResolution = 1024 * 6;
+    unsigned int shadowResolution = 1024;
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
-        framebufferWidth /= 2;
-        framebufferHeight /= 2;
+        framebufferWidth /= 4;
+        framebufferHeight /= 4;
 	#endif
 	
 	if(window == nullptr){
@@ -114,8 +114,8 @@ int main(int argc, const char * argv[]) { {
     engine->get_scene().get_directional_light()->get_transformation() = lookat;
 
     SpotLight sl1({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
-    SpotLight sl2({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
-    SpotLight sl3({1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 80.0f, {1.0f, 0.0f, 0.0f}, true);
+    SpotLight sl2({0.0f, 1.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
+    SpotLight sl3({0.0f, 0.0f, 1.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f}, true);
     engine->get_scene().get_spot_lights().push_back(sl1);
     engine->get_scene().get_spot_lights().push_back(sl2);
     engine->get_scene().get_spot_lights().push_back(sl3);

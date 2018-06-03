@@ -89,6 +89,11 @@ void _mglGenRenderbuffers (GLsizei n, GLuint* renderbuffers) {
 	ms::utils::check_gl_error();
 }
 
+void _mglTexImage3D (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels) {
+    glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
+    ms::utils::check_gl_error();
+}
+
 void _mglFramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
 	glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
 	ms::utils::check_gl_error();
@@ -388,6 +393,11 @@ void _mglUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint u
 void _mglBindBufferBase (GLenum target, GLuint index, GLuint buffer) {
 	glBindBufferBase(target, index, buffer);
 	ms::utils::check_gl_error();
+}
+
+void _mglFramebufferTextureLayer (GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer) {
+    glFramebufferTextureLayer(target, attachment, texture, level, layer);
+    ms::utils::check_gl_error();
 }
 
 std::string get_allocation_statistics() {

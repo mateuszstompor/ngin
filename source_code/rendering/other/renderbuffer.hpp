@@ -23,16 +23,16 @@ namespace ms {
         friend class NGin;
         
     public:
-                                    Renderbuffer        (Texture2D::Format            format,
-                                                         Texture2D::AssociatedType    associatedType,
-                                                         unsigned int                 mipMapLevel,
-                                                         unsigned int                 width,
-                                                         unsigned int                 height);
+                                    Renderbuffer        (texture::Format            format,
+                                                         texture::AssociatedType    associatedType,
+                                                         unsigned int               mipMapLevel,
+                                                         unsigned int               width,
+                                                         unsigned int               height);
         
-                                    Renderbuffer        (Texture2D::Format            format,
-                                                         Texture2D::AssociatedType    associatedType,
-                                                         unsigned int                 width,
-                                                         unsigned int                 height);
+                                    Renderbuffer        (texture::Format            format,
+                                                         texture::AssociatedType    associatedType,
+                                                         unsigned int               width,
+                                                         unsigned int               height);
                                     ~Renderbuffer       () = default;
         std::string                 get_class           () const override;
         
@@ -49,8 +49,8 @@ namespace ms {
         void                        _load               () override;
         void                        _unload             () override;
         
-        Texture2D::AssociatedType   associatedType;
-        Texture2D::Format           format;
+        texture::AssociatedType     associatedType;
+        texture::Format             format;
         unsigned int                mipMapLevel;
         unsigned int                width;
         unsigned int                height;

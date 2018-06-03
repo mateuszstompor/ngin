@@ -63,8 +63,7 @@ void ms::DeferredRender::set_material (Material * material) {
 
 void ms::DeferredRender::set_spot_lights (std::vector<SpotLight> const & spotLights) {
     lightingShader->set_uniform("spotLightsAmount", static_cast<int>(spotLights.size()));
-    for(unsigned int i = 0; i < spotLights.size(); ++i) {
-        
+    for(auto i {0}; i < spotLights.size(); ++i) {
         lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].power", spotLights[i].get_power());
         lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].color", spotLights[i].get_color());
         lightingShader->set_uniform("spotLights[" + std::to_string(i) + "].angleDegrees", spotLights[i].get_angle_degrees());
@@ -76,7 +75,7 @@ void ms::DeferredRender::set_spot_lights (std::vector<SpotLight> const & spotLig
 
 void ms::DeferredRender::set_point_lights (std::vector<PointLight> const & pointLights) {
     lightingShader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
-    for(unsigned int i = 0; i < pointLights.size(); ++i) {
+    for(auto i {0}; i < pointLights.size(); ++i) {
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i].get_color());
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].position", math::get_position(pointLights[i].get_transformation()));
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i].get_power());
@@ -94,6 +93,7 @@ void ms::DeferredRender::set_directionallight (DirectionalLight const * directio
         lightingShader->set_uniform("hasDirLightShadowMap", 1);
     } else {
         lightingShader->set_uniform("hasDirLight", 0);
+        // check, it should not be necessary
         lightingShader->set_uniform("hasDirLightShadowMap", 0);
     }
 }
@@ -115,16 +115,16 @@ void ms::DeferredRender::use () {
 
 void ms::DeferredRender::_load () {
     
-    auto gPosition = std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
+    auto gPosition = std::make_unique<Texture2D>(texture::Format::rgb_16_16_16, texture::AssociatedType::FLOAT,
                                                  framebuffer->get_width(), framebuffer->get_height());
     
-    auto gNormal = std::make_unique<Texture2D>(Texture2D::Format::rgb_16_16_16, Texture2D::AssociatedType::FLOAT,
+    auto gNormal = std::make_unique<Texture2D>(texture::Format::rgb_16_16_16, texture::AssociatedType::FLOAT,
                                                framebuffer->get_width(), framebuffer->get_height());
     
-    auto gAlbedo = std::make_unique<Texture2D>(Texture2D::Format::rgba_8_8_8_8, Texture2D::AssociatedType::UNSIGNED_BYTE,
+    auto gAlbedo = std::make_unique<Texture2D>(texture::Format::rgba_8_8_8_8, texture::AssociatedType::UNSIGNED_BYTE,
                                                framebuffer->get_width(), framebuffer->get_height());
     
-    auto depthRenderbuffer = std::unique_ptr<Renderbuffer>(new Renderbuffer(Texture2D::Format::depth_32, Texture2D::AssociatedType::FLOAT, 0,
+    auto depthRenderbuffer = std::unique_ptr<Renderbuffer>(new Renderbuffer(texture::Format::depth_32, texture::AssociatedType::FLOAT, 0,
                                                                             framebuffer->get_width(), framebuffer->get_height()));
     
     gFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer{3, 1, framebuffer->get_width(), framebuffer->get_height()});
@@ -147,9 +147,7 @@ void ms::DeferredRender::_load () {
     lightingShader->set_uniform("gNormal", 1);
     lightingShader->set_uniform("gAlbedo", 2);
     lightingShader->set_uniform("dirLightShadowMap", 3);
-    for(int i=0; i<maxSpotLightsAmount; ++i) {
-        lightingShader->set_uniform("spotLightsShadowMaps[" + std::to_string(i) + "]", 4 + i);
-    }
+    lightingShader->set_uniform("spotLightsShadowMaps", 4);
 }
 
 void ms::DeferredRender::_unload () {

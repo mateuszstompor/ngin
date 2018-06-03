@@ -70,11 +70,9 @@ include_directories(${CMAKE_SOURCE_DIR}/third-party-libs/aTree)
 set(NGIN_LIBRARY_HEADER_FILES   ${CMAKE_SOURCE_DIR}/glMath/source/glMath.h
                                 ${CMAKE_SOURCE_DIR}/source_code/base/ngin.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/loader.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/umbrellaHeader.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/config.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/utils/proxyOGL.hpp
-                                ${CMAKE_SOURCE_DIR}/source_code/utils/utils.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shaders/shader.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.hpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/other/framebuffer.hpp
@@ -123,6 +121,8 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/drawable.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/geometry.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/texture.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/textureArray.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/textureUtilities.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/scene.cpp)
 
 if (WIN32)

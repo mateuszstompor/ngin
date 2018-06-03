@@ -10,6 +10,8 @@
 
 #include "stb_image.h"
 
+
+// TODO clean redundancy in this class
 ms::Loader::model_data ms::Loader::load_flat_model (std::string const & path) const {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
@@ -165,16 +167,16 @@ std::unique_ptr<ms::Texture2D> ms::Loader::load_texture (std::string const & abs
 	int width, height, bpp;
 	unsigned char* data = stbi_load(absolutePath.c_str(), &width, &height, &bpp, 0);
 	if (data != nullptr) {
-		Texture2D::Format format;
+        ms::texture::Format format;
 		switch (bpp) {
 			case 3:
-				format = Texture2D::Format::rgb_8_8_8;
+                format = ms::texture::Format::rgb_8_8_8;
 				break;
 			case 4:
-				format = Texture2D::Format::rgba_8_8_8_8;
+				format = ms::texture::Format::rgba_8_8_8_8;
 				break;
 			case 1:
-				format = Texture2D::Format::r_8;
+				format = ms::texture::Format::r_8;
 				break;
 			default:
 				std::cerr << "FORMAT NOT SUPPORTED" << '\n';
@@ -182,14 +184,14 @@ std::unique_ptr<ms::Texture2D> ms::Loader::load_texture (std::string const & abs
 		}
 
         auto texture = std::make_unique<ms::Texture2D>(format,
-													   Texture2D::AssociatedType::UNSIGNED_BYTE,
+													   ms::texture::AssociatedType::UNSIGNED_BYTE,
                                                        static_cast<unsigned int>(width),
                                                        static_cast<unsigned int>(height),
                                                        absolutePath,
-													   Texture2D::MinFilter::linear,
-													   Texture2D::MagFilter::linear,
-													   Texture2D::Wrapping::repeat,
-													   Texture2D::Wrapping::repeat,
+													   ms::texture::MinFilter::linear,
+													   ms::texture::MagFilter::linear,
+													   ms::texture::Wrapping::repeat,
+													   ms::texture::Wrapping::repeat,
                                                        0);
 		
 		texture->copy_data(data, static_cast<size_t>(width * height * bpp));
