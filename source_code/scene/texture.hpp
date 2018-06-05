@@ -16,7 +16,6 @@
 #include <iostream>
 #include <cstdint>
 
-
 #include "textureUtilities.hpp"
 #include "../resources/resource.hpp"
 #include "../utils/proxyOGL.hpp"
@@ -35,14 +34,14 @@ namespace ms {
         
                                     Texture2D           (texture::Format             format,
                                                          texture::AssociatedType     associatedType,
-                                                         unsigned int       width,
-                                                         unsigned int       height,
-                                                         std::string        name = "",
+                                                         unsigned int                width,
+                                                         unsigned int                height,
+                                                         std::string                 name = "",
                                                          texture::MinFilter          minFilter = texture::MinFilter::nearest,
                                                          texture::MagFilter          magFilter = texture::MagFilter::nearest,
                                                          texture::Wrapping           sWrapping = texture::Wrapping::repeat,
                                                          texture::Wrapping           tWrapping = texture::Wrapping::repeat,
-                                                         unsigned int       mipMapLevel = 0);
+                                                         unsigned int                mipMapLevel = 0);
 
                                     Texture2D           (const Texture2D & texture) = delete;
                     Texture2D &	    operator =			(const Texture2D & texture) = delete;

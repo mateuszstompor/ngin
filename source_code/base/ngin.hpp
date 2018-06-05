@@ -21,6 +21,7 @@
 
 #include "../scene/scene.hpp"
 #include "../scene/textureArray.hpp"
+#include "../scene/cubemap.hpp"
 
 #include "../utils/loader.hpp"
 
@@ -62,7 +63,10 @@ namespace ms {
 		void							                count_fps			();
         void                                            draw_models         ();
         void                                            draw_postprocess    ();
-        void                                            draw_sl_pov         (std::uint16_t x, std::uint16_t y, std::uint16_t tileWidth, std::uint16_t tileHeight);
+        void                                            draw_sl_pov         (std::uint16_t x,
+                                                                             std::uint16_t y,
+                                                                             std::uint16_t tileWidth,
+                                                                             std::uint16_t tileHeight);
 		Loader					                        loader;
         
 		std::unique_ptr<DeferredRender>                 deferredRenderer;
@@ -79,6 +83,8 @@ namespace ms {
 		std::unique_ptr<PostprocessRender>     	        scaleRenderer;
         std::vector<std::unique_ptr<Framebuffer>>       shadows;
         std::unique_ptr<Texture2DArray>                 shadowsArray;
+        std::vector<std::unique_ptr<CubeMap>>           pointLightShadowsBuffer;
+        std::unique_ptr<Framebuffer>                    pointLightFramebuffer;
         
         bool                                            shouldDraw;
         unsigned int                                    shadowResolution;

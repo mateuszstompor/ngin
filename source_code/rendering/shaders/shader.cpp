@@ -156,6 +156,11 @@ void ms::Shader::bind_texture (std::size_t index, Texture2DArray & texture) {
 	texture.use();
 }
 
+void ms::Shader::bind_texture (std::size_t index, CubeMap & texture) {
+	mglActiveTexture(GL_TEXTURE0 + static_cast<int>(index));
+	texture.use();
+}
+
 ms::Shader::program_ptr ms::Shader::vf_program 	(std::string const & vertexSource, std::string const & fragmentSource) {
 	return std::unique_ptr<Shader>(new Shader{vertexSource, "", "", "", fragmentSource});
 }

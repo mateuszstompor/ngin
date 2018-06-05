@@ -15,6 +15,7 @@
 #include "../../resources/resource.hpp"
 
 #include "../../scene/texture.hpp"
+#include "../../scene/cubemap.hpp"
 #include "../../scene/textureArray.hpp"
 
 #include "renderbuffer.hpp"
@@ -52,6 +53,7 @@ namespace ms {
         void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> && renderbuffer);
         void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
         void                            bind_depth_buffer   (std::unique_ptr<Texture2DArray> & texture, std::size_t layer);
+        void                            bind_depth_buffer   (std::unique_ptr<CubeMap> & texture, /*CubeMap::Face*/ int face);
         void                            configure           ();
         void                            use                 ();
                                         ~Framebuffer        () = default;

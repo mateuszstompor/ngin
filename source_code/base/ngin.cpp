@@ -25,8 +25,7 @@ screenHeight{screenHeight},
 framebufferWidth{fbW},
 framebufferHeight{fbH},
 loader{},
-shadowResolution{shadowsResolution}{
-    
+shadowResolution{shadowsResolution}{    
         using tf = texture::Format;
         using tt = texture::AssociatedType;
     
@@ -46,7 +45,7 @@ shadowResolution{shadowsResolution}{
         shadowsArray->load();
     
         for (std::size_t i = 0; i < 11; ++i) {
-            shadows.push_back(std::unique_ptr<Framebuffer>(new Framebuffer(0, 0, shadowResolution, shadowResolution)));
+            shadows.push_back(std::unique_ptr<Framebuffer>(new Framebuffer(0, 1, shadowResolution, shadowResolution)));
             if(i == 0) {
                 shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution));
             } else {
@@ -54,6 +53,15 @@ shadowResolution{shadowsResolution}{
             }
             shadows[i]->configure();
         }
+    
+    for ( auto j{0}; j < 20; ++j) {
+        auto cm = new CubeMap{texture::Format::depth_32, texture::AssociatedType::FLOAT, ms::Size<uint>{shadowResolution, shadowResolution}};
+        pointLightShadowsBuffer.push_back(std::unique_ptr<CubeMap>{cm});
+    }
+    
+    pointLightFramebuffer = std::unique_ptr<Framebuffer>{new Framebuffer(0, 1, shadowResolution, shadowResolution)};
+    pointLightFramebuffer->bind_depth_buffer(pointLightShadowsBuffer[0], CubeMap::Face::back_positive_z);
+    pointLightFramebuffer->configure();
     
         mainRenderFramebuffer->bind_depth_buffer(std::unique_ptr<Renderbuffer>(new Renderbuffer(tf::depth_32, tt::FLOAT, 0, fbW, fbH)));
         mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
@@ -199,6 +207,7 @@ void ms::NGin::load () {
 
 void ms::NGin::unload () {
     pause_drawing();
+    pointLightFramebuffer->unload();
     shadowsArray->unload();
     phongForwardRenderer->unload();
     deferredRenderer->unload();
@@ -213,6 +222,7 @@ void ms::NGin::unload () {
     scaleRenderer->unload();
     vignetteRenderer->unload();
     
+    std::for_each(pointLightShadowsBuffer.begin(), pointLightShadowsBuffer.end(), [](auto const & res){ res->unload(); });
     std::for_each(scene.get_geometries().begin(), scene.get_geometries().end(), [](auto const & geo) { geo->unload(); } );
     std::for_each(scene.get_nodes().begin(), scene.get_nodes().end(), [](auto const & node) { node->unload(); } );
     std::for_each(scene.get_textures().begin(), scene.get_textures().end(), [](auto const & texture) { texture.second->unload(); });
@@ -286,7 +296,6 @@ void ms::NGin::draw_models () {
     lightSourceRenderer->get_framebuffer().clear_frame();
     
     for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
-        
         SpotLight & spotLight = scene.get_spot_lights()[i];
         if(spotLight.casts_shadow()) {
             shadows[1 + i]->use();
@@ -307,8 +316,54 @@ void ms::NGin::draw_models () {
             }
             
         }
-
     }
+    
+    //point light shadows
+    s = std::stack<math::mat4>{};
+    for(auto i{0}; i < scene.get_point_lights().size(); ++i) {
+        PointLight & pointLight = scene.get_point_lights()[i];
+        shadowRenderer->use(*pointLightFramebuffer);
+        if(pointLight.casts_shadow()) {
+            pointLightFramebuffer->use();
+            for(int j{0}; j < 6; ++j) {
+                pointLightFramebuffer->bind_depth_buffer(pointLightShadowsBuffer[i], (CubeMap::Face::right_positive_x + j));
+                pointLightFramebuffer->clear_frame();
+                switch (j) {
+                    case 0:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(M_PI/2) * pointLight.get_transformation());
+                        break;
+                    case 1:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(-M_PI/2) * pointLight.get_transformation());
+                        break;
+                    case 2:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_x_radians(M_PI/2) * pointLight.get_transformation());
+                        break;
+                    case 3:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_x_radians(-M_PI/2) * pointLight.get_transformation());
+                        break;
+                    case 4:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(), pointLight.get_transformation());
+                        break;
+                    default:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(-M_PI) * pointLight.get_transformation());
+                        break;
+                }
+                s = std::stack<math::mat4>{};
+                auto it = scene.get_nodes().begin(l);
+                
+                while(it != scene.get_nodes().end()) {
+                    auto node = *it;
+                    auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
+                    if(node->can_be_drawn()) {
+                        shadowRenderer->draw(*(*it), transform);
+                    }
+                    ++it;
+                }
+            }
+        }
+    }
+    
+    //point light shadows end
     
     s = std::stack<math::mat4>{};
     if(chosenRenderer == Renderer::deferred) {
@@ -335,6 +390,7 @@ void ms::NGin::draw_models () {
         deferredRenderer->lightingShader->use();
         deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
         deferredRenderer->get_shader().bind_texture(4, *shadowsArray);
+        deferredRenderer->get_shader().bind_texture(5, *pointLightShadowsBuffer[0]);
         deferredRenderer->perform_light_pass(scene);
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {

@@ -79,6 +79,9 @@ void ms::DeferredRender::set_point_lights (std::vector<PointLight> const & point
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i].get_color());
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].position", math::get_position(pointLights[i].get_transformation()));
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i].get_power());
+        lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].castsShadow", pointLights[i].casts_shadow() == true ? int{1} : int{0});
+        lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].projection", pointLights[i].get_projection());
+        lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].transformation", pointLights[i].get_transformation());
     }
 }
 
@@ -148,6 +151,8 @@ void ms::DeferredRender::_load () {
     lightingShader->set_uniform("gAlbedo", 2);
     lightingShader->set_uniform("dirLightShadowMap", 3);
     lightingShader->set_uniform("spotLightsShadowMaps", 4);
+    lightingShader->set_uniform("pointLightShadow", 5);
+    
 }
 
 void ms::DeferredRender::_unload () {

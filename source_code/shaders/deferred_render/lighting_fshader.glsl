@@ -35,6 +35,9 @@ struct PointLight {
 	float 		power;
 	vec3		color;
 	vec3		position;
+    mat4        transformation;
+    mat4        projection;
+    int         castsShadow;
 };
 
 //position in world cooridnates
@@ -82,7 +85,6 @@ vec3 count_light_influence(vec3     lightColor,
 
     vec3 result = vec3(0.0f, 0.0f, 0.0f);
 
-    result += lightColor * ambientColor * attenuation * AMBIENT_STRENGTH;
 
     if(attenuation > MIN_ATTENUATION) {
         result += lightColor * diffuseColor * count_diffuse_factor(normal_N, surfaceZLight_N) * attenuation * DIFFUSE_STRENGTH;
@@ -186,6 +188,42 @@ float calculate_pcf_shadow(in sampler2DArray    textureToSample,
     return pcf_depth(textureToSample, layer, projectedCoordinates.xy, 3, 3, currentDepth, bias);
 }
 
+//float calculate_pcf_shadow(in samplerCube    textureToSample,
+//                           vec4                 fragmentPositionInLightSpace,
+//                           vec3                 lightDirection_N,
+//                           vec3                 surfaceNormal_N,
+//                           float                bias) {
+//    // TODO do separate function for directional lights
+//    // it is required to do this division for non-orthographic projections
+//    vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
+//    // we need to map value from range [0, 1] to [-1, 1]
+//    if(projectedCoordinates.z > 1.0f) {
+//        return 0.0f;
+//    }
+//    float currentDepth = projectedCoordinates.z;
+//    return pcf_depth(textureToSample, layer, projectedCoordinates.xy, 3, 3, currentDepth, bias);
+//}
+
+//float pcf_depth(in samplerCube  textureToSample,
+//                vec3            sampleCoordinate,
+//                int             rowSamples,
+//                int             columnSamples,
+//                float           countedDepth,
+//                float           bias) {
+//
+//    vec2 texelSize = vec2(1.0f) / vec2(textureSize(textureToSample, 0));
+//    float result = 0.0f;
+//
+//    for (int i = -rowSamples; i <= rowSamples; ++i) {
+//        for (int j = -columnSamples; j <= columnSamples; ++j) {
+//            float depth = texture(textureToSample, vec3(sampleCoordinate + vec2(i, j) * texelSize, layer)).r;
+//            result += countedDepth - bias > depth ? 1.0 : 0.0f;
+//        }
+//    }
+//
+//    return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
+//}
+
 #define MAX_SPOT_LIGHT_AMOUNT	12
 #define MAX_POINT_LIGHT_AMOUNT	12
 
@@ -200,7 +238,7 @@ uniform	int									spotLightsAmount;
 uniform sampler2DArray                      spotLightsShadowMaps;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 
-
+uniform samplerCube                         pointLightShadow;
 uniform	int									pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
 
@@ -280,15 +318,21 @@ void main() {
     for (int i = 0; i < pointLightsAmount; ++i) {
         vec3 surfaceLightZ = pointLights[i].position - fragmentPosition;
         vec3 surfaceLightZ_N = normalize(surfaceLightZ);
-        result += count_light_influence(pointLights[i].color,
-                                        diffuseColor,
-                                        diffuseColor,
-                                        specularColor,
-                                        shininess,
-                                        normal_N,
-                                        surfaceCameraZ_N,
-                                        surfaceLightZ,
-                                        surfaceLightZ_N) * pointLights[i].power/USUAL_POWER;
+        float shadow = 0.0f;
+        if (pointLights[i].castsShadow == 1) {
+            vec4 fragmentInLightPos = pointLights[i].projection * pointLights[i].transformation * vec4(fragmentPosition, 1.0f);
+//            shadow = calculate_pcf_shadow(dirLightShadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
+        }
+        result += pointLights[i].color * diffuseColor * AMBIENT_STRENGTH;
+        result += (1.0f - shadow) * count_light_influence(pointLights[i].color,
+                                                          diffuseColor,
+                                                          diffuseColor,
+                                                          specularColor,
+                                                          shininess,
+                                                          normal_N,
+                                                          surfaceCameraZ_N,
+                                                          surfaceLightZ,
+                                                          surfaceLightZ_N) * pointLights[i].power/USUAL_POWER;
     }
 
     outputColor = vec4(result, 1.0f);

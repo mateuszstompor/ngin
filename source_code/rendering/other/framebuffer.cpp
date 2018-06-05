@@ -124,7 +124,6 @@ void ms::Framebuffer::bind_depth_buffer	(std::unique_ptr<Renderbuffer> && render
 void ms::Framebuffer::configure () {
 	use();
     if (colorTextureAttachmentsAmount > 0) {
-
         GLenum* attachments;
 		attachments = new GLenum[colorTextureAttachmentsAmount];
         for(int i = 0; i < colorTextureAttachmentsAmount; ++i) {
@@ -206,10 +205,16 @@ void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2D> && texture) 
     depthTexture = std::move(texture);
 }
 
-void ms::Framebuffer::bind_depth_buffer   (std::unique_ptr<Texture2DArray> & texture, std::size_t layer) {
+void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2DArray> & texture, std::size_t layer) {
     use();
     texture->use();
     mglFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture->get_underlying_id(), 0, static_cast<int>(layer));
+}
+
+void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<CubeMap> & texture, /*CubeMap::Face*/ int face) {
+    use();
+    texture->use();
+    mglFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, texture->get_underlying_id(), 0);
 }
 
 std::unique_ptr<ms::Framebuffer> ms::Framebuffer::window_framebuffer	(int width, int height) {

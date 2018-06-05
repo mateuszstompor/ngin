@@ -8,7 +8,9 @@
 
 #pragma once
 
-#include "texture.hpp"
+#include "textureUtilities.hpp"
+#include "../resources/resource.hpp"
+#include "../utils/proxyOGL.hpp"
 
 namespace ms {
     
