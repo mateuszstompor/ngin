@@ -260,6 +260,7 @@ void ms::NGin::draw_scene() {
         
     #ifdef DRAW_LIGHT_POV
         draw_sl_pov(0, 0, 500, 500);
+        draw_pl_pov(0, 0, 500, 500);
     #endif
         
     }
@@ -330,22 +331,24 @@ void ms::NGin::draw_models () {
                 pointLightFramebuffer->clear_frame();
                 switch (j) {
                     case 0:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(M_PI/2) * pointLight.get_transformation());
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(),  math::transform4f::rotate_about_y_radians(M_PI/2) * pointLight.get_transformation() );
                         break;
                     case 1:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(-M_PI/2) * pointLight.get_transformation());
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(),  math::transform4f::rotate_about_y_radians(-M_PI/2) * pointLight.get_transformation());
                         break;
                     case 2:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_x_radians(M_PI/2) * pointLight.get_transformation());
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(),   math::transform4f::rotate_about_x_radians(-M_PI/2) * pointLight.get_transformation());
                         break;
                     case 3:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_x_radians(-M_PI/2) * pointLight.get_transformation());
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(),   math::transform4f::rotate_about_x_radians(M_PI/2) * pointLight.get_transformation());
                         break;
                     case 4:
                         shadowRenderer->setup_uniforms(pointLight.get_projection(), pointLight.get_transformation());
                         break;
+                    case 5:
+                        shadowRenderer->setup_uniforms(pointLight.get_projection(),  math::transform4f::rotate_about_y_radians(M_PI) * pointLight.get_transformation());
+                        break;
                     default:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(-M_PI) * pointLight.get_transformation());
                         break;
                 }
                 s = std::stack<math::mat4>{};
@@ -502,6 +505,34 @@ void ms::NGin::draw_sl_pov (std::uint16_t x, std::uint16_t y, std::uint16_t tile
     }
 }
 
+void ms::NGin::draw_pl_pov (std::uint16_t x, std::uint16_t y, std::uint16_t tileWidth, std::uint16_t tileHeight) {
+    scaleRenderer->get_framebuffer().use();
+    shadowRenderer->use(scaleRenderer->get_framebuffer());
+    for(int i = 0; i < scene.get_point_lights().size(); ++i) {
+        //render front view, side number 4
+        mglViewport(x + tileWidth * 3 * i, y, tileWidth, tileWidth);
+        scaleRenderer->get_framebuffer().clear_depth();
+        shadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), scene.get_point_lights()[i].get_transformation());
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node);
+        }
+        //render right view, side number 0
+        mglViewport(x + tileWidth * 3 * i + tileWidth, y, tileWidth, tileWidth);
+        scaleRenderer->get_framebuffer().clear_depth();
+        shadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), math::transform4f::rotate_about_y_radians(M_PI/2) * scene.get_point_lights()[i].get_transformation());
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node);
+        }
+        //render up view, side number 2
+        mglViewport(x + tileWidth * 3 * i + 2 * tileWidth, y, tileWidth, tileWidth);
+        scaleRenderer->get_framebuffer().clear_depth();
+        shadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), math::transform4f::rotate_about_x_radians(-M_PI/2) * scene.get_point_lights()[i].get_transformation());
+        for(auto & node : scene.get_nodes()) {
+            shadowRenderer->draw(*node);
+        }
+    }
+}
+
 void ms::NGin::draw_postprocess () {
     bloomSplitRenderer->use();
     bloomSplitRenderer->get_framebuffer().clear_frame();
@@ -536,7 +567,7 @@ void ms::NGin::set_renderer (Renderer r) {
     this->chosenRenderer = r;
 }
 
-ms::DeferredRender & ms::NGin::get_deferred_render	() const {
+ms::DeferredRender & ms::NGin::get_deferred_render () const {
     return *deferredRenderer;
 }
 

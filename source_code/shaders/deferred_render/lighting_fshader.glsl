@@ -29,7 +29,6 @@ struct DirectionalLight {
 	vec3    	color;
 };
 
-
 //position in world cooridnates
 struct PointLight {
 	float 		power;
@@ -188,21 +187,23 @@ float calculate_pcf_shadow(in sampler2DArray    textureToSample,
     return pcf_depth(textureToSample, layer, projectedCoordinates.xy, 3, 3, currentDepth, bias);
 }
 
-//float calculate_pcf_shadow(in samplerCube    textureToSample,
-//                           vec4                 fragmentPositionInLightSpace,
-//                           vec3                 lightDirection_N,
-//                           vec3                 surfaceNormal_N,
-//                           float                bias) {
-//    // TODO do separate function for directional lights
-//    // it is required to do this division for non-orthographic projections
-//    vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
-//    // we need to map value from range [0, 1] to [-1, 1]
-//    if(projectedCoordinates.z > 1.0f) {
-//        return 0.0f;
-//    }
-//    float currentDepth = projectedCoordinates.z;
-//    return pcf_depth(textureToSample, layer, projectedCoordinates.xy, 3, 3, currentDepth, bias);
-//}
+float calculate_pcf_shadow(in samplerCube       textureToSample,
+                           vec4                 fragmentPositionInLightSpace,
+                           vec3                 lightSurface_N,
+                           vec3                 surfaceNormal_N,
+                           float                bias) {
+    // TODO do separate function for directional lights
+    // it is required to do this division for non-orthographic projections
+    vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
+    // we need to map value from range [0, 1] to [-1, 1]
+    if(projectedCoordinates.z > 1.0f) {
+        return 0.0f;
+    }
+    float currentDepth = projectedCoordinates.z;
+    vec3 ls =  vec3(lightSurface_N.x, lightSurface_N.y, -lightSurface_N.z);
+    float depthOfTexture = texture(textureToSample, ls).r;
+    return currentDepth > depthOfTexture ? 1.0 : 0.0f;
+}
 
 //float pcf_depth(in samplerCube  textureToSample,
 //                vec3            sampleCoordinate,
@@ -316,12 +317,18 @@ void main() {
     }
 
     for (int i = 0; i < pointLightsAmount; ++i) {
-        vec3 surfaceLightZ = pointLights[i].position - fragmentPosition;
+
+        mat3 pointLightRotation = mat3(pointLights[i].transformation);
+        vec3 pointLightPosition = vec3(pointLights[i].transformation[3][0], pointLights[i].transformation[3][1], pointLights[i].transformation[3][2]);
+        vec3 transformatedLightPosition = pointLightPosition * pointLightRotation;
+
+        vec3 surfaceLightZ = - transformatedLightPosition - fragmentPosition;
         vec3 surfaceLightZ_N = normalize(surfaceLightZ);
+
         float shadow = 0.0f;
         if (pointLights[i].castsShadow == 1) {
-            vec4 fragmentInLightPos = pointLights[i].projection * pointLights[i].transformation * vec4(fragmentPosition, 1.0f);
-//            shadow = calculate_pcf_shadow(dirLightShadowMap, fragmentInLightPos, dirLight.direction, normal_N, 0.005f, 0.05f);
+//            vec4 fragmentInLightPos = pointLights[i].projection * pointLights[i].transformation * vec4(fragmentPosition, 1.0f);
+//            shadow = calculate_pcf_shadow(pointLightShadow, fragmentInLightPos, surfaceLightZ_N, normal_N, 0.000001f);
         }
         result += pointLights[i].color * diffuseColor * AMBIENT_STRENGTH;
         result += (1.0f - shadow) * count_light_influence(pointLights[i].color,

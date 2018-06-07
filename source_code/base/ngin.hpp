@@ -67,6 +67,10 @@ namespace ms {
                                                                              std::uint16_t y,
                                                                              std::uint16_t tileWidth,
                                                                              std::uint16_t tileHeight);
+        void                                            draw_pl_pov         (std::uint16_t x,
+                                                                             std::uint16_t y,
+                                                                             std::uint16_t tileWidth,
+                                                                             std::uint16_t tileHeight);
 		Loader					                        loader;
         
 		std::unique_ptr<DeferredRender>                 deferredRenderer;
