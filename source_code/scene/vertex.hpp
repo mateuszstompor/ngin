@@ -11,7 +11,16 @@
 #include "glMath.h"
 
 namespace ms {
-	
+    
+    /**
+     * Wierzchołek jest najmniejszym elementem z którego złożona jest siatka.
+     * Posiada pozycję określoną we współrzędnych modelu, określanych także mianem współrzędnych obiektu.
+     * Z każdym wierzchołkiem powiązany jest także wektor normalny.
+     * Te dwie składowe są wymagane, aby model generowany na ekranie mógł być poddany cieniowaniu.
+     * W celu poprawienia walorów wizualnych wierzchołek może posiadać także koordynaty tekstury z którego będzie próbkowany kolor.
+     * Tangens oraz bitangens wykorzystywane są wówczas, gdy wektory normalne siatki wierzchołków próbkowane są za pomocą normal mapy.
+     * @see Geometry
+     */
 	struct Vertex {
 		math::vec3 position;
 		math::vec3 normal;

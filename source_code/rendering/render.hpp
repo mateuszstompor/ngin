@@ -16,22 +16,30 @@
 #include "shaders/shader.hpp"
 
 namespace ms {
-	
+
+    /**
+     * Baza dla wszystkich renderów.
+     * Stworzona w celu przedstawienia na bufor ramki obiektu, bądź efektu graficznego.
+     * Stanowi integralną, niewidoczną dla użytkownika część biblioteki.
+     * Choć nie jest to wylistowane klasa posiada powiązany ze sobą bufor ramki, na który przedstawia efkety pracy oraz program cieniującego, którego używa do ich generowania.
+     * @see Framebuffer
+     * @see Shader
+     */
     class Render : public Resource {
 	public:
 
-		virtual					~Render 		() = default;
+		virtual							~Render 		() = default;
 
     protected:
-								Render			(std::unique_ptr<Framebuffer> && 	framebuffer,
-												 std::unique_ptr<Shader> && 		shader);
-		virtual void			use		     	();
-		virtual void			use		     	(Framebuffer & framebuffer);
-		virtual	void			_load			() override;
-		virtual	void 			_unload			() override;
-		virtual std::string 	get_class		() const override;
-		Framebuffer &			get_framebuffer () { return *framebuffer; }
-		Shader &				get_shader		() { return *shader; }
+										Render			(std::unique_ptr<Framebuffer> && 	framebuffer,
+												         std::unique_ptr<Shader> && 		shader);
+		virtual void					use		     	();
+		virtual void					use		     	(Framebuffer & framebuffer);
+		virtual	void					_load			() override;
+		virtual	void 					_unload			() override;
+		virtual std::string 			get_class		() const override;
+		Framebuffer &					get_framebuffer () { return *framebuffer; }
+		Shader &						get_shader		() { return *shader; }
 		
 		std::unique_ptr<Framebuffer> 	framebuffer;
 		std::unique_ptr<Shader>			shader;

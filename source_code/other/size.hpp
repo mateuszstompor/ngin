@@ -10,9 +10,19 @@
 
 namespace ms {
     
+    /**
+     * Szablonowa struktura służąca do reprezentowania rozmiaru w formie dwuwymiarowej.
+     */
     template<typename T>
     struct Size {
-        T width, height;
+        /**
+         * Szerokość
+         */
+        T width;
+        /**
+         * Wysokość
+         */
+        T height;
     };
     
 }

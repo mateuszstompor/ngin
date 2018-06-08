@@ -88,6 +88,18 @@
 		568D9CBA20BC5E1E00961C9A /* vignettePostprocessRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 568D9CB620BC5E1E00961C9A /* vignettePostprocessRender.cpp */; };
 		568D9CBB20BC5E1E00961C9A /* vignettePostprocessRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 568D9CB720BC5E1E00961C9A /* vignettePostprocessRender.hpp */; };
 		569A899D204FFF6200A9A292 /* reusableGeometry.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 569A899C204FFF6200A9A292 /* reusableGeometry.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56A44DC120CAEA0C00F672C6 /* pointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC020CAEA0C00F672C6 /* pointLight.cpp */; };
+		56A44DC220CAEA0C00F672C6 /* pointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC020CAEA0C00F672C6 /* pointLight.cpp */; };
+		56A44DC320CAEA0C00F672C6 /* pointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC020CAEA0C00F672C6 /* pointLight.cpp */; };
+		56A44DC520CAEB0F00F672C6 /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC420CAEB0F00F672C6 /* light.cpp */; };
+		56A44DC620CAEB0F00F672C6 /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC420CAEB0F00F672C6 /* light.cpp */; };
+		56A44DC720CAEB0F00F672C6 /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC420CAEB0F00F672C6 /* light.cpp */; };
+		56A44DC920CAEBA800F672C6 /* directionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC820CAEBA800F672C6 /* directionalLight.cpp */; };
+		56A44DCA20CAEBA800F672C6 /* directionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC820CAEBA800F672C6 /* directionalLight.cpp */; };
+		56A44DCB20CAEBA800F672C6 /* directionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DC820CAEBA800F672C6 /* directionalLight.cpp */; };
+		56A44DCD20CAEC5500F672C6 /* spotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DCC20CAEC5500F672C6 /* spotLight.cpp */; };
+		56A44DCE20CAEC5500F672C6 /* spotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DCC20CAEC5500F672C6 /* spotLight.cpp */; };
+		56A44DCF20CAEC5500F672C6 /* spotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56A44DCC20CAEC5500F672C6 /* spotLight.cpp */; };
 		56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56AB0ED92058552300B8E964 /* geometry.cpp */; };
 		56CC7EC52088B20C00C2C8AA /* shadowRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */; };
@@ -234,6 +246,10 @@
 		568D9CB720BC5E1E00961C9A /* vignettePostprocessRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vignettePostprocessRender.hpp; sourceTree = "<group>"; };
 		568FA8702048A2E2005BD711 /* libngin_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		569A899C204FFF6200A9A292 /* reusableGeometry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = reusableGeometry.hpp; sourceTree = "<group>"; wrapsLines = 1; };
+		56A44DC020CAEA0C00F672C6 /* pointLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pointLight.cpp; sourceTree = "<group>"; };
+		56A44DC420CAEB0F00F672C6 /* light.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = light.cpp; sourceTree = "<group>"; };
+		56A44DC820CAEBA800F672C6 /* directionalLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = directionalLight.cpp; sourceTree = "<group>"; };
+		56A44DCC20CAEC5500F672C6 /* spotLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = spotLight.cpp; sourceTree = "<group>"; };
 		56A5ED85205580AD00BDA233 /* shaderHeaders.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shaderHeaders.hpp; sourceTree = "<group>"; };
 		56AB0ED92058552300B8E964 /* geometry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
 		56B12337207B7E5F001046CD /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/libassimp.a"; sourceTree = "<group>"; };
@@ -552,9 +568,13 @@
 			isa = PBXGroup;
 			children = (
 				562BB81B209A86D6003033A7 /* light.hpp */,
+				56A44DC420CAEB0F00F672C6 /* light.cpp */,
 				56716821204ADFAE0028EFAA /* directionalLight.hpp */,
+				56A44DC820CAEBA800F672C6 /* directionalLight.cpp */,
 				56716822204ADFAE0028EFAA /* pointLight.hpp */,
+				56A44DC020CAEA0C00F672C6 /* pointLight.cpp */,
 				56716823204ADFAE0028EFAA /* spotLight.hpp */,
+				56A44DCC20CAEC5500F672C6 /* spotLight.cpp */,
 			);
 			path = lights;
 			sourceTree = "<group>";
@@ -769,18 +789,22 @@
 				5651733E20BA437900F9F4D0 /* gaussianBlurPostprocessRender.cpp in Sources */,
 				560627D020633B69005085CD /* renderbuffer.cpp in Sources */,
 				563B996A2065B66900B54626 /* forwardRender.cpp in Sources */,
+				56A44DC220CAEA0C00F672C6 /* pointLight.cpp in Sources */,
 				5676F29D20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
 				5674534220540C6F000E7EBD /* texture.cpp in Sources */,
 				5633FA90204B6988003449EE /* resource.cpp in Sources */,
 				563B996D2065BF3000B54626 /* lightSourcesRender.cpp in Sources */,
 				5671682E204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				56DF0F3C20571B6D00713420 /* loader.cpp in Sources */,
+				56A44DCA20CAEBA800F672C6 /* directionalLight.cpp in Sources */,
 				5674534A2054B391000E7EBD /* deferredRender.cpp in Sources */,
 				56716840204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				5677DA7420C482E800ABEF2A /* textureUtilities.cpp in Sources */,
+				56A44DCE20CAEC5500F672C6 /* spotLight.cpp in Sources */,
 				560627CB20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99652065A7BA00B54626 /* render.cpp in Sources */,
 				56CC7EC62088B20C00C2C8AA /* shadowRender.cpp in Sources */,
+				56A44DC620CAEB0F00F672C6 /* light.cpp in Sources */,
 				56AB0EDB2058552300B8E964 /* geometry.cpp in Sources */,
 				5677DA6E20C47A5C00ABEF2A /* textureArray.cpp in Sources */,
 				564E046F20C6BEA4000FF403 /* cubemap.cpp in Sources */,
@@ -802,18 +826,22 @@
 				5651733D20BA437900F9F4D0 /* gaussianBlurPostprocessRender.cpp in Sources */,
 				563B99692065B66900B54626 /* forwardRender.cpp in Sources */,
 				5676F29C20522AD1002EAB31 /* proxyOGL.cpp in Sources */,
+				56A44DC120CAEA0C00F672C6 /* pointLight.cpp in Sources */,
 				5674534120540C6F000E7EBD /* texture.cpp in Sources */,
 				5671682D204ADFAE0028EFAA /* resourceCoordinator.cpp in Sources */,
 				563B996C2065BF3000B54626 /* lightSourcesRender.cpp in Sources */,
 				5633FA8F204B6988003449EE /* resource.cpp in Sources */,
 				56DF0F3B20571B6D00713420 /* loader.cpp in Sources */,
 				567453492054B391000E7EBD /* deferredRender.cpp in Sources */,
+				56A44DC920CAEBA800F672C6 /* directionalLight.cpp in Sources */,
 				5671683F204ADFAE0028EFAA /* perspectiveCamera.cpp in Sources */,
 				56CC7EC52088B20C00C2C8AA /* shadowRender.cpp in Sources */,
 				5677DA7320C482E800ABEF2A /* textureUtilities.cpp in Sources */,
+				56A44DCD20CAEC5500F672C6 /* spotLight.cpp in Sources */,
 				560627CA20633B5F005085CD /* framebuffer.cpp in Sources */,
 				563B99642065A7BA00B54626 /* render.cpp in Sources */,
 				56AB0EDA2058552300B8E964 /* geometry.cpp in Sources */,
+				56A44DC520CAEB0F00F672C6 /* light.cpp in Sources */,
 				5640FED5204AE77600512938 /* shader.cpp in Sources */,
 				5677DA6D20C47A5C00ABEF2A /* textureArray.cpp in Sources */,
 				564E046E20C6BEA4000FF403 /* cubemap.cpp in Sources */,
@@ -835,18 +863,22 @@
 				5651733F20BA437900F9F4D0 /* gaussianBlurPostprocessRender.cpp in Sources */,
 				56D29AA4207B8DED0080CB3B /* renderbuffer.cpp in Sources */,
 				56D29AA6207B8DED0080CB3B /* forwardRender.cpp in Sources */,
+				56A44DC320CAEA0C00F672C6 /* pointLight.cpp in Sources */,
 				56D29AA7207B8DED0080CB3B /* proxyOGL.cpp in Sources */,
 				56D29AA8207B8DED0080CB3B /* texture.cpp in Sources */,
 				56D29AAC207B8DED0080CB3B /* resource.cpp in Sources */,
 				56D29AAE207B8DED0080CB3B /* lightSourcesRender.cpp in Sources */,
 				56D29AAF207B8DED0080CB3B /* resourceCoordinator.cpp in Sources */,
 				56D29AB0207B8DED0080CB3B /* loader.cpp in Sources */,
+				56A44DCB20CAEBA800F672C6 /* directionalLight.cpp in Sources */,
 				56D29AB1207B8DED0080CB3B /* deferredRender.cpp in Sources */,
 				56D29AB2207B8DED0080CB3B /* perspectiveCamera.cpp in Sources */,
 				5677DA7520C482E800ABEF2A /* textureUtilities.cpp in Sources */,
+				56A44DCF20CAEC5500F672C6 /* spotLight.cpp in Sources */,
 				56D29AB5207B8DED0080CB3B /* framebuffer.cpp in Sources */,
 				56D29AB6207B8DED0080CB3B /* render.cpp in Sources */,
 				56CC7EC72088B20C00C2C8AA /* shadowRender.cpp in Sources */,
+				56A44DC720CAEB0F00F672C6 /* light.cpp in Sources */,
 				56D29AB7207B8DED0080CB3B /* geometry.cpp in Sources */,
 				5677DA6F20C47A5C00ABEF2A /* textureArray.cpp in Sources */,
 				564E047020C6BEA4000FF403 /* cubemap.cpp in Sources */,

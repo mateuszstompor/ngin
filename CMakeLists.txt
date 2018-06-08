@@ -110,6 +110,10 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/other/framebuffer.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/other/renderbuffer.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/deferredRender.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/lights/light.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/lights/spotLight.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/lights/directionalLight.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/scene/lights/pointLight.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shadowRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.cpp
@@ -193,6 +197,11 @@ file(COPY ${CMAKE_SOURCE_DIR}/models/sponza DESTINATION ${CMAKE_CURRENT_BINARY_D
 file(COPY ${CMAKE_SOURCE_DIR}/models/nanosuit DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/models/sphere DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/models/cone DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+if (WIN32)
+#    file(COPY ${CMAKE_CURRENT_BINARY_DIR}/third-party-libs/glfw/src/glfw3.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+#    file(COPY ${CMAKE_CURRENT_BINARY_DIR}/third-party-libs/assimp/code/glfw3.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+endif()
 
 target_link_libraries(testapp glfw ${GLFW_LIBRARIES})
 target_link_libraries(testapp ${PROJECT_NAME})

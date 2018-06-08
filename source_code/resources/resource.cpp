@@ -36,20 +36,16 @@ void ms::Resource::unload () {
 }
 
 ms::Resource::Resource () : isLoaded(false) {
-	
 	#ifdef R_ALLOCATIONS
 		std::cout << "#Resource::Resource " << this << '\n';
 	#endif
-	
 	ResourceCoordinator::get_instance()->register_allocation(this);
 }
 
 ms::Resource::~Resource () {
-	
 	#ifdef R_DEALLOCATIONS
 		std::cout << "#Resource::~Resource " << this << '\n';
 	#endif
-	
 	ResourceCoordinator::get_instance()->register_deallocation(this);
 }
 
