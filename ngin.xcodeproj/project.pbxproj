@@ -249,6 +249,8 @@
 		56C9A15E2056C301008AD76B /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
 		56CC7EC32088B20C00C2C8AA /* shadowRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shadowRender.cpp; path = source_code/rendering/shadowRender.cpp; sourceTree = SOURCE_ROOT; };
 		56CC7EC42088B20C00C2C8AA /* shadowRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = shadowRender.hpp; path = source_code/rendering/shadowRender.hpp; sourceTree = SOURCE_ROOT; };
+		56CEE64420CAB554002D417D /* sm_point_light_fshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sm_point_light_fshader.glsl; sourceTree = "<group>"; };
+		56CEE64520CAB554002D417D /* sm_point_light_vshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sm_point_light_vshader.glsl; sourceTree = "<group>"; };
 		56D29AC8207B8DED0080CB3B /* libngin_ios_x86_64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libngin_ios_x86_64.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		56D29AC9207B8E120080CB3B /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "third-party-libs/assimp_iOS/x86_64/libassimp.a"; sourceTree = "<group>"; };
 		56D29ACA207B8E120080CB3B /* libzlibstatic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlibstatic.a; path = "third-party-libs/assimp_iOS/x86_64/libzlibstatic.a"; sourceTree = "<group>"; };
@@ -410,6 +412,8 @@
 		5636DE2020811DF000F4147C /* shadow_mapping */ = {
 			isa = PBXGroup;
 			children = (
+				56CEE64420CAB554002D417D /* sm_point_light_fshader.glsl */,
+				56CEE64520CAB554002D417D /* sm_point_light_vshader.glsl */,
 				5636DE2620811E3100F4147C /* sm_directional_light_fshader.glsl */,
 				5636DE2520811E3100F4147C /* sm_directional_light_vshader.glsl */,
 			);

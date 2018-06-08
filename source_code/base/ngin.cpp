@@ -110,14 +110,14 @@ shadowResolution{shadowsResolution}{
         auto scaleProgram = Shader::vf_program(get_shader_of_type(Type::post_process_scale_vshader), get_shader_of_type(Type::post_process_scale_fshader));
         auto defGshader = Shader::vf_program(get_shader_of_type(Type::deferred_render_g_buf_vertex_shader), get_shader_of_type(Type::deferred_render_g_buf_fragment_shader));
         auto defLightingShader = Shader::vf_program(get_shader_of_type(Type::deferred_render_light_pass_vshader), get_shader_of_type(Type::deferred_render_light_pass_fshader));
-    
+        auto plsmShader = Shader::vf_program(get_shader_of_type(Type::shadow_mapping_pl_vshader), get_shader_of_type(Type::shadow_mapping_pl_fshader));
         deferredRenderer = std::unique_ptr<DeferredRender> (new DeferredRender{AOL, AOL, std::move(mainRenderFramebuffer), std::move(defGshader), std::move(defLightingShader)});
         shadowRenderer = std::unique_ptr<DLShadowRender>(new DLShadowRender{nullptr, std::move(shadowShader)});
         phongForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender{AOL, nullptr, std::move(phongforwardShader)});
         gouraudForwardRenderer = std::unique_ptr<ForwardRender>(new ForwardRender(AOL, nullptr, std::move(gouraudforwardShader)));
         lightSourceRenderer = std::unique_ptr<LightSourcesRender>(new LightSourcesRender{std::move(lsFramebuffer), std::move(lightSourceforwardShader)});
         bloomSplitRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(lightSourceRenderer->get_framebuffer().get_colors(), std::move(bloomSplitFramebuffer), std::move(bloomSplitProgram)));
-    
+        pointLightShadowRenderer = std::unique_ptr<DLShadowRender>(new DLShadowRender{nullptr, std::move(plsmShader)});
         std::vector<std::weak_ptr<Texture2D>> textures;
         textures.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[0]);
     
@@ -202,6 +202,7 @@ void ms::NGin::load () {
     gaussianBlurSecondStepRenderer->load();
     scaleRenderer->load();
     shadowRenderer->load();
+    pointLightShadowRenderer->load();
     vignetteRenderer->load();
 }
 
@@ -209,6 +210,7 @@ void ms::NGin::unload () {
     pause_drawing();
     pointLightFramebuffer->unload();
     shadowsArray->unload();
+    pointLightShadowRenderer->unload();
     phongForwardRenderer->unload();
     deferredRenderer->unload();
     gouraudForwardRenderer->unload();
@@ -323,30 +325,31 @@ void ms::NGin::draw_models () {
     s = std::stack<math::mat4>{};
     for(auto i{0}; i < scene.get_point_lights().size(); ++i) {
         PointLight & pointLight = scene.get_point_lights()[i];
-        shadowRenderer->use(*pointLightFramebuffer);
+        pointLightShadowRenderer->use(*pointLightFramebuffer);
         if(pointLight.casts_shadow()) {
             pointLightFramebuffer->use();
+            pointLightFramebuffer->clear_frame();
             for(int j{0}; j < 6; ++j) {
                 pointLightFramebuffer->bind_depth_buffer(pointLightShadowsBuffer[i], (CubeMap::Face::right_positive_x + j));
                 pointLightFramebuffer->clear_frame();
                 switch (j) {
                     case 0:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(),  math::transform4f::rotate_about_y_radians(M_PI/2) * pointLight.get_transformation() );
+                        pointLightShadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(M_PI/2) * pointLight.get_transformation() );
                         break;
                     case 1:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(),  math::transform4f::rotate_about_y_radians(-M_PI/2) * pointLight.get_transformation());
+                        pointLightShadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(-M_PI/2) * pointLight.get_transformation());
                         break;
                     case 2:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(),   math::transform4f::rotate_about_x_radians(-M_PI/2) * pointLight.get_transformation());
+                        pointLightShadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_x_radians(-M_PI/2) * pointLight.get_transformation());
                         break;
                     case 3:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(),   math::transform4f::rotate_about_x_radians(M_PI/2) * pointLight.get_transformation());
+                        pointLightShadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_x_radians(M_PI/2) * pointLight.get_transformation());
                         break;
                     case 4:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(), pointLight.get_transformation());
+                        pointLightShadowRenderer->setup_uniforms(pointLight.get_projection(), pointLight.get_transformation());
                         break;
                     case 5:
-                        shadowRenderer->setup_uniforms(pointLight.get_projection(),  math::transform4f::rotate_about_y_radians(M_PI) * pointLight.get_transformation());
+                        pointLightShadowRenderer->setup_uniforms(pointLight.get_projection(), math::transform4f::rotate_about_y_radians(M_PI) * pointLight.get_transformation());
                         break;
                     default:
                         break;

@@ -51,6 +51,12 @@ namespace ms {
             const std::string directionalLightShadowMappingFshader =
             #include "./shadow_mapping/sm_directional_light_fshader.glsl"
             
+            const std::string pointLightShadowMappingVshader =
+            #include "./shadow_mapping/sm_point_light_vshader.glsl"
+            
+            const std::string pointLightShadowMappingFshader =
+            #include "./shadow_mapping/sm_point_light_fshader.glsl"
+            
         }
         
 		namespace deferredrenderer {
@@ -146,7 +152,9 @@ enum class ms::shader::Type {
     post_process_vignette_vshader,
     post_process_vignette_fshader,
     shadow_mapping_dir_vshader,
-    shadow_mapping_dir_fshader
+    shadow_mapping_dir_fshader,
+    shadow_mapping_pl_vshader,
+    shadow_mapping_pl_fshader
 };
 
 
@@ -231,6 +239,12 @@ std::string ms::shader::get_shader_of_type(Type type) {
             break;
         case ms::shader::Type::shadow_mapping_dir_fshader:
             shaderContent += shadowmapping::directionalLightShadowMappingFshader;
+            break;
+        case ms::shader::Type::shadow_mapping_pl_vshader:
+            shaderContent += shadowmapping::pointLightShadowMappingVshader;
+            break;
+        case ms::shader::Type::shadow_mapping_pl_fshader:
+            shaderContent += shadowmapping::pointLightShadowMappingFshader;
             break;
 		default:
 			std::cout << "critical error, shader type not recognized\n";

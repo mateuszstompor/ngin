@@ -187,44 +187,6 @@ float calculate_pcf_shadow(in sampler2DArray    textureToSample,
     return pcf_depth(textureToSample, layer, projectedCoordinates.xy, 3, 3, currentDepth, bias);
 }
 
-float calculate_pcf_shadow(in samplerCube       textureToSample,
-                           vec4                 fragmentPositionInLightSpace,
-                           vec3                 lightSurface_N,
-                           vec3                 surfaceNormal_N,
-                           float                bias) {
-    // TODO do separate function for directional lights
-    // it is required to do this division for non-orthographic projections
-    vec3 projectedCoordinates = (fragmentPositionInLightSpace.xyz / fragmentPositionInLightSpace.w) / 2.0f + 0.5f;
-    // we need to map value from range [0, 1] to [-1, 1]
-    if(projectedCoordinates.z > 1.0f) {
-        return 0.0f;
-    }
-    float currentDepth = projectedCoordinates.z;
-    vec3 ls =  vec3(lightSurface_N.x, lightSurface_N.y, -lightSurface_N.z);
-    float depthOfTexture = texture(textureToSample, ls).r;
-    return currentDepth > depthOfTexture ? 1.0 : 0.0f;
-}
-
-//float pcf_depth(in samplerCube  textureToSample,
-//                vec3            sampleCoordinate,
-//                int             rowSamples,
-//                int             columnSamples,
-//                float           countedDepth,
-//                float           bias) {
-//
-//    vec2 texelSize = vec2(1.0f) / vec2(textureSize(textureToSample, 0));
-//    float result = 0.0f;
-//
-//    for (int i = -rowSamples; i <= rowSamples; ++i) {
-//        for (int j = -columnSamples; j <= columnSamples; ++j) {
-//            float depth = texture(textureToSample, vec3(sampleCoordinate + vec2(i, j) * texelSize, layer)).r;
-//            result += countedDepth - bias > depth ? 1.0 : 0.0f;
-//        }
-//    }
-//
-//    return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
-//}
-
 #define MAX_SPOT_LIGHT_AMOUNT	12
 #define MAX_POINT_LIGHT_AMOUNT	12
 
@@ -327,8 +289,11 @@ void main() {
 
         float shadow = 0.0f;
         if (pointLights[i].castsShadow == 1) {
-//            vec4 fragmentInLightPos = pointLights[i].projection * pointLights[i].transformation * vec4(fragmentPosition, 1.0f);
-//            shadow = calculate_pcf_shadow(pointLightShadow, fragmentInLightPos, surfaceLightZ_N, normal_N, 0.000001f);
+            vec4 fragmentInLightPos = pointLights[i].transformation * vec4(fragmentPosition, 1.0f);
+            float currentDepth = length(fragmentInLightPos.xyz)/100.0f;
+            vec3 ls = vec3(-surfaceLightZ_N.x, surfaceLightZ_N.y, surfaceLightZ_N.z);
+            float depthOfTexture = texture(pointLightShadow, ls).r;
+            shadow = currentDepth - 0.01f > depthOfTexture ? 1.0 : 0.0f;
         }
         result += pointLights[i].color * diffuseColor * AMBIENT_STRENGTH;
         result += (1.0f - shadow) * count_light_influence(pointLights[i].color,
