@@ -28,7 +28,14 @@
 #include "../shaders/shaderHeaders.hpp"
 
 namespace ms {
-    
+
+	/**
+	 * Zewnętrzna klasa, będąca jednocześnie fasadą biblioteki.
+	 * Z jej poziomu użytkownik ma dostęp do wszystkich funkcjonalności.
+	 * @see Scene
+	 * @see Loader
+	 * @see PostprocessRender
+	 */
 	class NGin {
       
     public:
@@ -38,7 +45,16 @@ namespace ms {
             forward_fragment,
             forward_vertex
         };
-        
+        /**
+         *
+         * @param screenWidth Szerokość okna w którym należy generować obraz
+         * @param screenHeight Wysokość okna w którym należy generować obraz
+         * @param frameBufferWidth Szerokość obrazu, którą należy generować w zadanej szerokości okna
+         * @param frameBufferHeight Wysokość obrazu, którą należy generować w zadanej szerokości okna
+         * @param shadowsResolution Rozdzielczość cieni
+         * @param cam kamera, którą należy dodać na scenę
+         * @param defaultFramebuffer w przypadku urządzeń, które nie korzystają z domyślnego bufora ramki, np. smartfony z iOS, należy podać bufor ramki na który generować obraz
+         */
                                                         NGin        		(unsigned int                       screenWidth,
                                                                              unsigned int                       screenHeight,
                                                                              unsigned int                       frameBufferWidth,
@@ -46,19 +62,61 @@ namespace ms {
                                                                              unsigned int                       shadowsResolution,
                                                                              std::unique_ptr<Camera> &&			cam,
                                                                              std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
-        void                                            set_renderer        (Renderer r);
+
+		/**
+		 * Ładuje do karty graficznej wszystkie komponenty silnika jak renderery, shadery, itd.
+		 */
         void 							                load 				();
+		/**
+		 * Dealokuje wszystkie zasoby.
+		 */
         void 							                unload 				();
+		/**
+		 * Wyrysowuje pojedynczą klatkę obrazu.
+		 */
         void							                draw_scene  		();
+		/**
+		 * Zwraca loader, za pomocą którego użytkownik może pobierać z pamięciu urządzenia zasoby.
+		 */
         constexpr Loader const &                        get_loader          () const { return loader; }
-        DeferredRender & 		                        get_deferred_render	() const;
+        DeferredRender & 		                        get_deferred_render	();
+		/**
+		 * Zwraca renderer odpowiadający za winietowanie.
+		 */
+		VignettePostprocessRender &						get_vignette_render ();
+		/**
+		 * @return Zwraca renderer odpowiedzialny za wertykalny blur gaussowski podczas nakładania efektu bloom.
+		 */
+		GaussianBlurPostprocessRender &					get_bloom_v_render	();
+		/**
+		 * @return Zwraca renderer odpowiedzialny za horyzontalny blur gaussowski podczas nakładania efektu bloom.
+		 */
+		GaussianBlurPostprocessRender &					get_bloom_h_render	();
+		/**
+		 * @return Zwraca renderer odpowiedzialny za mapowanie klatki hdr do sdr.
+		 */
+		PostprocessRender &								get_hdr_render		();
+		/**
+		 * Wczytuje model do sceny, powiązuje jego komponenty ze sobą.
+		 * @param absolutePath ścieżka do pliku
+		 */
         void							                load_model			(std::string const & absolutePath);
+		/**
+		 * Wstrzymuje pracę biblioteki.
+		 */
         void                                            pause_drawing       () { shouldDraw = false; }
+		/**
+		 * Kontynuuje pracę biblioteki.
+		 */
         void                                            resume_drawing      () { shouldDraw = true; }
+		/**
+		 * Zwraca scenę, którą użytkownik może swobodnie modyfikować
+		 */
         constexpr Scene &                               get_scene           () { return scene; }
 		
 	private:
-		
+
+		void                                            set_renderer        (Renderer r);
         Scene                                           scene;
 		void							                count_fps			();
         void                                            draw_models         ();
@@ -71,7 +129,7 @@ namespace ms {
                                                                              std::uint16_t y,
                                                                              std::uint16_t tileWidth,
                                                                              std::uint16_t tileHeight);
-		Loader					                        loader;
+
         
 		std::unique_ptr<DeferredRender>                 deferredRenderer;
         std::unique_ptr<DLShadowRender>                 shadowRenderer;
@@ -95,11 +153,10 @@ namespace ms {
         unsigned int                                    shadowResolution;
 		unsigned int							        screenWidth;
 		unsigned int							        screenHeight;
-
 		unsigned int 							        framebufferWidth;
 		unsigned int 							        framebufferHeight;
-        
         Renderer                                        chosenRenderer {Renderer::deferred};
+		Loader					                        loader;
 		
     };
     

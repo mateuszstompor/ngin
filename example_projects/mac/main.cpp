@@ -108,7 +108,7 @@ int main(int argc, const char * argv[]) { {
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
     engine->get_scene().set_directional_light(std::make_unique<DirectionalLight>(ms::math::vec3{ 1.0f, 1.0f, 1.0f}, 100, vec3(0.0f, -1.0f, 0.0f).normalized(), true));
-//
+
     mat4 lookat = transform::look_at(vec3(0.0f, 4.0f, 0.0f), vec3( 0.0f, 0.0f,  0.0f), vec3( 0.0f, 0.0f,  1.0f));
 
     engine->get_scene().get_directional_light()->get_transformation() = lookat;

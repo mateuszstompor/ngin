@@ -23,7 +23,20 @@
 #include <vector>
 
 namespace ms {
-    
+
+    /**
+     * Główny element biblioteki służący do reprezentowania sceny.
+     * Na scenie w formie drzewa zorganizowane są rysowalne obiekty.
+     * Bezpośrednio, bez użycia hierarchii, w wektorze przechowywane są światła punktowe oraz kierunkowe stożkowe.
+     * Na scenie może występować tylko jedno światło kierunkowe, które umiejscowione jest bezpośrednio do współrzędnych świata.
+     * Scena musi zawierać dokładnie jedną kamerę.
+     * Dodatkowo scena pełni też rolę kontenera na wszystkie załadowane siatki, materiały oraz tesktury i odpowiada za ich dealokację.
+     * @see NGin
+     * @see Drawable
+     * @see SpotLight
+     * @see PointLight
+     * @see DirectionalLight
+     */
     class Scene {
 
         using materials_type    = std::map<std::string, std::shared_ptr<Material>>;
@@ -34,27 +47,65 @@ namespace ms {
         using drawable_type     = ms::tree<std::shared_ptr<Drawable>>;
         
 	public:
-        
+        /**
+         * Tworzy scene, dodając na nią kamerę i umiejscawiajac ją w początku układu współrzędnych.
+         */
                                                 Scene (std::unique_ptr<Camera> && cam);
+        /**
+         * @return Zwraca kamerę umiejscowiona na scenie.
+         */
         Camera const &                          get_camera() const;
+        /**
+         * @return Zwraca kamerę umiejscowiona na scenie.
+         */
 		Camera &                                get_camera();
-		DirectionalLight const *                get_directional_light() const;
-		DirectionalLight *                      get_directional_light();
-        
+        /**
+         * @return Zwraca załadowane do sceny materiały.
+         */
         constexpr materials_type &              get_materials() { return materials; }
-        
+        /**
+         * @return Zwraca załadowane do sceny siatki.
+         */
         constexpr geometries_vec &              get_geometries() { return geometries; }
-        
+        /**
+         * @return Zwraca załadowane do sceny tekstury.
+         */
         constexpr textures_type &               get_textures() { return textures; }
-        
+        /**
+         * @return Zwraca wszystkie światła kierunkowe, stożkowe w scenie.
+         */
         constexpr spot_lights_type &            get_spot_lights() { return spotLights; }
+        /**
+         * @return Zwraca wszystkie światła kierunkowe, stożkowe w scenie.
+         */
         constexpr spot_lights_type const &      get_spot_lights() const { return spotLights; }
-        
+        /**
+         * @return Zwraca wszystkie światła punktowe umiejscowione na scenie.
+         */
         constexpr point_lights_type &           get_point_lights() { return pointLights; }
+        /**
+         * @return Zwraca wszystkie światła punktowe umiejscowione na scenie.
+         */
         constexpr point_lights_type const &     get_point_lights() const { return pointLights; }
-        
+        /**
+         * Zwraca drzewo rysowalnych obiektów na scenie.
+         */
         constexpr drawable_type &               get_nodes() { return nodes; }
+        /**
+         * Zwraca drzewo rysowalnych obiektów na scenie.
+         */
         constexpr drawable_type const &         get_nodes() const { return nodes; }
+        /**
+         * @return Zwraca światło kierunkowe umiejscowione na scenie.
+         */
+        DirectionalLight const *                get_directional_light() const;
+        /**
+         * @return Zwraca światło kierunkowe umiejscowione na scenie.
+         */
+        DirectionalLight *                      get_directional_light();
+        /**
+         * Dodaje na scenę światło kierunkowe.
+         */
         void        							set_directional_light(std::unique_ptr<DirectionalLight> && dl) { directionalLight = std::move(dl); }
 		
     private:

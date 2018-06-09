@@ -191,15 +191,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_4:
             usedPointLight = std::clamp((usedPointLight + 1), 0, static_cast<int>(engine->get_scene().get_point_lights().size()));
             break;
-        case GLFW_KEY_8:
-        engine->set_renderer(ms::NGin::Renderer::deferred);
-        break;
-        case GLFW_KEY_9:
-        engine->set_renderer(ms::NGin::Renderer::forward_fragment);
-        break;
-        case GLFW_KEY_0:
-        engine->set_renderer(ms::NGin::Renderer::forward_vertex);
-        break;
         default:
             break;
     }

@@ -29,7 +29,16 @@
 #include "../scene/geometry.hpp"
 
 namespace ms {
-	
+
+	/**
+	 * Klasa odpowiedzialna za wczytywanie obiektów, może być użyta niezależnie od biblioteki.
+	 * Na podstawie ścieżki jest w stanie wczytać geometrię przy zachowaniu lub z pominięciem hierarchii znajdujących się w niej siatek.
+	 * Dodatkowo może wczytywać tekstury i materiały.
+	 * @see NGin
+	 * @see Geometry
+	 * @see Texture2D
+	 * @see Material
+	 */
 	class Loader {
 		
 	public:
@@ -44,12 +53,36 @@ namespace ms {
         using geometry                  = std::unique_ptr<Geometry>;
         using texture                   = std::unique_ptr<Texture2D>;
         using paths                     = std::vector<std::string>;
-		
+
+		/**
+		 * @param absolutePath ścieżka do pliku
+		 * @return zwraca płaski model geometrii
+		 */
 		model_data	                	load_flat_model                         (std::string const & absolutePath) const;
+		/**
+		 * @param absolutePath ścieżka do pliku
+		 * @return zwraca dwuwymiarową teksturę
+		 */
         texture                         load_texture                            (std::string const & absolutePath) const;
+		/**
+		 * @param absolutePath ścieżka do pliku
+		 * @return wczytuje materiały osadzone w pliku
+		 */
         materials_map                   load_materials                          (std::string const & absolutePath) const;
+		/**
+		 * Wczytuje materiał, ale w przypadku, gdy zawiera on także tekstury pobierze i zwróci je
+		 * @param absolutePath ścieżka do pliku
+		 */
         textures_map                    load_textures_for_materials             (std::string const & absolutePath) const;
+		/**
+		* @param absolutePath ścieżka do pliku
+		* @return Zwraca model nie zachowując hierarchii jego siatek
+		*/
         geometries_vec                  load_flat_geometry                      (std::string const & absolutePath) const;
+		/**
+		 * @param absolutePath ścieżka do pliku
+		 * @return Zwraca model zachowując hierarchię jego siatek
+		 */
         geometries_vec_h                load_hierarchical_geometry              (std::string const & absolutePath) const;
         
 	private:
