@@ -14,14 +14,22 @@
 #include "../other/size.hpp"
 
 namespace ms {
-    
+
+    /**
+     * Wewnętrzna klasa biblioteki, niedostępna dla użytkownika.
+     * W chwili obecnej służy do reprezentowania map cieni dla świateł punktowych.
+     */
     class CubeMap : public Resource {
         
         friend class Framebuffer;
         friend class Shader;
+        friend class NGin;
         
     public:
-        
+
+        /**
+         * Specyfikuje ścianę cubemapy.
+         */
         enum Face {
             right_positive_x = 0,
             left_negative_x = 1,
@@ -30,7 +38,11 @@ namespace ms {
             back_positive_z = 4,
             front_negative_z = 5
         };
+
+        std::string                 get_class           () const override;
         
+    private:
+
                                     CubeMap             (texture::Format             format,
                                                          texture::AssociatedType     associatedType,
                                                          Size<unsigned int>          positiveX,
@@ -46,7 +58,7 @@ namespace ms {
                                                          texture::Wrapping           tWrapping = texture::Wrapping::repeat,
                                                          texture::Wrapping           rWrapping = texture::Wrapping::repeat,
                                                          unsigned int                mipMapLevel = 0);
-        
+
                                     CubeMap             (texture::Format             format,
                                                          texture::AssociatedType     associatedType,
                                                          Size<unsigned int>          size,
@@ -57,13 +69,9 @@ namespace ms {
                                                          texture::Wrapping           tWrapping = texture::Wrapping::repeat,
                                                          texture::Wrapping           rWrapping = texture::Wrapping::repeat,
                                                          unsigned int                mipMapLevel = 0);
-        
+
                                     CubeMap             (const CubeMap & texture) = delete;
         CubeMap &                   operator =          (const CubeMap & texture) = delete;
-        std::string                 get_class           () const override;
-        
-    private:
-        
         constexpr   GLuint          get_underlying_id   () const { return glTexture; }
         void                        _load               () override;
         void                        _unload             () override;

@@ -21,7 +21,17 @@
 #include "../config.hpp"
 
 namespace ms {
-    
+
+	/**
+	 * Klasa jest zwierzchnikiem czuwający nad wszystkimi alokowanymi zasobami - pochodnymi Resource.
+	 * W chwili obecnej jej najważniejszym zadaniem jest pełnienie funkcji diagnostycznych.
+	 * Niemożliwa jest jej konfiugracja, jest całkowicie zamknięta na ingerencje użytkownika.
+	 * Stanowi element fasady biblioteki - klasy NGin.
+	 * Alokowana jest wraz z tworzeniem biblioteki, a dealokowana wraz jej destrukcją
+	 *
+	 * @see Resource
+	 * @see NGin
+	 */
     class ResourceCoordinator {
 		
         friend class NGin;

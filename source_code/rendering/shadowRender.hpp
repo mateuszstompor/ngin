@@ -13,14 +13,18 @@
 #include "render.hpp"
 
 namespace ms {
-    
+
+    /**
+	 * Klasa służąca do generowania rysowalnych map cieni obiektów na scenie dla każdego ze świateł rzucających cień.
+	 * W obencym stadium rozwoju nie może poddawana być modyfikacjom i z zewnątrz biblioteki nie ma do niej dostępu.
+	 * @see NGin
+	 */
     class DLShadowRender : public Render {
         
         friend class NGin;
         
     public:
     
-                        ~DLShadowRender         () = default;
         std::string     get_class               () const override;
         
     private:

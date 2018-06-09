@@ -20,15 +20,15 @@
 #include "../scene/drawable.hpp"
 
 namespace ms {
-	
+
+	/**
+	 * Jedna z pochodnych ModelRener stworzona do generowania modeli na bufor ramki z oparci o algorytm deferred renderingu.
+	 * W chwili obencej niemożliwe jest jej .
+	 */
 	class DeferredRender : public ModelRender {
 		
 		friend class NGin;
-		
-	public:
-		
-										~DeferredRender				() = default;
-		
+
 	private:
 		
 										DeferredRender				(unsigned int 						maxPointLightsAmount,

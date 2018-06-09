@@ -46,10 +46,8 @@ namespace ms {
                                                              int    height);
         void                            bind_color_buffer   (int                            index,
                                                              std::unique_ptr<Texture2D> &&  Texture2D);
-        
         void                            bind_color_buffer   (int                                index,
                                                              std::unique_ptr<Renderbuffer> &&   renderbuffer);
-        
         void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> && renderbuffer);
         void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
         void                            bind_depth_buffer   (std::unique_ptr<Texture2DArray> & texture, std::size_t layer);

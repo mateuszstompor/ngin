@@ -21,7 +21,13 @@
 #include "../../scene/textureArray.hpp"
 
 namespace ms {
-    
+
+	/**
+	 * Programy cieniące są częścią rendererów, dostęp do nich nie jest możliwy dla użytkownika.
+	 * Tworzone są na podstawie plików tekstowych i uruchamiane na rdzeniach karty graficznej.
+	 * Stanowią wewnętrzną, zamkniętą część biblioteki.
+	 * @see Render
+	 */
 	class Shader : public Resource {
 		
 		using program_ptr = std::unique_ptr<Shader>;

@@ -143,6 +143,9 @@
 		56F566A220B8A38900D8E5FC /* modelRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 564D04C6209DBADB007C7340 /* modelRender.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56F566A320B8A38900D8E5FC /* vertex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56C9A15E2056C301008AD76B /* vertex.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		56F566A420B8A38900D8E5FC /* config.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 56C3C6A920655EFE0003F630 /* config.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		56FC5E8220CC0CB4009F0E74 /* modelRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56FC5E8120CC0CB4009F0E74 /* modelRender.cpp */; };
+		56FC5E8320CC0CB4009F0E74 /* modelRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56FC5E8120CC0CB4009F0E74 /* modelRender.cpp */; };
+		56FC5E8420CC0CB4009F0E74 /* modelRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56FC5E8120CC0CB4009F0E74 /* modelRender.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -280,6 +283,7 @@
 		56E611BC2057520E0036FA07 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = ../assimp/lib/iOS/x86_64/libassimp.a; sourceTree = "<group>"; };
 		56E611BE2057522A0036FA07 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libassimp-fat.a"; path = "../assimp/lib/iOS/libassimp-fat.a"; sourceTree = "<group>"; };
 		56F5447B205ECC4F00431095 /* constantsDefinitions.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = constantsDefinitions.glsl; sourceTree = "<group>"; };
+		56FC5E8120CC0CB4009F0E74 /* modelRender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modelRender.cpp; sourceTree = "<group>"; };
 		56FD82032066FB2E00B57BB6 /* bloom_splitter_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = bloom_splitter_fshader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -513,6 +517,7 @@
 				566D1E1A205F4CAE00CE2F84 /* lightSourcesRender.hpp */,
 				563B996B2065BF3000B54626 /* lightSourcesRender.cpp */,
 				564D04C6209DBADB007C7340 /* modelRender.hpp */,
+				56FC5E8120CC0CB4009F0E74 /* modelRender.cpp */,
 			);
 			path = rendering;
 			sourceTree = "<group>";
@@ -810,6 +815,7 @@
 				564E046F20C6BEA4000FF403 /* cubemap.cpp in Sources */,
 				56716850204ADFAE0028EFAA /* ngin.cpp in Sources */,
 				560313E6207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
+				56FC5E8320CC0CB4009F0E74 /* modelRender.cpp in Sources */,
 				5633FAB4204C64D7003449EE /* drawable.cpp in Sources */,
 				566BCF2D204EAF6500E90246 /* scene.cpp in Sources */,
 				565AAAC92069B5F3002B6C6B /* material.cpp in Sources */,
@@ -847,6 +853,7 @@
 				564E046E20C6BEA4000FF403 /* cubemap.cpp in Sources */,
 				560313E5207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
 				5671684F204ADFAE0028EFAA /* ngin.cpp in Sources */,
+				56FC5E8220CC0CB4009F0E74 /* modelRender.cpp in Sources */,
 				5633FAB3204C64D7003449EE /* drawable.cpp in Sources */,
 				566BCF2C204EAF6500E90246 /* scene.cpp in Sources */,
 				565AAAC82069B5F3002B6C6B /* material.cpp in Sources */,
@@ -884,6 +891,7 @@
 				564E047020C6BEA4000FF403 /* cubemap.cpp in Sources */,
 				56D29AB8207B8DED0080CB3B /* ngin.cpp in Sources */,
 				560313E7207F9EB300C37C68 /* orthographicCamera.cpp in Sources */,
+				56FC5E8420CC0CB4009F0E74 /* modelRender.cpp in Sources */,
 				56D29ABA207B8DED0080CB3B /* drawable.cpp in Sources */,
 				56D29ABC207B8DED0080CB3B /* scene.cpp in Sources */,
 				56D29ABD207B8DED0080CB3B /* material.cpp in Sources */,

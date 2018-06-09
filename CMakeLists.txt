@@ -115,6 +115,7 @@ set(NGIN_LIBRARY_SOURCE_FILES   ${CMAKE_SOURCE_DIR}/source_code/rendering/postpr
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/lights/directionalLight.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/scene/lights/pointLight.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/shadowRender.cpp
+                                ${CMAKE_SOURCE_DIR}/source_code/rendering/modelRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/resources/resource.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/forwardRender.cpp
                                 ${CMAKE_SOURCE_DIR}/source_code/rendering/lightSourcesRender.cpp

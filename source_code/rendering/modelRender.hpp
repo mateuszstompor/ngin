@@ -11,13 +11,22 @@
 #include "render.hpp"
 
 namespace ms {
-    
+
+    /**
+	 * Klasa służąca do generowania rysowalnych obiektów na scenie, które nie są poddawane cieniowaniu.
+	 * W obencym stadium rozwoju nie może poddawana być modyfikacjom.
+	 * Klasa stanowi część fasady biblioteki - NGin.
+	 * @see Scene
+	 * @see NGin
+	 */
     class ModelRender : public Render {
-            
+
         friend class ForwardRender;
         friend class DeferredRender;
-        
-        inline          ModelRender             (std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader);
+
+    private:
+
+                        ModelRender             (std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader);
         virtual void    draw                    (Drawable & node) = 0;
         virtual void    draw                    (Drawable & node, math::mat4 const & transformation) = 0;
         virtual void    set_material            (Material * material) = 0;
@@ -31,4 +40,3 @@ namespace ms {
     
 }
 
-ms::ModelRender::ModelRender (std::unique_ptr<Framebuffer> && framebuffer, std::unique_ptr<Shader> && shader) : Render{std::move(framebuffer), std::move(shader)} {}

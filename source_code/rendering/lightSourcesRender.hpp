@@ -11,7 +11,14 @@
 #include "render.hpp"
 
 namespace ms {
-	
+
+	/**
+	 * Klasa służąca do generowania rysowalnych obiektów na scenie, które nie są poddawane cieniowaniu.
+	 * W obencym stadium rozwoju nie może poddawana być modyfikacjom.
+	 * Klasa stanowi część fasady biblioteki - NGin.
+	 * @see Scene
+	 * @see NGin
+	 */
 	class LightSourcesRender : public Render {
 		
         friend class NGin;

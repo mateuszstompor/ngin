@@ -13,7 +13,11 @@
 #include "modelRender.hpp"
 
 namespace ms {
-	
+
+	/**
+	 * Jedna z pochodnych ModelRener stworzona do generowania modeli na bufor ramki z oparci o algorytm forward renderingu.
+	 * W chwili obencej niemożliwe jest jej konfigurowanie.
+	 */
 	class ForwardRender : public ModelRender {
 	
 		friend class NGin;

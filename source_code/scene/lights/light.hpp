@@ -30,7 +30,7 @@ namespace ms {
          */
         inline constexpr    math::vec3 const  &       	get_color              	() const { return color; }
         /**
-         * Metoda zwracająca przetrzymywaną wewnątrz klasy wartość, służacą do modyfikacji położenia światła.
+         * Metoda zwracająca przetrzymywaną wewnątrz klasy wartość, służacą do modyfikacjei położenia światła.
          */
         inline constexpr    math::mat4 const &        	get_transformation     	() const { return transformation; }
 		/**

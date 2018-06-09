@@ -13,7 +13,11 @@
 #include "../utils/proxyOGL.hpp"
 
 namespace ms {
-    
+
+    /**
+     * Wewnętrzna klasa biblioteki, niedostępna dla użytkownika.
+     * Służy do reprezentowania tablic tekstur w programach cieniąjących, które ze względu na specyfikę API wymagając odrębnej implementacji.
+     */
     class Texture2DArray : public Resource {
     
         friend class Framebuffer;
@@ -32,14 +36,12 @@ namespace ms {
                                                               texture::Wrapping         tWrapping = texture::Wrapping::repeat,
                                                               unsigned int              mipMapLevel = 0);
         
+        std::string                 get_class               () const override;
+                                    ~Texture2DArray         () = default;
+    private:
                                     Texture2DArray          (const Texture2DArray & texture) = delete;
         Texture2DArray &            operator =              (const Texture2DArray & texture) = delete;
-        std::string                 get_class               () const override;
-                                    ~Texture2DArray() = default;
-    private:
-        
-        constexpr   GLuint          get_underlying_id   () const { return glTexture; }
-        
+        constexpr   GLuint          get_underlying_id       () const { return glTexture; }
         void                        _load                   () override;
         void                        _unload                 () override;
         void                        use                     ();
@@ -55,7 +57,6 @@ namespace ms {
         unsigned int                width;
         unsigned int                height;
         std::size_t                 layerAmount;
-        
         GLenum                      glInternalFormat;
         GLenum                      glColorFormat;
         GLenum                      glType;

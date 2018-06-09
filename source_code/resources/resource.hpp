@@ -39,7 +39,7 @@ namespace ms {
 
         /**
          * Metoda służąca do sprawdzenia jaka klasa specyficzna jest wykorzystana.
-         * @return zwraca nazwę
+         * @return zwraca nazwę klasy
          */
         virtual std::string 	get_class		() const = 0;
 		/**
