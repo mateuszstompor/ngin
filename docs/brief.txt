@@ -1,0 +1,9 @@
+/*! \mainpage
+\section my-intro Wprowadzenie
+Rozpoczynając korzystanie z biblioteki pierwszą z klas, na którą użytkownik powinien zwrócić uwagę jest NGin.
+Jest to fasada biblioteki, za jej pomocą może on wczytać obiekty, odwołać się do sceny i umieścić obiekty w jej obrębie.
+Za pośrednictwem pojedynczego wywołania jest w stanie wygenerować także klatkę obrazu.
+Projekt zakłada, że użytkownik posiada możliwość modyfikacji obiektów znajdujących się na scenie.
+Z drugiej strony biblioteka jest w większości zamknięta na modyfikację efektów graficznych.
+W jej skład wchodzi duża ilość klas, o istnieniu których użytkownik jest wprawdzie informowany, ale z jego punktu widzenie nie udostępniają one żadnych funkcji.
+*/

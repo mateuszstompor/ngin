@@ -61,18 +61,22 @@ namespace ms {
 		Camera &                                get_camera();
         /**
          * @return Zwraca załadowane do sceny materiały.
+         * Użytkownik może użyć tej metody w celu dodania nowego zasobu do sceny.
          */
         constexpr materials_type &              get_materials() { return materials; }
         /**
          * @return Zwraca załadowane do sceny siatki.
+         * Użytkownik może użyć tej metody w celu dodania nowego zasobu do sceny.
          */
         constexpr geometries_vec &              get_geometries() { return geometries; }
         /**
          * @return Zwraca załadowane do sceny tekstury.
+         * Użytkownik może użyć tej metody w celu dodania nowego zasobu do sceny.
          */
         constexpr textures_type &               get_textures() { return textures; }
         /**
          * @return Zwraca wszystkie światła kierunkowe, stożkowe w scenie.
+         * Użytkownik może użyć tej metody w celu dodania nowego zasobu do sceny.
          */
         constexpr spot_lights_type &            get_spot_lights() { return spotLights; }
         /**
@@ -81,6 +85,7 @@ namespace ms {
         constexpr spot_lights_type const &      get_spot_lights() const { return spotLights; }
         /**
          * @return Zwraca wszystkie światła punktowe umiejscowione na scenie.
+         * Użytkownik może użyć tej metody w celu dodania nowego zasobu do sceny.
          */
         constexpr point_lights_type &           get_point_lights() { return pointLights; }
         /**
@@ -89,6 +94,7 @@ namespace ms {
         constexpr point_lights_type const &     get_point_lights() const { return pointLights; }
         /**
          * Zwraca drzewo rysowalnych obiektów na scenie.
+         * Użytkownik może użyć tej metody w celu dodania nowego zasobu do sceny.
          */
         constexpr drawable_type &               get_nodes() { return nodes; }
         /**

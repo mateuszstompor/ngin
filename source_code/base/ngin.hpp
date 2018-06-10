@@ -32,6 +32,9 @@ namespace ms {
 	/**
 	 * Zewnętrzna klasa, będąca jednocześnie fasadą biblioteki.
 	 * Z jej poziomu użytkownik ma dostęp do wszystkich funkcjonalności.
+	 * Zapewnione są w niej takie możliwości jak pobranie instancji sceny, a następnie dokonanie modyfikacji obiektów na niej się znajdujących.
+	 * Dodatkowo, odwołanie do instancji loader umożliwi pobranie z plików obiektów, które mogą zostać umieszczone na scenie.
+	 * Użytkownik ma możliwość także odwołać się do części z klas występujących w potoku renderowania i dokonać ich nieznacznej modyfikacji.
 	 * @see Scene
 	 * @see Loader
 	 * @see PostprocessRender
