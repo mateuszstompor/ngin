@@ -177,6 +177,11 @@ void ms::Shader::compile_shader(GLuint program, GLuint shader, std::string const
 	mglAttachShader(program, shader);
 }
 
+void ms::Shader::bind_texture (std::size_t index, CubemapArray & texture) {
+	mglActiveTexture(GL_TEXTURE0 + static_cast<int>(index));
+	texture.use();
+}
+
 int ms::Shader::get_shader_status(GLuint shader, GLenum statusType) {
 	int code; char infoLog[INFO_LOG_SIZE];
 	mglGetShaderiv(shader, statusType, &code);

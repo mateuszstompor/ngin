@@ -46,6 +46,10 @@
 		5651734020BA437900F9F4D0 /* gaussianBlurPostprocessRender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5651733C20BA437900F9F4D0 /* gaussianBlurPostprocessRender.hpp */; };
 		565AAAC82069B5F3002B6C6B /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 565AAAC62069B5F3002B6C6B /* material.cpp */; };
 		565AAAC92069B5F3002B6C6B /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 565AAAC62069B5F3002B6C6B /* material.cpp */; };
+		5665F62020D0D219006D6F60 /* cubemapArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5665F61E20D0D219006D6F60 /* cubemapArray.cpp */; };
+		5665F62120D0D219006D6F60 /* cubemapArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5665F61E20D0D219006D6F60 /* cubemapArray.cpp */; };
+		5665F62220D0D219006D6F60 /* cubemapArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5665F61E20D0D219006D6F60 /* cubemapArray.cpp */; };
+		5665F62320D0D219006D6F60 /* cubemapArray.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5665F61F20D0D219006D6F60 /* cubemapArray.hpp */; };
 		566BCF2C204EAF6500E90246 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566BCF2B204EAF6500E90246 /* scene.cpp */; };
 		566BCF2D204EAF6500E90246 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566BCF2B204EAF6500E90246 /* scene.cpp */; };
 		566D09DF2088EAA200D1CDF4 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5640FED3204AE77600512938 /* shader.cpp */; };
@@ -214,6 +218,8 @@
 		5651733C20BA437900F9F4D0 /* gaussianBlurPostprocessRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gaussianBlurPostprocessRender.hpp; sourceTree = "<group>"; };
 		565231B0206B9598001766F3 /* scale_fshader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = scale_fshader.glsl; sourceTree = "<group>"; };
 		565AAAC62069B5F3002B6C6B /* material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
+		5665F61E20D0D219006D6F60 /* cubemapArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cubemapArray.cpp; sourceTree = "<group>"; };
+		5665F61F20D0D219006D6F60 /* cubemapArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cubemapArray.hpp; sourceTree = "<group>"; };
 		566BCF2B204EAF6500E90246 /* scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
 		566D1E1A205F4CAE00CE2F84 /* lightSourcesRender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lightSourcesRender.hpp; sourceTree = "<group>"; };
 		56716806204ADFAE0028EFAA /* resourceCoordinator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resourceCoordinator.cpp; sourceTree = "<group>"; };
@@ -538,6 +544,8 @@
 				5633FAB1204C64D7003449EE /* drawable.cpp */,
 				564E046C20C6BEA4000FF403 /* cubemap.cpp */,
 				564E046D20C6BEA4000FF403 /* cubemap.hpp */,
+				5665F61F20D0D219006D6F60 /* cubemapArray.hpp */,
+				5665F61E20D0D219006D6F60 /* cubemapArray.cpp */,
 				5677DA7120C47F7100ABEF2A /* textureUtilities.hpp */,
 				5677DA7220C482E800ABEF2A /* textureUtilities.cpp */,
 				5674534020540C6F000E7EBD /* texture.hpp */,
@@ -679,6 +687,7 @@
 				56F5669E20B8A38900D8E5FC /* framebuffer.hpp in Headers */,
 				5651734020BA437900F9F4D0 /* gaussianBlurPostprocessRender.hpp in Headers */,
 				56F5669F20B8A38900D8E5FC /* forwardRender.hpp in Headers */,
+				5665F62320D0D219006D6F60 /* cubemapArray.hpp in Headers */,
 				56F566A020B8A38900D8E5FC /* deferredRender.hpp in Headers */,
 				568D9CBB20BC5E1E00961C9A /* vignettePostprocessRender.hpp in Headers */,
 				56F566A120B8A38900D8E5FC /* lightSourcesRender.hpp in Headers */,
@@ -818,6 +827,7 @@
 				56FC5E8320CC0CB4009F0E74 /* modelRender.cpp in Sources */,
 				5633FAB4204C64D7003449EE /* drawable.cpp in Sources */,
 				566BCF2D204EAF6500E90246 /* scene.cpp in Sources */,
+				5665F62120D0D219006D6F60 /* cubemapArray.cpp in Sources */,
 				565AAAC92069B5F3002B6C6B /* material.cpp in Sources */,
 				56736CBD2064572400CE636A /* postprocessRender.cpp in Sources */,
 			);
@@ -856,6 +866,7 @@
 				56FC5E8220CC0CB4009F0E74 /* modelRender.cpp in Sources */,
 				5633FAB3204C64D7003449EE /* drawable.cpp in Sources */,
 				566BCF2C204EAF6500E90246 /* scene.cpp in Sources */,
+				5665F62020D0D219006D6F60 /* cubemapArray.cpp in Sources */,
 				565AAAC82069B5F3002B6C6B /* material.cpp in Sources */,
 				56736CBC2064572400CE636A /* postprocessRender.cpp in Sources */,
 			);
@@ -894,6 +905,7 @@
 				56FC5E8420CC0CB4009F0E74 /* modelRender.cpp in Sources */,
 				56D29ABA207B8DED0080CB3B /* drawable.cpp in Sources */,
 				56D29ABC207B8DED0080CB3B /* scene.cpp in Sources */,
+				5665F62220D0D219006D6F60 /* cubemapArray.cpp in Sources */,
 				56D29ABD207B8DED0080CB3B /* material.cpp in Sources */,
 				56D29ABE207B8DED0080CB3B /* postprocessRender.cpp in Sources */,
 			);

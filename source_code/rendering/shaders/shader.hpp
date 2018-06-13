@@ -18,6 +18,7 @@
 
 #include "../../scene/texture.hpp"
 #include "../../scene/cubemap.hpp"
+#include "../../scene/cubemapArray.hpp"
 #include "../../scene/textureArray.hpp"
 
 namespace ms {
@@ -60,6 +61,7 @@ namespace ms {
 		virtual		void 			bind_texture			(std::size_t index, Texture2D & texture);
 		virtual		void 			bind_texture			(std::size_t index, Texture2DArray & texture);
 		virtual		void 			bind_texture			(std::size_t index, CubeMap & texture);
+		virtual		void 			bind_texture			(std::size_t index, CubemapArray & texture);
 		virtual 	void 			use						();
 		virtual 	void 			_load					() override;
 		virtual 	void 			_unload					() override;

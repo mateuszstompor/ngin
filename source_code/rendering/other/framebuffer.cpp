@@ -205,6 +205,12 @@ void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2D> && texture) 
     depthTexture = std::move(texture);
 }
 
+void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<CubemapArray> & texture, int face, std::size_t layerIndex) {
+    use();
+    texture->use();
+    mglFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture->get_underlying_id(), 0, 6 * static_cast<int>(layerIndex) + face);
+}
+
 void ms::Framebuffer::bind_depth_buffer (std::unique_ptr<Texture2DArray> & texture, std::size_t layer) {
     use();
     texture->use();
