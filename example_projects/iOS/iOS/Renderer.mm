@@ -46,8 +46,8 @@ using namespace math;
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
     
-    depthRenderBuffer = std::unique_ptr<ms::Renderbuffer>(new Renderbuffer( ms::Texture2D::Format::depth_24,
-                                                                            ms::Texture2D::AssociatedType::UNSIGNED_INT,
+    depthRenderBuffer = std::unique_ptr<ms::Renderbuffer>(new Renderbuffer( ms::texture::Format::depth_24,
+                                                                            ms::texture::AssociatedType::UNSIGNED_INT,
                                                                             0,
                                                                             backingWidth,
                                                                             backingHeight));

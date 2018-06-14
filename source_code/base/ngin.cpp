@@ -115,10 +115,14 @@ shadowResolution{shadowsResolution}{
         std::vector<std::weak_ptr<Texture2D>> textures2;
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
         textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
-        pointLightMaps = std::unique_ptr<CubemapArray>( new CubemapArray(tf::depth_32, tt::FLOAT, ms::Size<unsigned int>{shadowResolution, shadowResolution}, 20) );
-    
         pointLightFramebuffer = std::unique_ptr<Framebuffer>{new Framebuffer(0, 1, shadowResolution, shadowResolution)};
+    #ifndef ios_build
+        pointLightMaps = std::unique_ptr<CubemapArray>( new CubemapArray(tf::depth_32, tt::FLOAT, ms::Size<unsigned int>{shadowResolution, shadowResolution}, 20) );
         pointLightFramebuffer->bind_depth_buffer(pointLightMaps, 0, 0);
+    #else
+        pointLightMap = std::unique_ptr<CubeMap>( new CubeMap(tf::depth_32, tt::FLOAT, ms::Size<unsigned int>{shadowResolution, shadowResolution}) );
+        pointLightFramebuffer->bind_depth_buffer(pointLightMap, 0);
+    #endif
         pointLightFramebuffer->configure();
     
         spotLightFramebuffer = std::unique_ptr<Framebuffer>{new Framebuffer(0, 1, shadowResolution, shadowResolution)};
@@ -192,7 +196,11 @@ void ms::NGin::load () {
     gouraudForwardRenderer->load();
     lightSourceRenderer->load();
     hdrRenderer->load();
+#ifndef ios_build
     pointLightMaps->load();
+#else
+    pointLightMap->load();
+#endif
     bloomSplitRenderer->load();
     bloomMergeRenderer->load();
     gaussianBlurFirstStepRenderer->load();
@@ -213,7 +221,11 @@ void ms::NGin::unload () {
     gouraudForwardRenderer->unload();
     lightSourceRenderer->unload();
     hdrRenderer->unload();
-    pointLightMaps->unload();
+    #ifndef ios_build
+        pointLightMaps->unload();
+    #else
+        pointLightMap->unload();
+    #endif
     bloomSplitRenderer->unload();
     shadowRenderer->unload();
     bloomMergeRenderer->unload();
@@ -257,7 +269,7 @@ void ms::NGin::draw_scene() {
         draw_models();
         draw_postprocess();
         
-    #ifdef DRAW_LIGHT_POV
+    #if defined(DRAW_LIGHT_POV) && !defined(ios_build)
         draw_sl_pov(0, 0, 500, 500);
         draw_pl_pov(0, 0, 500, 500);
     #endif
@@ -326,7 +338,11 @@ void ms::NGin::draw_models () {
             pointLightFramebuffer->use();
             pointLightFramebuffer->clear_frame();
             for(int j{0}; j < 6; ++j) {
+#ifndef ios_build
                 pointLightFramebuffer->bind_depth_buffer(pointLightMaps, (CubeMap::Face::right_positive_x + j), i);
+#else
+                pointLightFramebuffer->bind_depth_buffer(pointLightMap, (CubeMap::Face::right_positive_x + j));
+#endif
                 pointLightFramebuffer->clear_frame();
                 auto transform = math::transform4f::translate(math::vec3{0.0f, 0.0f, TRANSFORM});
                 switch (j) {
@@ -393,7 +409,11 @@ void ms::NGin::draw_models () {
         deferredRenderer->lightingShader->use();
         deferredRenderer->lightingShader->bind_texture(3, *directionalLightFramebuffer->get_depth_texture().lock());
         deferredRenderer->get_shader().bind_texture(4, *spotLightShadows);
+    #ifndef ios_build
         deferredRenderer->get_shader().bind_texture(5, *pointLightMaps);
+    #else
+        deferredRenderer->get_shader().bind_texture(5, *pointLightMap);
+    #endif
         deferredRenderer->perform_light_pass(scene);
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {

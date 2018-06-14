@@ -135,6 +135,7 @@ float pcf_depth(sampler2DArray  textureToSample,
     return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
 }
 
+#ifndef ios_build
 float pcf_depth(samplerCubeArray    textureToSample,
                 int                 layer,
                 vec3            	sampleCoordinate,
@@ -158,6 +159,29 @@ float pcf_depth(samplerCubeArray    textureToSample,
     
     return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
 }
+
+#else
+
+float pcf_depth(samplerCube         textureToSample,
+                vec3                sampleCoordinate,
+                int                 rowSamples,
+                int                 columnSamples,
+                float               countedDepth,
+                float               bias) {
+    
+    vec3 texelSize = vec3(1.0f) / vec3(textureSize(textureToSample, 0), 0);
+    float result = 0.0f;
+    
+    for (int i = -rowSamples; i <= rowSamples; ++i) {
+        for (int j = -columnSamples; j <= columnSamples; ++j) {
+            float depth = texture(textureToSample, vec3(sampleCoordinate + vec3(i, j, 0) * texelSize)).r;
+            result += countedDepth - bias > depth ? 1.0 : 0.0f;
+        }
+    }
+    
+    return result/float((rowSamples * 2 + 1) * (columnSamples * 2 + 1));
+}
+#endif
 
 float calculate_pcf_shadow(in sampler2D     textureToSample,
                            vec4             fragmentPositionInLightSpace,
@@ -226,7 +250,13 @@ uniform	int									spotLightsAmount;
 uniform sampler2DArray                      spotLightsShadowMaps;
 uniform	SpotLight [MAX_SPOT_LIGHT_AMOUNT] 	spotLights;
 
+
+#ifndef ios_build
 uniform samplerCubeArray                    pointLightShadow;
+#else
+uniform samplerCube                         pointLightShadow;
+#endif
+
 uniform	int									pointLightsAmount;
 uniform	PointLight [MAX_POINT_LIGHT_AMOUNT]	pointLights;
 
@@ -317,9 +347,13 @@ void main() {
             vec4 fragmentInLightPos = pointLights[i].transformation * vec4(fragmentPosition, 1.0f);
             float currentDepth = length(fragmentInLightPos.xyz)/100.0f;
             vec3 ls = vec3(-surfaceLightZ_N.x, surfaceLightZ_N.y, surfaceLightZ_N.z);
+    #ifndef ios_build
             float depthOfTexture = texture(pointLightShadow, vec4(ls, i)).r;
-//            shadow = currentDepth - 0.01f > depthOfTexture ? 1.0 : 0.0f;
             shadow = pcf_depth(pointLightShadow, i, ls, 3, 3, 0, currentDepth, 0.01f);
+    #else
+            float depthOfTexture = texture(pointLightShadow, ls).r;
+            shadow = pcf_depth(pointLightShadow, ls, 3, 3, currentDepth, 0.01f);
+    #endif
         }
         result += pointLights[i].color * diffuseColor * AMBIENT_STRENGTH;
         result += (1.0f - shadow) * count_light_influence(pointLights[i].color,

@@ -34,7 +34,9 @@ rWrapping{rWrapping},
 mipMapLevel{mipMapLevel},
 size{size},
 glTexture{0},
+#ifndef ios_build
 glTarget{GL_TEXTURE_CUBE_MAP_ARRAY},
+#endif
 glType{to_ogl(associatedType)},
 glColorFormat{to_ogl(format)},
 glInternalFormat{underlying_type(this->associatedType, this->format)},

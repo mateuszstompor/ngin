@@ -23,9 +23,10 @@ namespace ms {
 		"#version 300 es\n"
 		#ifdef DEBUG
 		"#define DEBUG 1\n"
+        "#define ios_build 1\n"
 		#endif
-		"precision highp float;\n";
-		
+		"precision highp float;\n"
+        "precision mediump sampler2DArray;\n";
 	#else
 		
 		static std::string os_header =

@@ -238,11 +238,12 @@ void _mglEnable (GLenum cap) {
 	ms::utils::check_gl_error();
 }
 
+#ifndef ios_build
 void _mglFramebufferTexture3D (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset) {
     glFramebufferTexture3D(target, attachment, textarget, texture, level, zoffset);
     ms::utils::check_gl_error();
 }
-
+#endif
 
 void _mglGenFramebuffers (GLsizei n, GLuint* framebuffers) {
 	glGenFramebuffers(n, framebuffers);

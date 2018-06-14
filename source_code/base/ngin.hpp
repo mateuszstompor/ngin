@@ -150,7 +150,11 @@ namespace ms {
 		std::unique_ptr<PostprocessRender>     	        scaleRenderer;
         std::unique_ptr<Framebuffer>                    directionalLightFramebuffer;
         std::unique_ptr<Texture2DArray>                 spotLightShadows;
+        #ifndef ios_build
         std::unique_ptr<CubemapArray>                   pointLightMaps;
+        #else
+        std::unique_ptr<CubeMap>                        pointLightMap;
+        #endif
         std::unique_ptr<Framebuffer>                    pointLightFramebuffer;
         std::unique_ptr<Framebuffer>                    spotLightFramebuffer;
         

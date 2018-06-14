@@ -25,6 +25,9 @@ if (DOXYGEN_FOUND)
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             COMMENT "Generating API documentation with Doxygen"
             VERBATIM )
+    file(COPY ${CMAKE_SOURCE_DIR}/docs/DoxygenLayout.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    file(COPY ${CMAKE_SOURCE_DIR}/docs/customdoxygen.css DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    file(COPY ${CMAKE_SOURCE_DIR}/docs/brief.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 else (DOXYGEN_FOUND)
     message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
