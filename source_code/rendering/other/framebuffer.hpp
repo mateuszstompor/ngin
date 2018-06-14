@@ -16,6 +16,7 @@
 
 #include "../../scene/texture.hpp"
 #include "../../scene/cubemap.hpp"
+#include "../../scene/cubemapArray.hpp"
 #include "../../scene/textureArray.hpp"
 
 #include "renderbuffer.hpp"
@@ -40,18 +41,19 @@ namespace ms {
         
     public:
         
-                                        Framebuffer         (int    colorAttachmentsAmount,
-                                                             int    renderbufferAttachmentsAmount,
-                                                             int    width,
-                                                             int    height);
-        void                            bind_color_buffer   (int                            index,
-                                                             std::unique_ptr<Texture2D> &&  Texture2D);
+                                        Framebuffer         (int                                colorAttachmentsAmount,
+                                                             int                                renderbufferAttachmentsAmount,
+                                                             int                                width,
+                                                             int                                height);
+        void                            bind_color_buffer   (int                                index,
+                                                             std::unique_ptr<Texture2D> &&      Texture2D);
         void                            bind_color_buffer   (int                                index,
                                                              std::unique_ptr<Renderbuffer> &&   renderbuffer);
-        void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> && renderbuffer);
-        void                            bind_depth_buffer   (std::unique_ptr<Texture2D> && texture);
-        void                            bind_depth_buffer   (std::unique_ptr<Texture2DArray> & texture, std::size_t layer);
-        void                            bind_depth_buffer   (std::unique_ptr<CubeMap> & texture, /*CubeMap::Face*/ int face);
+        void                            bind_depth_buffer   (std::unique_ptr<Renderbuffer> &&   renderbuffer);
+        void                            bind_depth_buffer   (std::unique_ptr<Texture2D> &&      texture);
+        void                            bind_depth_buffer   (std::unique_ptr<Texture2DArray> &  texture, std::size_t layer);
+        void                            bind_depth_buffer   (std::unique_ptr<CubeMap> &         texture, /*CubeMap::Face*/ int face);
+        void                            bind_depth_buffer   (std::unique_ptr<CubemapArray> &    texture, int face, std::size_t layerIndex);
         void                            configure           ();
         void                            use                 ();
                                         ~Framebuffer        () = default;
@@ -73,7 +75,6 @@ namespace ms {
 									    Framebuffer			(Framebuffer const &) = delete;
 		Framebuffer & 				    operator = 			(Framebuffer const &) = delete;
 		
-        
 		
 					//														//
 					// 	Checks completeness and merge all things together	//

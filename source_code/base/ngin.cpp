@@ -11,7 +11,7 @@
 using namespace ms;
 using namespace shader;
 
-#define TRANSFORM -1.0f
+#define TRANSFORM -0.9f
 
 ms::NGin::NGin(unsigned int                   	screenWidth,
                unsigned int                     screenHeight,
@@ -43,28 +43,13 @@ shadowResolution{shadowsResolution}{
         auto gbsFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
         auto bloomMergeFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(1, 0, fbW, fbH));
     
-        shadowsArray = std::unique_ptr<Texture2DArray>( new Texture2DArray{10, tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution} );
-        shadowsArray->load();
+        spotLightShadows = std::unique_ptr<Texture2DArray>( new Texture2DArray{30, tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution} );
+        spotLightShadows->load();
     
-        for (std::size_t i = 0; i < 11; ++i) {
-            shadows.push_back(std::unique_ptr<Framebuffer>(new Framebuffer(0, 1, shadowResolution, shadowResolution)));
-            if(i == 0) {
-                shadows[i]->bind_depth_buffer(std::make_unique<Texture2D>(tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution));
-            } else {
-                shadows[i]->bind_depth_buffer(shadowsArray, i-1);
-            }
-            shadows[i]->configure();
-        }
-    
-    for ( auto j{0}; j < 20; ++j) {
-        auto cm = new CubeMap{texture::Format::depth_32, texture::AssociatedType::FLOAT, ms::Size<uint>{shadowResolution, shadowResolution}};
-        pointLightShadowsBuffer.push_back(std::unique_ptr<CubeMap>{cm});
-    }
-    
-    pointLightFramebuffer = std::unique_ptr<Framebuffer>{new Framebuffer(0, 1, shadowResolution, shadowResolution)};
-    pointLightFramebuffer->bind_depth_buffer(pointLightShadowsBuffer[0], CubeMap::Face::back_positive_z);
-    pointLightFramebuffer->configure();
-    
+        directionalLightFramebuffer = std::unique_ptr<Framebuffer>(new Framebuffer(0, 1, shadowResolution, shadowResolution));
+        directionalLightFramebuffer->bind_depth_buffer(std::make_unique<Texture2D>(tf::depth_32, tt::FLOAT, shadowResolution, shadowResolution));
+        directionalLightFramebuffer->configure();
+
         mainRenderFramebuffer->bind_depth_buffer(std::unique_ptr<Renderbuffer>(new Renderbuffer(tf::depth_32, tt::FLOAT, 0, fbW, fbH)));
         mainRenderFramebuffer->bind_color_buffer(0, std::make_unique<Texture2D>(tf::rgb_16_16_16, tt::FLOAT, fbW, fbH));
         mainRenderFramebuffer->configure();
@@ -130,6 +115,15 @@ shadowResolution{shadowsResolution}{
         std::vector<std::weak_ptr<Texture2D>> textures2;
         textures2.push_back(gaussianBlurSecondStepRenderer->get_framebuffer().get_colors()[0]);
         textures2.push_back(bloomSplitRenderer->get_framebuffer().get_colors()[1]);
+        pointLightMaps = std::unique_ptr<CubemapArray>( new CubemapArray(tf::depth_32, tt::FLOAT, ms::Size<unsigned int>{shadowResolution, shadowResolution}, 20) );
+    
+        pointLightFramebuffer = std::unique_ptr<Framebuffer>{new Framebuffer(0, 1, shadowResolution, shadowResolution)};
+        pointLightFramebuffer->bind_depth_buffer(pointLightMaps, 0, 0);
+        pointLightFramebuffer->configure();
+    
+        spotLightFramebuffer = std::unique_ptr<Framebuffer>{new Framebuffer(0, 1, shadowResolution, shadowResolution)};
+        spotLightFramebuffer->bind_depth_buffer(spotLightShadows, 0);
+        spotLightFramebuffer->configure();
     
         bloomMergeRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(textures2, std::move(bloomMergeFramebuffer), std::move(bloomMergeProgram)));
         hdrRenderer = std::unique_ptr<PostprocessRender>(new PostprocessRender(bloomMergeRenderer->get_framebuffer().get_colors(), std::move(hdrFramebuffer), std::move(hdrProgram)));
@@ -198,6 +192,7 @@ void ms::NGin::load () {
     gouraudForwardRenderer->load();
     lightSourceRenderer->load();
     hdrRenderer->load();
+    pointLightMaps->load();
     bloomSplitRenderer->load();
     bloomMergeRenderer->load();
     gaussianBlurFirstStepRenderer->load();
@@ -211,13 +206,14 @@ void ms::NGin::load () {
 void ms::NGin::unload () {
     pause_drawing();
     pointLightFramebuffer->unload();
-    shadowsArray->unload();
+    spotLightShadows->unload();
     pointLightShadowRenderer->unload();
     phongForwardRenderer->unload();
     deferredRenderer->unload();
     gouraudForwardRenderer->unload();
     lightSourceRenderer->unload();
     hdrRenderer->unload();
+    pointLightMaps->unload();
     bloomSplitRenderer->unload();
     shadowRenderer->unload();
     bloomMergeRenderer->unload();
@@ -225,13 +221,12 @@ void ms::NGin::unload () {
     gaussianBlurSecondStepRenderer->unload();
     scaleRenderer->unload();
     vignetteRenderer->unload();
-    
-    std::for_each(pointLightShadowsBuffer.begin(), pointLightShadowsBuffer.end(), [](auto const & res){ res->unload(); });
+    directionalLightFramebuffer->unload();
+    spotLightFramebuffer->unload();
     std::for_each(scene.get_geometries().begin(), scene.get_geometries().end(), [](auto const & geo) { geo->unload(); } );
     std::for_each(scene.get_nodes().begin(), scene.get_nodes().end(), [](auto const & node) { node->unload(); } );
     std::for_each(scene.get_textures().begin(), scene.get_textures().end(), [](auto const & texture) { texture.second->unload(); });
     std::for_each(scene.get_materials().begin(), scene.get_materials().end(), [](auto const & material) { material.second->unload(); });
-    std::for_each(shadows.begin(), shadows.end(), [](auto const & fb) { fb->unload(); } );
 }
 
 void ms::NGin::count_fps () {
@@ -284,9 +279,9 @@ void ms::NGin::draw_models () {
     
     if (auto dirLight = scene.get_directional_light()) {
         if(dirLight->casts_shadow()) {
-            shadows[0]->use();
-            shadows[0]->clear_frame();
-            shadowRenderer->use(*shadows[0]);
+            directionalLightFramebuffer->use();
+            directionalLightFramebuffer->clear_frame();
+            shadowRenderer->use(*directionalLightFramebuffer);
             shadowRenderer->setup_uniforms(dirLight->get_projection(), dirLight->get_transformation());
             s = std::stack<math::mat4>{};
             auto it = scene.get_nodes().begin(l);
@@ -303,13 +298,13 @@ void ms::NGin::draw_models () {
     for (size_t i = 0; i < scene.get_spot_lights().size(); ++i) {
         SpotLight & spotLight = scene.get_spot_lights()[i];
         if(spotLight.casts_shadow()) {
-            shadows[1 + i]->use();
-            shadows[1 + i]->clear_frame();
-            shadowRenderer->use(*shadows[1 + i]);
+            spotLightFramebuffer->use();
+            spotLightFramebuffer->bind_depth_buffer(spotLightShadows, i);
+            spotLightFramebuffer->clear_frame();
+            shadowRenderer->use(*spotLightFramebuffer);
             shadowRenderer->setup_uniforms(spotLight.get_frustum().get_projection_matrix(), spotLight.get_transformation());
             s = std::stack<math::mat4>{};
             auto it = scene.get_nodes().begin(l);
-            
             while(it != scene.get_nodes().end()) {
                 auto node = *it;
                 auto transform =  s.empty() ? node->get_transformation() : node->get_transformation() * s.top();
@@ -319,7 +314,6 @@ void ms::NGin::draw_models () {
                 }
                 ++it;
             }
-            
         }
     }
     
@@ -332,7 +326,7 @@ void ms::NGin::draw_models () {
             pointLightFramebuffer->use();
             pointLightFramebuffer->clear_frame();
             for(int j{0}; j < 6; ++j) {
-                pointLightFramebuffer->bind_depth_buffer(pointLightShadowsBuffer[i], (CubeMap::Face::right_positive_x + j));
+                pointLightFramebuffer->bind_depth_buffer(pointLightMaps, (CubeMap::Face::right_positive_x + j), i);
                 pointLightFramebuffer->clear_frame();
                 auto transform = math::transform4f::translate(math::vec3{0.0f, 0.0f, TRANSFORM});
                 switch (j) {
@@ -397,9 +391,9 @@ void ms::NGin::draw_models () {
         deferredRenderer->get_framebuffer().use();
         deferredRenderer->get_framebuffer().clear_frame();
         deferredRenderer->lightingShader->use();
-        deferredRenderer->lightingShader->bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        deferredRenderer->get_shader().bind_texture(4, *shadowsArray);
-        deferredRenderer->get_shader().bind_texture(5, *pointLightShadowsBuffer[0]);
+        deferredRenderer->lightingShader->bind_texture(3, *directionalLightFramebuffer->get_depth_texture().lock());
+        deferredRenderer->get_shader().bind_texture(4, *spotLightShadows);
+        deferredRenderer->get_shader().bind_texture(5, *pointLightMaps);
         deferredRenderer->perform_light_pass(scene);
         lightSourceRenderer->get_framebuffer().copy_framebuffer(deferredRenderer->get_framebuffer());
     } else if(chosenRenderer == Renderer::forward_fragment) {
@@ -409,8 +403,8 @@ void ms::NGin::draw_models () {
         phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
         phongForwardRenderer->set_directionallight(scene.get_directional_light());
         phongForwardRenderer->set_point_lights(scene.get_point_lights());
-        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        phongForwardRenderer->get_shader().bind_texture(4, *shadowsArray);
+        phongForwardRenderer->get_shader().bind_texture(3, *directionalLightFramebuffer->get_depth_texture().lock());
+        phongForwardRenderer->get_shader().bind_texture(4, *spotLightShadows);
         tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
         
         while(it != scene.get_nodes().end()) {
@@ -433,8 +427,8 @@ void ms::NGin::draw_models () {
         gouraudForwardRenderer->set_spot_lights(scene.get_spot_lights());
         gouraudForwardRenderer->set_directionallight(scene.get_directional_light());
         gouraudForwardRenderer->set_point_lights(scene.get_point_lights());
-        gouraudForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        gouraudForwardRenderer->get_shader().bind_texture(4, *shadowsArray);
+        gouraudForwardRenderer->get_shader().bind_texture(3, *directionalLightFramebuffer->get_depth_texture().lock());
+        gouraudForwardRenderer->get_shader().bind_texture(4, *spotLightShadows);
         tree<std::shared_ptr<Drawable>>::iterator it = scene.get_nodes().begin(l);
         
         while(it != scene.get_nodes().end()) {
@@ -477,8 +471,8 @@ void ms::NGin::draw_models () {
         phongForwardRenderer->set_spot_lights(scene.get_spot_lights());
         phongForwardRenderer->set_directionallight(scene.get_directional_light());
         phongForwardRenderer->set_point_lights(scene.get_point_lights());
-        phongForwardRenderer->get_shader().bind_texture(3, *shadows[0]->get_depth_texture().lock());
-        phongForwardRenderer->get_shader().bind_texture(4, *shadowsArray);
+        phongForwardRenderer->get_shader().bind_texture(3, *directionalLightFramebuffer->get_depth_texture().lock());
+        phongForwardRenderer->get_shader().bind_texture(4, *spotLightShadows);
         s = std::stack<math::mat4>{};
         auto it = scene.get_nodes().begin(l);
         
@@ -513,29 +507,29 @@ void ms::NGin::draw_sl_pov (std::uint16_t x, std::uint16_t y, std::uint16_t tile
 
 void ms::NGin::draw_pl_pov (std::uint16_t x, std::uint16_t y, std::uint16_t tileWidth, std::uint16_t tileHeight) {
     scaleRenderer->get_framebuffer().use();
-    shadowRenderer->use(scaleRenderer->get_framebuffer());
+    pointLightShadowRenderer->use(scaleRenderer->get_framebuffer());
     for(int i = 0; i < scene.get_point_lights().size(); ++i) {
         //render front view, side number 4
         auto transform = math::transform4f::translate(math::vec3{0.0f, 0.0f, TRANSFORM});
         mglViewport(x + tileWidth * 3 * i, y, tileWidth, tileWidth);
         scaleRenderer->get_framebuffer().clear_depth();
-        shadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), transform * scene.get_point_lights()[i].get_transformation());
+        pointLightShadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), transform * scene.get_point_lights()[i].get_transformation());
         for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
+            pointLightShadowRenderer->draw(*node);
         }
         //render right view, side number 0
         mglViewport(x + tileWidth * 3 * i + tileWidth, y, tileWidth, tileWidth);
         scaleRenderer->get_framebuffer().clear_depth();
-        shadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(),transform * math::transform4f::rotate_about_y_radians(M_PI/2) * scene.get_point_lights()[i].get_transformation());
+        pointLightShadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(),transform * math::transform4f::rotate_about_y_radians(M_PI/2) * scene.get_point_lights()[i].get_transformation());
         for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
+            pointLightShadowRenderer->draw(*node);
         }
         //render up view, side number 2
         mglViewport(x + tileWidth * 3 * i + 2 * tileWidth, y, tileWidth, tileWidth);
         scaleRenderer->get_framebuffer().clear_depth();
-        shadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), transform * math::transform4f::rotate_about_x_radians(-M_PI/2) * scene.get_point_lights()[i].get_transformation());
+        pointLightShadowRenderer->setup_uniforms(scene.get_point_lights()[i].get_projection(), transform * math::transform4f::rotate_about_x_radians(-M_PI/2) * scene.get_point_lights()[i].get_transformation());
         for(auto & node : scene.get_nodes()) {
-            shadowRenderer->draw(*node);
+            pointLightShadowRenderer->draw(*node);
         }
     }
 }

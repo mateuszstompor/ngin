@@ -13,5 +13,5 @@ ms::PointLight::PointLight (math::vec3 const &  col,
                             math::vec3 const &  pos,
                             bool                castsShadow) :
 Light{col, pow,  math::transform4f::translate(pos), castsShadow},
-projection{math::projection4f::perspective(0.001f, 100.0f, 90.0f, 1.0f)}{ }
+projection{math::projection4f::perspective(1.0f, 100.0f, 90.0f, 1.0f)}{ }
 

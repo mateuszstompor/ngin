@@ -77,7 +77,7 @@ int main(int argc, const char * argv[]) { {
 	actualScreenWidth = framebufferWidth;
 	actualScreenHeight = framebufferHeight;
 	
-    unsigned int shadowResolution = 512;
+    unsigned int shadowResolution = 1024;
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
@@ -118,8 +118,8 @@ int main(int argc, const char * argv[]) { {
     engine->get_scene().get_spot_lights().push_back(sl1);
     engine->get_scene().get_spot_lights().push_back(sl2);
     engine->get_scene().get_spot_lights().push_back(sl3);
-    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
-    engine->get_scene().get_point_lights().push_back(pl1);
+//    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
+//    engine->get_scene().get_point_lights().push_back(pl1);
 
     for (auto & node : engine->get_scene().get_nodes()) {
         node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();

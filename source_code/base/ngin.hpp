@@ -22,6 +22,7 @@
 #include "../scene/scene.hpp"
 #include "../scene/textureArray.hpp"
 #include "../scene/cubemap.hpp"
+#include "../scene/cubemapArray.hpp"
 
 #include "../utils/loader.hpp"
 
@@ -147,10 +148,11 @@ namespace ms {
 		std::unique_ptr<GaussianBlurPostprocessRender>  gaussianBlurSecondStepRenderer;
         std::unique_ptr<VignettePostprocessRender>      vignetteRenderer;
 		std::unique_ptr<PostprocessRender>     	        scaleRenderer;
-        std::vector<std::unique_ptr<Framebuffer>>       shadows;
-        std::unique_ptr<Texture2DArray>                 shadowsArray;
-        std::vector<std::unique_ptr<CubeMap>>           pointLightShadowsBuffer;
+        std::unique_ptr<Framebuffer>                    directionalLightFramebuffer;
+        std::unique_ptr<Texture2DArray>                 spotLightShadows;
+        std::unique_ptr<CubemapArray>                   pointLightMaps;
         std::unique_ptr<Framebuffer>                    pointLightFramebuffer;
+        std::unique_ptr<Framebuffer>                    spotLightFramebuffer;
         
         bool                                            shouldDraw;
         unsigned int                                    shadowResolution;

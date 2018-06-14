@@ -110,6 +110,7 @@ void        _mglReadBuffer (GLenum mode);
 void        _mglBlendFunc (GLenum sfactor, GLenum dfactor);
 void        _mglTexImage3D (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
 void        _mglFramebufferTextureLayer (GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer);
+void        _mglFramebufferTexture3D (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
 
 
 #if DEBUG
@@ -180,6 +181,7 @@ void        _mglFramebufferTextureLayer (GLenum target, GLenum attachment, GLuin
 #define mglReadBuffer               _mglReadBuffer
 #define mglTexImage3D               _mglTexImage3D
 #define mglFramebufferTextureLayer  _mglFramebufferTextureLayer
+#define mglFramebufferTexture3D     _mglFramebufferTexture3D
 
 #else
 
@@ -249,6 +251,7 @@ void        _mglFramebufferTextureLayer (GLenum target, GLenum attachment, GLuin
 #define mglReadBuffer               glReadBuffer
 #define mglTexImage3D               glTexImage3D
 #define mglFramebufferTextureLayer  glFramebufferTextureLayer
+#define mglFramebufferTexture3D     glFramebufferTexture3D
 
 #endif
 
