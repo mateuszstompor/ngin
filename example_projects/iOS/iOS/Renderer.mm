@@ -138,20 +138,16 @@ using namespace math;
 }
 
 - (void)dealloc {
-	
-    engine->unload();
-    
 	if (_colorRenderbuffer) {
 		glDeleteRenderbuffers(1, &_colorRenderbuffer);
 		_colorRenderbuffer = 0;
 	}
-	
+//    engine->unload();
 //    framebuffer->unload();
 //    depthRenderBuffer->unload();
     engine = nullptr;
     depthRenderBuffer = nullptr;
     framebuffer = nullptr;
-    
 }
 
 @end

@@ -65,7 +65,20 @@ namespace ms {
                                                                              unsigned int                       frameBufferHeight,
                                                                              unsigned int                       shadowsResolution,
                                                                              std::unique_ptr<Camera> &&			cam,
-                                                                             std::unique_ptr<Framebuffer> &&    defaultFramebuffer);
+                                                                             std::unique_ptr<Framebuffer> &&    defaultFramebuffer = nullptr);
+        /**
+         *
+         * @param frameWidth Szerokość obrazu i okna w której należy generować grafikę
+         * @param frameHeight Wysokość obrazu i okna w której należy generować grafikę
+         * @param shadowsResolution Rozdzielczość cieni
+         * @param cam kamera, którą należy dodać na scenę
+         * @param defaultFramebuffer w przypadku urządzeń, które nie korzystają z domyślnego bufora ramki, np. smartfony z iOS, należy podać bufor ramki na który generować obraz
+         */
+                                                        NGin                (unsigned int                       frameWidth,
+                                                                             unsigned int                       frameHeight,
+                                                                             unsigned int                       shadowsResolution,
+                                                                             std::unique_ptr<Camera> &&         cam,
+                                                                             std::unique_ptr<Framebuffer> &&    defaultFramebuffer = nullptr);
 
 		/**
 		 * Ładuje do karty graficznej wszystkie komponenty silnika jak renderery, shadery, itd.

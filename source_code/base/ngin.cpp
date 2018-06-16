@@ -13,6 +13,13 @@ using namespace shader;
 
 #define TRANSFORM -0.9f
 
+ms::NGin::NGin      (unsigned int                       frameWidth,
+                     unsigned int                       frameHeight,
+                     unsigned int                       shadowsResolution,
+                     std::unique_ptr<Camera> &&         cam,
+                     std::unique_ptr<Framebuffer> &&    defaultFramebuffer) :
+NGin{frameWidth, frameHeight, frameWidth, frameHeight, 1024, std::move(cam), std::move(defaultFramebuffer)} { }
+
 ms::NGin::NGin(unsigned int                   	screenWidth,
                unsigned int                     screenHeight,
                unsigned int                     fbW,

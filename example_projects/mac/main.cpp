@@ -81,8 +81,8 @@ int main(int argc, const char * argv[]) { {
     
 	//Configure rendering resoultion here
 	#ifndef __WIN32__
-        framebufferWidth /= 4;
-        framebufferHeight /= 4;
+        framebufferWidth /= 2;
+        framebufferHeight /= 2;
 	#endif
 	
 	if(window == nullptr){
@@ -103,7 +103,7 @@ int main(int argc, const char * argv[]) { {
 	
     auto cam = std::make_unique<ms::PerspectiveCamera>(0.01f, 100, 90, float(framebufferWidth)/framebufferHeight);
 
-    engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, shadowResolution, std::move(cam), nullptr);
+    engine = std::make_unique<NGin>(actualScreenWidth, actualScreenHeight, framebufferWidth, framebufferHeight, shadowResolution, std::move(cam));
 		
     engine->load_model(useCommandLineArguments ? argv[1] : "./sponza/sponza.obj");
 
@@ -118,8 +118,8 @@ int main(int argc, const char * argv[]) { {
     engine->get_scene().get_spot_lights().push_back(sl1);
     engine->get_scene().get_spot_lights().push_back(sl2);
     engine->get_scene().get_spot_lights().push_back(sl3);
-//    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
-//    engine->get_scene().get_point_lights().push_back(pl1);
+    PointLight pl1({1.0f, 1.0f, 0.0f}, 50.0f, {0.0f, 0.0f, 0.0f}, true);
+    engine->get_scene().get_point_lights().push_back(pl1);
 
     for (auto & node : engine->get_scene().get_nodes()) {
         node->get_transformation() = ms::math::transform::scale<float, 4>({0.02f, 0.02f, 0.02f}) * node->get_transformation();
