@@ -77,7 +77,6 @@ void ms::DeferredRender::set_point_lights (std::vector<PointLight> const & point
     lightingShader->set_uniform("pointLightsAmount", static_cast<int>(pointLights.size()));
     for(auto i {0}; i < pointLights.size(); ++i) {
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].color", pointLights[i].get_color());
-        lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].position", math::get_position(pointLights[i].get_transformation()));
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].power", pointLights[i].get_power());
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].castsShadow", pointLights[i].casts_shadow() == true ? int{1} : int{0});
         lightingShader->set_uniform("pointLights[" + std::to_string(i) + "].projection", pointLights[i].get_projection());

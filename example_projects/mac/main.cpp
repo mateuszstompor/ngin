@@ -128,7 +128,7 @@ int main(int argc, const char * argv[]) { {
     engine->load_model(useCommandLineArguments ? argv[2] : "./nanosuit/nanosuit.obj");
 	
 	engine->load();
-	
+    
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
 	glfwSetKeyCallback(window, key_callback);

@@ -9,17 +9,6 @@ R"(
 #define DIFFUSE_STRENGTH			0.9f
 #define SPECULAR_STRENGTH			0.8f
 
-#define SPOT_LIGHT_INNER_CUTOFF		0.91f
-#define SPOT_LIGHT_OUTER_CUTOFF		0.50f
-
-#define RED_VALUE_WEIGHT			0.2126f
-#define GREEN_VALUE_WEIGHT			0.7152f
-#define BLUE_VALUE_WEIGHT			0.0722f
-
-#define RED_WEIGHT_ADAPTIVE_TONE	0.3f
-#define GREEN_WEIGHT_ADAPTIVE_TONE	0.59f
-#define BLUE_WEIGHT_ADAPTIVE_TONE	0.11f
-
 #define INNER_CUTOFF_BIAS           0.015f
 #define USUAL_POWER                 100.0f
 
@@ -33,7 +22,6 @@ struct DirectionalLight {
 struct PointLight {
 	float 		power;
 	vec3		color;
-	vec3		position;
     mat4        transformation;
     mat4        projection;
     int         castsShadow;
